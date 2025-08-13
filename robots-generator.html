@@ -3,70 +3,209 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Robots.txt Generator – Seohub.dk</title>
-  <meta name="description" content="Lav en korrekt robots.txt på få sekunder.">
+  <title>Robots.txt Generator – Gratis værktøj til crawl-styring | Seohub.dk</title>
+  <meta name="description" content="Lav en korrekt robots.txt på få sekunder. Vælg hvad søgemaskiner må/ikke må crawle, og tilføj automatisk dit sitemap. Kopiér eller download filen direkte.">
   <link rel="canonical" href="https://seohub.dk/robots-generator.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Seohub.dk">
+  <meta property="og:title" content="Robots.txt Generator – Gratis værktøj til crawl-styring">
+  <meta property="og:description" content="Byg en korrekt robots.txt, tilføj Allow/Disallow-regler og sitemap-link. Kopiér eller download på få sekunder.">
+  <meta property="og:url" content="https://seohub.dk/robots-generator.html">
+  <meta property="og:image" content="https://seohub.dk/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Robots.txt Generator – Gratis værktøj til crawl-styring">
+  <meta name="twitter:description" content="Lav en korrekt robots.txt på få sekunder og styr, hvad Google må crawle.">
+  <meta name="twitter:image" content="https://seohub.dk/og-image.png">
+
+  <!-- Styles & React -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Robots.txt Generator – Gratis værktøj",
+    "url":"https://seohub.dk/robots-generator.html",
+    "description":"Gratis robots.txt generator som hjælper dig med at styre crawl og pege søgemaskiner til dit sitemap.",
+    "inLanguage":"da"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Hvad er robots.txt?",
+        "acceptedAnswer":{"@type":"Answer","text":"En tekstfil i roden af dit domæne, som fortæller crawlere hvilke stier der må eller ikke må tilgås. Den er vejledende, men respekteres typisk af søgemaskiner."}
+      },
+      {
+        "@type":"Question",
+        "name":"Skal jeg blokere sider med noindex i robots.txt?",
+        "acceptedAnswer":{"@type":"Answer","text":"Nej. Blokerer du i robots.txt, kan Google ikke læse noindex-tags på siden. Brug noindex på siden og lad den være crawlbar, eller brug Search Console fjernelse midlertidigt."}
+      },
+      {
+        "@type":"Question",
+        "name":"Hvor skal robots.txt ligge?",
+        "acceptedAnswer":{"@type":"Answer","text":"På https://ditdomæne.dk/robots.txt (domænets rod). Vær opmærksom på subdomæner – hvert subdomæne kan have sin egen robots.txt."}
+      },
+      {
+        "@type":"Question",
+        "name":"Hvad med mit sitemap?",
+        "acceptedAnswer":{"@type":"Answer","text":"Tilføj en linje med Sitemap: https://ditdomæne.dk/sitemap.xml nederst i robots.txt. Det hjælper crawlere med at finde dine sider."}
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+  <!-- Header / Nav -->
   <header class="border-b bg-white/80 backdrop-blur">
     <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
       <a href="/" class="font-semibold">Seohub.dk</a>
       <nav class="text-sm text-neutral-600 space-x-4">
         <a href="/">Forside</a>
         <a href="/serp-preview.html">SERP</a>
-        <a href="/robots-generator.html">Robots</a>
+        <a href="/robots-generator.html" class="font-medium text-neutral-900">Robots</a>
         <a href="/sitemap-generator.html">Sitemap</a>
       </nav>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-2">Robots.txt Generator</h1>
-<p class="text-neutral-700 mb-6">Lav en korrekt robots.txt på få sekunder.</p>
-<div id="root-robots"></div>
-<script>
-const { useState, useMemo } = React;
-function App(){
-  const [sitemap, setSitemap] = useState("https://www.seohub.dk/sitemap.xml");
-  const [allow, setAllow] = useState("/wp-admin/admin-ajax.php");
-  const [disallow, setDisallow] = useState("/wp-admin/\n*/?s=\n/search\n/cart");
-  const txt = useMemo(()=>{
-    const a = allow.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>"Allow: "+x).join("\n");
-    const d = disallow.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>"Disallow: "+x).join("\n");
-    return ("User-agent: *\n" + a + (a&&d?"\n":"") + d + "\n\nSitemap: " + sitemap).trim();
-  }, [sitemap, allow, disallow]);
-  return React.createElement("div", {className:"grid md:grid-cols-2 gap-6"},
-    React.createElement("div", null,
-      React.createElement("label", {className:"block mb-3"},
-        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Sitemap URL"),
-        React.createElement("input",{className:"w-full border rounded-xl p-3", value:sitemap, onChange:e=>setSitemap(e.target.value)})
-      ),
-      React.createElement("label", {className:"block mb-3"},
-        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Tillad (én pr. linje)"),
-        React.createElement("textarea",{rows:3,className:"w-full border rounded-xl p-3", value:allow, onChange:e=>setAllow(e.target.value)})
-      ),
-      React.createElement("label", {className:"block mb-3"},
-        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Bloker (én pr. linje)"),
-        React.createElement("textarea",{rows:6,className:"w-full border rounded-xl p-3", value:disallow, onChange:e=>setDisallow(e.target.value)})
-      ),
-      React.createElement("div",{className:"flex gap-2"},
-        React.createElement("button",{className:"px-3 py-2 rounded-xl border", onClick:()=>navigator.clipboard.writeText(txt)},"Kopiér"),
-        React.createElement("button",{className:"px-3 py-2 rounded-xl border", onClick:()=>{const b=new Blob([txt],{type:"text/plain"});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download="robots.txt";a.click();URL.revokeObjectURL(u);}},"Download")
-      )
-    ),
-    React.createElement("div", null,
-      React.createElement("pre",{className:"bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap"}, txt)
-    )
-  );
-}
-ReactDOM.createRoot(document.getElementById("root-robots")).render(React.createElement(App));
-</script>
+  <main class="max-w-6xl mx-auto p-4 space-y-10">
+    <!-- Hero -->
+    <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+      <h1 class="text-3xl font-bold mb-2">Robots.txt Generator – styr crawl korrekt</h1>
+      <p class="text-neutral-700">Byg en <strong>robots.txt</strong> på få sekunder. Vælg hvad der må/ikke må crawles, og tilføj automatisk dit <strong>sitemap</strong>. Kopiér eller download filen direkte.</p>
+    </section>
 
+    <!-- Værktøjet -->
+    <section>
+      <div id="root-robots"></div>
+      <script>
+        const { useState, useMemo } = React;
+
+        function RobotsTool() {
+          const [sitemap, setSitemap] = useState("https://www.seohub.dk/sitemap.xml");
+          const [allow, setAllow] = useState("/wp-admin/admin-ajax.php");
+          const [disallow, setDisallow] = useState("/wp-admin/\n*/?s=\n/search\n/cart");
+
+          const output = useMemo(() => {
+            const a = allow.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>"Allow: " + x).join("\n");
+            const d = disallow.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>"Disallow: " + x).join("\n");
+            return ("User-agent: *\n" + (a ? a + "\n" : "") + d + "\n\nSitemap: " + sitemap).trim();
+          }, [sitemap, allow, disallow]);
+
+          function copyTxt() {
+            navigator.clipboard.writeText(output).then(() => {
+              alert("Kopieret til udklipsholder");
+            }, () => alert("Kunne ikke kopiere – markér og kopier manuelt."));
+          }
+          function downloadTxt() {
+            const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url; a.download = "robots.txt"; a.click();
+            URL.revokeObjectURL(url);
+          }
+
+          return React.createElement("div", { className: "grid md:grid-cols-2 gap-6" },
+            React.createElement("div", null,
+              React.createElement("label", { className: "block mb-3" },
+                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Sitemap URL"),
+                React.createElement("input", { className: "w-full border rounded-xl p-3", value: sitemap, onChange: e=>setSitemap(e.target.value) })
+              ),
+              React.createElement("label", { className: "block mb-3" },
+                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Tillad (én pr. linje)"),
+                React.createElement("textarea", { rows: 3, className: "w-full border rounded-xl p-3", value: allow, onChange: e=>setAllow(e.target.value) })
+              ),
+              React.createElement("label", { className: "block mb-3" },
+                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Bloker (én pr. linje)"),
+                React.createElement("textarea", { rows: 6, className: "w-full border rounded-xl p-3", value: disallow, onChange: e=>setDisallow(e.target.value) })
+              ),
+              React.createElement("div", { className: "flex gap-2" },
+                React.createElement("button", { className: "px-3 py-2 rounded-xl border", onClick: copyTxt }, "Kopiér"),
+                React.createElement("button", { className: "px-3 py-2 rounded-xl border", onClick: downloadTxt }, "Download")
+              )
+            ),
+            React.createElement("div", null,
+              React.createElement("pre", { className: "bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap" }, output)
+            )
+          );
+        }
+
+        ReactDOM.createRoot(document.getElementById("root-robots")).render(React.createElement(RobotsTool));
+      </script>
+    </section>
+
+    <!-- Indhold -->
+    <section class="prose max-w-none">
+      <h2 class="text-2xl font-semibold mb-2">Hvad er robots.txt?</h2>
+      <p><code>robots.txt</code> er en simpel tekstfil, der ligger på <code>/robots.txt</code> på dit domæne. Den fortæller søgemaskiners crawlere hvilke dele af dit website, de må eller ikke må besøge. Filen er vejledende (ikke et sikkerhedslag), men Google & co. følger den som regel.</p>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Hvornår skal du blokere – og hvornår ikke?</h2>
+      <ul class="list-disc pl-5">
+        <li><strong>Bloker:</strong> interne søgesider (<code>*/?s=</code>), kurv/checkout, filtre med uendelige kombinationer, test- eller staging-stier, duplikerede kalendersider osv.</li>
+        <li><strong>Undgå at blokere:</strong> sider med <code>noindex</code> (ellers kan Google ikke se dit noindex-tag), kritisk indhold og ressourcer nødvendige for rendering (fx CSS/JS).</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Best practice & eksempler</h2>
+      <pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap">User-agent: *
+Allow: /wp-admin/admin-ajax.php
+Disallow: /wp-admin/
+Disallow: */?s=
+Disallow: /search
+Disallow: /cart
+
+Sitemap: https://www.ditdomæne.dk/sitemap.xml</pre>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Sådan bruger du værktøjet</h2>
+      <ol class="list-decimal pl-5">
+        <li>Indsæt din <strong>Sitemap URL</strong> (fx <code>https://www.seohub.dk/sitemap.xml</code>).</li>
+        <li>Tilføj stier under <strong>Tillad</strong> og <strong>Bloker</strong> (én pr. linje).</li>
+        <li>Klik <em>Kopiér</em> eller <em>Download</em> og læg filen i roden: <code>/robots.txt</code>.</li>
+        <li>Test i browseren: <code>https://ditdomæne.dk/robots.txt</code>.</li>
+      </ol>
+
+      <div class="mt-8 rounded-2xl border p-4 bg-white">
+        <p class="mb-2"><strong>Næste skridt:</strong> Kombinér med de andre værktøjer:</p>
+        <ul class="list-disc pl-5">
+          <li><a class="underline" href="/serp-preview.html">SERP & Meta Preview</a> – skriv titler og beskrivelser der får klik.</li>
+          <li><a class="underline" href="/sitemap-generator.html">Sitemap.xml Generator</a> – generér en ren sitemap hurtigt.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ (synligt indhold matcher JSON-LD) -->
+    <section>
+      <h2 class="text-2xl font-semibold mt-8 mb-2" id="faq">FAQ om robots.txt</h2>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Hvad er robots.txt?</summary>
+        <p class="mt-2 text-neutral-700">En tekstfil, som vejleder crawlere om adgang til dine URL-stier.</p>
+      </details>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Skal jeg blokere noindex-sider?</summary>
+        <p class="mt-2 text-neutral-700">Nej. Lad dem være crawlbare, så Google kan læse noindex-tagget.</p>
+      </details>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Hvor skal filen ligge?</summary>
+        <p class="mt-2 text-neutral-700">På <code>/robots.txt</code> i domænets rod.</p>
+      </details>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Hvordan tilføjer jeg mit sitemap?</summary>
+        <p class="mt-2 text-neutral-700">Tilføj en linje: <code>Sitemap: https://ditdomæne.dk/sitemap.xml</code>.</p>
+      </details>
+    </section>
   </main>
+
   <footer class="text-center text-xs text-neutral-500 py-8">© 2025 Seohub – seohub.dk</footer>
 </body>
 </html>
