@@ -358,56 +358,5 @@ function App() {
     React.createElement(ContactForm, { key:"contact" })
   ]);
 }
-/* ---------- Footer ---------- */
-function Footer() {
-  return React.createElement(
-    "footer",
-    { className: "text-center text-xs text-neutral-500 py-8" },
-    "© 2025 Seohub – seohub.dk"
-  );
-}
-
-/* ---------- App (main + footer) ---------- */
-function App() {
-  return React.createElement(React.Fragment, null, [
-    React.createElement("main", { key:"main", className: "max-w-6xl mx-auto p-4 space-y-8" }, [
-      // Hero
-      React.createElement(Section, { key:"hero" },
-        React.createElement("div", null, [
-          React.createElement("h1", { key:"h", className:"text-3xl font-bold mb-2" }, "Gratis SEO værktøjer"),
-          React.createElement("p", { key:"p", className:"text-neutral-700" }, "Vælg et værktøj herunder – ingen login, ingen installation.")
-        ])
-      ),
-      // Tool cards (links)
-      React.createElement("section", { key:"grid", className:"grid md:grid-cols-3 gap-4" }, [
-        React.createElement("a", { key:"k", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/serp-preview.html" },
-          [React.createElement("h2", { key:"t", className:"font-semibold" }, "SERP & Meta"),
-           React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Forhåndsvisning + længde-tjek.")]
-        ),
-        React.createElement("a", { key:"r", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/robots-generator.html" },
-          [React.createElement("h2", { key:"t", className:"font-semibold" }, "Robots.txt"),
-           React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Byg og download.")]
-        ),
-        React.createElement("a", { key:"s", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/sitemap-generator.html" },
-          [React.createElement("h2", { key:"t", className:"font-semibold" }, "Sitemap.xml"),
-           React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Generér fra liste af URLs.")]
-        ),
-      ]),
-      // Inline tools
-      React.createElement(KeywordIdeas, { key:"kw" }),
-      React.createElement(SerpAndMeta, { key:"serp" }),
-      React.createElement(RobotsTxt, { key:"rob" }),
-      React.createElement(SitemapXml, { key:"map" }),
-      React.createElement(FaqSchema, { key:"faq" }),
-      React.createElement(ContentBrief, { key:"brief" }),
-
-      // Kontaktformular lige efter Content Brief
-      React.createElement(ContactForm, { key:"contact" })
-    ]),
-    // Footer under main
-    React.createElement(Footer, { key:"footer" })
-  ]);
-}
-
 /* ---------- Mount ---------- */
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
