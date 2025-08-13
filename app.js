@@ -299,7 +299,7 @@ function ContentBrief() {
   );
 }
 
-/* ---------- Kontaktformular (NU inde i appen) ---------- */
+/* ---------- Kontaktformular (NU i appen) ---------- */
 function ContactForm() {
   return React.createElement(Section, { title: "Kontakt os" },
     React.createElement("form", {
@@ -307,10 +307,6 @@ function ContactForm() {
       method: "POST",
       className: "space-y-4"
     }, [
-      React.createElement(TextInput, { key:"n", label:"Navn", value:"", onChange:()=>{}, placeholder:"Dit navn" }),
-      React.createElement(TextInput, { key:"e", label:"E-mail", value:"", onChange:()=>{}, placeholder:"din@email.dk" }),
-      // Brug almindelige inputs for reelt POST (ikke kontrollerede)
-      React.createElement("div", { key:"ri", className:"hidden" }), // spacer
       React.createElement("label", { key:"name", className:"block mb-3" }, [
         React.createElement("span", { className:"block text-sm font-medium mb-1" }, "Navn"),
         React.createElement("input", { name:"name", required:true, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200", placeholder:"Dit navn" })
