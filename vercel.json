@@ -20,5 +20,7 @@
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     }
-  ]
+  ],
+  "buildCommand": "node generate-sitemap.mjs && npm run build",
+  "outputDirectory": "public"
 }
