@@ -358,5 +358,12 @@ function App() {
     React.createElement(ContactForm, { key:"contact" })
   ]);
 }
+React.createElement(Footer, { key:"footer" })
+/* ---------- Footer ---------- */
+function Footer() {
+  return React.createElement("footer", { className: "text-center text-xs text-neutral-500 py-8" },
+    "© 2025 Seohub – seohub.dk"
+  );
+}
 /* ---------- Mount ---------- */
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
