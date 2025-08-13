@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://seohub.dk/</loc></url>
-  <url><loc>https://seohub.dk/serp-preview.html</loc></url>
-  <url><loc>https://seohub.dk/robots-generator.html</loc></url>
-  <url><loc>https://seohub.dk/sitemap-generator.html</loc></url>
+  <!-- Forside -->
+  <url>
+    <loc>https://seohub.dk/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
+
+  <!-- Værktøjer -->
+  <url>
+    <loc>https://seohub.dk/serp-preview.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
+  <url>
+    <loc>https://seohub.dk/robots-generator.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
+  <url>
+    <loc>https://seohub.dk/sitemap-generator.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
+
+  <!-- Blog oversigt -->
+  <url>
+    <loc>https://seohub.dk/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
+
+  <!-- Blogindlæg -->
+  <url>
+    <loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/sitemap-fejl-du-skal-undga.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <lastmod>2025-08-13</lastmod>
+  </url>
 </urlset>
