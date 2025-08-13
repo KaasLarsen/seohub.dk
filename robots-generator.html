@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robots.txt Generator – Seohub.dk</title>
+  <meta name="description" content="Lav en korrekt robots.txt på få sekunder.">
+  <link rel="canonical" href="https://seohub.dk/robots-generator.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+  <header class="border-b bg-white/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+      <a href="/" class="font-semibold">Seohub.dk</a>
+      <nav class="text-sm text-neutral-600 space-x-4">
+        <a href="/">Forside</a>
+        <a href="/serp-preview.html">SERP</a>
+        <a href="/robots-generator.html">Robots</a>
+        <a href="/sitemap-generator.html">Sitemap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-2">Robots.txt Generator</h1>
+<p class="text-neutral-700 mb-6">Lav en korrekt robots.txt på få sekunder.</p>
+<div id="root-robots"></div>
+<script>
+const { useState, useMemo } = React;
+function App(){
+  const [sitemap, setSitemap] = useState("https://www.seohub.dk/sitemap.xml");
+  const [allow, setAllow] = useState("/wp-admin/admin-ajax.php");
+  const [disallow, setDisallow] = useState("/wp-admin/\n*/?s=\n/search\n/cart");
+  const txt = useMemo(()=>{
+    const a = allow.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>"Allow: "+x).join("\n");
+    const d = disallow.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(x=>"Disallow: "+x).join("\n");
+    return ("User-agent: *\n" + a + (a&&d?"\n":"") + d + "\n\nSitemap: " + sitemap).trim();
+  }, [sitemap, allow, disallow]);
+  return React.createElement("div", {className:"grid md:grid-cols-2 gap-6"},
+    React.createElement("div", null,
+      React.createElement("label", {className:"block mb-3"},
+        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Sitemap URL"),
+        React.createElement("input",{className:"w-full border rounded-xl p-3", value:sitemap, onChange:e=>setSitemap(e.target.value)})
+      ),
+      React.createElement("label", {className:"block mb-3"},
+        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Tillad (én pr. linje)"),
+        React.createElement("textarea",{rows:3,className:"w-full border rounded-xl p-3", value:allow, onChange:e=>setAllow(e.target.value)})
+      ),
+      React.createElement("label", {className:"block mb-3"},
+        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Bloker (én pr. linje)"),
+        React.createElement("textarea",{rows:6,className:"w-full border rounded-xl p-3", value:disallow, onChange:e=>setDisallow(e.target.value)})
+      ),
+      React.createElement("div",{className:"flex gap-2"},
+        React.createElement("button",{className:"px-3 py-2 rounded-xl border", onClick:()=>navigator.clipboard.writeText(txt)},"Kopiér"),
+        React.createElement("button",{className:"px-3 py-2 rounded-xl border", onClick:()=>{const b=new Blob([txt],{type:"text/plain"});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download="robots.txt";a.click();URL.revokeObjectURL(u);}},"Download")
+      )
+    ),
+    React.createElement("div", null,
+      React.createElement("pre",{className:"bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap"}, txt)
+    )
+  );
+}
+ReactDOM.createRoot(document.getElementById("root-robots")).render(React.createElement(App));
+</script>
+
+  </main>
+  <footer class="text-center text-xs text-neutral-500 py-8">© 2025 Seohub – seohub.dk</footer>
+</body>
+</html>
