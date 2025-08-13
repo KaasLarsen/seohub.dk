@@ -1,77 +1,128 @@
-<script>
-  (async function () {
-    const el = document.getElementById('posts');
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SEO-blog – tips, guides & teknisk tjek | Seohub.dk</title>
+  <meta name="description" content="SEO-blog fra Seohub.dk: konkrete guides, tekniske tjeklister og best practice for dansk SEO.">
+  <link rel="canonical" href="https://www.seohub.dk/blog/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/assets/consent-analytics.js" defer></script>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    function show(msg) {
-      el.innerHTML = '<p class="text-sm text-neutral-600">' + msg + '</p>';
-    }
+  <!-- Header -->
+  <header class="border-b bg-white/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+      <a href="/" class="font-semibold">Seohub.dk</a>
+      <nav class="text-sm text-neutral-600 space-x-4">
+        <a href="/">Forside</a>
+        <a href="/serp-preview.html">SERP</a>
+        <a href="/robots-generator.html">Robots</a>
+        <a href="/sitemap-generator.html">Sitemap</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </header>
 
-    try {
-      // Bypass cache og vær tolerant ift. placering
-      const res = await fetch('/blog/posts.json?ts=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) {
-        console.error('HTTP status:', res.status, res.statusText);
-        show('Kunne ikke indlæse indlæg (HTTP ' + res.status + ').');
-        return;
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto p-4">
+    <!-- Hero -->
+    <section class="rounded-2xl p-10 text-center text-white shadow-lg mb-8"
+             style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
+      <h1 class="text-4xl font-bold mb-2">SEO-blog</h1>
+      <p class="text-blue-100">Guides, tjeklister og praksisnær viden – optimeret til dansk SEO.</p>
+    </section>
+
+    <!-- Seneste indlæg -->
+    <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+      <h2 class="text-xl font-semibold mb-4">Seneste indlæg</h2>
+      <div id="posts" class="grid md:grid-cols-2 gap-4">
+        <!-- Dynamisk indhold kommer her -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-neutral-500 py-8">© 2025 Seohub – seohub.dk</footer>
+
+  <!-- Loader script -->
+  <script>
+    (async function () {
+      const el = document.getElementById('posts');
+
+      function show(msg) {
+        el.innerHTML = '<p class="text-sm text-neutral-600">' + msg + '</p>';
       }
 
-      // Sikr at response faktisk er JSON og ikke HTML via en forkert rewrite
-      const ct = res.headers.get('content-type') || '';
-      const text = await res.text();
-      if (!ct.includes('application/json')) {
-        console.warn('Forventede JSON, men fik:', ct, text.slice(0, 120) + '...');
-        // prøv at parse alligevel – nogle hosts sætter forkert content-type
-      }
-
-      let items;
       try {
-        items = JSON.parse(text);
-      } catch (e) {
-        console.error('JSON parse-fejl:', e, text);
-        show('Indlæste filen, men den var ikke gyldig JSON.');
-        return;
-      }
+        // Bypass cache
+        const res = await fetch('/blog/posts.json?ts=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) {
+          console.error('HTTP status:', res.status, res.statusText);
+          show('Kunne ikke indlæse indlæg (HTTP ' + res.status + ').');
+          return;
+        }
 
-      if (!Array.isArray(items)) {
-        console.error('Forventede array, fik:', items);
-        show('Formatet i posts.json er ikke som forventet.');
-        return;
-      }
-      if (items.length === 0) {
-        show('Ingen indlæg endnu.');
-        return;
-      }
+        const ct = res.headers.get('content-type') || '';
+        const raw = await res.text();
+        if (!ct.includes('application/json')) {
+          // Nogle hosts sætter forkert content-type – vi prøver at parse alligevel
+          console.warn('Forventede JSON, men fik:', ct);
+        }
 
-      // sortér nyest først (ISO-datoer)
-      items.sort((a,b) => (a.date < b.date ? 1 : -1));
+        let items;
+        try {
+          items = JSON.parse(raw);
+        } catch (e) {
+          console.error('JSON parse-fejl:', e, raw.slice(0, 200));
+          show('Indlæste filen, men den var ikke gyldig JSON.');
+          return;
+        }
 
-      // render
-      el.innerHTML = '';
-      for (const p of items) {
-        const slug = (p.slug || '').trim();
-        const title = p.title || 'Uden titel';
-        const date = p.date ? new Date(p.date).toLocaleDateString('da-DK') : '';
-        const excerpt = p.excerpt || '';
-        const tags = (p.tags || []).map(t =>
-          `<span class="text-xs bg-neutral-100 border px-2 py-1 rounded-full">${t}</span>`
-        ).join(' ');
-        const url = `/blog/${slug}.html`;
+        if (!Array.isArray(items)) {
+          show('Formatet i posts.json er ikke som forventet.');
+          return;
+        }
+        if (items.length === 0) {
+          show('Ingen indlæg endnu.');
+          return;
+        }
 
-        el.insertAdjacentHTML('beforeend', `
-          <article class="rounded-2xl border p-5 bg-white hover:shadow transition">
+        // Sortér nyest først (ISO-datoer)
+        items.sort((a,b) => (a.date < b.date ? 1 : -1));
+
+        // Render kort
+        el.innerHTML = '';
+        for (const p of items) {
+          const slug = (p.slug || '').trim();
+          const title = p.title || 'Uden titel';
+          const date = p.date ? new Date(p.date).toLocaleDateString('da-DK') : '';
+          const excerpt = p.excerpt || '';
+          const tags = (p.tags || []).map(t =>
+            `<span class="text-xs bg-neutral-100 border px-2 py-1 rounded-full">${t}</span>`
+          ).join(' ');
+          const url = `/blog/${slug}.html`;
+
+          const card = document.createElement('article');
+          card.className = "rounded-2xl border p-5 bg-white hover:shadow transition";
+          card.innerHTML = `
             <h3 class="text-lg font-semibold">
               <a class="hover:underline" href="${url}">${title}</a>
             </h3>
             <p class="text-xs text-neutral-500 mt-1">${date}</p>
             <p class="text-sm text-neutral-700 mt-3">${excerpt}</p>
-            <div class="flex gap-2 mt-3">${tags}</div>
+            <div class="flex gap-2 mt-3 flex-wrap">${tags}</div>
             <a class="inline-block mt-4 text-blue-600 hover:underline" href="${url}">Læs mere →</a>
-          </article>
-        `);
+          `;
+          el.appendChild(card);
+        }
+      } catch (e) {
+        console.error(e);
+        show('Kunne ikke indlæse indlæg lige nu.');
       }
-    } catch (e) {
-      console.error(e);
-      show('Kunne ikke indlæse indlæg lige nu.');
-    }
-  })();
-</script>
+    })();
+  </script>
+</body>
+</html>
