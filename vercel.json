@@ -21,6 +21,5 @@
       ]
     }
   ],
-  "buildCommand": "node generate-sitemap.mjs && npm run build",
-  "outputDirectory": "public"
+  "buildCommand": "node generate-sitemap.mjs"
 }
