@@ -3,7 +3,7 @@
     "slug": "seo-titler-der-ranker",
     "title": "SEO-titler der ranker: længde, vinkler og CTR-hacks",
     "date": "2025-08-13",
-    "excerpt": "Sådan skriver du titler Google elsker – uden at miste klik. Få strukturer, længder og konkrete eksempler.",
+    "excerpt": "Sådan skriver du titler Google elsker – med den rigtige længde, struktur og vinkler, der øger CTR.",
     "tags": ["on-page", "copywriting"]
   },
   {
@@ -12,5 +12,26 @@
     "date": "2025-08-13",
     "excerpt": "Sitemaps hjælper Google – men små fejl kan bremse crawling. Tjeklisten, der redder dine URL’er.",
     "tags": ["teknisk seo"]
+  },
+  {
+    "slug": "intern-linkbuilding-strategi",
+    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
+    "date": "2025-08-13",
+    "excerpt": "Fordel linkjuice, byg hub-sider og brug ankertekster rigtigt. En praktisk guide til intern linkstruktur.",
+    "tags": ["intern linkbuilding", "information architecture"]
+  },
+  {
+    "slug": "core-web-vitals-2025",
+    "title": "Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS",
+    "date": "2025-08-13",
+    "excerpt": "Hurtige, konkrete forbedringer for performance: billedoptimering, caching, JS-split og font-loading.",
+    "tags": ["teknisk seo", "performance"]
+  },
+  {
+    "slug": "lokal-seo-danmark-guide",
+    "title": "Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP",
+    "date": "2025-08-13",
+    "excerpt": "Bliv synlig i lokale søgeresultater: Google Virksomhedsprofil, citations og lokale landingssider.",
+    "tags": ["lokal seo"]
   }
 ]
