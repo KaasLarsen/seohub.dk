@@ -352,11 +352,19 @@ function App() {
     React.createElement(RobotsTxt, { key:"rob" }),
     React.createElement(SitemapXml, { key:"map" }),
     React.createElement(FaqSchema, { key:"faq" }),
-    React.createElement(ContentBrief, { key:"brief" }),
+    React.createElement(ContentBrief, { key:"brief" }
+    React.createElement(Footer, { key:"footer" }),
 
     // Kontaktformular LIGE EFTER Content Brief
     React.createElement(ContactForm, { key:"contact" })
   ]);
+}
+function Footer() {
+  return React.createElement(
+    "footer",
+    { className: "text-center text-xs text-neutral-500 py-8" },
+    "© 2025 Seohub – seohub.dk"
+  );
 }
 /* ---------- Mount ---------- */
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
