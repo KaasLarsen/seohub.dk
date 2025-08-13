@@ -3,15 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sitemap.xml Generator – Seohub.dk</title>
-  <meta name="description" content="Generér en XML-sitemap ud fra dine URL-stier.">
+  <title>Sitemap.xml Generator – Gratis værktøj til XML sitemaps | Seohub.dk</title>
+  <meta name="description" content="Lav en gyldig sitemap.xml på få sekunder. Indsæt dine URL-stier, vælg changefreq og priority, og download filen klar til upload. Gratis sitemap værktøj.">
   <link rel="canonical" href="https://seohub.dk/sitemap-generator.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Seohub.dk">
+  <meta property="og:title" content="Sitemap.xml Generator – Gratis XML værktøj">
+  <meta property="og:description" content="Byg hurtigt en gyldig sitemap.xml. Tilpas changefreq og priority og download med ét klik.">
+  <meta property="og:url" content="https://seohub.dk/sitemap-generator.html">
+  <meta property="og:image" content="https://seohub.dk/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sitemap.xml Generator – Gratis XML værktøj">
+  <meta name="twitter:description" content="Lav en gyldig sitemap.xml på få sekunder og hjælp Google med at finde dine sider.">
+  <meta name="twitter:image" content="https://seohub.dk/og-image.png">
+
+  <!-- Styles & React -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- JSON-LD WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Sitemap.xml Generator – Gratis værktøj",
+    "url":"https://seohub.dk/sitemap-generator.html",
+    "description":"Gratis sitemap.xml generator der hjælper dig med at bygge en gyldig XML-sitemap og pege søgemaskiner til dine vigtigste sider.",
+    "inLanguage":"da"
+  }
+  </script>
+  <!-- JSON-LD FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Hvad er en sitemap.xml?","acceptedAnswer":{"@type":"Answer","text":"En XML-fil der lister dine vigtigste URL'er, så søgemaskiner lettere kan finde og forstå dit website. Den øger ikke rangering direkte, men forbedrer dækning og crawl."}},
+      {"@type":"Question","name":"Hvor skal sitemap.xml ligge?","acceptedAnswer":{"@type":"Answer","text":"På https://ditdomæne.dk/sitemap.xml (domænets rod). Husk at tilføje URL'en i robots.txt og indsend den i Google Search Console."}},
+      {"@type":"Question","name":"Hvor ofte skal jeg opdatere min sitemap?","acceptedAnswer":{"@type":"Answer","text":"Opdatér når du tilføjer eller fjerner vigtige sider. Store sites kan generere den automatisk; mindre sites kan opdatere manuelt hver gang der publiceres nyt indhold."}},
+      {"@type":"Question","name":"Skal alle URL'er med i en sitemap?","acceptedAnswer":{"@type":"Answer","text":"Nej. Medtag kun kanoniske, crawlbare, indekserbare URL'er du ønsker i Google. Undgå parameter- og duplicate-URL'er."}},
+      {"@type":"Question","name":"Hvad betyder changefreq og priority?","acceptedAnswer":{"@type":"Answer","text":"Metadata som kan hjælpe crawlere med at prioritere. De er vejledende og ikke garantier. Brug dem fornuftigt (fx startside højere priority end bagatel-sider)."}}
+    ]
+  }
+  </script>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+  <!-- Header / Nav -->
   <header class="border-b bg-white/80 backdrop-blur">
     <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
       <a href="/" class="font-semibold">Seohub.dk</a>
@@ -19,63 +61,172 @@
         <a href="/">Forside</a>
         <a href="/serp-preview.html">SERP</a>
         <a href="/robots-generator.html">Robots</a>
-        <a href="/sitemap-generator.html">Sitemap</a>
+        <a href="/sitemap-generator.html" class="font-medium text-neutral-900">Sitemap</a>
       </nav>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-2">Sitemap.xml Generator</h1>
-<p class="text-neutral-700 mb-6">Generér en XML-sitemap ud fra dine URL-stier og download filen.</p>
-<div id="root-sitemap"></div>
-<script>
-const { useState, useMemo } = React;
-function App(){
-  const [base, setBase] = useState("https://www.seohub.dk");
-  const [paths, setPaths] = useState("/\n/serp-preview.html\n/robots-generator.html\n/sitemap-generator.html");
-  const [changefreq, setChangefreq] = useState("weekly");
-  const [priority, setPriority] = useState("0.8");
-  const xml = useMemo(()=>{
-    const list = paths.split(/\n+/).map(x=>x.trim()).filter(Boolean).map(p => base.replace(/\/$/,'') + (p.startsWith('/')?'':'/') + p);
-    const items = list.map(loc => "  <url>\n    <loc>"+loc+"</loc>\n    <changefreq>"+changefreq+"</changefreq>\n    <priority>"+priority+"</priority>\n  </url>").join("\n");
-    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"+items+"\n</urlset>";
-  }, [base, paths, changefreq, priority]);
-  return React.createElement("div",{className:"grid md:grid-cols-2 gap-6"},
-    React.createElement("div", null,
-      React.createElement("label",{className:"block mb-3"},
-        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Base URL"),
-        React.createElement("input",{className:"w-full border rounded-xl p-3", value:base, onChange:e=>setBase(e.target.value)})
-      ),
-      React.createElement("label",{className:"block mb-3"},
-        React.createElement("span",{className:"block text-sm font-medium mb-1"},"Stier (én pr. linje)"),
-        React.createElement("textarea",{rows:6,className:"w-full border rounded-xl p-3", value:paths, onChange:e=>setPaths(e.target.value)})
-      ),
-      React.createElement("div",{className:"grid grid-cols-2 gap-3 mb-4"},
-        React.createElement("label",{className:"block"},
-          React.createElement("span",{className:"block text-sm font-medium mb-1"},"changefreq"),
-          React.createElement("select",{className:"w-full border rounded-xl p-3", value:changefreq, onChange:e=>setChangefreq(e.target.value)},
-            ["always","hourly","daily","weekly","monthly","yearly","never"].map(x=>React.createElement("option",{key:x, value:x},x))
-          )
-        ),
-        React.createElement("label",{className:"block"},
-          React.createElement("span",{className:"block text-sm font-medium mb-1"},"priority (0.0–1.0)"),
-          React.createElement("input",{className:"w-full border rounded-xl p-3", value:priority, onChange:e=>setPriority(e.target.value)})
-        )
-      ),
-      React.createElement("div",{className:"flex gap-2"},
-        React.createElement("button",{className:"px-3 py-2 rounded-xl border", onClick:()=>navigator.clipboard.writeText(xml)},"Kopiér"),
-        React.createElement("button",{className:"px-3 py-2 rounded-xl border", onClick:()=>{{const b=new Blob([xml],{{type:"text/xml"}});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download="sitemap.xml";a.click();URL.revokeObjectURL(u);}}},"Download")
-      )
-    ),
-    React.createElement("div", null,
-      React.createElement("pre",{className:"bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre"}, xml)
-    )
-  );
-}
-ReactDOM.createRoot(document.getElementById("root-sitemap")).render(React.createElement(App));
-</script>
+  <main class="max-w-6xl mx-auto p-4 space-y-10">
+    <!-- Hero -->
+    <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+      <h1 class="text-3xl font-bold mb-2">Sitemap.xml Generator – gratis XML værktøj</h1>
+      <p class="text-neutral-700">Lav en <strong>gyldig sitemap.xml</strong> på få sekunder. Indsæt dine vigtigste URL'er, sæt <em>changefreq</em> og <em>priority</em>, og <strong>download</strong> filen klar til upload i domænets rod.</p>
+    </section>
 
+    <!-- Værktøjet -->
+    <section>
+      <div id="root-sitemap"></div>
+      <script>
+        const { useState, useMemo } = React;
+
+        function SitemapTool() {
+          const [base, setBase] = useState("https://www.seohub.dk");
+          const [paths, setPaths] = useState("/\n/serp-preview.html\n/robots-generator.html\n/sitemap-generator.html");
+          const [changefreq, setChangefreq] = useState("weekly");
+          const [priority, setPriority] = useState("0.8");
+
+          const xml = useMemo(() => {
+            const list = paths
+              .split(/\n+/)
+              .map(x => x.trim())
+              .filter(Boolean)
+              .map(p => base.replace(/\/$/, "") + (p.startsWith("/") ? "" : "/") + p);
+            const items = list
+              .map(loc => `  <url>\n    <loc>${loc}</loc>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`)
+              .join("\n");
+            return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${items}\n</urlset>`;
+          }, [base, paths, changefreq, priority]);
+
+          const copyXml = () => navigator.clipboard.writeText(xml).then(
+            () => alert("Kopieret!"),
+            () => alert("Kunne ikke kopiere – markér og kopier manuelt.")
+          );
+
+          const downloadXml = () => {
+            const blob = new Blob([xml], { type: "text/xml;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url; a.download = "sitemap.xml"; a.click();
+            URL.revokeObjectURL(url);
+          };
+
+          return React.createElement("div", { className: "grid md:grid-cols-2 gap-6" },
+            React.createElement("div", null,
+              React.createElement("label", { className: "block mb-3" },
+                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Base URL"),
+                React.createElement("input", { className: "w-full border rounded-xl p-3", value: base, onChange: e=>setBase(e.target.value), placeholder: "https://www.ditdomæne.dk" })
+              ),
+              React.createElement("label", { className: "block mb-3" },
+                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Stier (én pr. linje)"),
+                React.createElement("textarea", { rows: 8, className: "w-full border rounded-xl p-3", value: paths, onChange: e=>setPaths(e.target.value), placeholder: "/\n/kategori/\n/produkt/xyz" })
+              ),
+              React.createElement("div", { className: "grid grid-cols-2 gap-3 mb-4" },
+                React.createElement("label", { className: "block" },
+                  React.createElement("span", { className: "block text-sm font-medium mb-1" }, "changefreq"),
+                  React.createElement("select", { className: "w-full border rounded-xl p-3", value: changefreq, onChange: e=>setChangefreq(e.target.value) },
+                    ["always","hourly","daily","weekly","monthly","yearly","never"].map(x => React.createElement("option", { key: x, value: x }, x))
+                  )
+                ),
+                React.createElement("label", { className: "block" },
+                  React.createElement("span", { className: "block text-sm font-medium mb-1" }, "priority (0.0–1.0)"),
+                  React.createElement("input", { className: "w-full border rounded-xl p-3", value: priority, onChange: e=>setPriority(e.target.value) })
+                )
+              ),
+              React.createElement("div", { className: "flex gap-2" },
+                React.createElement("button", { className: "px-3 py-2 rounded-xl border", onClick: copyXml }, "Kopiér"),
+                React.createElement("button", { className: "px-3 py-2 rounded-xl border", onClick: downloadXml }, "Download")
+              )
+            ),
+            React.createElement("div", null,
+              React.createElement("pre", { className: "bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre" }, xml)
+            )
+          );
+        }
+
+        ReactDOM.createRoot(document.getElementById("root-sitemap")).render(React.createElement(SitemapTool));
+      </script>
+    </section>
+
+    <!-- Indhold: SEO forklaring, best practices, eksempler -->
+    <section class="prose max-w-none">
+      <h2 class="text-2xl font-semibold mb-2">Hvad er en sitemap.xml – og hvorfor er den vigtig?</h2>
+      <p>En <strong>sitemap.xml</strong> hjælper søgemaskiner med at opdage og forstå dit website. Den er ikke en rangfaktor i sig selv, men den <em>forbedrer dækning</em> og kan gøre crawl mere effektivt — især hvis du har et nyt domæne, mange URL'er, sektioner dybt i strukturen eller sider uden stærke interne links.</p>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Sådan laver du en god sitemap (trin for trin)</h2>
+      <ol class="list-decimal pl-5">
+        <li>Angiv din <strong>Base URL</strong> (fx <code>https://www.seohub.dk</code>).</li>
+        <li>Tilføj dine vigtigste stier (<em>én pr. linje</em>): <code>/</code>, <code>/serp-preview.html</code>, <code>/robots-generator.html</code> osv.</li>
+        <li>Vælg <strong>changefreq</strong> (hvor ofte indholdet typisk ændres).</li>
+        <li>Sæt <strong>priority</strong> (relativ vigtighed, startside højere end øvrige undersider).</li>
+        <li>Klik <em>Kopiér</em> eller <em>Download</em> — og upload filen som <code>/sitemap.xml</code> i domænets rod.</li>
+      </ol>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Best practices</h2>
+      <ul class="list-disc pl-5">
+        <li><strong>Kun kanoniske URL'er:</strong> Medtag ikke parametre (<code>?ref=</code>), sporingslinks, filter-URL'er eller duplicerede varianter.</li>
+        <li><strong>Kun indekserbare sider:</strong> Ingen <code>noindex</code> eller blokerede (robots.txt) URL'er i sitemap.</li>
+        <li><strong>Hold den opdateret:</strong> Opdatér når du publicerer eller fjerner vigtigt indhold.</li>
+        <li><strong>Split store sites:</strong> Over 50.000 URL'er? Lav flere sitemaps og et sitemap-index.</li>
+        <li><strong>Konsistens:</strong> Brug samme protokol og host overalt (fx altid <code>https://www.</code>).</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Eksempel på simpel sitemap.xml</h2>
+      <pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.ditdomæne.dk/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ditdomæne.dk/serp-preview.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+      </pre>
+
+      <h2 class="text-2xl font-semibold mt-8 mb-2">Typiske fejl at undgå</h2>
+      <ul class="list-disc pl-5">
+        <li>At indsende URL'er der returnerer 404/410 eller <code>noindex</code>.</li>
+        <li>Blande <code>http</code> og <code>https</code> eller blande <code>www</code>/<code>non-www</code>.</li>
+        <li>Medtage staging- eller test-URL'er ved en fejl.</li>
+        <li>Glemme at opdatere sitemap efter større ændringer.</li>
+      </ul>
+
+      <div class="mt-8 rounded-2xl border p-4 bg-white">
+        <p class="mb-2"><strong>Næste skridt:</strong></p>
+        <ul class="list-disc pl-5">
+          <li>Tilføj linjen i <a class="underline" href="/robots-generator.html">robots.txt</a>: <code>Sitemap: https://www.seohub.dk/sitemap.xml</code></li>
+          <li>Indsend din sitemap i Google Search Console under <em>Sitemaps</em>.</li>
+          <li>Optimer dine snippets med <a class="underline" href="/serp-preview.html">SERP &amp; Meta Preview</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ (matcher JSON-LD) -->
+    <section>
+      <h2 class="text-2xl font-semibold mt-8 mb-2" id="faq">FAQ om sitemap.xml</h2>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Hvad er en sitemap.xml?</summary>
+        <p class="mt-2 text-neutral-700">En XML-liste over dine vigtigste URL'er, så søgemaskiner lettere kan crawle og indeksere dit site.</p>
+      </details>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Hvor skal sitemap.xml ligge?</summary>
+        <p class="mt-2 text-neutral-700">På <code>/sitemap.xml</code> i domænets rod.</p>
+      </details>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Hvor ofte skal den opdateres?</summary>
+        <p class="mt-2 text-neutral-700">Når du tilføjer/fjerner vigtige sider. For større sites kan automatisk generering være bedst.</p>
+      </details>
+      <details class="mb-2 bg-white rounded-xl border p-4">
+        <summary class="font-medium cursor-pointer">Skal alle URL'er med?</summary>
+        <p class="mt-2 text-neutral-700">Nej, kun kanoniske, indekserbare URL'er uden parametre.</p>
+      </details>
+    </section>
   </main>
+
   <footer class="text-center text-xs text-neutral-500 py-8">© 2025 Seohub – seohub.dk</footer>
 </body>
 </html>
