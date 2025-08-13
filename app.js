@@ -1,4 +1,4 @@
-// /app.js — Seohub SPA (uden "Om Seohub", med kontaktformular i appen)
+// /app.js — Seohub SPA (alle værktøjer + ny hero + why-sektion + kontakt + footer)
 const { useState, useMemo } = React;
 
 /* ---------- UI helpers ---------- */
@@ -299,7 +299,7 @@ function ContentBrief() {
   );
 }
 
-/* ---------- Kontaktformular (NU i appen) ---------- */
+/* ---------- Kontaktformular ---------- */
 function ContactForm() {
   return React.createElement(Section, { title: "Kontakt os" },
     React.createElement("form", {
@@ -324,29 +324,75 @@ function ContactForm() {
   );
 }
 
-/* ---------- App (uden “Om Seohub”) ---------- */
+/* ---------- Footer ---------- */
+function Footer() {
+  return React.createElement(
+    "footer",
+    { className: "text-center text-xs text-neutral-500 py-8" },
+    "© 2025 Seohub – seohub.dk"
+  );
+}
+
+/* ---------- App (samlet) ---------- */
 function App() {
   return React.createElement("main", { className: "max-w-6xl mx-auto p-4 space-y-8" }, [
-    // Hero
-    React.createElement(Section, { key:"hero" },
+    // Hero med blød gradient + knap
+    React.createElement("section", { 
+      key:"hero",
+      className:"rounded-2xl p-10 text-center text-white shadow-lg",
+      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" }
+    },
       React.createElement("div", null, [
-        React.createElement("h1", { key:"h", className:"text-3xl font-bold mb-2" }, "Gratis SEO værktøjer"),
-        React.createElement("p", { key:"p", className:"text-neutral-700" }, "Vælg et værktøj herunder – ingen login, ingen installation.")
+        React.createElement("h1", { key:"h", className:"text-4xl font-bold mb-4" }, "Gratis SEO værktøjer"),
+        React.createElement("p", { key:"p", className:"text-lg text-blue-100 max-w-2xl mx-auto mb-6" }, 
+          "Vælg et værktøj herunder – ingen login, ingen installation. Alt er optimeret til dansk SEO, og helt gratis at bruge."
+        ),
+        React.createElement("a", { 
+          key:"btn",
+          href:"/serp-preview.html", 
+          className:"inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl shadow hover:bg-blue-50 transition"
+        }, "Prøv SERP & Meta-værktøjet")
       ])
     ),
-    // Tool cards (links til undersider)
+
+    // Hvorfor vælge Seohub?
+    React.createElement(Section, { key:"why", title:"Hvorfor vælge Seohub?" },
+      React.createElement("div", { className:"grid md:grid-cols-3 gap-6 text-center" }, [
+        React.createElement("div", { key:"1", className:"p-4" }, [
+          React.createElement("div", { className:"text-4xl mb-2" }, "🚀"),
+          React.createElement("h3", { className:"font-semibold mb-1" }, "Hurtigt og gratis"),
+          React.createElement("p", { className:"text-sm text-neutral-600" }, "Få dine SEO-værktøjer uden ventetid og helt gratis.")
+        ]),
+        React.createElement("div", { key:"2", className:"p-4" }, [
+          React.createElement("div", { className:"text-4xl mb-2" }, "📈"),
+          React.createElement("h3", { className:"font-semibold mb-1" }, "Optimeret til dansk SEO"),
+          React.createElement("p", { className:"text-sm text-neutral-600" }, "Tilpasset danske søgemønstre og behov.")
+        ]),
+        React.createElement("div", { key:"3", className:"p-4" }, [
+          React.createElement("div", { className:"text-4xl mb-2" }, "🔒"),
+          React.createElement("h3", { className:"font-semibold mb-1" }, "Ingen login – anonymt"),
+          React.createElement("p", { className:"text-sm text-neutral-600" }, "Vi gemmer ingen data – du arbejder privat.")
+        ])
+      ])
+    ),
+
+    // Kort med links til undersider
     React.createElement("section", { key:"grid", className:"grid md:grid-cols-3 gap-4" }, [
       React.createElement("a", { key:"k", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/serp-preview.html" },
-        [React.createElement("h2", { key:"t", className:"font-semibold" }, "SERP & Meta"), React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Forhåndsvisning + længde-tjek.")]
+        [React.createElement("h2", { key:"t", className:"font-semibold" }, "SERP & Meta"),
+         React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Forhåndsvisning + længde-tjek.")]
       ),
       React.createElement("a", { key:"r", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/robots-generator.html" },
-        [React.createElement("h2", { key:"t", className:"font-semibold" }, "Robots.txt"), React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Byg og download.")]
+        [React.createElement("h2", { key:"t", className:"font-semibold" }, "Robots.txt"),
+         React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Byg og download.")]
       ),
       React.createElement("a", { key:"s", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/sitemap-generator.html" },
-        [React.createElement("h2", { key:"t", className:"font-semibold" }, "Sitemap.xml"), React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Generér fra liste af URLs.")]
+        [React.createElement("h2", { key:"t", className:"font-semibold" }, "Sitemap.xml"),
+         React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Generér fra liste af URLs.")]
       ),
     ]),
-    // Inline tools (valgfrit at beholde)
+
+    // Inline tools
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
     React.createElement(RobotsTxt, { key:"rob" }),
@@ -354,9 +400,13 @@ function App() {
     React.createElement(FaqSchema, { key:"faq" }),
     React.createElement(ContentBrief, { key:"brief" }),
 
-    // Kontaktformular LIGE EFTER Content Brief
-    React.createElement(ContactForm, { key:"contact" })
+    // Kontaktformular
+    React.createElement(ContactForm, { key:"contact" }),
+
+    // Footer nederst
+    React.createElement(Footer, { key:"footer" })
   ]);
 }
+
 /* ---------- Mount ---------- */
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
