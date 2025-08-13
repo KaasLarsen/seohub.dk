@@ -1,18 +1,6 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <script src="/assets/consent-analytics.js" defer></script>
-      <header class="border-b bg-white/80 backdrop-blur">
-  <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-    <a href="/" class="font-semibold">Seohub.dk</a>
-    <nav class="text-sm text-neutral-600 space-x-4">
-      <a href="/">Forside</a>
-      <a href="/serp-preview.html">SERP</a>
-      <a href="/robots-generator.html">Robots</a>
-      <a href="/sitemap-generator.html">Sitemap</a>
-    </nav>
-  </div>
-</header>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Seohub – SEO værktøjer</title>
@@ -22,33 +10,57 @@
     <meta property="og:image" content="/og-image.png" />
     <meta property="og:type" content="website" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <!-- Tailwind CDN -->
+
+    <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React via CDN -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-</head>
-     <section class="max-w-2xl mx-auto my-12 p-6 bg-white shadow rounded">
-  <h2 class="text-2xl font-bold mb-4">Kontakt os</h2>
-  <p class="mb-6 text-neutral-600">Har du spørgsmål, forslag eller ønsker et samarbejde? Udfyld formularen, så vender vi tilbage hurtigst muligt.</p>
-<form action="https://formspree.io/f/mjkolqrk" method="POST" class="space-y-4">
-    <div>
-      <label for="name" class="block text-sm font-medium text-neutral-700">Navn</label>
-      <input type="text" name="name" id="name" required class="mt-1 block w-full border border-neutral-300 rounded px-3 py-2">
-    </div>
-    <div>
-      <label for="email" class="block text-sm font-medium text-neutral-700">E-mail</label>
-      <input type="email" name="_replyto" id="email" required class="mt-1 block w-full border border-neutral-300 rounded px-3 py-2">
-    </div>
-    <div>
-      <label for="message" class="block text-sm font-medium text-neutral-700">Besked</label>
-      <textarea name="message" id="message" rows="5" required class="mt-1 block w-full border border-neutral-300 rounded px-3 py-2"></textarea>
-    </div>
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send</button>
-  </form>
-</section>
+    <script src="/assets/consent-analytics.js" defer></script>
+  </head>
+
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+    <!-- Header skal ligge i body -->
+    <header class="border-b bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hele forsiden renderes her via React -->
     <div id="root"></div>
     <script type="module" src="/app.js"></script>
+    <!-- Hvis din JS ligger i /assets/app.js, så brug det i stedet:
+    <script type="module" src="/assets/app.js"></script>
+    -->
+
+    <!-- Kontaktformular: placeret EFTER #root, så den kommer under indholdet -->
+    <section class="max-w-2xl mx-auto my-12 p-6 bg-white shadow rounded">
+      <h2 class="text-2xl font-bold mb-4">Kontakt os</h2>
+      <p class="mb-6 text-neutral-600">
+        Har du spørgsmål, forslag eller ønsker et samarbejde? Udfyld formularen, så vender vi tilbage hurtigst muligt.
+      </p>
+
+      <form action="https://formspree.io/f/mjkolqrk" method="POST" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-neutral-700">Navn</label>
+          <input type="text" name="name" id="name" required class="mt-1 block w-full border border-neutral-300 rounded px-3 py-2">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-neutral-700">E-mail</label>
+          <input type="email" name="_replyto" id="email" required class="mt-1 block w-full border border-neutral-300 rounded px-3 py-2">
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium text-neutral-700">Besked</label>
+          <textarea name="message" id="message" rows="5" required class="mt-1 block w-full border border-neutral-300 rounded px-3 py-2"></textarea>
+        </div>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send</button>
+      </form>
+    </section>
   </body>
 </html>
