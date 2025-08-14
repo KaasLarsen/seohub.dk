@@ -1,4 +1,4 @@
-// /app.js — Seohub SPA (alle værktøjer + ny hero + why-sektion + kontakt + footer)
+// /app.js — Seohub SPA (forside med værktøjer, RecentPosts m/ tags, kontaktformular)
 const { useState, useMemo } = React;
 
 /* ---------- UI helpers ---------- */
@@ -77,7 +77,7 @@ function KeywordIdeas() {
   const ideas = useMemo(() => {
     if (!seed.trim()) return [];
     const s = seed.trim().toLowerCase();
-    const prefixes = ["bedste","billig","guide til","hvordan","tjekliste","tips til","kritiske fejl i","idéer til","steg for steg","2025"];
+    const prefixes = ["bedste","billig","guide til","hvordan","tjekliste","tips til","kritiske fejl i","idéer til","trin for trin","2025"];
     const suffixes = ["pris","eksempler","skabelon","værktøjer","for begyndere","for små virksomheder","lokal seo","teknisk seo","content","linkbuilding"];
     const variants = new Set();
     prefixes.forEach(p=>variants.add(`${p} ${s}`));
@@ -170,7 +170,7 @@ function RobotsTxt() {
 
 function SitemapXml() {
   const [base, setBase] = useState("https://www.seohub.dk");
-  const [paths, setPaths] = useState("/\n/serp-preview.html\n/robots-generator.html\n/sitemap-generator.html");
+  const [paths, setPaths] = useState("/\n/serp-preview.html\n/robots-generator.html\n/sitemap-generator.html\n/blog/");
   const [changefreq, setChangefreq] = useState("weekly");
   const [priority, setPriority] = useState("0.8");
 
@@ -299,7 +299,7 @@ function ContentBrief() {
   );
 }
 
-/* ---------- Kontaktformular ---------- */
+/* ---------- Kontaktformular (i appen) ---------- */
 function ContactForm() {
   return React.createElement(Section, { title: "Kontakt os" },
     React.createElement("form", {
@@ -324,14 +324,6 @@ function ContactForm() {
   );
 }
 
-/* ---------- Footer ---------- */
-function Footer() {
-  return React.createElement(
-    "footer",
-    { className: "text-center text-xs text-neutral-500 py-8" },
-    "© 2025 Seohub – seohub.dk"
-  );
-}
 /* ---------- Seneste fra bloggen (med klikbare tags) ---------- */
 function RecentPosts() {
   const [items, setItems] = React.useState(null);   // null = loader, [] = ingen indlæg, array = data
@@ -372,23 +364,20 @@ function RecentPosts() {
               items.map((p, i) => {
                 const href = `/blog/${p.slug}.html`;
                 const date = p.date ? new Date(p.date).toLocaleDateString('da-DK') : '';
-                const tags = Array.isArray(p.tags) ? p.tags : [];
+                const tagChips = (Array.isArray(p.tags) ? p.tags : []).map((t,j) =>
+                  React.createElement("a", {
+                    key: j,
+                    href: `/blog/?tag=${encodeURIComponent(t)}`,
+                    className: "text-xs bg-neutral-100 border px-2 py-1 rounded-full hover:bg-neutral-200",
+                    onClick: (e) => { e.stopPropagation(); } // så kortets link ikke trigges
+                  }, t)
+                );
+
                 return React.createElement("a", { key:i, href, className:"rounded-2xl border p-5 bg-white hover:shadow transition block" }, [
                   React.createElement("h3", { key:"h", className:"font-semibold" }, p.title || "Uden titel"),
                   React.createElement("p", { key:"d", className:"text-xs text-neutral-500 mt-1" }, date),
                   p.excerpt ? React.createElement("p", { key:"e", className:"text-sm text-neutral-700 mt-3 line-clamp-3" }, p.excerpt) : null,
-                  tags.length
-                    ? React.createElement("div", { key:"t", className:"flex gap-2 mt-3 flex-wrap" },
-                        tags.map((t,j) =>
-                          React.createElement("a", {
-                            key:j,
-                            href: `/blog/?tag=${encodeURIComponent(t)}`,
-                            className: "text-xs bg-neutral-100 border px-2 py-1 rounded-full hover:bg-neutral-200",
-                            onClick: (e) => { e.stopPropagation(); } // så kortets link ikke trigges
-                          }, t)
-                        )
-                      )
-                    : null,
+                  tagChips.length ? React.createElement("div", { key:"t", className:"flex gap-2 mt-3 flex-wrap" }, tagChips) : null,
                   React.createElement("span", { key:"l", className:"inline-block mt-4 text-blue-600" }, "Læs mere →")
                 ]);
               })
@@ -396,77 +385,19 @@ function RecentPosts() {
   );
 }
 
-
-  return React.createElement(Section, { title: "Seneste fra bloggen" },
-    items === null
-      ? React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
-          [0,1,2].map(i =>
-            React.createElement("div", { key:i, className:"rounded-2xl border p-5 bg-white animate-pulse h-40" })
-          )
-        )
-      : error
-        ? React.createElement("p", { className:"text-sm text-neutral-600" }, error)
-        : items.length === 0
-          ? React.createElement("p", { className:"text-sm text-neutral-600" }, "Ingen indlæg endnu.")
-          : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
-              items.map((p, i) => {
-                const href = `/blog/${p.slug}.html`;
-                const date = p.date ? new Date(p.date).toLocaleDateString('da-DK') : '';
-                return React.createElement("a", { key:i, href, className:"rounded-2xl border p-5 bg-white hover:shadow transition block" }, [
-                  React.createElement("h3", { key:"h", className:"font-semibold" }, p.title || "Uden titel"),
-                  React.createElement("p", { key:"d", className:"text-xs text-neutral-500 mt-1" }, date),
-                  p.excerpt ? React.createElement("p", { key:"e", className:"text-sm text-neutral-700 mt-3 line-clamp-3" }, p.excerpt) : null,
-                  React.createElement("span", { key:"l", className:"inline-block mt-4 text-blue-600" }, "Læs mere →")
-                ]);
-              })
-            )
-  );
-}
-
-/* ---------- App (samlet) ---------- */
+/* ---------- App ---------- */
 function App() {
   return React.createElement("main", { className: "max-w-6xl mx-auto p-4 space-y-8" }, [
-    // Hero med blød gradient + knap
-    React.createElement("section", { 
-      key:"hero",
-      className:"rounded-2xl p-10 text-center text-white shadow-lg",
-      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" }
-    },
-      React.createElement("div", null, [
-        React.createElement("h1", { key:"h", className:"text-4xl font-bold mb-4" }, "Gratis SEO værktøjer"),
-        React.createElement("p", { key:"p", className:"text-lg text-blue-100 max-w-2xl mx-auto mb-6" }, 
-          "Vælg et værktøj herunder – ingen login, ingen installation. Alt er optimeret til dansk SEO, og helt gratis at bruge."
-        ),
-        React.createElement("a", { 
-          key:"btn",
-          href:"/serp-preview.html", 
-          className:"inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl shadow hover:bg-blue-50 transition"
-        }, "Prøv SERP & Meta-værktøjet")
-      ])
+    // Hero med gradient
+    React.createElement("section", { key:"hero", className:"rounded-2xl p-10 text-white shadow-lg",
+      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" } },
+      [
+        React.createElement("h1", { key:"h", className:"text-3xl font-bold mb-2" }, "Gratis SEO-værktøjer til hverdagen"),
+        React.createElement("p", { key:"p", className:"text-blue-100" }, "Vælg et værktøj herunder – ingen login, ingen installation.")
+      ]
     ),
 
-    // Hvorfor vælge Seohub?
-    React.createElement(Section, { key:"why", title:"Hvorfor vælge Seohub?" },
-      React.createElement("div", { className:"grid md:grid-cols-3 gap-6 text-center" }, [
-        React.createElement("div", { key:"1", className:"p-4" }, [
-          React.createElement("div", { className:"text-4xl mb-2" }, "🚀"),
-          React.createElement("h3", { className:"font-semibold mb-1" }, "Hurtigt og gratis"),
-          React.createElement("p", { className:"text-sm text-neutral-600" }, "Få dine SEO-værktøjer uden ventetid og helt gratis.")
-        ]),
-        React.createElement("div", { key:"2", className:"p-4" }, [
-          React.createElement("div", { className:"text-4xl mb-2" }, "📈"),
-          React.createElement("h3", { className:"font-semibold mb-1" }, "Optimeret til dansk SEO"),
-          React.createElement("p", { className:"text-sm text-neutral-600" }, "Tilpasset danske søgemønstre og behov.")
-        ]),
-        React.createElement("div", { key:"3", className:"p-4" }, [
-          React.createElement("div", { className:"text-4xl mb-2" }, "🔒"),
-          React.createElement("h3", { className:"font-semibold mb-1" }, "Ingen login – anonymt"),
-          React.createElement("p", { className:"text-sm text-neutral-600" }, "Vi gemmer ingen data – du arbejder privat.")
-        ])
-      ])
-    ),
-
-    // Kort med links til undersider
+    // Kort til undersider (links)
     React.createElement("section", { key:"grid", className:"grid md:grid-cols-3 gap-4" }, [
       React.createElement("a", { key:"k", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/serp-preview.html" },
         [React.createElement("h2", { key:"t", className:"font-semibold" }, "SERP & Meta"),
@@ -489,14 +420,12 @@ function App() {
     React.createElement(SitemapXml, { key:"map" }),
     React.createElement(FaqSchema, { key:"faq" }),
     React.createElement(ContentBrief, { key:"brief" }),
-    // NYT: Seneste fra bloggen
+
+    // Seneste fra bloggen (NY)
     React.createElement(RecentPosts, { key:"recent" }),
 
     // Kontaktformular
     React.createElement(ContactForm, { key:"contact" }),
-
-    // Footer nederst
-    React.createElement(Footer, { key:"footer" })
   ]);
 }
 
