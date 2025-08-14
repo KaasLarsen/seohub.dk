@@ -40,5 +40,20 @@
     <!-- Hvis din JS ligger i /assets/app.js, så brug det i stedet:
     <script type="module" src="/assets/app.js"></script>
     -->
+    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
+  <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+    <p>© <span id="year"></span> Seohub – seohub.dk</p>
+    <nav class="flex items-center gap-4">
+      <a class="hover:underline" href="/blog/">Blog</a>
+      <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+      <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
+    </nav>
+  </div>
+</footer>
+<script>
+  // sæt årstal automatisk
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
   </body>
 </html>
