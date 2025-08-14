@@ -10,13 +10,14 @@
     <meta property="og:type" content="article" />
     <meta property="og:image" content="/og-image.png" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Consent + GA (du har allerede /assets/consent-analytics.js og GA id i den) -->
+    <!-- Consent + GA -->
     <script src="/assets/consent-analytics.js" defer></script>
-    <!-- Tailwind CDN -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-    <!-- Header (samme som de andre sider) -->
+
+    <!-- Header -->
     <header class="border-b bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
         <a href="/" class="font-semibold">Seohub.dk</a>
@@ -31,7 +32,7 @@
     </header>
 
     <main class="max-w-6xl mx-auto p-4">
-      <!-- Hero for artikel -->
+      <!-- Hero -->
       <section class="rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
                style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
         <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
@@ -43,33 +44,33 @@
         </p>
       </section>
 
+      <!-- Brødtekst -->
       <article class="prose prose-neutral max-w-none">
         <p class="text-sm text-neutral-500">Opdateret: 14. august 2025 • Læsetid: 7–9 min</p>
 
         <h2>Hvad er en meta description — og hvorfor betyder den noget?</h2>
         <p>
           Meta description er den korte tekst, der vises under din titel i Googles søgeresultater.
-          Den er ikke en direkte rankingfaktor, men den påvirker <strong>CTR</strong> (click-through rate),
-          og Google bruger den til at forstå sidens emne og intention. En stærk meta description kan derfor
-          give dig flere klik på samme placering.
+          Den er ikke en direkte rankingfaktor, men den påvirker <strong>CTR</strong> (click-through rate).
+          En stærk meta description kan give dig markant flere klik på samme placering.
         </p>
 
         <h2>Anbefalet længde (og format)</h2>
         <ul>
-          <li><strong>140–160 tegn</strong> er typisk sikkert på desktop. Mobil kan være lidt kortere.</li>
+          <li><strong>140–160 tegn</strong> er typisk sikkert på desktop; mobil kan være lidt kortere.</li>
           <li>Få <em>primært søgeord</em> og <em>USP</em> med. Slut gerne med en <em>soft CTA</em>.</li>
-          <li>Undgå duplikater: hver side fortjener en unik meta description.</li>
+          <li>Undgå duplikater: hver side fortjener en unik beskrivelse.</li>
         </ul>
         <p>
           Brug vores <a href="/serp-preview.html">SERP &amp; Meta-værktøj</a> til at tjekke længde i realtid
-          (titel + beskrivelse) og se en Google-lignende forhåndsvisning.
+          og se en Google-lignende forhåndsvisning.
         </p>
 
         <h2>10 eksempler på meta descriptions, der løfter CTR</h2>
 
         <h3>1) Produktkategori (pris/udvalg) – e-commerce</h3>
         <p><em>“Smarte løbesko til herre &amp; dame – fri retur og hurtig levering. Sammenlign populære mærker og find den bedste pris i dag.”</em></p>
-        <p><strong>Hvorfor virker den?</strong> Tydelig kategori, stærke USPs (fri retur, hurtig levering) og pris-signal.</p>
+        <p><strong>Hvorfor?</strong> Stærke USPs (fri retur, hurtig levering) og pris-signal.</p>
 
         <h3>2) Lokal service (troværdighed + hastighed)</h3>
         <p><em>“Autoriseret låsesmed i Aarhus – døgnservice og fast pris. Vi er fremme på 20–30 min. Ring for et uforpligtende tilbud.”</em></p>
@@ -90,7 +91,7 @@
         <h3>7) Vidensartikel (kort &amp; konkret)</h3>
         <p><em>“Hvad er Core Web Vitals? Forklaring med eksempler og værktøjer. Sådan forbedrer du LCP, INP og CLS.”</em></p>
 
-        <h3>8) Events/kursus (mangelsignal + dato)</h3>
+        <h3>8) Event/kursus (mangelsignal + dato)</h3>
         <p><em>“SEO-kursus i København – små hold, hands-on øvelser. Begrænsede pladser 12. september. Tilmeld dig i dag.”</em></p>
 
         <h3>9) Værktøj/feature-side (problem → løsning)</h3>
@@ -101,16 +102,16 @@
 
         <h2>Skabeloner du kan tilpasse (copy-paste)</h2>
         <ul>
-          <li><strong>[Kategori] –</strong> “[Kategori] fra kendte brands – [USP1] &amp; [USP2]. Sammenlign priser og find din favorit i dag.”</li>
-          <li><strong>[Lokal ydelse] –</strong> “[Ydelse] i [By] – [proof] &amp; [SLA]. Få fast pris og hurtig hjælp.”</li>
-          <li><strong>[Guide] –</strong> “Guide til [emne] – [3 ting læseren får]. Se eksempler og undgå typiske fejl.”</li>
-          <li><strong>[Værktøj] –</strong> “Lav [output] på sekunder – [USP]. Gratis, uden login.”</li>
+          <li><strong>[Kategori]</strong>: “[Kategori] fra kendte brands – [USP1] &amp; [USP2]. Sammenlign priser og find din favorit i dag.”</li>
+          <li><strong>[Lokal ydelse]</strong>: “[Ydelse] i [By] – [proof] &amp; [SLA]. Få fast pris og hurtig hjælp.”</li>
+          <li><strong>[Guide]</strong>: “Guide til [emne] – [3 ting læseren får]. Se eksempler og undgå typiske fejl.”</li>
+          <li><strong>[Værktøj]</strong>: “Lav [output] på sekunder – [USP]. Gratis, uden login.”</li>
         </ul>
 
         <h2>Hyppige fejl (og hurtige fixes)</h2>
         <ul>
           <li><strong>For lang/kort:</strong> hold ca. 140–160 tegn. <a href="/serp-preview.html">Tjek længden her</a>.</li>
-          <li><strong>Duplikater:</strong> unikke beskrivelser pr. side (tjek i <a href="https://search.google.com/search-console" target="_blank" rel="noopener">Search Console</a>).</li>
+          <li><strong>Duplikater:</strong> unikke beskrivelser pr. side (tjek i Search Console).</li>
           <li><strong>Kun keywords:</strong> skriv for mennesker – forklar værdi og næste skridt.</li>
           <li><strong>Manglende USP/CTA:</strong> giv en grund til at klikke nu (“fri retur”, “download skabelon”, “book tid”).</li>
         </ul>
@@ -118,9 +119,9 @@
         <h2>Sådan arbejder du effektivt, trin for trin</h2>
         <ol>
           <li>Prioritér de sider, der allerede har visninger men lav CTR.</li>
-          <li>Skab 2–3 varianter pr. side (A/B manuelt over tid).</li>
+          <li>Lav 2–3 varianter pr. side (A/B manuelt over tid).</li>
           <li>Indsæt USP + CTA, undersøg SERP’en for søgeintention.</li>
-          <li>Test længde og forhåndsvisning i <a href="/serp-preview.html">SERP-værktøjet</a>.</li>
+          <li>Test længde og preview i <a href="/serp-preview.html">SERP-værktøjet</a>.</li>
           <li>Mål CTR-ændringer over 2–4 uger i Search Console.</li>
         </ol>
 
@@ -133,18 +134,16 @@
           </ul>
         </div>
 
-        <hr />
-
         <p class="text-sm text-neutral-600">
           Har du spørgsmål eller ønsker sparring? Brug <a href="/#kontakt" class="text-blue-600">kontaktformularen</a> nederst på forsiden.
         </p>
       </article>
     </main>
 
-    <!-- Footer (samme som forsiden, hvis du bruger statisk footer) -->
+    <!-- Footer -->
     <footer class="mt-12 border-t bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
-        <p>© <span id="year"></span> Seohub – seohub.dk</p>
+        <p>© 2025 Seohub – seohub.dk</p>
         <nav class="flex items-center gap-4">
           <a class="hover:underline" href="/blog/">Blog</a>
           <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
@@ -152,6 +151,5 @@
         </nav>
       </div>
     </footer>
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   </body>
 </html>
