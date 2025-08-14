@@ -1,172 +1,115 @@
 <!doctype html>
 <html lang="da">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS | Seohub.dk</title>
-  <meta name="description" content="Praktisk guide til Core Web Vitals i 2025: konkrete forbedringer til LCP, INP og CLS – med tjekliste, kodeeksempler og målemetoder.">
-  <link rel="canonical" href="https://www.seohub.dk/blog/core-web-vitals-2025.html">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/assets/consent-analytics.js" defer></script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org","@type":"Article",
-    "headline":"Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS",
-    "datePublished":"2025-08-13","dateModified":"2025-08-13",
-    "author":{"@type":"Person","name":"Seohub redaktionen"},
-    "publisher":{"@type":"Organization","name":"Seohub.dk"},
-    "description":"Praktisk guide til Core Web Vitals i 2025: konkrete forbedringer til LCP, INP og CLS – med tjekliste, kodeeksempler og målemetoder.",
-    "mainEntityOfPage":{"@type":"WebPage","@id":"https://www.seohub.dk/blog/core-web-vitals-2025.html"}
-  }
-  </script>
-</head>
-<body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+  <head>
+    <meta charset="utf-8" />
+    <title>Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS | Seohub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Opdateret guide til Core Web Vitals i 2025 – lær at optimere LCP, INP og CLS med praktiske, tekniske forbedringer og værktøjer." />
+    <meta property="og:title" content="Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS" />
+    <meta property="og:description" content="Forbedr din sides hastighed og brugeroplevelse med konkrete tips til Core Web Vitals: LCP, INP og CLS." />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="/og-image.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script src="/assets/consent-analytics.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-<header class="border-b bg-white/80 backdrop-blur">
-  <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-    <a href="/" class="font-semibold">Seohub.dk</a>
-    <nav class="text-sm text-neutral-600 space-x-4">
-      <a href="/">Forside</a>
-      <a href="/serp-preview.html">SERP</a>
-      <a href="/robots-generator.html">Robots</a>
-      <a href="/sitemap-generator.html">Sitemap</a>
-      <a href="/blog/">Blog</a>
-    </nav>
-  </div>
-</header>
-
-<main class="max-w-6xl mx-auto p-4">
-  <!-- Hero -->
-  <section class="rounded-2xl p-8 text-white shadow mb-6"
-           style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
-    <h1 class="text-3xl font-bold">Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS</h1>
-    <p id="post-meta" class="text-blue-100 text-sm mt-2">
-      Opdateret 13. august 2025 • Læsetid: <span data-reading>–</span>
-    </p>
-  </section>
-
-  <div class="grid lg:grid-cols-3 gap-6">
-    <!-- Article -->
-    <article class="lg:col-span-2 prose prose-neutral max-w-none bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
-      <p>Core Web Vitals (CWV) måler brugeroplevelse i den virkelige verden. I 2025 er fokus især på <strong>LCP</strong> (Largest Contentful Paint), <strong>INP</strong> (Interaction to Next Paint) og <strong>CLS</strong> (Cumulative Layout Shift). Her får du konkrete forbedringer, hvordan du måler, og en tjekliste du kan følge trin for trin.</p>
-
-      <h2>Hurtig oversigt over gode grænser</h2>
-      <ul>
-        <li><strong>LCP:</strong> ≤ 2,5 s</li>
-        <li><strong>INP:</strong> ≤ 200 ms</li>
-        <li><strong>CLS:</strong> ≤ 0,1</li>
-      </ul>
-
-      <h2>LCP – gør det primære indhold hurtigt synligt</h2>
-      <p>LCP rammes typisk af tunge hero-billeder, langsomme servere eller blokkerende ressourcer.</p>
-      <h3>Quick wins</h3>
-      <ul>
-        <li>Konverter hero-billeder til <strong>WebP/AVIF</strong> og servér korrekte størrelser (srcset/sizes).</li>
-        <li><strong>Preload</strong> den største hero-ressource:
-<pre><code>&lt;link rel="preload" as="image" href="/img/hero@2x.avif" imagesrcset="/img/hero.avif 1x, /img/hero@2x.avif 2x" imagesizes="100vw"&gt;</code></pre></li>
-        <li>Flyt tunge 3.-parts scripts <em>ned</em> eller brug <code>defer</code>/<code>async</code>.</li>
-        <li>Aktivér HTTP/2 eller HTTP/3 og <code>cache-control</code> for statiske assets.</li>
-      </ul>
-      <h3>Diagnose</h3>
-      <ul>
-        <li>Brug PageSpeed Insights → “Opportunities” for at finde LCP-blokkere.</li>
-        <li>WebPageTest → “Filmstrip” for at se hvad der vises hvornår.</li>
-      </ul>
-
-      <h2>INP – gør interaktioner hurtige og responsive</h2>
-      <p>INP måler hvor hurtigt siden reagerer på <em>alle</em> interaktioner (klik, tast, tap). Problemer skyldes typisk tung JavaScript.</p>
-      <h3>Quick wins</h3>
-      <ul>
-        <li><strong>Code-splitting</strong>: indlæs kun det JS, der er nødvendigt på den aktuelle side.</li>
-        <li>Debounce dyre event-handlers (søgning, input) og brug passive event listeners:
-<pre><code>window.addEventListener('touchstart', onTouch, { passive: true });</code></pre></li>
-        <li>Offload tunge beregninger til <strong>Web Workers</strong>.</li>
-        <li>Fjern/udskift tunge UI-libs (store frameworks for simple sider).</li>
-      </ul>
-      <h3>Diagnose</h3>
-      <ul>
-        <li>Chrome Performance profiler → se “Main thread” blokeringer.</li>
-        <li>INP i CrUX/Field Data → prioriter de sider/flows med dårligst tal.</li>
-      </ul>
-
-      <h2>CLS – stop layout-hop</h2>
-      <p>CLS opstår når indhold flytter sig efter render (annoncer, billeder uden dimensioner, webfonts).</p>
-      <h3>Quick wins</h3>
-      <ul>
-        <li>Angiv altid <code>width</code>/<code>height</code> på billeder eller brug moderne CSS med aspect-ratio.</li>
-        <li>Reserver plads til annoncer/embeds med en container i fast højde.</li>
-        <li>Håndtér webfonts: <code>font-display: swap</code> + <code>&lt;link rel="preload" as="font"&gt;</code>.</li>
-      </ul>
-      <h3>Kodeeksempel: reserve plads til billede</h3>
-<pre><code>&lt;style&gt;
-.hero { aspect-ratio: 16/9; background:#eee; }
-&lt;/style&gt;
-&lt;img class="hero" src="/img/hero.avif" alt="Hero"&gt;</code></pre>
-
-      <h2>Cache & levering af assets</h2>
-      <ul>
-        <li>Brug lange cache-tider for fingerprintede filer (<code>immutable</code>), kortere for HTML.</li>
-        <li>Komprimer med Brotli; sørg for GZIP fallback.</li>
-        <li>Preconnect til vigtige domæner:
-<pre><code>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</code></pre></li>
-      </ul>
-
-      <h2>Måling: lab vs. field data</h2>
-      <p>Lab (syntetisk) = stabile forhold, gode til at finde problemer. Field (rigtige brugere) = sandheden i CrUX/GA.</p>
-      <ul>
-        <li>Start i PageSpeed (lab) → implementér fixes → verificér i CrUX (field).</li>
-        <li>Hold øje med “p95” i field data (de langsomste 5%).</li>
-      </ul>
-
-      <h2>Tjekliste (printbar)</h2>
-      <ul>
-        <li>[ ] LCP ≤ 2,5 s: WebP/AVIF + preload af hero, fjern render-blockers</li>
-        <li>[ ] INP ≤ 200 ms: split JS, debounce events, workers for tunge tasks</li>
-        <li>[ ] CLS ≤ 0,1: faste dimensioner, reserverede containere, font-display</li>
-        <li>[ ] Cache: immutable på assets, kort for HTML</li>
-        <li>[ ] HTTP/2 eller HTTP/3, Brotli aktiv</li>
-        <li>[ ] Verificér forbedringer i CrUX/GA</li>
-      </ul>
-
-      <!-- CTA-boks -->
-      <div class="not-prose mt-8 p-4 rounded-2xl border bg-white">
-        <div class="font-semibold mb-1">Få hurtige gevinster på din sidehastighed</div>
-        <ul class="list-disc pl-5 text-sm space-y-1">
-          <li><a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP-preview & meta-tjek</a></li>
-          <li><a class="text-blue-600 hover:underline" href="/robots-generator.html">Robots.txt generator</a></li>
-          <li><a class="text-blue-600 hover:underline" href="/sitemap-generator.html">Sitemap.xml generator</a></li>
-        </ul>
+    <!-- Header -->
+    <header class="border-b bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+          <a href="/blog/" class="text-blue-600 font-medium underline underline-offset-4">Blog</a>
+        </nav>
       </div>
+    </header>
 
-      <!-- Forfatter -->
-      <div class="not-prose mt-8 p-4 rounded-2xl border bg-white text-sm text-neutral-700">
-        Skrevet af <strong>Seohub redaktionen</strong>. Vi bygger enkle SEO-værktøjer til hverdagen.
-      </div>
-    </article>
-
-    <!-- Sidebar -->
-    <aside class="lg:col-span-1 space-y-6">
-      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-5 border border-neutral-100">
-        <h3 class="font-semibold mb-3">Indhold</h3>
-        <div id="toc" class="text-sm"></div>
+    <main class="max-w-6xl mx-auto p-4">
+      <!-- Hero -->
+      <section class="rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
+               style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+          Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS
+        </h1>
+        <p class="text-blue-100 text-base md:text-lg max-w-3xl">
+          Core Web Vitals er Googles vigtigste hastigheds- og oplevelsesfaktorer.  
+          Her får du en opdateret 2025-guide med konkrete forbedringer.
+        </p>
       </section>
-      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-5 border border-neutral-100">
-        <h3 class="font-semibold mb-3">Relateret</h3>
-        <ul class="text-sm space-y-2">
-          <li><a class="text-blue-600 hover:underline" href="/blog/seo-titler-der-ranker.html">SEO-titler der ranker</a></li>
-          <li><a class="text-blue-600 hover:underline" href="/blog/sitemap-fejl-du-skal-undga.html">Sitemap-fejl: 7 klassikere</a></li>
-          <li><a class="text-blue-600 hover:underline" href="/blog/intern-linkbuilding-strategi.html">Intern linkbuilding</a></li>
+
+      <!-- Brødtekst -->
+      <article class="prose prose-neutral max-w-none">
+        <p class="text-sm text-neutral-500">Opdateret: 14. august 2025 • Læsetid: 6–8 min</p>
+
+        <h2>Hvad er Core Web Vitals i 2025?</h2>
+        <p>
+          Core Web Vitals består i år af tre målepunkter: <strong>LCP</strong> (Largest Contentful Paint), 
+          <strong>INP</strong> (Interaction to Next Paint) og <strong>CLS</strong> (Cumulative Layout Shift).  
+          De måler henholdsvis hastighed, interaktivitet og visuel stabilitet.
+        </p>
+
+        <h2>LCP – Largest Contentful Paint</h2>
+        <p><strong>Mål:</strong> LCP under 2,5 sekunder.</p>
+        <ul>
+          <li>Optimer store billeder (komprimering, moderne formater som WebP/AVIF).</li>
+          <li>Lazy-load billeder under folden.</li>
+          <li>Brug hurtigere hosting eller CDN til tunge ressourcer.</li>
         </ul>
-      </section>
-    </aside>
-  </div>
 
-  <div class="mt-6">
-    <a class="text-blue-600 hover:underline" href="/blog/">← Tilbage til bloggen</a>
-  </div>
-</main>
+        <h2>INP – Interaction to Next Paint</h2>
+        <p><strong>Mål:</strong> INP under 200 ms.</p>
+        <ul>
+          <li>Reducer tung JavaScript – split op og indlæs kun nødvendigt JS.</li>
+          <li>Fjern unødvendige 3. parts scripts (tracking, widgets).</li>
+          <li>Brug <code>requestIdleCallback</code> eller async loading til ikke-kritiske scripts.</li>
+        </ul>
 
-<footer class="text-center text-xs text-neutral-500 py-8">© 2025 Seohub – seohub.dk</footer>
-<script src="/assets/post.js" defer></script>
-</body>
+        <h2>CLS – Cumulative Layout Shift</h2>
+        <p><strong>Mål:</strong> CLS under 0,1.</p>
+        <ul>
+          <li>Angiv faste størrelser for billeder og video-elementer i HTML/CSS.</li>
+          <li>Undgå dynamiske elementer, der skubber indhold ned, uden foruddefineret plads.</li>
+          <li>Indlæs skrifttyper korrekt for at undgå layout hop.</li>
+        </ul>
+
+        <h2>Sådan tester du dine Core Web Vitals</h2>
+        <ul>
+          <li>Google PageSpeed Insights (PSI).</li>
+          <li>Chrome Lighthouse.</li>
+          <li>Google Search Console → Core Web Vitals rapport.</li>
+        </ul>
+
+        <h2>Quick wins</h2>
+        <div class="my-6 p-5 rounded-2xl border bg-white shadow-sm">
+          <ul class="list-disc pl-5">
+            <li>Konverter billeder til WebP.</li>
+            <li>Brug preload på de vigtigste skrifttyper.</li>
+            <li>Fjern eller udskyd tunge scripts.</li>
+            <li>Brug en moderne caching-strategi (service workers, edge caching).</li>
+          </ul>
+        </div>
+
+        <p>
+          For mere teknisk dybde, læs også vores <a href="/blog/sitemap-fejl-du-skal-undga.html" class="text-blue-600">guide til teknisk SEO</a>.
+        </p>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+        <p>© 2025 Seohub – seohub.dk</p>
+        <nav class="flex items-center gap-4">
+          <a class="hover:underline" href="/blog/">Blog</a>
+          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
 </html>
