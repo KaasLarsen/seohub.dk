@@ -450,6 +450,8 @@ function App() {
     React.createElement(SitemapXml, { key:"map" }),
     React.createElement(FaqSchema, { key:"faq" }),
     React.createElement(ContentBrief, { key:"brief" }),
+    // NYT: Seneste fra bloggen
+    React.createElement(RecentPosts, { key:"recent" }),
 
     // Kontaktformular
     React.createElement(ContactForm, { key:"contact" }),
