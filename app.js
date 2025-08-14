@@ -332,6 +332,57 @@ function Footer() {
     "© 2025 Seohub – seohub.dk"
   );
 }
+/* ---------- Seneste fra bloggen (henter /blog/posts.json) ---------- */
+function RecentPosts() {
+  const [items, setItems] = React.useState(null);   // null = loader, [] = ingen indlæg, array = data
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/blog/posts.json?ts=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('Ugyldig JSON');
+        // sortér nyeste først og tag top 3
+        const top = data
+          .slice()
+          .sort((a,b) => (a.date < b.date ? 1 : -1))
+          .slice(0, 3);
+        setItems(top);
+      } catch (e) {
+        console.error('RecentPosts fejl:', e);
+        setError('Kunne ikke indlæse indlæg lige nu.');
+        setItems([]);
+      }
+    })();
+  }, []);
+
+  return React.createElement(Section, { title: "Seneste fra bloggen" },
+    items === null
+      ? React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
+          [0,1,2].map(i =>
+            React.createElement("div", { key:i, className:"rounded-2xl border p-5 bg-white animate-pulse h-40" })
+          )
+        )
+      : error
+        ? React.createElement("p", { className:"text-sm text-neutral-600" }, error)
+        : items.length === 0
+          ? React.createElement("p", { className:"text-sm text-neutral-600" }, "Ingen indlæg endnu.")
+          : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
+              items.map((p, i) => {
+                const href = `/blog/${p.slug}.html`;
+                const date = p.date ? new Date(p.date).toLocaleDateString('da-DK') : '';
+                return React.createElement("a", { key:i, href, className:"rounded-2xl border p-5 bg-white hover:shadow transition block" }, [
+                  React.createElement("h3", { key:"h", className:"font-semibold" }, p.title || "Uden titel"),
+                  React.createElement("p", { key:"d", className:"text-xs text-neutral-500 mt-1" }, date),
+                  p.excerpt ? React.createElement("p", { key:"e", className:"text-sm text-neutral-700 mt-3 line-clamp-3" }, p.excerpt) : null,
+                  React.createElement("span", { key:"l", className:"inline-block mt-4 text-blue-600" }, "Læs mere →")
+                ]);
+              })
+            )
+  );
+}
 
 /* ---------- App (samlet) ---------- */
 function App() {
