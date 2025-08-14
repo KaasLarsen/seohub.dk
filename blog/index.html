@@ -4,16 +4,18 @@
     <meta charset="utf-8" />
     <title>Blog – Seneste SEO-artikler | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Læs de nyeste blogindlæg om SEO, on-page optimering, teknisk SEO, linkbuilding og content strategi fra Seohub.dk." />
+    <meta name="description" content="Læs de nyeste blogindlæg om SEO, on-page optimering, teknisk SEO, linkbuilding og content-strategi fra Seohub.dk." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Consent + GA (dit eksisterende script) -->
+    <!-- Consent + GA -->
     <script src="/assets/consent-analytics.js" defer></script>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Blog-list loader (CSP-venligt, ingen inline JS) -->
+    <script src="/assets/blog-list.js" defer></script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900 flex flex-col">
 
-    <!-- Header (samme som øvrige sider) -->
+    <!-- Header -->
     <header class="border-b bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
         <a href="/" class="font-semibold">Seohub.dk</a>
@@ -40,34 +42,26 @@
 
     <!-- Liste over indlæg -->
     <main class="flex-1 max-w-6xl mx-auto p-4">
-      <!-- Filter/badge-linje (valgfri – kan bygges ud senere) -->
-      <div class="mb-6 text-sm text-neutral-600">
-        Seneste indlæg
-      </div>
+      <div class="mb-6 text-sm text-neutral-600">Seneste indlæg</div>
 
       <div id="blog-list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <!-- JS fylder indlæg her -->
-        <!-- Skeletloader som fallback hvis JS er langsomt -->
+        <!-- Skeletloadere (vises kort indtil JS har indlæst posts) -->
         <div class="rounded-xl border p-6 bg-white shadow-sm animate-pulse h-48"></div>
         <div class="rounded-xl border p-6 bg-white shadow-sm animate-pulse h-48"></div>
         <div class="rounded-xl border p-6 bg-white shadow-sm animate-pulse h-48"></div>
       </div>
     </main>
 
-    <!-- Footer (statisk – eller fjern hvis du allerede inkluderer global footer) -->
+    <!-- Footer (statisk årstal for at undgå inline script pga. CSP) -->
     <footer class="mt-12 border-t bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
-        <p>© <span id="year"></span> Seohub – seohub.dk</p>
+        <p>© 2025 Seohub – seohub.dk</p>
         <nav class="flex items-center gap-4">
           <a class="hover:underline" href="/blog/">Blog</a>
-          <a className="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
           <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
         </nav>
       </div>
     </footer>
-
-    <!-- Eksternt script (CSP-venligt) -->
-    <script src="/assets/blog-list.js" defer></script>
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   </body>
 </html>
