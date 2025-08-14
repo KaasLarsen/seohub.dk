@@ -1,81 +1,73 @@
 <!doctype html>
 <html lang="da">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog – Seneste SEO-artikler | Seohub.dk</title>
-  <meta name="description" content="Læs de nyeste blogindlæg om SEO, on-page optimering, teknisk SEO, linkbuilding og content strategi. Hold dig opdateret med tips og guides fra Seohub.dk." />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900 flex flex-col">
+  <head>
+    <meta charset="utf-8" />
+    <title>Blog – Seneste SEO-artikler | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Læs de nyeste blogindlæg om SEO, on-page optimering, teknisk SEO, linkbuilding og content strategi fra Seohub.dk." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Consent + GA (dit eksisterende script) -->
+    <script src="/assets/consent-analytics.js" defer></script>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900 flex flex-col">
 
-  <!-- Header -->
-  <header class="border-b bg-white/80 backdrop-blur">
-    <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-      <a href="/" class="font-semibold">Seohub.dk</a>
-      <nav class="text-sm text-neutral-600 space-x-4">
-        <a href="/">Forside</a>
-        <a href="/serp-preview.html">SERP</a>
-        <a href="/robots-generator.html">Robots</a>
-        <a href="/sitemap-generator.html">Sitemap</a>
-        <a href="/blog/">Blog</a>
-      </nav>
-    </div>
-  </header>
+    <!-- Header (samme som øvrige sider) -->
+    <header class="border-b bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+          <a href="/blog/" class="text-blue-600 font-medium underline underline-offset-4">Blog</a>
+        </nav>
+      </div>
+    </header>
 
-  <!-- Hero -->
-  <section class="bg-blue-600 text-white py-12">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-      <h1 class="text-3xl md:text-4xl font-bold mb-4">SEO Blog – tips, guides & strategier</h1>
-      <p class="text-lg text-blue-100 max-w-2xl mx-auto">
-        Vi deler praktiske SEO-råd, dybdegående guides og teknikker, du kan bruge med det samme.
-      </p>
-    </div>
-  </section>
+    <!-- Hero -->
+    <section class="rounded-none md:rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
+             style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
+      <div class="max-w-6xl mx-auto px-4">
+        <h1 class="text-3xl md:text-5xl font-bold mb-3 leading-tight">SEO Blog – tips, guides & strategier</h1>
+        <p class="text-blue-100 text-base md:text-lg max-w-3xl">
+          Praktiske SEO-råd du kan bruge med det samme. Nye indlæg tilføjes løbende.
+        </p>
+      </div>
+    </section>
 
-  <!-- Blog container -->
-  <main class="flex-1 max-w-6xl mx-auto p-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3" id="blog-list">
-    <!-- Dynamisk indhold her -->
-  </main>
+    <!-- Liste over indlæg -->
+    <main class="flex-1 max-w-6xl mx-auto p-4">
+      <!-- Filter/badge-linje (valgfri – kan bygges ud senere) -->
+      <div class="mb-6 text-sm text-neutral-600">
+        Seneste indlæg
+      </div>
 
-  <!-- Footer -->
-  <footer class="text-center text-xs text-neutral-500 py-8 border-t">
-    © 2025 Seohub – seohub.dk
-  </footer>
+      <div id="blog-list" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <!-- JS fylder indlæg her -->
+        <!-- Skeletloader som fallback hvis JS er langsomt -->
+        <div class="rounded-xl border p-6 bg-white shadow-sm animate-pulse h-48"></div>
+        <div class="rounded-xl border p-6 bg-white shadow-sm animate-pulse h-48"></div>
+        <div class="rounded-xl border p-6 bg-white shadow-sm animate-pulse h-48"></div>
+      </div>
+    </main>
 
-  <!-- Script til at hente og vise blogindlæg -->
-  <script>
-    fetch('/blog/posts.json?ts=' + Date.now(), { cache: 'no-store' })
-      .then(res => res.json())
-      .then(posts => {
-        const container = document.getElementById('blog-list');
-        if (!posts.length) {
-          container.innerHTML = '<p class="col-span-full text-center text-neutral-500">Ingen indlæg endnu.</p>';
-          return;
-        }
-        posts.forEach(post => {
-          const card = document.createElement('a');
-          card.href = `/blog/${post.slug}.html`;
-          card.className = "block bg-white rounded-xl shadow hover:shadow-md transition p-6 flex flex-col justify-between";
-          card.innerHTML = `
-            <div>
-              <h2 class="text-xl font-semibold mb-2">${post.title}</h2>
-              <p class="text-sm text-neutral-500 mb-4">${new Date(post.date).toLocaleDateString('da-DK')}</p>
-              <p class="text-neutral-700 mb-4">${post.excerpt}</p>
-            </div>
-            <div class="mt-auto">
-              ${(post.tags || []).map(tag => `<span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded mr-2">${tag}</span>`).join('')}
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      })
-      .catch(err => {
-        document.getElementById('blog-list').innerHTML =
-          '<p class="col-span-full text-center text-red-500">Fejl ved indlæsning af indlæg.</p>';
-        console.error(err);
-      });
-  </script>
-</body>
+    <!-- Footer (statisk – eller fjern hvis du allerede inkluderer global footer) -->
+    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+        <p>© <span id="year"></span> Seohub – seohub.dk</p>
+        <nav class="flex items-center gap-4">
+          <a class="hover:underline" href="/blog/">Blog</a>
+          <a className="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- Eksternt script (CSP-venligt) -->
+    <script src="/assets/blog-list.js" defer></script>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  </body>
 </html>
