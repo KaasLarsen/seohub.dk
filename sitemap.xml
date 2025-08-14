@@ -1,77 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- Forside -->
   <url>
     <loc>https://seohub.dk/</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>1.0</priority>
   </url>
 
   <!-- Værktøjer -->
   <url>
     <loc>https://seohub.dk/serp-preview.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://seohub.dk/robots-generator.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://seohub.dk/sitemap-generator.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.8</priority>
   </url>
 
   <!-- Blog oversigt -->
   <url>
     <loc>https://seohub.dk/blog/</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.7</priority>
   </url>
 
   <!-- Blogindlæg -->
   <url>
     <loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://seohub.dk/blog/sitemap-fejl-du-skal-undga.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://seohub.dk/blog/intern-linkbuilding-strategi.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://seohub.dk/blog/core-web-vitals-2025.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://seohub.dk/blog/lokal-seo-danmark-guide.html</loc>
+    <lastmod>2025-08-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-    <lastmod>2025-08-13</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
-  <loc>https://seohub.dk/blog/meta-descriptions-der-konverterer.html</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.5</priority>
-  <lastmod>2025-08-14</lastmod>
-</url>
-</urlset>
+    <loc>https://seohub.dk/blog/meta-descriptions-der-konverterer.html</loc>
+    <lastmod>2025-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
+</urlset>
