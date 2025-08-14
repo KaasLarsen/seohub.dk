@@ -1,4 +1,4 @@
-// /app.js — Seohub SPA (forside med værktøjer, RecentPosts m/ tags, kontaktformular)
+// /app.js — Seohub SPA (stor hero, kort m/ ikoner, RecentPosts m/ tags, værktøjer, kontaktformular)
 const { useState, useMemo } = React;
 
 /* ---------- UI helpers ---------- */
@@ -14,6 +14,7 @@ function Section({ title, children }) {
     ]
   );
 }
+
 function Card({ title, description, children }) {
   return React.createElement(
     "div",
@@ -33,6 +34,7 @@ function Card({ title, description, children }) {
     ]
   );
 }
+
 function TextInput({ label, value, onChange, placeholder, textarea=false, rows=3 }) {
   return React.createElement(
     "label",
@@ -45,6 +47,7 @@ function TextInput({ label, value, onChange, placeholder, textarea=false, rows=3
     ]
   );
 }
+
 function CopyButton({ getText, label="Kopiér" }) {
   const [copied, setCopied] = useState(false);
   return React.createElement("button", {
@@ -58,6 +61,7 @@ function CopyButton({ getText, label="Kopiér" }) {
     className: "px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100"
   }, copied ? "Kopieret!" : label);
 }
+
 function DownloadButton({ filename, getContent, label="Download" }) {
   return React.createElement("button", {
     onClick: () => {
@@ -227,7 +231,7 @@ function FaqSchema() {
         React.createElement("button", { key:"rm", className:"px-3 py-2 rounded-xl border", onClick: ()=>pairs.length>1 && setPairs(pairs.slice(0,-1)) }, "fjern sidste"),
         React.createElement(CopyButton, { key:"c", getText: ()=>json }),
       ]),
-      React.createElement("pre", { key:"pre", className:"bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap" }, json)
+      React.createElement("pre", { key:"pre", className:"bg-neutral-900 text-neutral-100 rounded-2xl p-4 overflow-auto text-sm whitespace-pre-wrap" }, json)
     ])
   );
 }
@@ -388,46 +392,10 @@ function RecentPosts() {
 /* ---------- App ---------- */
 function App() {
   return React.createElement("main", { className: "max-w-6xl mx-auto p-4 space-y-8" }, [
-    // Hero med gradient
-    React.createElement("section", { key:"hero", className:"rounded-2xl p-10 text-white shadow-lg",
-      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" } },
-      [
-        React.createElement("h1", { key:"h", className:"text-3xl font-bold mb-2" }, "Gratis SEO-værktøjer til hverdagen"),
-        React.createElement("p", { key:"p", className:"text-blue-100" }, "Vælg et værktøj herunder – ingen login, ingen installation.")
-      ]
-    ),
-
-    // Kort til undersider (links)
-    React.createElement("section", { key:"grid", className:"grid md:grid-cols-3 gap-4" }, [
-      React.createElement("a", { key:"k", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/serp-preview.html" },
-        [React.createElement("h2", { key:"t", className:"font-semibold" }, "SERP & Meta"),
-         React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Forhåndsvisning + længde-tjek.")]
-      ),
-      React.createElement("a", { key:"r", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/robots-generator.html" },
-        [React.createElement("h2", { key:"t", className:"font-semibold" }, "Robots.txt"),
-         React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Byg og download.")]
-      ),
-      React.createElement("a", { key:"s", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/sitemap-generator.html" },
-        [React.createElement("h2", { key:"t", className:"font-semibold" }, "Sitemap.xml"),
-         React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Generér fra liste af URLs.")]
-      ),
-    ]),
-
-    // Inline tools
-    React.createElement(KeywordIdeas, { key:"kw" }),
-    React.createElement(SerpAndMeta, { key:"serp" }),
-    React.createElement(RobotsTxt, { key:"rob" }),
-    React.createElement(SitemapXml, { key:"map" }),
-    React.createElement(FaqSchema, { key:"faq" }),
-    React.createElement(ContentBrief, { key:"brief" }),
-
-    // Seneste fra bloggen (NY)
-    React.createElement(RecentPosts, { key:"recent" }),
-
-    // Kontaktformular
-    React.createElement(ContactForm, { key:"contact" }),
-  ]);
-}
-
-/* ---------- Mount ---------- */
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+    // Hero med større padding og typografi
+    React.createElement("section", {
+      key:"hero",
+      className:"rounded-2xl p-12 md:p-20 text-white shadow-lg",
+      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" }
+    }, [
+      React
