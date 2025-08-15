@@ -7,12 +7,12 @@
     <meta name="description" content="Seohub er en enkel værktøjskasse til SEO: nøgleordsidéer, SERP-preview, title/meta-tjek, robots.txt, sitemap.xml, FAQ schema, content briefs m.m." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <!-- AdSense (kræves i rå HTML på forsiden for verificering) -->
+    <!-- AdSense (beholdt på forsiden) -->
     <meta name="google-adsense-account" content="ca-pub-7373148222153531">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7373148222153531" crossorigin="anonymous"></script>
 
-    <!-- Fælles header/footer + GA/cookie -->
-    <script src="/assets/include-header.js" defer></script>
+    <!-- GA + cookie consent (som aftalt tidligere) -->
+    <script src="/assets/consent-analytics.js" defer></script>
 
     <!-- UI + React -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,6 +23,34 @@
     <script type="module" src="/app.js"></script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+    <!-- Header / Navigation (STICKY) -->
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+          <a href="/internal-link-builder.html">Intern links</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- React mount -->
     <div id="root"></div>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+        <p>© 2025 Seohub – seohub.dk</p>
+        <nav class="flex items-center gap-4">
+          <a class="hover:underline" href="/blog/">Blog</a>
+          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>
