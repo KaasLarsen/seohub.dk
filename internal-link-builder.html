@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <title>Intern Link Builder – foreslå interne links fra sitemap | Seohub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Indsæt din sitemap.xml eller en liste af URL’er og få forslag til interne links baseret på emnelighed og URL-struktur." />
+    <meta property="og:title" content="Intern Link Builder – foreslå interne links fra sitemap" />
+    <meta property="og:description" content="Generér interne linkforslag mellem dine sider ved hjælp af sitemap.xml – helt uden login." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Fælles header (GA, AdSense, Tailwind, React hvis brugt andre steder) -->
+    <script src="/assets/include-header.js" defer></script>
+    <!-- Vi bruger ren JS her, ingen React nødvendig -->
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Header (samme som øvrige sider) -->
+    <header class="border-b bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+          <a href="/blog/">Blog</a>
+          <a href="/internal-link-builder.html" class="text-blue-600 font-medium underline underline-offset-4">Intern links</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="rounded-none md:rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
+             style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
+      <div class="max-w-6xl mx-auto px-4">
+        <h1 class="text-3xl md:text-5xl font-bold mb-3 leading-tight">Intern Link Builder</h1>
+        <p class="text-blue-100 text-base md:text-lg max-w-3xl">
+          Indlæs din <strong>sitemap.xml</strong> eller indsæt en liste af URL’er. Få smarte forslag til interne links baseret på emnelighed i URL/sti.
+        </p>
+      </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto p-4 space-y-8">
+
+      <!-- Input sektion -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+        <h2 class="text-xl font-semibold mb-4">1) Indlæs dine URLs</h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- A: Indlæs fra sitemap -->
+          <div>
+            <label class="block text-sm font-medium mb-2">Sitemap URL (fx https://ditdomæne.dk/sitemap.xml)</label>
+            <div class="flex gap-2">
+              <input id="sitemapUrl" class="w-full border rounded-xl p-3" placeholder="https://www.seohub.dk/sitemap.xml" />
+              <button id="btnFetchSitemap" class="px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Hent</button>
+            </div>
+            <p class="text-xs text-neutral-500 mt-2">
+              Bemærk: Nogle domæner blokerer cross-origin forespørgsler (CORS). Hvis hentning fejler, brug tekstfeltet til højre.
+            </p>
+          </div>
+
+          <!-- B: Indsæt manuelt -->
+          <div>
+            <label class="block text-sm font-medium mb-2">Eller indsæt URL’er (én pr. linje)</label>
+            <textarea id="manualUrls" rows="7" class="w-full border rounded-xl p-3" placeholder="https://ditdomæne.dk/side-1
+https://ditdomæne.dk/kategori/side-2
+https://ditdomæne.dk/blog/indlæg-om-seo"></textarea>
+            <div class="flex items-center gap-2 mt-2">
+              <button id="btnUseManual" class="px-4 py-2 rounded-2xl border bg-neutral-50 hover:bg-neutral-100">Brug disse URL’er</button>
+              <span id="countUrls" class="text-xs text-neutral-500"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Indstillinger -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+        <h2 class="text-xl font-semibold mb-4">2) Indstillinger</h2>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Maks forslag pr. side</span>
+            <input id="maxPerPage" type="number" value="5" min="1" max="20" class="w-full border rounded-xl p-3" />
+          </label>
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Min. emnelighed (0–1)</span>
+            <input id="minScore" type="number" step="0.05" value="0.25" min="0" max="1" class="w-full border rounded-xl p-3" />
+          </label>
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Ignorer identiske mapper?</span>
+            <select id="preferSameFolder" class="w-full border rounded-xl p-3">
+              <option value="1">Foretræk samme mappe</option>
+              <option value="0">Ingen præference</option>
+            </select>
+          </label>
+        </div>
+        <div class="mt-4 flex gap-2">
+          <button id="btnGenerate" class="px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Generér forslag</button>
+          <button id="btnDownloadCSV" class="px-4 py-3 rounded-2xl border bg-neutral-50 hover:bg-neutral-100">Download CSV</button>
+          <button id="btnDownloadJSON" className="px-4 py-3 rounded-2xl border bg-neutral-50 hover:bg-neutral-100">Download JSON</button>
+          <span id="status" class="text-sm text-neutral-500 self-center"></span>
+        </div>
+      </section>
+
+      <!-- Resultater -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+        <h2 class="text-xl font-semibold mb-4">3) Forslag til interne links</h2>
+        <div id="emptyState" class="text-neutral-500 text-sm">Indlæs dine URLs og klik “Generér forslag”.</div>
+        <div id="results" class="hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead>
+                <tr class="text-left text-neutral-600 border-b">
+                  <th class="py-2 pr-4">Side (fra)</th>
+                  <th class="py-2 pr-4">Foreslåede interne links (til)</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hjælp / tips -->
+      <section class="bg-white rounded-2xl border shadow-sm p-6">
+        <h3 class="font-semibold mb-2">Tip</h3>
+        <ul class="list-disc pl-5 text-sm text-neutral-700 space-y-1">
+          <li>Værktøjet bruger URL-struktur og emneord fra stier/slugs til at måle emnelighed (Jaccard-lighed).</li>
+          <li>Du kan manuelt hæve/sænke “Min. emnelighed” for flere/færre forslag.</li>
+          <li>Brug CSV-download til at dele opgaver i dit team (fra-URL → anbefalede interne links).</li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+        <p>© 2025 Seohub – seohub.dk</p>
+        <nav class="flex items-center gap-4">
+          <a class="hover:underline" href="/blog/">Blog</a>
+          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+      // ---------- Utils ----------
+      const stop = new Set([
+        "", "da", "dk", "og", "i", "en", "et", "til", "for", "med", "om", "af", "på", "der", "som", "de", "du", "jeg", "vi", "jer",
+        "the","a","an","of","in","to","and","for","on","is","it","at","by","from","or","as","be","are"
+      ]);
+
+      function tokenize(url) {
+        try {
+          const u = new URL(url);
+          // tag sti + filnavn uden .html
+          let path = u.pathname.toLowerCase();
+          if (path.endsWith(".html")) path = path.slice(0, -5);
+          const parts = path.split(/[\/\-_.]+/).map(s => s.trim()).filter(Boolean);
+          return parts.filter(w => !stop.has(w) && w.length > 1);
+        } catch(e) {
+          return [];
+        }
+      }
+
+      function jaccard(a, b) {
+        const A = new Set(a), B = new Set(b);
+        let inter = 0;
+        for (const x of A) if (B.has(x)) inter++;
+        const union = A.size + B.size - inter;
+        return union === 0 ? 0 : inter / union;
+      }
+
+      function folderKey(url) {
+        try {
+          const u = new URL(url);
+          const segs = u.pathname.split("/").filter(Boolean);
+          if (segs.length <= 1) return "/";
+          return "/" + segs.slice(0, segs.length-1).join("/") + "/";
+        } catch {
+          return "/";
+        }
+      }
+
+      function csvEscape(v) {
+        const s = String(v ?? "");
+        if (/[",;\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+        return s;
+      }
+
+      // ---------- State ----------
+      let urls = [];    // rå URLs
+      let tokens = {};  // url -> tokens
+
+      // ---------- DOM ----------
+      const sitemapUrl = document.getElementById('sitemapUrl');
+      const btnFetch = document.getElementById('btnFetchSitemap');
+      const manual = document.getElementById('manualUrls');
+      const btnUseManual = document.getElementById('btnUseManual');
+      const countUrls = document.getElementById('countUrls');
+
+      const maxPerPage = document.getElementById('maxPerPage');
+      const minScore = document.getElementById('minScore');
+      const preferSameFolder = document.getElementById('preferSameFolder');
+
+      const btnGenerate = document.getElementById('btnGenerate');
+      const btnCSV = document.getElementById('btnDownloadCSV');
+      const btnJSON = document.getElementById('btnDownloadJSON');
+      const statusEl = document.getElementById('status');
+
+      const emptyState = document.getElementById('emptyState');
+      const resultsWrap = document.getElementById('results');
+      const tbody = document.getElementById('tbody');
+
+      function setStatus(s) {
+        statusEl.textContent = s || "";
+      }
+
+      function setUrls(list) {
+        // dedup + sort
+        const seen = new Set();
+        urls = [];
+        for (const u of list) {
+          try {
+            const url = new URL(u.trim());
+            if (!seen.has(url.href)) {
+              seen.add(url.href);
+              urls.push(url.href);
+            }
+          } catch {}
+        }
+        urls.sort();
+        tokens = {};
+        for (const u of urls) tokens[u] = tokenize(u);
+        countUrls.textContent = urls.length ? `${urls.length} URL’er indlæst` : '';
+      }
+
+      // ----- A: Fetch sitemap -----
+      btnFetch.addEventListener('click', async () => {
+        const href = sitemapUrl.value.trim();
+        if (!href) return alert("Angiv en gyldig sitemap URL.");
+        setStatus("Henter sitemap…");
+        try {
+          const res = await fetch(href, { cache: 'no-store' });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const xml = await res.text();
+          const locs = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/gi)).map(m => m[1].trim());
+          if (!locs.length) throw new Error("Ingen <loc> fundet i sitemap.");
+          setUrls(locs);
+          setStatus(`OK – indlæste ${locs.length} URL’er fra sitemap.`);
+        } catch (e) {
+          console.error(e);
+          setStatus("Kunne ikke hente sitemap (CORS eller format). Brug tekstfeltet til højre.");
+        }
+      });
+
+      // ----- B: Brug manuelle -----
+      btnUseManual.addEventListener('click', () => {
+        const list = manual.value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+        if (!list.length) return alert("Indsæt mindst 1 URL.");
+        setUrls(list);
+        setStatus(`OK – indlæste ${urls.length} URL’er fra tekstfelt.`);
+      });
+
+      // ----- Generér forslag -----
+      btnGenerate.addEventListener('click', () => {
+        if (!urls.length) return alert("Indlæs først nogle URL’er (sitemap eller tekst).");
+
+        const maxN = Math.max(1, Math.min(20, Number(maxPerPage.value) || 5));
+        const minS = Math.max(0, Math.min(1, Number(minScore.value) || 0.25));
+        const prefer = preferSameFolder.value === "1";
+
+        tbody.innerHTML = '';
+        let totalPairs = 0;
+
+        // For hver URL: find bedste matches
+        for (const u of urls) {
+          const tokU = tokens[u] || [];
+          const sameFolder = folderKey(u);
+
+          // scor alle andre
+          const scores = [];
+          for (const v of urls) {
+            if (u === v) continue;
+            let score = jaccard(tokU, tokens[v] || []);
+            if (prefer && folderKey(v) === sameFolder) {
+              score += 0.05; // lille bias for samme mappe
+            }
+            if (score >= minS) scores.push([v, score]);
+          }
+
+          scores.sort((a,b) => b[1]-a[1]);
+          const picks = scores.slice(0, maxN);
+
+          // render række
+          const tr = document.createElement('tr');
+          tr.className = "align-top border-b last:border-0";
+          const tdFrom = document.createElement('td');
+          tdFrom.className = "py-3 pr-4 text-blue-700 break-all";
+          tdFrom.innerHTML = `<a href="${u}" target="_blank" rel="noopener">${u}</a>`;
+          const tdTo = document.createElement('td');
+          tdTo.className = "py-3 pr-4";
+
+          if (!picks.length) {
+            tdTo.innerHTML = `<span class="text-neutral-500">Ingen forslag (prøv lavere min. emnelighed)</span>`;
+          } else {
+            const list = document.createElement('ol');
+            list.className = "list-decimal pl-5 space-y-1";
+            for (const [href, s] of picks) {
+              const li = document.createElement('li');
+              li.innerHTML = `<a class="text-blue-700 break-all" href="${href}" target="_blank" rel="noopener">${href}</a>
+                <span class="text-xs text-neutral-500 ml-2">score: ${s.toFixed(2)}</span>`;
+              list.appendChild(li);
+            }
+            tdTo.appendChild(list);
+          }
+          tr.appendChild(tdFrom);
+          tr.appendChild(tdTo);
+          tbody.appendChild(tr);
+          totalPairs += picks.length;
+        }
+
+        emptyState.classList.add('hidden');
+        resultsWrap.classList.remove('hidden');
+        setStatus(`Færdig – genererede ${totalPairs} linkforslag.`);
+      });
+
+      // ----- Download -----
+      btnCSV.addEventListener('click', () => {
+        if (!tbody.children.length) return alert("Der er ingen resultater at downloade endnu.");
+        const rows = [["from_url","to_url","score"]];
+        for (const tr of tbody.children) {
+          const from = tr.children[0].innerText.trim();
+          const items = tr.children[1].querySelectorAll('li');
+          if (items.length === 0) {
+            rows.push([from, "", ""]);
+            continue;
+          }
+          for (const li of items) {
+            const a = li.querySelector('a');
+            const score = (li.querySelector('span')?.textContent || "").replace("score:","").trim();
+            rows.push([from, a ? a.href : "", score]);
+          }
+        }
+        const csv = rows.map(r => r.map(csvEscape).join(";")).join("\n");
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "internal-link-suggestions.csv"; a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      btnJSON.addEventListener('click', () => {
+        if (!tbody.children.length) return alert("Der er ingen resultater at downloade endnu.");
+        const out = [];
+        for (const tr of tbody.children) {
+          const from = tr.children[0].innerText.trim();
+          const items = tr.children[1].querySelectorAll('li');
+          const to = [];
+          for (const li of items) {
+            const a = li.querySelector('a');
+            const score = Number((li.querySelector('span')?.textContent || "").replace("score:","").trim());
+            if (a) to.push({ url: a.href, score });
+          }
+          out.push({ from, suggestions: to });
+        }
+        const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "internal-link-suggestions.json"; a.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>
