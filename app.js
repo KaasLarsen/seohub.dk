@@ -1,5 +1,5 @@
-// /app.js — Seohub: stor blå hero (3 ikoner) + partnere + alle værktøjer + kontakt
-const { createElement: h, useState, useMemo } = React;
+// /app.js — Seohub: stor blå hero (3 ikoner) + sponsorerede samarbejdspartnere (logoer) + alle værktøjer + kontakt
+const { createElement: h, useState, useMemo, useRef, useEffect } = React;
 
 /* ---------- UI helpers ---------- */
 function Section({ title, children, className="" }) {
@@ -86,38 +86,55 @@ function Hero() {
   );
 }
 
-/* ---------- Partnersektion (Sponsoreret) ---------- */
+/* ---------- Partnersektion (Sponsorerede samarbejdspartnere m. logoer) ---------- */
 function PartnersSection() {
   const partners = [
     {
       name: "AI Links",
       href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555",
-      tagline: "AI-drevne backlinks – smartere linkbuilding til SEO."
+      tagline: "AI-drevne backlinks – smartere linkbuilding til SEO.",
+      logo: "/assets/logos/ai-links.png"
     },
     {
       name: "Nemlinkbuilding.dk",
       href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=87346",
-      tagline: "Kvalitetslinks uden bøvl – nem bestilling og hurtig levering."
+      tagline: "Kvalitetslinks uden bøvl – nem bestilling og hurtig levering.",
+      logo: "/assets/logos/nemlinkbuilding.png"
     },
     {
       name: "CLKWEB",
       href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=99810",
-      tagline: "E-commerce & Magento-eksperter – få en shop der performer."
+      tagline: "E-commerce & Magento-eksperter – få en shop der performer.",
+      logo: "/assets/logos/clkweb.png"
     }
   ];
-  const Icon = ({ text }) => {
-    const initials = (text||"").split(/\s|-/).map(s=>s[0]?.toUpperCase()).filter(Boolean).slice(0,3).join('');
-    return h("span", { className:"mx-auto mb-3 inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-600 text-white font-semibold" }, initials);
+
+  // fallback hvis et logo fejler: skjul billedet og vis initialer
+  const Logo = ({ src, alt }) => {
+    const imgRef = useRef(null);
+    const [err, setErr] = useState(false);
+    useEffect(()=>{ setErr(false); }, [src]);
+    return err
+      ? h("span", { className:"mx-auto mb-3 inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-600 text-white font-semibold" },
+          (alt||"").split(/\s|-/).map(s=>s[0]?.toUpperCase()).filter(Boolean).slice(0,3).join('') || "SE")
+      : h("img", {
+          ref: imgRef,
+          src, alt,
+          className:"mx-auto mb-3 h-12 object-contain",
+          loading:"lazy",
+          onError:()=>setErr(true)
+        });
   };
+
   return h("section", { className:"max-w-6xl mx-auto px-4" },
     h("div", { className:"bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100" }, [
-      h("h2", { key:"h", className:"text-2xl font-bold mb-6 text-center" }, "Vores partnere"),
+      h("h2", { key:"h", className:"text-2xl font-bold mb-6 text-center" }, "Sponsorerede samarbejdspartnere"),
       h("div", { key:"g", className:"grid grid-cols-1 md:grid-cols-3 gap-6" },
         partners.map((p,i)=>
           h("div", { key:i, className:"border rounded-2xl shadow hover:shadow-lg transition p-5 text-center" }, [
             h("span", { className:"text-[11px] uppercase tracking-wide text-neutral-500 block mb-2" }, "Sponsoreret"),
-            h("a", { href:p.href, target:"_blank", rel:"sponsored noopener", className:"block focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-xl" }, [
-              h(Icon, { text:p.name }),
+            h("a", { href:p.href, target:"_blank", rel:"sponsored noopener", className:"block focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-xl p-2" }, [
+              h(Logo, { src:p.logo, alt:p.name }),
               h("h3", { className:"text-lg font-semibold mb-1" }, p.name),
               h("p", { className:"text-sm text-neutral-600" }, p.tagline)
             ])
