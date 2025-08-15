@@ -1,24 +1,32 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <script src="/assets/include-header.js" defer></script>
-    <script src="/assets/consent-analytics.js" defer></script>
     <meta charset="utf-8" />
-    <title>Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS | Seohub</title>
+    <title>Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS – Seohub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Opdateret guide til Core Web Vitals i 2025 – lær at optimere LCP, INP og CLS med praktiske, tekniske forbedringer og værktøjer." />
-    <meta property="og:title" content="Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS" />
-    <meta property="og:description" content="Forbedr din sides hastighed og brugeroplevelse med konkrete tips til Core Web Vitals: LCP, INP og CLS." />
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content="/og-image.png" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <script src="/assets/consent-analytics.js" defer></script>
+    <meta name="description" content="Hurtige, konkrete forbedringer for performance: billedoptimering, caching, JS-split og font-loading. Løft LCP, INP og CLS i 2025." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://seohub.dk/blog/core-web-vitals-2025.html" />
+
+    <script src="/assets/include-header.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Article",
+      "headline":"Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS",
+      "description":"Hurtige, konkrete forbedringer for performance: billedoptimering, caching, JS-split og font-loading.",
+      "author":{"@type":"Person","name":"Seohub"},
+      "publisher":{"@type":"Organization","name":"Seohub","logo":{"@type":"ImageObject","url":"https://seohub.dk/favicon.svg"}},
+      "mainEntityOfPage":"https://seohub.dk/blog/core-web-vitals-2025.html",
+      "datePublished":"2025-08-13",
+      "dateModified":"2025-08-15"
+    }
+    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-
-    <!-- Header -->
-    <header class="border-b bg-white/80 backdrop-blur">
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
       <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
         <a href="/" class="font-semibold">Seohub.dk</a>
         <nav class="text-sm text-neutral-600 space-x-4">
@@ -26,83 +34,50 @@
           <a href="/serp-preview.html">SERP</a>
           <a href="/robots-generator.html">Robots</a>
           <a href="/sitemap-generator.html">Sitemap</a>
-          <a href="/blog/" class="text-blue-600 font-medium underline underline-offset-4">Blog</a>
+          <a href="/internal-link-builder.html">Intern links</a>
+          <a href="/blog/">Blog</a>
         </nav>
       </div>
     </header>
 
-    <main class="max-w-6xl mx-auto p-4">
-      <!-- Hero -->
-      <section class="rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
-               style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
-        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-          Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS
-        </h1>
-        <p class="text-blue-100 text-base md:text-lg max-w-3xl">
-          Core Web Vitals er Googles vigtigste hastigheds- og oplevelsesfaktorer.  
-          Her får du en opdateret 2025-guide med konkrete forbedringer.
-        </p>
-      </section>
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-20 text-white shadow-lg" style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS</h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">Konkrete, testede tiltag der ofte flytter nålen på få dage.</p>
+        </div>
+      </div>
+    </section>
 
-      <!-- Brødtekst -->
-      <article class="prose prose-neutral max-w-none">
-        <p class="text-sm text-neutral-500">Opdateret: 14. august 2025 • Læsetid: 6–8 min</p>
+    <main class="max-w-3xl mx-auto px-4 pb-16">
+      <article class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <p class="text-sm text-neutral-500 mb-6">Opdateret: 15. august 2025 • Læsetid: 8 min</p>
 
-        <h2>Hvad er Core Web Vitals i 2025?</h2>
-        <p>
-          Core Web Vitals består i år af tre målepunkter: <strong>LCP</strong> (Largest Contentful Paint), 
-          <strong>INP</strong> (Interaction to Next Paint) og <strong>CLS</strong> (Cumulative Layout Shift).  
-          De måler henholdsvis hastighed, interaktivitet og visuel stabilitet.
-        </p>
-
-        <h2>LCP – Largest Contentful Paint</h2>
-        <p><strong>Mål:</strong> LCP under 2,5 sekunder.</p>
-        <ul>
-          <li>Optimer store billeder (komprimering, moderne formater som WebP/AVIF).</li>
-          <li>Lazy-load billeder under folden.</li>
-          <li>Brug hurtigere hosting eller CDN til tunge ressourcer.</li>
+        <h2 class="text-2xl font-semibold mb-3">Hurtige gevinster</h2>
+        <ul class="list-disc pl-5 text-neutral-700 space-y-2">
+          <li><strong>Billedoptimering:</strong> moderne formater (AVIF/WebP), width/height, lazy-load under fold.</li>
+          <li><strong>JS-split:</strong> indlæs kun det, der bruges på siden (code-splitting, defer).</li>
+          <li><strong>Cache-headers:</strong> langt cache for statiske assets.</li>
+          <li><strong>Font-loading:</strong> preconnect + font-display: swap.</li>
         </ul>
 
-        <h2>INP – Interaction to Next Paint</h2>
-        <p><strong>Mål:</strong> INP under 200 ms.</p>
-        <ul>
-          <li>Reducer tung JavaScript – split op og indlæs kun nødvendigt JS.</li>
-          <li>Fjern unødvendige 3. parts scripts (tracking, widgets).</li>
-          <li>Brug <code>requestIdleCallback</code> eller async loading til ikke-kritiske scripts.</li>
-        </ul>
+        <h2 class="text-2xl font-semibold mt-8 mb-3">Mål og monitorér</h2>
+        <p class="text-neutral-700 mb-4">Brug PageSpeed Insights, Lighthouse og CrUX. Mål både lab og field data.</p>
 
-        <h2>CLS – Cumulative Layout Shift</h2>
-        <p><strong>Mål:</strong> CLS under 0,1.</p>
-        <ul>
-          <li>Angiv faste størrelser for billeder og video-elementer i HTML/CSS.</li>
-          <li>Undgå dynamiske elementer, der skubber indhold ned, uden foruddefineret plads.</li>
-          <li>Indlæs skrifttyper korrekt for at undgå layout hop.</li>
-        </ul>
-
-        <h2>Sådan tester du dine Core Web Vitals</h2>
-        <ul>
-          <li>Google PageSpeed Insights (PSI).</li>
-          <li>Chrome Lighthouse.</li>
-          <li>Google Search Console → Core Web Vitals rapport.</li>
-        </ul>
-
-        <h2>Quick wins</h2>
-        <div class="my-6 p-5 rounded-2xl border bg-white shadow-sm">
-          <ul class="list-disc pl-5">
-            <li>Konverter billeder til WebP.</li>
-            <li>Brug preload på de vigtigste skrifttyper.</li>
-            <li>Fjern eller udskyd tunge scripts.</li>
-            <li>Brug en moderne caching-strategi (service workers, edge caching).</li>
+        <div class="mt-8 p-5 rounded-xl bg-neutral-50 border">
+          <p class="mb-1"><strong>Relaterede værktøjer</strong></p>
+          <ul class="list-disc pl-5 text-neutral-700">
+            <li><a class="text-blue-700 underline" href="/sitemap-generator.html">Sitemap generator</a></li>
+            <li><a class="text-blue-700 underline" href="/serp-preview.html">SERP & Meta preview</a></li>
+            <li><a class="text-blue-700 underline" href="/internal-link-builder.html">Intern Link Builder</a></li>
           </ul>
         </div>
 
-        <p>
-          For mere teknisk dybde, læs også vores <a href="/blog/sitemap-fejl-du-skal-undga.html" class="text-blue-600">guide til teknisk SEO</a>.
-        </p>
+        <hr class="my-8 border-neutral-200" />
+        <p class="text-sm text-neutral-500">Kategori: Teknisk SEO • Tags: performance, CWV, hastighed</p>
       </article>
     </main>
 
-    <!-- Footer -->
     <footer class="mt-12 border-t bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
         <p>© 2025 Seohub – seohub.dk</p>
