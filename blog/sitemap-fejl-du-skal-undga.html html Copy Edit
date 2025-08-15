@@ -7,31 +7,10 @@
     <meta name="description" content="Sitemaps hjælper Google – men små fejl kan bremse crawling og indeksering. Se de 7 typiske fejl og de hurtige løsninger." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="canonical" href="https://seohub.dk/blog/sitemap-fejl-du-skal-undga.html" />
-
-    <!-- Fælles header/GA/cookie-banner -->
     <script src="/assets/include-header.js" defer></script>
-
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Article JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"Article",
-      "headline":"De 7 mest almindelige sitemap-fejl (og hurtige fixes)",
-      "description":"Sitemaps hjælper Google – men små fejl kan bremse crawling og indeksering. Her er de 7 typiske fejl og de hurtige løsninger.",
-      "author":{"@type":"Person","name":"Seohub"},
-      "publisher":{"@type":"Organization","name":"Seohub","logo":{"@type":"ImageObject","url":"https://seohub.dk/favicon.svg"}},
-      "mainEntityOfPage":"https://seohub.dk/blog/sitemap-fejl-du-skal-undga.html",
-      "datePublished":"2025-08-13",
-      "dateModified":"2025-08-15"
-    }
-    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-
-    <!-- Header (statisk) -->
     <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
       <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
         <a href="/" class="font-semibold">Seohub.dk</a>
@@ -46,7 +25,6 @@
       </div>
     </header>
 
-    <!-- HERO (samme stil som forsiden) -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-20 text-white shadow-lg"
@@ -61,7 +39,6 @@
       </div>
     </section>
 
-    <!-- CONTENT -->
     <main class="max-w-3xl mx-auto px-4 pb-16">
       <article class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <p class="text-sm text-neutral-500 mb-6">Opdateret: 15. august 2025 • Læsetid: 7 min</p>
@@ -83,7 +60,7 @@
         <p class="text-neutral-700 mb-3">Google bruger <code>lastmod</code> som signal for ændringer.</p>
         <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Opdater <code>&lt;lastmod&gt;</code> når der reelt er ændret indhold.</div>
 
-        <h2 class="text-2xl font-semibold mt-8 mb-3">4) Inkluderer noindex-/noindexerede sider</h2>
+        <h2 class="text-2xl font-semibold mt-8 mb-3">4) Inkluderer noindex-sider</h2>
         <p class="text-neutral-700 mb-3">Sider markeret med <code>noindex</code> bør ikke være i sitemappet.</p>
         <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Rens sitemappet og hold robots/meta-tags og sitemap i sync.</div>
 
@@ -99,29 +76,11 @@
         <p class="text-neutral-700 mb-3">Ét sitemap må max indeholde 50.000 URL’er eller 50 MB ukomprimeret.</p>
         <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Split op i flere sitemaps og brug et <strong>sitemap-indeks</strong>.</div>
 
-        <h2 class="text-2xl font-semibold mt-10 mb-3">Tjekliste</h2>
-        <ul class="list-disc pl-5 space-y-2 text-neutral-700">
-          <li>Kun kanoniske, live 200-URL’er.</li>
-          <li>Ensartet https + host.</li>
-          <li>Korrekt XML + namespace.</li>
-          <li>Opdateret <code>lastmod</code> for ændrede sider.</li>
-        </ul>
-
-        <div class="mt-8 p-5 rounded-xl bg-neutral-50 border">
-          <p class="mb-1"><strong>Relaterede værktøjer</strong></p>
-          <ul class="list-disc pl-5 text-neutral-700">
-            <li><a class="text-blue-700 underline" href="/sitemap-generator.html">Sitemap.xml generator</a></li>
-            <li><a class="text-blue-700 underline" href="/serp-preview.html">SERP & Meta preview</a></li>
-            <li><a class="text-blue-700 underline" href="/internal-link-builder.html">Intern Link Builder</a></li>
-          </ul>
-        </div>
-
         <hr class="my-8 border-neutral-200" />
         <p class="text-sm text-neutral-500">Kategori: Teknisk SEO • Tags: sitemap, indeksering, crawling</p>
       </article>
     </main>
 
-    <!-- Footer (statisk) -->
     <footer class="mt-12 border-t bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
         <p>© 2025 Seohub – seohub.dk</p>
