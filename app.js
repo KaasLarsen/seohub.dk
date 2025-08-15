@@ -1,4 +1,4 @@
-// /app.js — Seohub SPA med header, footer og Intern Link Builder-kort
+// /app.js — Seohub SPA med Hero (ikonknapper), header, footer og alle værktøjer
 const { useState, useMemo } = React;
 
 /* ---------- UI helpers ---------- */
@@ -81,7 +81,7 @@ function Header() {
         React.createElement("a", { key:"n2", href:"/serp-preview.html" }, "SERP"),
         React.createElement("a", { key:"n3", href:"/robots-generator.html" }, "Robots"),
         React.createElement("a", { key:"n4", href:"/sitemap-generator.html" }, "Sitemap"),
-        React.createElement("a", { key:"n5", href:"/internal-link-builder.html" }, "Intern links"),
+        React.createElement("a", { key:"n7", href:"/internal-link-builder.html" }, "Intern links"),
         React.createElement("a", { key:"n6", href:"/blog/" }, "Blog"),
       ])
     ])
@@ -95,6 +95,69 @@ function Footer() {
         React.createElement("a", { key:"b", className:"hover:underline", href:"/blog/" }, "Blog"),
         React.createElement("a", { key:"p", className:"hover:underline", href:"/privatliv-cookies.html" }, "Privatliv & cookies"),
         React.createElement("a", { key:"k", className:"hover:underline", href:"mailto:info@seohub.dk" }, "Kontakt")
+      ])
+    ])
+  );
+}
+
+/* ---------- Fancy Hero med klikbare ikonknapper ---------- */
+function Icon({ name, className }) {
+  // simple inline SVGs (no external deps)
+  const base = { className: "w-6 h-6 " + (className || "") , fill:"none", stroke:"currentColor", strokeWidth:"1.8", strokeLinecap:"round", strokeLinejoin:"round" };
+  switch (name) {
+    case "serp":
+      return React.createElement("svg", base,
+        React.createElement("path", { d:"M4 6h16M4 10h10M4 14h8M4 18h6" })
+      );
+    case "robot":
+      return React.createElement("svg", base,
+        React.createElement("path", { d:"M8 9h8v8H8zM12 5v4M6 13H4m16 0h-2M10 12h.01M14 12h.01M8 17v2m8-2v2" })
+      );
+    case "sitemap":
+      return React.createElement("svg", base,
+        React.createElement("path", { d:"M12 6v6M8 18h8M6 12h12M8 6h8M6 18v0M18 18v0" })
+      );
+    case "links":
+      return React.createElement("svg", base,
+        React.createElement("path", { d:"M10 13a5 5 0 0 1 0-7l1.5-1.5a5 5 0 0 1 7 7L17 13" }),
+        React.createElement("path", { d:"M14 11a5 5 0 0 1 0 7L12.5 19.5a5 5 0 1 1-7-7L7 11" })
+      );
+    default:
+      return null;
+  }
+}
+function Hero() {
+  return React.createElement("section",
+    {
+      className:"rounded-none md:rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8",
+      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" }
+    },
+    React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
+      React.createElement("h1", { key:"h", className:"text-3xl md:text-5xl font-bold mb-3 leading-tight" }, "Gratis SEO værktøjer"),
+      React.createElement("p", { key:"p", className:"text-blue-100 text-base md:text-lg max-w-3xl mb-6" },
+        "Vælg et værktøj – ingen login, ingen installation. Pænt, hurtigt og praktisk."),
+      // ikonknapper
+      React.createElement("div", { key:"cta", className:"grid grid-cols-2 sm:grid-cols-4 gap-3" }, [
+        React.createElement("a", { key:"serp", href:"/serp-preview.html",
+          className:"group flex items-center gap-2 px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition shadow" },
+          [React.createElement(Icon, { key:"i", name:"serp", className:"text-white" }),
+           React.createElement("span", { key:"t", className:"font-medium" }, "SERP & Meta")]
+        ),
+        React.createElement("a", { key:"robot", href:"/robots-generator.html",
+          className:"group flex items-center gap-2 px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition shadow" },
+          [React.createElement(Icon, { key:"i", name:"robot", className:"text-white" }),
+           React.createElement("span", { key:"t", className:"font-medium" }, "Robots.txt")]
+        ),
+        React.createElement("a", { key:"site", href:"/sitemap-generator.html",
+          className:"group flex items-center gap-2 px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition shadow" },
+          [React.createElement(Icon, { key:"i", name:"sitemap", className:"text-white" }),
+           React.createElement("span", { key:"t", className:"font-medium" }, "Sitemap.xml")]
+        ),
+        React.createElement("a", { key:"links", href:"/internal-link-builder.html",
+          className:"group flex items-center gap-2 px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition shadow" },
+          [React.createElement(Icon, { key:"i", name:"links", className:"text-white" }),
+           React.createElement("span", { key:"t", className:"font-medium" }, "Intern links")]
+        ),
       ])
     ])
   );
@@ -357,19 +420,10 @@ function ContactForm() {
 function App() {
   return React.createElement(React.Fragment, null, [
     React.createElement(Header, { key:"header" }),
+    React.createElement(Hero, { key:"hero" }),
 
-    // Hero (blå gradient)
-    React.createElement("section", { key:"hero", className:"rounded-none md:rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8",
-      style:{ background: "linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)" } },
-      React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
-        React.createElement("h1", { key:"h", className:"text-3xl md:text-5xl font-bold mb-3 leading-tight" }, "Gratis SEO værktøjer"),
-        React.createElement("p", { key:"p", className:"text-blue-100 text-base md:text-lg max-w-3xl" },
-          "Vælg et værktøj herunder – ingen login, ingen installation.")
-      ])
-    ),
-
-    // Tool cards (links til undersider) — nu med Intern Link Builder
     React.createElement("main", { key:"main", className:"max-w-6xl mx-auto p-4 space-y-8" }, [
+      // Kort-grid (link til undersider)
       React.createElement("section", { key:"grid", className:"grid md:grid-cols-4 gap-4" }, [
         React.createElement("a", { key:"k", className:"rounded-2xl border p-4 bg-white hover:shadow", href:"/serp-preview.html" },
           [React.createElement("h2", { key:"t", className:"font-semibold" }, "SERP & Meta"), React.createElement("p", { key:"d", className:"text-sm text-neutral-600" }, "Forhåndsvisning + længde-tjek.")]
