@@ -7,13 +7,28 @@
     <meta name="description" content="Seneste SEO-guides, tjeklister og værktøjsnyheder fra Seohub." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <!-- Fælles header/GA/cookie/nav/footer -->
+    <!-- Fælles header/GA/cookie (må gerne blive) -->
     <script src="/assets/include-header.js" defer></script>
 
     <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Header (statisk – samme som forsiden) -->
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+          <a href="/internal-link-builder.html">Intern links</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+      </div>
+    </header>
 
     <!-- HERO (samme stil som forsiden, max width) -->
     <section class="py-10 md:py-14">
@@ -42,7 +57,19 @@
       </section>
     </main>
 
+    <!-- Footer (statisk – samme som forsiden) -->
+    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
+      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
+        <p>© 2025 Seohub – seohub.dk</p>
+        <nav class="flex items-center gap-4">
+          <a class="hover:underline" href="/blog/">Blog</a>
+          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
+          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
+        </nav>
+      </div>
+    </footer>
+
     <!-- Ekstern JS (CSP-venlig) -->
-    <script src="/assets/blog-page.js?v=1" defer></script>
+    <script src="/assets/blog-page.js?v=2" defer></script>
   </body>
 </html>
