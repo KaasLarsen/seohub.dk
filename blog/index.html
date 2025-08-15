@@ -7,7 +7,7 @@
     <meta name="description" content="Seneste SEO-guides, tjeklister og værktøjsnyheder fra Seohub." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <!-- Fælles header/GA/cookie/nav -->
+    <!-- Fælles header/GA/cookie/nav/footer -->
     <script src="/assets/include-header.js" defer></script>
 
     <!-- UI -->
@@ -42,89 +42,7 @@
       </section>
     </main>
 
-    <!-- Inline modul: loader posts.json med robust fallback -->
-    <script type="module">
-      const grid = document.getElementById('blog-grid');
-      const status = document.getElementById('blog-status');
-
-      const showError = (msg) => {
-        status.textContent = msg;
-        status.className = "text-sm text-red-700 mb-4";
-      };
-      const clearStatus = () => { status.textContent = ""; status.className = "text-sm text-neutral-600 mb-4"; };
-
-      async function loadPosts() {
-        // 1) Prøv JSON module import (hurtigt og simpelt)
-        try {
-          const mod = await import('/blog/posts.json', { assert: { type: 'json' } });
-          return mod.default;
-        } catch (e) {
-          // 2) Fallback til fetch (hvis browseren ikke kan JSON modules)
-          try {
-            const res = await fetch('/blog/posts.json?ts=' + Date.now(), { cache: 'no-store' });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            return await res.json();
-          } catch (fetchErr) {
-            throw e; // boble original import-fejl (eller fetch-fejl) op
-          }
-        }
-      }
-
-      function render(posts) {
-        if (!Array.isArray(posts) || posts.length === 0) {
-          showError('Ingen indlæg fundet. Tilføj objekter i /blog/posts.json.');
-          return;
-        }
-        // sortér seneste først
-        posts.sort((a,b) => String(b.date).localeCompare(String(a.date)));
-
-        const frag = document.createDocumentFragment();
-        for (const p of posts) {
-          const href = `/blog/${p.slug}.html`;
-          const card = document.createElement('a');
-          card.href = href;
-          card.className = "rounded-2xl border p-4 bg-white hover:shadow transition flex flex-col";
-
-          const title = document.createElement('h3');
-          title.className = "font-semibold mb-2";
-          title.textContent = p.title || p.slug;
-
-          const meta = document.createElement('p');
-          meta.className = "text-xs text-neutral-500 mb-2";
-          meta.textContent = p.date ? new Date(p.date).toLocaleDateString('da-DK', { year:'numeric', month:'long', day:'numeric' }) : '';
-
-          const excerpt = document.createElement('p');
-          excerpt.className = "text-sm text-neutral-700 flex-1";
-          excerpt.textContent = p.excerpt || '';
-
-          const tagsWrap = document.createElement('div');
-          tagsWrap.className = "mt-3 flex flex-wrap gap-2";
-          (p.tags || []).slice(0,4).forEach(t => {
-            const tag = document.createElement('span');
-            tag.className = "text-xs px-2 py-1 rounded-full bg-neutral-100 border";
-            tag.textContent = t;
-            tagsWrap.appendChild(tag);
-          });
-
-          card.appendChild(title);
-          if (meta.textContent) card.appendChild(meta);
-          card.appendChild(excerpt);
-          if (tagsWrap.childNodes.length) card.appendChild(tagsWrap);
-
-          frag.appendChild(card);
-        }
-        grid.innerHTML = "";
-        grid.appendChild(frag);
-        clearStatus();
-      }
-
-      try {
-        const posts = await loadPosts();
-        render(posts);
-      } catch (err) {
-        console.error(err);
-        showError('Kunne ikke hente blogindlæg. Åbn /blog/posts.json i browseren og tjek at filen findes og er gyldig JSON.');
-      }
-    </script>
+    <!-- Ekstern JS (CSP-venlig) -->
+    <script src="/assets/blog-page.js?v=1" defer></script>
   </body>
 </html>
