@@ -1,26 +1,38 @@
 <!doctype html>
 <html lang="da">
   <head>
-<script src="/assets/include-header.js" defer></script>
-<script src="/assets/consent-analytics.js" defer></script>
     <meta charset="utf-8" />
-    <title>De 7 mest almindelige sitemap-fejl (og hurtige fixes) | Seohub</title>
+    <title>De 7 mest almindelige sitemap-fejl (og hurtige fixes) – Seohub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Sitemaps hjælper Google – men små fejl kan bremse crawling. Se de 7 typiske sitemap-fejl og lær de hurtige fixes. Inkl. eksempler og værktøjer." />
-    <meta property="og:title" content="De 7 mest almindelige sitemap-fejl (og hurtige fixes)" />
-    <meta property="og:description" content="Undgå fejl i dit sitemap.xml. Tjek vores liste over 7 klassikere og lær de hurtige fixes – så Google crawler mere stabilt." />
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content="/og-image.png" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Consent + GA -->
-    <script src="/assets/consent-analytics.js" defer></script>
+    <meta name="description" content="Sitemaps hjælper Google – men små fejl kan bremse crawling og indeksering. Se de 7 typiske fejl og de hurtige løsninger." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://seohub.dk/blog/sitemap-fejl-du-skal-undga.html" />
+
+    <!-- Fælles header/GA/cookie-banner -->
+    <script src="/assets/include-header.js" defer></script>
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Article JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Article",
+      "headline":"De 7 mest almindelige sitemap-fejl (og hurtige fixes)",
+      "description":"Sitemaps hjælper Google – men små fejl kan bremse crawling og indeksering. Her er de 7 typiske fejl og de hurtige løsninger.",
+      "author":{"@type":"Person","name":"Seohub"},
+      "publisher":{"@type":"Organization","name":"Seohub","logo":{"@type":"ImageObject","url":"https://seohub.dk/favicon.svg"}},
+      "mainEntityOfPage":"https://seohub.dk/blog/sitemap-fejl-du-skal-undga.html",
+      "datePublished":"2025-08-13",
+      "dateModified":"2025-08-15"
+    }
+    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    <!-- Header -->
-    <header class="border-b bg-white/80 backdrop-blur">
+    <!-- Header (statisk) -->
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
       <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
         <a href="/" class="font-semibold">Seohub.dk</a>
         <nav class="text-sm text-neutral-600 space-x-4">
@@ -28,128 +40,88 @@
           <a href="/serp-preview.html">SERP</a>
           <a href="/robots-generator.html">Robots</a>
           <a href="/sitemap-generator.html">Sitemap</a>
-          <a href="/blog/" class="text-blue-600 font-medium underline underline-offset-4">Blog</a>
+          <a href="/internal-link-builder.html">Intern links</a>
+          <a href="/blog/">Blog</a>
         </nav>
       </div>
     </header>
 
-    <main class="max-w-6xl mx-auto p-4">
-      <!-- Hero -->
-      <section class="rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
-               style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
-        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-          De 7 mest almindelige sitemap-fejl (og hurtige fixes)
-        </h1>
-        <p class="text-blue-100 text-base md:text-lg max-w-3xl">
-          Et rent sitemap hjælper Google med at forstå dine vigtigste sider. Her er fejlene, der oftest
-          bremser crawling – og præcis hvordan du retter dem. Brug evt. vores
-          <a href="/sitemap-generator.html" class="underline text-white/90 hover:text-white">sitemap-generator</a>.
-        </p>
-      </section>
-
-      <!-- Brødtekst -->
-      <article class="prose prose-neutral max-w-none">
-        <p class="text-sm text-neutral-500">Opdateret: 14. august 2025 • Læsetid: 7–9 min</p>
-
-        <h2>Hvorfor et korrekt sitemap betyder noget</h2>
-        <p>
-          Et <code>sitemap.xml</code> er ikke en garanti for bedre rangeringer, men det gør Googles arbejde lettere:
-          tydelig prioritering, færre blinde vinkler og hurtigere forståelse af nye/ændrede sider. Når sitemap’et er
-          fyldt med fejl, ignoreres det ofte – og du mister fordelen.
-        </p>
-
-        <h2>1) Fejl: Ikke-200 URL’er i sitemap</h2>
-        <p>
-          Sider, der returnerer <code>404</code>, <code>301/302</code>, <code>500</code> eller er blokeret af robots.txt, bør ikke ligge i sitemap’et.
-          Google forventer <strong>kanoniske 200-sider</strong>.
-        </p>
-        <p><strong>Fix:</strong> Rens URL-listen jævnligt. Sørg for, at alle URL’er svarer 200 og ikke er noindex/blokerede.</p>
-
-        <h2>2) Fejl: HTTP i stedet for HTTPS</h2>
-        <p>
-          Hvis sitet kører på HTTPS, skal sitemap’et også pege på HTTPS-URL’er. Blandet indhold skaber støj.
-        </p>
-        <p><strong>Fix:</strong> Tjek dine skabeloner/auto-generator. Opdater base-URL til <code>https://</code>.</p>
-
-        <h2>3) Fejl: Ikke-kanoniske URL’er</h2>
-        <p>
-          Parametre, alternative stier eller dubletter i sitemap’et skaber forvirring. Kun <strong>kanonisk URL</strong> bør med.
-        </p>
-        <p><strong>Fix:</strong> Brug altid den URL, som din side selv deklarerer som kanonisk.</p>
-
-        <h2>4) Fejl: For mange tynde eller irrelevante sider</h2>
-        <p>
-          Sitemap’et er ikke et arkiv over alt. Læg fokus på sider, der <em>bør</em> indekseres (trafik, intent, værdi).
-        </p>
-        <p><strong>Fix:</strong> Udelad tag-arkiver, filtre, test-sider, paginering (som udgangspunkt) osv., medmindre de har selvstændig værdi.</p>
-
-        <h2>5) Fejl: Manglende opdeling i sitemap-indeks</h2>
-        <p>
-          Store sites (>50.000 URL’er eller >50MB pr. fil) kræver et <strong>sitemap-indeks</strong> som peger på flere sitemap-filer.
-        </p>
-        <p><strong>Fix:</strong> Brug et indeks (<code>sitemap_index.xml</code>) og split efter sektioner (fx /blog/, /produkter/, /kategorier/).</p>
-
-        <h2>6) Fejl: Forkert <code>&lt;lastmod&gt;</code> – eller slet ingen</h2>
-        <p>
-          <code>&lt;lastmod&gt;</code> hjælper søgemaskiner med at prioritere crawl. Ingen eller misvisende datoer kan koste crawl-budget.
-        </p>
-        <p><strong>Fix:</strong> Sæt korrekt dato (ISO, fx <code>2025-08-14</code>) ved reelle ændringer.</p>
-
-        <h2>7) Fejl: Sitemap ikke indsendt eller ikke refereret</h2>
-        <p>
-          Google kan finde dit sitemap, men hjælp det på vej: indsend i Search Console og link til det i <code>robots.txt</code>.
-        </p>
-        <p><strong>Fix:</strong> Indsend på <em>Indeksering &gt; Sitemaps</em> i Search Console. Tilføj <code>Sitemap: https://ditdomæne.dk/sitemap.xml</code> i robots.txt.</p>
-
-        <h2>Tjekliste: sådan får du et sundt sitemap</h2>
-        <ul>
-          <li>Kun 200/kanoniske/indekserbare URL’er (HTTPS).</li>
-          <li>Ingen duplikater, parametre eller test-sider.</li>
-          <li>Rimelig prioritering: kun sider med reel værdi.</li>
-          <li><code>&lt;lastmod&gt;</code> sat korrekt på opdaterede sider.</li>
-          <li>Split i indeks, hvis du har mange URL’er.</li>
-          <li>Indsend i Search Console og angiv i robots.txt.</li>
-        </ul>
-
-        <h2>Eksempel på minimalt gyldigt sitemap.xml</h2>
-        <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
-  &lt;url&gt;
-    &lt;loc&gt;https://seohub.dk/&lt;/loc&gt;
-    &lt;lastmod&gt;2025-08-14&lt;/lastmod&gt;
-    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
-    &lt;priority&gt;0.8&lt;/priority&gt;
-  &lt;/url&gt;
-  &lt;url&gt;
-    &lt;loc&gt;https://seohub.dk/blog/&lt;/loc&gt;
-    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
-    &lt;priority&gt;0.6&lt;/priority&gt;
-  &lt;/url&gt;
-&lt;/urlset&gt;
-</code></pre>
-
-        <h2>Værktøjer der hjælper</h2>
-        <ul>
-          <li><a class="text-blue-600" href="/sitemap-generator.html">Sitemap-generator</a> – generér korrekt XML fra en liste af URL’er.</li>
-          <li><a class="text-blue-600" href="/robots-generator.html">Robots.txt-generator</a> – tilføj Sitemap-linjen korrekt.</li>
-          <li><a class="text-blue-600" href="/serp-preview.html">SERP &amp; Meta-preview</a> – når du retter titler og beskrivelser.</li>
-        </ul>
-
-        <div class="my-8 p-5 rounded-2xl border bg-white shadow-sm">
-          <h3 class="font-semibold mb-2">Pro tip: dynamisk sitemap på Seohub</h3>
-          <p class="text-sm">
-            Kører du et statisk site? Overvej at generere sitemap dynamisk ud fra din post-liste, så nye indlæg altid kommer med.
-            Det reducerer manuelt arbejde og fejl i længden.
+    <!-- HERO (samme stil som forsiden) -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-20 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
+            De 7 mest almindelige sitemap-fejl (og hurtige fixes)
+          </h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Sitemaps hjælper Google – men små fejl kan bremse crawling og indeksering. Sådan retter du dem hurtigt.
           </p>
         </div>
+      </div>
+    </section>
 
-        <p class="text-sm text-neutral-600">
-          Spørgsmål eller sparring? Brug <a href="/#kontakt" class="text-blue-600">kontaktformularen</a> nederst på forsiden.
+    <!-- CONTENT -->
+    <main class="max-w-3xl mx-auto px-4 pb-16">
+      <article class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <p class="text-sm text-neutral-500 mb-6">Opdateret: 15. august 2025 • Læsetid: 7 min</p>
+
+        <p class="mb-6 text-neutral-700">
+          Et korrekt <code>sitemap.xml</code> gør det nemmere for søgemaskiner at opdage og forstå dine vigtigste sider.
+          Men fejl i format, URL’er eller opdateringer kan betyde, at Google ignorerer det. Her er de hyppigste fejl – og løsningerne.
         </p>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">1) Ikke-kanoniske eller mix af http/https</h2>
+        <p class="text-neutral-700 mb-3">Alle URL’er i sitemappet skal pege på den <em>kanoniske</em> version og samme protokol (typisk <code>https</code>).</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Brug kun <strong>https</strong> og den samme host overalt. Tjek dine redirects.</div>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">2) URL’er der returnerer 3xx/4xx/5xx</h2>
+        <p class="text-neutral-700 mb-3">Sitemappet skal kun indeholde gyldige <strong>200</strong>-sider.</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Kør en crawl (fx Screaming Frog) og fjern/ret fejlende URL’er.</div>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">3) Forældede <code>lastmod</code>-datoer</h2>
+        <p class="text-neutral-700 mb-3">Google bruger <code>lastmod</code> som signal for ændringer.</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Opdater <code>&lt;lastmod&gt;</code> når der reelt er ændret indhold.</div>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">4) Inkluderer noindex-/noindexerede sider</h2>
+        <p class="text-neutral-700 mb-3">Sider markeret med <code>noindex</code> bør ikke være i sitemappet.</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Rens sitemappet og hold robots/meta-tags og sitemap i sync.</div>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">5) Mangler vigtige skabelonsider</h2>
+        <p class="text-neutral-700 mb-3">Kategorier, services og guides overses ofte.</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Generér sitemappet automatisk eller brug vores værktøj til at samle stierne.</div>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">6) Forkert XML-struktur/namespace</h2>
+        <p class="text-neutral-700 mb-3">Sørg for korrekt <code>&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;</code> og <code>&lt;url&gt;</code>-blokke.</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Valider filen, eller generér via <a class="text-blue-700 underline" href="/sitemap-generator.html">Sitemap generator</a>.</div>
+
+        <h2 class="text-2xl font-semibold mt-8 mb-3">7) For store sitemaps uden indeks</h2>
+        <p class="text-neutral-700 mb-3">Ét sitemap må max indeholde 50.000 URL’er eller 50 MB ukomprimeret.</p>
+        <div class="rounded-xl bg-neutral-50 border p-4 text-sm">Fix: Split op i flere sitemaps og brug et <strong>sitemap-indeks</strong>.</div>
+
+        <h2 class="text-2xl font-semibold mt-10 mb-3">Tjekliste</h2>
+        <ul class="list-disc pl-5 space-y-2 text-neutral-700">
+          <li>Kun kanoniske, live 200-URL’er.</li>
+          <li>Ensartet https + host.</li>
+          <li>Korrekt XML + namespace.</li>
+          <li>Opdateret <code>lastmod</code> for ændrede sider.</li>
+        </ul>
+
+        <div class="mt-8 p-5 rounded-xl bg-neutral-50 border">
+          <p class="mb-1"><strong>Relaterede værktøjer</strong></p>
+          <ul class="list-disc pl-5 text-neutral-700">
+            <li><a class="text-blue-700 underline" href="/sitemap-generator.html">Sitemap.xml generator</a></li>
+            <li><a class="text-blue-700 underline" href="/serp-preview.html">SERP & Meta preview</a></li>
+            <li><a class="text-blue-700 underline" href="/internal-link-builder.html">Intern Link Builder</a></li>
+          </ul>
+        </div>
+
+        <hr class="my-8 border-neutral-200" />
+        <p class="text-sm text-neutral-500">Kategori: Teknisk SEO • Tags: sitemap, indeksering, crawling</p>
       </article>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (statisk) -->
     <footer class="mt-12 border-t bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
         <p>© 2025 Seohub – seohub.dk</p>
