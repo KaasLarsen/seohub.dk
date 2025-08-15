@@ -1,172 +1,284 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <script src="/assets/include-header.js" defer></script>
-    <script src="/assets/consent-analytics.js" defer></script>
     <meta charset="utf-8" />
-    <title>Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider | Seohub</title>
+    <title>Intern Link Builder – Seohub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Løft dine vigtigste sider med en simpel intern linkbuilding-strategi. Lær hub-sider, ankertekster, prioritering og vedligehold – med konkrete eksempler og tjekliste." />
-    <meta property="og:title" content="Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider" />
-    <meta property="og:description" content="Praktisk guide til intern linkstruktur: hub-sider, ankertekster, prioritering og løbende vedligehold." />
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content="/og-image.png" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Consent + GA -->
-    <script src="/assets/consent-analytics.js" defer></script>
-    <!-- Tailwind -->
+    <meta name="description" content="Foreslå interne links på din hjemmeside. Indsæt URL-liste eller hent et sitemap, og få forslag til interne links baseret på emne- og slug-match." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+    <!-- Fælles header/GA/cookie-banner -->
+    <script src="/assets/include-header.js" defer></script>
+
+    <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    <!-- Header -->
-    <header class="border-b bg-white/80 backdrop-blur">
-      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-        <a href="/" class="font-semibold">Seohub.dk</a>
-        <nav class="text-sm text-neutral-600 space-x-4">
-          <a href="/">Forside</a>
-          <a href="/serp-preview.html">SERP</a>
-          <a href="/robots-generator.html">Robots</a>
-          <a href="/sitemap-generator.html">Sitemap</a>
-          <a href="/blog/" class="text-blue-600 font-medium underline underline-offset-4">Blog</a>
-        </nav>
+    <!-- HERO (samme stil som forsiden, begrænset til max-w-6xl) -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-16 md:p-24 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Intern Link Builder</h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl mb-8">
+            Indsæt dine URL’er eller upload <code>sitemap.xml</code> — få forslag til interne links baseret på emner og slug-match.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="flex items-center gap-3 px-6 py-5 rounded-2xl bg-white/10 shadow-lg">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 1 7-7l1 1m-4 4a5 5 0 0 1-7 7l-1-1"/></svg>
+              <span class="font-semibold">Find overlap i emner</span>
+            </div>
+            <div class="flex items-center gap-3 px-6 py-5 rounded-2xl bg-white/10 shadow-lg">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 6v6m0 0l3-3m-3 3l-3-3M4 18h16"/></svg>
+              <span class="font-semibold">Importer sitemap</span>
+            </div>
+            <div class="flex items-center gap-3 px-6 py-5 rounded-2xl bg-white/10 shadow-lg">
+              <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 17l4 4 4-4M12 3v18"/></svg>
+              <span class="font-semibold">Eksportér som CSV</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </header>
+    </section>
 
-    <main class="max-w-6xl mx-auto p-4">
-      <!-- Hero -->
-      <section class="rounded-2xl p-10 md:p-16 text-white shadow-lg mb-8"
-               style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
-        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-          Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider
-        </h1>
-        <p class="text-blue-100 text-base md:text-lg max-w-3xl">
-          Fordel linkjuice, styrk tema­relevans og guid brugeren. Her er en 80/20-metode til intern linkstruktur,
-          du kan rulle ud på en eftermiddag.
-        </p>
+    <!-- SIDE-INDHOLD -->
+    <main class="max-w-6xl mx-auto px-4 pb-16">
+      <!-- Inputkort -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100 my-8">
+        <h2 class="text-xl font-semibold mb-4">Inddata</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">URL’er (én pr. linje)</label>
+            <textarea id="urls" rows="10" placeholder="https://ditdomæne.dk/guide/seo-titler&#10;https://ditdomæne.dk/blog/intern-linkbuilding-strategi&#10;..."
+              class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200"></textarea>
+            <p class="text-xs text-neutral-500 mt-2">Tip: Du kan paste direkte fra et regneark (én kolonne med URL’er).</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Importer sitemap.xml (valgfrit)</label>
+            <div class="flex items-center gap-3">
+              <input id="sitemapUrl" type="url" placeholder="https://www.seohub.dk/sitemap.xml"
+                     class="flex-1 border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200">
+              <button id="fetchSitemap" class="px-4 py-2 rounded-xl border bg-neutral-50 hover:bg-neutral-100">Hent</button>
+            </div>
+            <div class="mt-3">
+              <input id="sitemapFile" type="file" accept=".xml" class="block w-full text-sm" />
+              <p class="text-xs text-neutral-500 mt-1">Alternativt upload en lokal <code>.xml</code>-fil.</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex gap-2">
+          <button id="suggest" class="px-4 py-2 rounded-xl text-white bg-blue-600 hover:bg-blue-700">Foreslå interne links</button>
+          <button id="clear" class="px-4 py-2 rounded-xl border bg-neutral-50 hover:bg-neutral-100">Ryd</button>
+        </div>
       </section>
 
-      <!-- Brødtekst -->
-      <article class="prose prose-neutral max-w-none">
-        <p class="text-sm text-neutral-500">Opdateret: 14. august 2025 • Læsetid: 8–10 min</p>
-
-        <h2>Hvorfor intern linkbuilding virker</h2>
-        <p>
-          Interne links hjælper Google med at forstå <strong>hierarki</strong>, <strong>tema</strong> og <strong>prioritet</strong> på dit website. 
-          Samtidig hjælper de brugeren videre til næste relevante skridt. Rigtigt brugt øger det både <em>crawlbarhed</em>, 
-          <em>indeksering</em> og <em>placeringer</em> – især for de sider, du tjener mest på.
-        </p>
-
-        <h2>Grundprincip: Hub → Under-sider → Støtte</h2>
-        <ul>
-          <li><strong>Hub-side:</strong> En autoritativ oversigt/landingsside for et emne (fx “Lokal SEO”).</li>
-          <li><strong>Under-sider:</strong> Dybdeartikler, guides, cases og værktøjer, der dækker del-emner.</li>
-          <li><strong>Støtte-sider:</strong> Mindre indlæg/FAQ, der peger op på hub og relevante under-sider.</li>
-        </ul>
-        <p>Alle under- og støtte-sider linker tilbage til hub’en (og gerne på tværs), så autoritet samles.</p>
-
-        <h2>Sådan prioriterer du (80/20)</h2>
-        <ol>
-          <li>Lav en liste over <strong>vigtigste money-sider</strong> (kategori, service, lead-sider).</li>
-          <li>Udpeg en <strong>hub</strong> pr. emne og 3–6 under-sider, der dækker søgeintentioner bredt.</li>
-          <li>Find eksisterende indhold, der kan <strong>indsætte links</strong> til hub/under-sider med relevante ankre.</li>
-          <li>Gentag hver måned: 5–10 nye interne links til dine top 3 money-sider.</li>
-        </ol>
-
-        <h2>Ankertekster: naturlige men præcise</h2>
-        <ul>
-          <li><strong>Exact match</strong> (sparsomt): “intern linkbuilding”.</li>
-          <li><strong>Partial match</strong>: “enkel strategi for intern linkbuilding”.</li>
-          <li><strong>Semantiske varianter</strong>: “intern linkstruktur”, “interne links til kategorisider”.</li>
-          <li><strong>Handlingsorienterede</strong>: “se vores guide til intern linkbuilding”.</li>
-        </ul>
-        <p>Mix varianter – undgå 20 identiske ankre til samme side.</p>
-
-        <h2>Placering og kontekst</h2>
-        <ul>
-          <li>Links i <strong>brødteksten</strong> har typisk større vægt end i sidemenu/footer.</li>
-          <li>Hold links <strong>over folden</strong> når det giver mening – især på korte sider.</li>
-          <li>Giv <strong>kontekst</strong> omkring linket: én sætning, der forklarer hvorfor det er relevant.</li>
-        </ul>
-
-        <h2>Intern linktabel (hurtig mapping)</h2>
-        <div class="my-6 p-5 rounded-2xl border bg-white shadow-sm">
-          <table class="w-full text-sm">
+      <!-- Resultatkort -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100 my-8">
+        <h2 class="text-xl font-semibold mb-4">Forslag</h2>
+        <div id="summary" class="text-sm text-neutral-600 mb-4">Ingen forslag endnu.</div>
+        <div class="overflow-auto">
+          <table class="min-w-full text-sm">
             <thead>
-              <tr>
-                <th class="text-left py-2">Målside</th>
-                <th class="text-left py-2">Primært anker</th>
-                <th class="text-left py-2">Sekundære ankre</th>
-                <th class="text-left py-2">Fra sider</th>
+              <tr class="text-left border-b">
+                <th class="py-2 pr-4">Fra URL</th>
+                <th class="py-2 pr-4">Foreslå link til</th>
+                <th class="py-2 pr-4">Ankertekst (forslag)</th>
+                <th class="py-2">Score</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="border-t">
-                <td class="py-2">/blog/intern-linkbuilding-strategi.html</td>
-                <td class="py-2">intern linkbuilding</td>
-                <td class="py-2">intern linkstruktur, interne links guide</td>
-                <td class="py-2">/blog/seo-titler-der-ranker.html, /blog/lokal-seo-danmark-guide.html</td>
-              </tr>
-              <tr class="border-t">
-                <td class="py-2">/serp-preview.html</td>
-                <td class="py-2">SERP preview</td>
-                <td class="py-2">title/meta tjek, meta beskrivelse</td>
-                <td class="py-2">/blog/seo-titler-der-ranker.html</td>
-              </tr>
-            </tbody>
+            <tbody id="results"></tbody>
           </table>
         </div>
-
-        <h2>Hub-side: sådan bygger du den</h2>
-        <ul>
-          <li>Klar intro + hvem siden er for.</li>
-          <li>Indholdsfortegnelse med links til under-sider.</li>
-          <li>Korte resuméer af hvert under-emne (med “læs mere”-links).</li>
-          <li>FAQ-sektion (gerne med <a href="/blog/seo-titler-der-ranker.html" class="text-blue-600">schema markup</a> som FAQPage).</li>
-        </ul>
-
-        <h2>Vedligehold: månedlig mini-proces</h2>
-        <ol>
-          <li>Træk liste over sider med <strong>impressions men lav CTR</strong> i Search Console.</li>
-          <li>Tilføj 2–3 nye kontekstuelle links fra disse sider til dine money-sider.</li>
-          <li>Opdater 1–2 ældre artikler med friske links til hub/under-sider.</li>
-          <li>Tjek for <strong>forældede links</strong> (404/redirects) og ret dem.</li>
-        </ol>
-
-        <h2>Hurtige værktøjer</h2>
-        <ul>
-          <li><a class="text-blue-600" href="/serp-preview.html">SERP &amp; Meta-preview</a> – når du opdaterer titler/description.</li>
-          <li><a class="text-blue-600" href="/sitemap-generator.html">Sitemap-generator</a> – hold sitemap ajour efter nye sider.</li>
-          <li><a class="text-blue-600" href="/robots-generator.html">Robots.txt-generator</a> – undgå at blokere vigtige sider.</li>
-        </ul>
-
-        <div class="my-8 p-5 rounded-2xl border bg-white shadow-sm">
-          <h3 class="font-semibold mb-2">Tjekliste (print venlig)</h3>
-          <ul class="list-disc pl-5 text-sm space-y-1">
-            <li>Definér hub-sider for dine kerneemner.</li>
-            <li>Map 3–6 under-sider pr. hub (del-intentioner).</li>
-            <li>Tilføj 5–10 interne links pr. måned til dine top 3 money-sider.</li>
-            <li>Varier ankertekster (exact, partial, semantisk, CTA).</li>
-            <li>Ryd op i døde/irrelevante links kvartalsvis.</li>
-          </ul>
+        <div class="mt-4 flex gap-2">
+          <button id="copyCsv" class="px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100">Kopiér CSV</button>
+          <button id="downloadCsv" class="px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100">Download CSV</button>
         </div>
+      </section>
 
-        <p class="text-sm text-neutral-600">
-          Spørgsmål eller sparring? Brug <a href="/#kontakt" class="text-blue-600">kontaktformularen</a> nederst på forsiden.
-        </p>
-      </article>
+      <!-- Lille hjælpesektion -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100 my-8">
+        <h2 class="text-xl font-semibold mb-2">Hvordan virker det?</h2>
+        <ul class="list-disc pl-5 text-sm text-neutral-700 space-y-1">
+          <li>Vi udtrækker emneord fra hver URL’s slug og matcher dem mod andre URL’er.</li>
+          <li>Score beregnes ud fra overlap i keywords + længde på fælles fraser.</li>
+          <li>Resultaterne er forslag — gennemgå dem før du implementerer dem.</li>
+        </ul>
+      </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
-      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
-        <p>© 2025 Seohub – seohub.dk</p>
-        <nav class="flex items-center gap-4">
-          <a class="hover:underline" href="/blog/">Blog</a>
-          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
-          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
-        </nav>
-      </div>
-    </footer>
+    <script>
+      // Utils
+      const uniq = arr => Array.from(new Set(arr));
+      const norm = s => (s||"").toLowerCase().normalize("NFKD").replace(/[^\w\s-]+/g," ").replace(/[\s_]+/g," ").trim();
+      const slugTokens = url => {
+        try {
+          const u = new URL(url);
+          const parts = u.pathname.split("/").filter(Boolean);
+          const last = parts[parts.length-1] || "";
+          return norm(last).split(" ").filter(x=>x && x.length>1);
+        } catch(e) { return []; }
+      };
+      const humanAnchor = url => {
+        try {
+          const u = new URL(url);
+          const parts = u.pathname.split("/").filter(Boolean);
+          const last = parts[parts.length-1] || u.hostname;
+          return last.replace(/[-_]+/g," ").replace(/\b\w/g, c=>c.toUpperCase());
+        } catch(e) { return url; }
+      };
+
+      // Parse sitemap XML (string) -> URL[]
+      const parseSitemap = (xmlStr) => {
+        try {
+          const doc = new DOMParser().parseFromString(xmlStr, "application/xml");
+          const locs = Array.from(doc.getElementsByTagName("loc")).map(n => n.textContent.trim());
+          return locs.filter(Boolean);
+        } catch(e) { return []; }
+      };
+
+      // Match engine
+      function buildSuggestions(urls) {
+        const cleaned = uniq(urls.map(u=>u.trim()).filter(u=>/^https?:\/\//i.test(u)));
+        const tokensMap = cleaned.map(u => ({ url: u, tokens: slugTokens(u) }));
+        const rows = [];
+
+        // simple pairwise scoring
+        for (let i=0; i<tokensMap.length; i++) {
+          for (let j=0; j<tokensMap.length; j++) {
+            if (i===j) continue;
+            const A = tokensMap[i], B = tokensMap[j];
+            if (!A.tokens.length || !B.tokens.length) continue;
+            const setA = new Set(A.tokens);
+            const overlap = B.tokens.filter(t=>setA.has(t));
+            if (!overlap.length) continue;
+
+            // score: overlap size + bonus for common 2-gram
+            let score = overlap.length;
+            const bigrams = (arr)=>arr.map((_,k)=>k?arr[k-1]+" "+arr[k]:null).filter(Boolean);
+            const bigA = new Set(bigrams(A.tokens)); const bigB = new Set(bigrams(B.tokens));
+            for (const bg of bigB) if (bigA.has(bg)) score += 1.5;
+
+            // weak duplicate filter: don't recommend two-way duplicates with same score & same tokens
+            rows.push({
+              from: A.url,
+              to: B.url,
+              anchor: humanAnchor(B.url),
+              score: Number(score.toFixed(2))
+            });
+          }
+        }
+
+        // dedupe by from+to
+        const key = r => r.from+"|"+r.to;
+        const seen = new Set();
+        const out = [];
+        for (const r of rows.sort((a,b)=>b.score-a.score)) {
+          if (seen.has(key(r))) continue;
+          seen.add(key(r));
+          out.push(r);
+        }
+
+        return out;
+      }
+
+      // DOM refs
+      const elUrls = document.getElementById("urls");
+      const elSitemapUrl = document.getElementById("sitemapUrl");
+      const elSitemapFile = document.getElementById("sitemapFile");
+      const btnFetch = document.getElementById("fetchSitemap");
+      const btnSuggest = document.getElementById("suggest");
+      const btnClear = document.getElementById("clear");
+      const elResults = document.getElementById("results");
+      const elSummary = document.getElementById("summary");
+      const btnCopyCsv = document.getElementById("copyCsv");
+      const btnDownloadCsv = document.getElementById("downloadCsv");
+
+      // Actions
+      btnFetch.addEventListener("click", async () => {
+        const url = elSitemapUrl.value.trim();
+        if (!url) return alert("Indtast en sitemap URL.");
+        try {
+          const res = await fetch(url);
+          const xml = await res.text();
+          const list = parseSitemap(xml);
+          if (!list.length) return alert("Kunne ikke finde URL’er i sitemappet.");
+          const cur = elUrls.value.trim();
+          elUrls.value = (cur ? cur + "\n" : "") + list.join("\n");
+        } catch (e) {
+          alert("Kunne ikke hente sitemappet.");
+        }
+      });
+
+      elSitemapFile.addEventListener("change", async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const text = await file.text();
+        const list = parseSitemap(text);
+        if (!list.length) return alert("Fandt ingen URL’er i XML-filen.");
+        const cur = elUrls.value.trim();
+        elUrls.value = (cur ? cur + "\n" : "") + list.join("\n");
+      });
+
+      btnSuggest.addEventListener("click", () => {
+        const urls = elUrls.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+        const suggestions = buildSuggestions(urls).slice(0, 500); // cap for visning
+        elResults.innerHTML = "";
+        if (!suggestions.length) {
+          elSummary.textContent = "Ingen forslag. Tilføj flere URL’er eller prøv med sitemap.";
+          return;
+        }
+        elSummary.textContent = `Viser ${suggestions.length} forslag. Sorteret efter score (højeste først).`;
+
+        const frag = document.createDocumentFragment();
+        for (const r of suggestions) {
+          const tr = document.createElement("tr");
+          tr.className = "border-b hover:bg-neutral-50";
+          tr.innerHTML = `
+            <td class="py-2 pr-4"><a href="${r.from}" target="_blank" class="text-blue-600 hover:underline">${r.from}</a></td>
+            <td class="py-2 pr-4"><a href="${r.to}" target="_blank" class="text-blue-600 hover:underline">${r.to}</a></td>
+            <td class="py-2 pr-4">${r.anchor}</td>
+            <td class="py-2">${r.score}</td>
+          `;
+          frag.appendChild(tr);
+        }
+        elResults.appendChild(frag);
+      });
+
+      btnClear.addEventListener("click", () => {
+        elUrls.value = "";
+        elResults.innerHTML = "";
+        elSummary.textContent = "Ingen forslag endnu.";
+        elSitemapUrl.value = "";
+        elSitemapFile.value = "";
+      });
+
+      const toCsv = (rows) => {
+        const esc = (s) => `"${String(s).replace(/"/g,'""')}"`;
+        const header = ["from","to","anchor","score"];
+        const lines = [header.join(",")];
+        for (const r of rows) lines.push([r.from, r.to, r.anchor, r.score].map(esc).join(","));
+        return lines.join("\n");
+      };
+
+      btnCopyCsv.addEventListener("click", () => {
+        const urls = elUrls.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+        const rows = buildSuggestions(urls);
+        if (!rows.length) return alert("Ingen rækker at kopiere.");
+        navigator.clipboard.writeText(toCsv(rows)).then(()=>alert("CSV kopieret!")).catch(()=>alert("Kunne ikke kopiere."));
+      });
+
+      btnDownloadCsv.addEventListener("click", () => {
+        const urls = elUrls.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+        const rows = buildSuggestions(urls);
+        if (!rows.length) return alert("Ingen rækker at downloade.");
+        const csv = toCsv(rows);
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "internal-links.csv"; a.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
   </body>
 </html>
