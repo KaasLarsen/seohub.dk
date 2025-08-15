@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- Forside -->
+  <!--  Forside  -->
   <url>
     <loc>https://seohub.dk/</loc>
     <lastmod>2025-08-15</lastmod>
@@ -9,7 +8,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Værktøjer -->
+  <!--  Værktøjer  -->
   <url>
     <loc>https://seohub.dk/serp-preview.html</loc>
     <lastmod>2025-08-15</lastmod>
@@ -29,7 +28,7 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Blog oversigt -->
+  <!--  Blog oversigt  -->
   <url>
     <loc>https://seohub.dk/blog/</loc>
     <lastmod>2025-08-15</lastmod>
@@ -37,7 +36,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Blogindlæg -->
+  <!--  Blogindlæg  -->
   <url>
     <loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc>
     <lastmod>2025-08-15</lastmod>
@@ -75,12 +74,11 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Juridisk -->
+  <!--  Juridisk  -->
   <url>
     <loc>https://seohub.dk/privatliv-cookies.html</loc>
     <lastmod>2025-08-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
 </urlset>
