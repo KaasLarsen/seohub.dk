@@ -40,12 +40,12 @@
     "date": "2025-08-14",
     "excerpt": "Lær at skrive meta descriptions, der løfter CTR i Google. 10 konkrete eksempler, længde-tips, skabeloner og typiske fejl – test dem i vores SERP-værktøj.",
     "tags": ["on-page", "copywriting", "ctr"]
-  }
-  {
-  "slug": "intern-linkbuilding-guide",
-  "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
-  "date": "2025-08-15",
-  "excerpt": "Fordel linkværdi, styrk relevans og gør det nemt for Google at forstå dit website. En praktisk guide med tjekliste og workflows.",
-  "tags": ["intern linkbuilding", "on-page", "linkstruktur"]
   },
+  {
+    "slug": "intern-linkbuilding-guide",
+    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
+    "date": "2025-08-15",
+    "excerpt": "Fordel linkværdi, styrk relevans og gør det nemt for Google at forstå dit website. En praktisk guide med tjekliste og workflows.",
+    "tags": ["intern linkbuilding", "on-page", "linkstruktur"]
+  }
 ]
