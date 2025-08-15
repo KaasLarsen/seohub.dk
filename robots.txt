@@ -1,3 +1,10 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.seohub.dk/sitemap.xml
+
+# Bloker evt. irrelevante filer/mappen (fjern hvis du ikke har dem)
+Disallow: /assets/
+Disallow: /tmp/
+Disallow: /private/
+
+# Henvis til sitemap
+Sitemap: https://seohub.dk/sitemap.xml
