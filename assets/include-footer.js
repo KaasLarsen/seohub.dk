@@ -1,7 +1,5 @@
-<script>
 // /assets/include-footer.js
 (function () {
-  // Byg HTML’en til footeren
   const html = `
     <footer class="mt-12 border-t bg-white/80 backdrop-blur">
       <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
@@ -17,10 +15,8 @@
   `;
 
   function mount() {
-    // Hvis siden har et dedikeret #footer-element, brug det.
     let host = document.getElementById('footer');
     if (!host) {
-      // Ellers opret et nederst på siden (ændrer ikke andet indhold)
       host = document.createElement('div');
       document.body.appendChild(host);
     }
@@ -35,4 +31,3 @@
     mount();
   }
 })();
-</script>
