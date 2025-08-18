@@ -15,17 +15,25 @@
   `;
 
   function mount() {
-    let footer = document.querySelector('footer');
-    if (!footer) {
-      footer = document.createElement('footer');
-      document.body.appendChild(footer);
+    // Find eksisterende <footer> og ERSTAT hele elementet
+    const existing = document.querySelector('footer');
+    if (existing) {
+      existing.outerHTML = html;
+    } else {
+      // Ellers tilføj i bunden
+      const wrap = document.createElement('div');
+      wrap.innerHTML = html;
+      document.body.appendChild(wrap.firstElementChild);
     }
-    footer.innerHTML = html;
 
-    const yearEl = footer.querySelector('#footer-year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
+    // Sæt årstal
+    const yf = document.querySelector('#footer-year');
+    if (yf) yf.textContent = new Date().getFullYear();
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
-  else mount();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount);
+  } else {
+    mount();
+  }
 })();
