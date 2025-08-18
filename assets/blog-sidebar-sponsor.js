@@ -1,12 +1,11 @@
-// /assets/blog-sidebar-sponsor.js
-(function () {
-  function mount() {
-    // Find sticky container (samme struktur som dine blogartikler)
-    const asideCol = document.querySelector('aside .lg\\:sticky');
-    if (!asideCol) return;
+// /assets/blog-sidebar-sponsor.js (v2)
+// Indsætter en "Sponsoreret anbefaling"-boks under TOC i højre kolonne.
+// Robust: virker med/uden .lg:sticky, og har fallback til <aside> eller <main>.
 
-    // Lav sponsor-boks
+(function () {
+  function makeSponsorBox() {
     const box = document.createElement('div');
+    box.setAttribute('data-sponsor-box', '1');
     box.className = "rounded-2xl p-5 md:p-6 text-white shadow-lg mt-6";
     box.style.background = "linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)";
     box.innerHTML = `
@@ -26,9 +25,22 @@
         </svg>
       </a>
     `;
+    return box;
+  }
 
-    // Indsæt EFTER TOC-boksen (som er firstChild i sticky containeren)
-    asideCol.appendChild(box);
+  function mount() {
+    // Undgå dubletter
+    if (document.querySelector('[data-sponsor-box="1"]')) return;
+
+    // 1) Foretrukket: under sticky TOC-containeren
+    let target = document.querySelector('aside .lg\\:sticky');
+    // 2) Ellers i aside-kolonnen
+    if (!target) target = document.querySelector('aside');
+    // 3) Fallback: i bunden af main (fuld bredde – hellere vist end skjult)
+    if (!target) target = document.querySelector('main');
+
+    if (!target) return; // ingen passende container fundet
+    target.appendChild(makeSponsorBox());
   }
 
   if (document.readyState === 'loading') {
