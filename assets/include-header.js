@@ -1,85 +1,56 @@
 // /assets/include-header.js
-(function () {
-  const html = `
-  <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-      <a href="/" class="font-semibold text-neutral-900">Seohub.dk</a>
 
-      <!-- Mobile toggle -->
-      <button id="navToggle" aria-controls="siteNav" aria-expanded="false"
-        class="md:hidden inline-flex items-center justify-center rounded-lg border px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
-        type="button">
-        <span class="sr-only">Åbn menu</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-             class="pointer-events-none">
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-
-      <!-- Nav -->
-      <nav id="siteNav"
-        class="hidden md:flex text-sm text-neutral-600 gap-4
-               absolute left-0 right-0 top-full bg-white/95 backdrop-blur border-b
-               md:static md:border-0 md:bg-transparent md:backdrop-blur-0 md:items-center md:justify-end p-4 md:p-0">
-        <a href="/" class="block px-2 py-2 md:p-0">Forside</a>
-        <a href="/serp-preview.html" class="block px-2 py-2 md:p-0">SERP</a>
-        <a href="/robots-generator.html" class="block px-2 py-2 md:p-0">Robots</a>
-        <a href="/sitemap-generator.html" class="block px-2 py-2 md:p-0">Sitemap</a>
-        <a href="/internal-link-builder.html" class="block px-2 py-2 md:p-0">Intern links</a>
-        <a href="/blog/" class="block px-2 py-2 md:p-0">Blog</a>
-        <a href="/kontakt.html" class="block px-2 py-2 md:p-0">Kontakt</a>
-      </nav>
-    </div>
-  </header>
+document.addEventListener("DOMContentLoaded", () => {
+  const header = `
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold text-lg">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4 hidden md:flex">
+          <a href="/" data-page="/">Forside</a>
+          <a href="/serp-preview.html" data-page="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html" data-page="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html" data-page="/sitemap-generator.html">Sitemap</a>
+          <a href="/internal-link-builder.html" data-page="/internal-link-builder.html">Intern links</a>
+          <a href="/blog/" data-page="/blog/">Blog</a>
+          <a href="/om-os.html" data-page="/om-os.html">Om os</a>
+          <a href="/kontakt.html" data-page="/kontakt.html">Kontakt</a>
+        </nav>
+        <!-- Mobile menu button -->
+        <button id="mobileMenuBtn" class="md:hidden text-neutral-700">
+          ☰
+        </button>
+      </div>
+      <!-- Mobile dropdown -->
+      <div id="mobileMenu" class="hidden md:hidden px-4 pb-4 space-y-2 text-sm text-neutral-600">
+        <a href="/" data-page="/">Forside</a><br>
+        <a href="/serp-preview.html" data-page="/serp-preview.html">SERP</a><br>
+        <a href="/robots-generator.html" data-page="/robots-generator.html">Robots</a><br>
+        <a href="/sitemap-generator.html" data-page="/sitemap-generator.html">Sitemap</a><br>
+        <a href="/internal-link-builder.html" data-page="/internal-link-builder.html">Intern links</a><br>
+        <a href="/blog/" data-page="/blog/">Blog</a><br>
+        <a href="/om-os.html" data-page="/om-os.html">Om os</a><br>
+        <a href="/kontakt.html" data-page="/kontakt.html">Kontakt</a>
+      </div>
+    </header>
   `;
 
-  function mount() {
-    // Fjern evt. eksisterende header for at undgå dubletter
-    const existing = document.querySelector('header');
-    if (existing) existing.remove();
+  document.body.insertAdjacentHTML("afterbegin", header);
 
-    // Indsæt ny header øverst i <body>
-    const wrap = document.createElement('div');
-    wrap.innerHTML = html;
-    document.body.insertBefore(wrap.firstElementChild, document.body.firstChild);
-
-    // Toggle adfærd
-    const btn = document.getElementById('navToggle');
-    const nav = document.getElementById('siteNav');
-    if (!btn || !nav) return;
-
-    function closeNav() {
-      nav.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
+  // Marker aktiv side
+  const path = window.location.pathname;
+  document.querySelectorAll("nav a, #mobileMenu a").forEach(link => {
+    if (path === link.getAttribute("data-page")) {
+      link.classList.add("font-semibold", "text-blue-600");
     }
-    function openNav() {
-      nav.classList.remove('hidden');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-    btn.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      open ? closeNav() : openNav();
-    });
+  });
 
-    // Luk når man klikker et link (mobil)
-    nav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        if (window.matchMedia('(max-width: 767px)').matches) closeNav();
-      });
-    });
+  // Mobile menu toggle
+  const mobileBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
 
-    // Luk på Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeNav();
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
     });
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
-  } else {
-    mount();
-  }
-})();
+});
