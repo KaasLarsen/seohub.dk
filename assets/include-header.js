@@ -31,8 +31,6 @@
         <a href="/sitemap-generator.html" data-page="/sitemap-generator.html">Sitemap</a>
         <a href="/internal-link-builder.html" data-page="/internal-link-builder.html">Intern links</a>
         <a href="/blog/" data-page="/blog/">Blog</a>
-        <a href="/om-os.html" data-page="/om-os.html">Om os</a>
-        <a href="/kontakt.html" data-page="/kontakt.html">Kontakt</a>
       </nav>
     </div>
   </header>
