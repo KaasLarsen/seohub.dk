@@ -1,65 +1,112 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="da">
-<head>
-  <script src="/assets/include-footer.js" defer></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Om os - SEOHub</title>
-  <meta name="description" content="Læs om SEOHub – din gratis ressource til SEO-værktøjer, guides og artikler.">
-  <link rel="stylesheet" href="style.css">
-  <script src="/assets/include-header.js" defer></script>
-  <script src="/assets/include-footer.js" defer></script>
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXX');
-  </script>
-  <!-- Adsense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXX"
-     crossorigin="anonymous"></script>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Om os – Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Læs om Seohub.dk – gratis SEO-værktøjer, guides og artikler. Mission, redaktionelle principper og kontakt." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-  <!-- Hero -->
-  <section class="hero small-hero">
-    <div class="hero-content">
-      <h1>Om SEOHub</h1>
-      <p>Din gratis ressource til SEO-værktøjer, guides og artikler</p>
-    </div>
-  </section>
+    <!-- Fælles: cookie consent + Google Analytics (loader efter samtykke) + footer autoload -->
+    <script src="/assets/consent-analytics.js" defer></script>
 
-  <!-- Indhold -->
-  <main class="container content-section">
-    <h2>Hvem er vi?</h2>
-    <p>
-      SEOHub er skabt som et gratis univers til alle, der arbejder med online synlighed. 
-      Her finder du praktiske SEO-værktøjer, dybdegående blogindlæg og guides, der hjælper dig 
-      med at få mere ud af dit website – uanset om du er selvstændig, webshopejer eller en del af et marketingteam.
-    </p>
+    <!-- UI (Tailwind) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    <h2>Vores mission</h2>
-    <p>
-      Målet med SEOHub er at gøre SEO mere tilgængeligt og forståeligt. 
-      Vi deler viden, tips og værktøjer, så du kan styrke din online tilstedeværelse uden 
-      at bruge en formue på eksterne konsulenter.
-    </p>
+    <!-- Header / Navigation (samme som forsiden) -->
+    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
+        <a href="/" class="font-semibold">Seohub.dk</a>
+        <nav class="text-sm text-neutral-600 space-x-4">
+          <a href="/">Forside</a>
+          <a href="/serp-preview.html">SERP</a>
+          <a href="/robots-generator.html">Robots</a>
+          <a href="/sitemap-generator.html">Sitemap</a>
+          <a href="/internal-link-builder.html">Intern links</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+      </div>
+    </header>
 
-    <h2>Hvordan driver vi siden?</h2>
-    <p>
-      SEOHub drives uafhængigt med passion for digital marketing. 
-      For at dække udgifterne til drift kan siden indeholde sponsorerede links og annoncer. 
-      Vi markerer altid sponsoreret indhold tydeligt.
-    </p>
+    <!-- Hero (match forsiden med blå gradient, smal container) -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Om SEOHub</h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Din gratis værktøjskasse til SEO – skabt af nørder til hverdagsbrug.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <h2>Kontakt</h2>
-    <p>
-      Har du spørgsmål eller forslag? Du er altid velkommen til at kontakte os via 
-      <a href="mailto:kontakt@seohub.dk">kontakt@seohub.dk</a>.
-    </p>
-  </main>
+    <!-- Indhold -->
+    <main class="max-w-6xl mx-auto px-4 pb-12 space-y-8">
 
-</body>
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Vores mission</h2>
+            <p class="text-neutral-700">
+              At gøre søgemaskineoptimering nem, praktisk og tilgængelig for alle. SEOHub samler
+              værktøjer, skabeloner og guides, så du kan komme hurtigt videre uden at betale dyrt.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Hvem er vi?</h2>
+            <p class="text-neutral-700">
+              Et lille team af SEO- og marketingfolk, der bygger værktøjer vi selv mangler i hverdagen.
+              Fokus er hands-on løsninger frem for teori.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Hvem er det til?</h2>
+            <p class="text-neutral-700">
+              Webshopejere, selvstændige, content creators og marketingteams, der vil have
+              hurtige, brugbare værktøjer til on-page, teknik og planlægning.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <h2 class="text-xl font-semibold mb-3">Redaktionelle principper</h2>
+        <ul class="list-disc pl-5 space-y-2 text-neutral-700">
+          <li>Vi prioriterer klarhed, dokumenterbare råd og konkrete tjeklister.</li>
+          <li>Guides opdateres løbende ift. ændringer i søgelandskabet.</li>
+          <li>Vi markerer sponsoreret indhold og affiliate-links tydeligt (<span class="italic">“Sponsoreret”</span>).</li>
+        </ul>
+      </section>
+
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Transparens & finansiering</h2>
+            <p class="text-neutral-700">
+              SEOHub kan indeholde annoncer og sponsorerede links. Det hjælper med at dække drift
+              og udvikling, så værktøjerne kan være gratis. Sponsorerede samarbejder påvirker ikke
+              vores anbefalinger i guides og artikler.
+            </p>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Kontakt</h2>
+            <p class="text-neutral-700">
+              Idéer, fejl eller partnerskab? Skriv til
+              <a href="mailto:info@seohub.dk" class="text-blue-600 hover:underline">info@seohub.dk</a>.
+            </p>
+            <p class="text-neutral-700 mt-2">
+              Du kan også bruge kontaktformularen på forsiden.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer (indsættes centralt, samme på alle sider) -->
+    <script src="/assets/include-footer.js" defer></script>
+  </body>
 </html>
