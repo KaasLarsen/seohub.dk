@@ -1,4 +1,4 @@
-// /app.js — Seohub: stor blå hero (3 ikoner) + sponsorerede samarbejdspartnere (logoer) + alle værktøjer + kontakt
+// /app.js — Seohub: stor blå hero (3 ikoner) + partnerlogoer + 2 sponsorerede anbefalinger + alle værktøjer + kontakt
 const { createElement: h, useState, useMemo, useRef, useEffect } = React;
 
 /* ---------- UI helpers ---------- */
@@ -86,7 +86,7 @@ function Hero() {
   );
 }
 
-/* ---------- Partnersektion (Sponsorerede samarbejdspartnere m. logoer) ---------- */
+/* ---------- Partnersektion (logoer) ---------- */
 function PartnersSection() {
   const partners = [
     {
@@ -109,7 +109,6 @@ function PartnersSection() {
     }
   ];
 
-  // fallback hvis et logo fejler: skjul billedet og vis initialer
   const Logo = ({ src, alt }) => {
     const imgRef = useRef(null);
     const [err, setErr] = useState(false);
@@ -142,6 +141,63 @@ function PartnersSection() {
         )
       )
     ])
+  );
+}
+
+/* ---------- Featured Sponsors (2 sponsorerede anbefalinger) ---------- */
+function FeaturedSponsors() {
+  const items = [
+    {
+      title: "Få hjælp til SEO og vækst",
+      points: [
+        "Teknisk SEO, on-page og indhold",
+        "Rapportering & klare mål",
+        "Fleksible aftaler uden bøvl"
+      ],
+      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=95050"
+    },
+    {
+      title: "Skal du skalere online synlighed?",
+      points: [
+        "Strategi + eksekvering i ét",
+        "E-commerce & B2B erfaring",
+        "Resultater frem for slides"
+      ],
+      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108496"
+    }
+  ];
+
+  return h("section", { className:"max-w-6xl mx-auto px-4" },
+    h("div", { className:"grid md:grid-cols-2 gap-6" },
+      items.map((it, i) => h("div", {
+        key: i,
+        className: "rounded-2xl p-6 md:p-8 text-white shadow-lg",
+        style: { background: "linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)" }
+      }, [
+        h("div", { key:"badge", className:"text-[11px] uppercase tracking-wide mb-2 opacity-90" }, "Sponsoreret anbefaling"),
+        h("h2", { key:"h", className:"text-2xl md:text-3xl font-extrabold mb-2" }, it.title),
+        h("ul", { key:"ul", className:"list-disc pl-5 space-y-1 text-blue-100/90 mb-4" },
+          it.points.map((p,idx)=> h("li",{key:idx},p))
+        ),
+        h("div", { key:"cta", className:"text-right" },
+          h("a", {
+            href: it.href,
+            target: "_blank",
+            rel: "sponsored noopener nofollow",
+            className: "inline-flex items-center gap-2 bg-white text-neutral-900 px-5 py-3 rounded-xl font-semibold hover:shadow-lg transition"
+          }, [
+            "Besøg partner",
+            h("svg", {
+              key:"i", xmlns:"http://www.w3.org/2000/svg", viewBox:"0 0 24 24",
+              className:"w-5 h-5", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round"
+            }, [
+              h("path", { key:"p1", d:"M7 17L17 7" }),
+              h("path", { key:"p2", d:"M7 7h10v10" })
+            ])
+          ])
+        )
+      ]))
+    )
   );
 }
 
@@ -375,7 +431,8 @@ function ContactForm() {
 function App() {
   return h("main", { className:"max-w-6xl mx-auto p-4 space-y-8" }, [
     h(Hero, { key:"hero" }),
-    h(PartnersSection, { key:"partners" }),      // lige under hero
+    h(PartnersSection, { key:"partners" }),
+    h(FeaturedSponsors, { key:"featured" }),
     h(KeywordIdeas, { key:"kw" }),
     h(SerpAndMeta, { key:"serp" }),
     h(RobotsTxt, { key:"rob" }),
