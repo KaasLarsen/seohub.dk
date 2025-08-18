@@ -1,210 +1,145 @@
 <!doctype html>
 <html lang="da">
-<head>
-  <script src="/assets/include-footer.js" defer></script>
- <script src="/assets/include-header.js?v=3" defer></script>
-  <script src="/assets/consent-analytics.js" defer></script>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SERP & Meta Preview – Gratis Google snippet værktøj til SEO | Seohub.dk</title>
-  <meta name="description" content="Tjek titel- og meta-længde med vores gratis SERP værktøj. Få en Google-lignende snippet-forhåndsvisning og skriv bedre SEO-titler og metabeskrivelser.">
-  <link rel="canonical" href="https://seohub.dk/serp-preview.html">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <head>
+    <!-- Fælles header/nav -->
+    <script src="/assets/include-header.js?v=6" defer></script>
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Seohub.dk">
-  <meta property="og:title" content="SERP & Meta Preview – Gratis Google snippet værktøj til SEO">
-  <meta property="og:description" content="Gratis SERP værktøj: tjek længden på din SEO-titel og metabeskrivelse, og se en snippet-forhåndsvisning.">
-  <meta property="og:url" content="https://seohub.dk/serp-preview.html">
-  <meta property="og:image" content="https://seohub.dk/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SERP & Meta Preview – Gratis Google snippet værktøj til SEO">
-  <meta name="twitter:description" content="Tjek titel- og meta-længde og se en Google-lignende snippet.">
-  <meta name="twitter:image" content="https://seohub.dk/og-image.png">
+    <meta charset="utf-8" />
+    <title>SERP Preview & Meta-tjek – titler og beskrivelser | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Gratis SERP preview: tjek længde på title (50–60 tegn) og meta description (140–160). Se en Google-lignende visning og få hurtige tips til højere CTR." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://www.seohub.dk/serp-preview.html" />
 
-  <!-- Styles & React -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Consent + Analytics (GA4 loader efter samtykke) -->
+    <script src="/assets/consent-analytics.js" defer></script>
 
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebPage",
-    "name":"SERP & Meta Preview – Gratis Google snippet værktøj",
-    "url":"https://seohub.dk/serp-preview.html",
-    "description":"Gratis SERP værktøj der hjælper dig med at tjekke titel- og meta-længde og se en snippet-forhåndsvisning.",
-    "inLanguage":"da"
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Hvad er et SERP preview værktøj?",
-        "acceptedAnswer":{"@type":"Answer","text":"Det er et værktøj, der viser en simuleret forhåndsvisning af, hvordan din titel og metabeskrivelse kan fremstå i Googles søgeresultater."}
-      },
-      {
-        "@type":"Question",
-        "name":"Hvor lang bør en SEO-titel være?",
-        "acceptedAnswer":{"@type":"Answer","text":"Som tommelfingerregel ca. 50–60 tegn. Google afkorter ud fra pixelbredde, men 50–60 tegn rammer oftest pænt."}
-      },
-      {
-        "@type":"Question",
-        "name":"Hvor lang bør en meta description være?",
-        "acceptedAnswer":{"@type":"Answer","text":"Ca. 140–160 tegn. Google kan vælge en anden tekst, men 140–160 tegn giver typisk en god balance mellem information og plads."}
-      },
-      {
-        "@type":"Question",
-        "name":"Påvirker titler og beskrivelser min rangering?",
-        "acceptedAnswer":{"@type":"Answer","text":"De er ikke direkte rangsignaler, men de påvirker klikraten (CTR), som indirekte kan forbedre performance. Gode titler/descr. hjælper både brugere og søgemaskiner."}
-      }
-    ]
-  }
-  </script>
-</head>
-<body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+    <!-- UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Header / Nav (samme stil som forsiden) -->
-  <header class="border-b bg-white/80 backdrop-blur">
-    <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-      <a href="/" class="font-semibold">Seohub.dk</a>
-      <nav class="text-sm text-neutral-600 space-x-4">
-        <a href="/">Forside</a>
-        <a href="/serp-preview.html" class="font-medium text-neutral-900">SERP</a>
-        <a href="/robots-generator.html">Robots</a>
-        <a href="/sitemap-generator.html">Sitemap</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto p-4 space-y-10">
-    <section class="rounded-2xl p-12 md:p-20 text-white shadow-lg mb-8"
-         style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%)">
-  <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">SERP & Meta – forhåndsvisning</h1>
-  <p class="text-blue-100 text-base md:text-lg max-w-3xl">
-    Se hvordan din titel og metabeskrivelse kan se ud på Google, og tjek længde i realtid.
-  </p>
-</section>
+    <!-- Struktureret data (valgfrit) -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebPage",
+      "name":"SERP Preview & Meta-tjek",
+      "description":"Gratis SERP preview og længde-tjek for title og meta description.",
+      "url":"https://www.seohub.dk/serp-preview.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk"}
+    }
+    </script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
     <!-- Hero -->
-    <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
-      <h1 class="text-3xl font-bold mb-2">SERP & Meta Preview – gratis snippet værktøj</h1>
-      <p class="text-neutral-700">Skriv bedre <strong>SEO-titler</strong> og <strong>metabeskrivelser</strong>. Tjek længde i realtime og se en Google-lignende forhåndsvisning af din snippet.</p>
-    </section>
-
-    <!-- Værktøjet -->
-    <section>
-      <div id="root-serp"></div>
-      <script>
-        const { useState } = React;
-
-        function SerpTool() {
-          const [title, setTitle] = useState("");
-          const [url, setUrl] = useState("https://www.seohub.dk/eksempel");
-          const [desc, setDesc] = useState("");
-
-          const tLen = title.length, dLen = desc.length;
-          const okT = tLen >= 50 && tLen <= 60;
-          const okD = dLen >= 140 && dLen <= 160;
-
-          return React.createElement("div", { className: "grid md:grid-cols-2 gap-6" },
-            React.createElement("div", null,
-              React.createElement("label", { className: "block mb-3" },
-                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Titel (50–60 tegn)"),
-                React.createElement("input", { className: "w-full border rounded-xl p-3", value: title, onChange: e=>setTitle(e.target.value), placeholder: "Skriv din SEO-titel" })
-              ),
-              React.createElement("label", { className: "block mb-3" },
-                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "URL"),
-                React.createElement("input", { className: "w-full border rounded-xl p-3", value: url, onChange: e=>setUrl(e.target.value) })
-              ),
-              React.createElement("label", { className: "block mb-3" },
-                React.createElement("span", { className: "block text-sm font-medium mb-1" }, "Metabeskrivelse (140–160)"),
-                React.createElement("textarea", { rows: 4, className: "w-full border rounded-xl p-3", value: desc, onChange: e=>setDesc(e.target.value), placeholder: "Skriv en klar, handlingsorienteret beskrivelse…" })
-              ),
-              React.createElement("div", { className: "flex flex-wrap gap-2 text-sm" },
-                React.createElement("span", { className: `px-2 py-1 rounded-full ${okT ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}` }, `titel: ${tLen}`),
-                React.createElement("span", { className: `px-2 py-1 rounded-full ${okD ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}` }, `meta: ${dLen}`)
-              )
-            ),
-            React.createElement("div", null,
-              React.createElement("div", { className: "rounded-xl border p-4 bg-white" },
-                React.createElement("div", { className: "text-[#1a0dab] text-xl leading-snug truncate" }, title || "Din titel vises her"),
-                React.createElement("div", { className: "text-[#006621] text-sm mt-1 truncate" }, url),
-                React.createElement("div", { className: "text-[#545454] text-sm mt-1" }, desc || "Skriv en præcis metabeskrivelse, der matcher søgeintentionen og nævner dit primære søgeord + USP.")
-              )
-            )
-          );
-        }
-
-        ReactDOM.createRoot(document.getElementById("root-serp")).render(React.createElement(SerpTool));
-      </script>
-    </section>
-
-    <!-- Indhold: Hvad, Hvorfor, Hvordan -->
-    <section class="prose max-w-none">
-      <h2 class="text-2xl font-semibold mb-2">Hvad er et SERP preview værktøj?</h2>
-      <p>Et SERP værktøj hjælper dig med at se en <em>forhåndsvisning</em> af, hvordan din side kan blive vist i Googles søgeresultater. Vores snippet preview simulerer titlens og metabeskrivelsens udseende, så du kan justere længde, formulering og relevans før publicering.</p>
-
-      <h2 class="text-2xl font-semibold mt-8 mb-2">Hvor lang bør en SEO-titel være?</h2>
-      <p>En god SEO-titel er typisk <strong>50–60 tegn</strong>. Google afkorter efter pixelbredde, men 50–60 tegn rammer oftest rigtigt. Prioritér det primære søgeord i starten, kombineret med en klar værdi/USP.</p>
-
-      <h2 class="text-2xl font-semibold mt-8 mb-2">Hvor lang bør en meta description være?</h2>
-      <p>En metabeskrivelse omkring <strong>140–160 tegn</strong> er et fint mål. Den bruges ikke altid af Google, men er god som primær tekst. Fokuser på brugerens intention, nævn søgeordet naturligt og afslut gerne med en opfordring til handling.</p>
-
-      <h2 class="text-2xl font-semibold mt-8 mb-2">Sådan bruger du vores SERP værktøj</h2>
-      <ol class="list-decimal pl-5">
-        <li>Skriv din titel i feltet “Titel (50–60 tegn)”.</li>
-        <li>Indsæt din URL (endelig eller midlertidig).</li>
-        <li>Tilføj en metabeskrivelse på ca. 140–160 tegn.</li>
-        <li>Se forhåndsvisningen til højre – justér til tællerne bliver grønne.</li>
-        <li>Kopiér og indsæt i dit CMS (fx WordPress, Shopify el.lign.).</li>
-      </ol>
-
-      <h2 class="text-2xl font-semibold mt-8 mb-2">Tips til bedre klikrate (CTR)</h2>
-      <ul class="list-disc pl-5">
-        <li>Start titlen med dit primære søgeord og værdi (USP).</li>
-        <li>Brug tal, årstal eller stærke ord, hvor det giver mening.</li>
-        <li>Match søgeintentionen – svar på det, brugeren faktisk vil.</li>
-        <li>Metabeskrivelsen skal uddybe dit løfte og afslutte med en klar CTA.</li>
-      </ul>
-
-      <div class="mt-8 rounded-2xl border p-4 bg-white">
-        <p class="mb-2"><strong>Næste skridt:</strong> Få styr på teknikken med vores værktøjer:</p>
-        <ul class="list-disc pl-5">
-          <li><a class="underline" href="/robots-generator.html">Robots.txt generator</a> – styr hvad der må crawles.</li>
-          <li><a class="underline" href="/sitemap-generator.html">Sitemap.xml generator</a> – hjælp Google med at finde dine sider.</li>
-        </ul>
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj · SERP & CTR</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">SERP Preview & Meta-tjek</h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Forhåndsvis din titel og meta-beskrivelse – og få hurtige længdeindikatorer for bedre CTR.
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section>
-      <h2 class="text-2xl font-semibold mt-8 mb-2" id="faq">FAQ om SERP & metabeskrivelser</h2>
-      <details class="mb-2 bg-white rounded-xl border p-4">
-        <summary class="font-medium cursor-pointer">Hvad er et SERP preview værktøj?</summary>
-        <p class="mt-2 text-neutral-700">Det viser en simuleret snippet baseret på din titel og metatekst, så du kan finpudse dem før publicering.</p>
-      </details>
-      <details class="mb-2 bg-white rounded-xl border p-4">
-        <summary class="font-medium cursor-pointer">Hvor lang bør min SEO-titel være?</summary>
-        <p class="mt-2 text-neutral-700">Sigt efter 50–60 tegn. Fokuser på primært søgeord + stærk værdi.</p>
-      </details>
-      <details class="mb-2 bg-white rounded-xl border p-4">
-        <summary class="font-medium cursor-pointer">Hvor lang bør min meta description være?</summary>
-        <p class="mt-2 text-neutral-700">Ca. 140–160 tegn. Sørg for at den matcher brugerens intention og inkluderer en CTA.</p>
-      </details>
-      <details class="mb-2 bg-white rounded-xl border p-4">
-        <summary class="font-medium cursor-pointer">Er det her en 1:1 gengivelse af Google?</summary>
-        <p class="mt-2 text-neutral-700">Nej. Det er en praktisk approximation. Google kan afkorte eller vælge en anden tekst, men værktøjet er tæt nok til at skrive bedre snippets hurtigt.</p>
-      </details>
-    </section>
-  </main>
+    <!-- Indhold -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Content -->
+        <article class="lg:col-span-8 space-y-6">
+          <!-- Intro -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Hvorfor tjekke titel og meta?</h2>
+            <p>
+              Din <strong>title</strong> og <strong>meta description</strong> er det, brugeren møder i Googles søgeresultater.
+              En skarp vinkel og korrekt længde hjælper din <strong>CTR</strong> (click-through rate). Brug vores preview til
+              at se en Google-lignende visning og få hurtige længdeindikatorer:
+            </p>
+            <ul class="list-disc pl-6">
+              <li><strong>Title:</strong> sigt efter 50–60 tegn (ikke for kort, ikke for langt)</li>
+              <li><strong>Meta:</strong> sigt efter 140–160 tegn med klar værdi + CTA</li>
+              <li>Match søgeintention og brug tydelige H1/H2-strukturer på siden</li>
+            </ul>
+          </section>
 
-  <footer class="text-center text-xs text-neutral-500 py-8">© 2025 Seohub – seohub.dk</footer>
-</body>
+          <!-- Mini “hvordan” -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Sådan bruger du værktøjet</h2>
+            <ol class="list-decimal pl-6 space-y-1">
+              <li>Skriv din titel, URL og meta-beskrivelse i felterne</li>
+              <li>Se længdetællere opdatere live (grøn = godt)</li>
+              <li>Justér, til det ser skarpt ud i forhåndsvisningen</li>
+            </ol>
+            <p class="mt-3 text-sm text-neutral-700">
+              Vil du arbejde videre med hele siden? Tjek også vores <a class="text-blue-600 hover:underline" href="/robots-generator.html">robots.txt-generator</a>,
+              <a class="text-blue-600 hover:underline" href="/sitemap-generator.html">sitemap-generator</a> og <a class="text-blue-600 hover:underline" href="/internal-link-builder.html">interne linkbuilder</a>.
+            </p>
+          </section>
+
+          <!-- Link til det interaktive værktøj (på forsiden/SPA) -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Åbn det interaktive SERP-værktøj</h2>
+            <p>På forsiden har vi en fuld version med live-tællere og kopiér-knapper.</p>
+            <a href="/" class="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
+              Gå til forsiden
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </section>
+
+          <!-- FAQ (kort) -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Ofte stillede spørgsmål</h2>
+            <details class="mb-2">
+              <summary class="cursor-pointer font-medium">Skærer Google altid ved samme antal tegn?</summary>
+              <div class="mt-2 text-sm text-neutral-700">
+                Nej. Google bruger i praksis pixelbredde, og derfor kan to titler med samme tegnantal opføre sig forskelligt.
+                Brug vores indikatorer som guideline – og test i praksis.
+              </div>
+            </details>
+            <details class="mb-2">
+              <summary class="cursor-pointer font-medium">Kan jeg bruge emojis i title?</summary>
+              <div class="mt-2 text-sm text-neutral-700">
+                Nogle emojis kan vises, men påvirker længden og kan blive filtreret. Brug dem med omtanke.
+              </div>
+            </details>
+          </section>
+
+          <!-- Sponsoreret CTA: Simply.com (NY) -->
+          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
+            <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+            <h3 class="text-lg md:text-xl font-bold mb-2">Klar til at få dit website online?</h3>
+            <p class="text-blue-100 mb-4">
+              Har du lige optimeret title og meta – og mangler domæne & webhotel?
+              <strong>Simply.com</strong> er dansk, nemt og billigt. Perfekt til nye sites.
+            </p>
+            <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+              Køb domæne & hosting hos Simply.com
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </section>
+        </article>
+
+        <!-- Sidebar (valgfri, tom på denne side) -->
+        <aside class="lg:col-span-4">
+          <!-- plads til senere TOC/ads -->
+        </aside>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+  </body>
 </html>
