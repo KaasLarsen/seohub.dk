@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <!-- Fælles header/nav -->
+    <!-- Header/nav -->
     <script src="/assets/include-header.js?v=6" defer></script>
 
     <meta charset="utf-8" />
     <title>Robots.txt Generator – gratis SEO-værktøj | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Lav en gratis robots.txt fil til dit website. Vælg hvilke sider søgemaskiner skal have adgang til, og generér filen med ét klik." />
+    <meta name="description" content="Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik. Inkl. eksempler og fejl du skal undgå." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://www.seohub.dk/robots-generator.html" />
 
@@ -16,18 +16,30 @@
 
     <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Struktureret data -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebPage",
+      "name":"Robots.txt Generator",
+      "description":"Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik.",
+      "url":"https://www.seohub.dk/robots-generator.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk"}
+    }
+    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    <!-- Hero -->
+    <!-- Hero (Seohub blå) -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
-             style="background:linear-gradient(135deg,#22c55e 0%,#16a34a 50%,#0d9488 100%)">
-          <p class="text-xs uppercase tracking-wider text-green-100/90 mb-2">Værktøj · SEO basics</p>
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj · SEO basics</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Robots.txt Generator</h1>
-          <p class="text-green-100 text-lg md:text-xl max-w-3xl">
-            Opret en korrekt robots.txt-fil og styr hvilke sider søgemaskiner kan crawle.
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Opret en korrekt robots.txt-fil og styr hvad søgemaskiner må (og ikke må) crawle.
           </p>
         </div>
       </div>
@@ -42,35 +54,89 @@
           <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
             <h2 class="text-2xl font-bold mb-3">Hvorfor bruge en robots.txt?</h2>
             <p>
-              En <code>robots.txt</code>-fil fortæller søgemaskiner, hvilke dele af dit site de må og ikke må crawle.
-              Den er især nyttig til at:
+              En <code>robots.txt</code>-fil fortæller søgemaskiner, hvilke dele af dit site de må og ikke må crawle. Den bruges til at:
             </p>
             <ul class="list-disc pl-6">
-              <li>Undgå crawl af irrelevante sider (f.eks. admin eller interne tests)</li>
-              <li>Styre crawl-budget på større websites</li>
-              <li>Give søgemaskiner en reference til dit sitemap</li>
+              <li>undgå crawling af irrelevante områder (fx admin, søgesider, interne filmapper)</li>
+              <li>styre crawl-budget på større websites</li>
+              <li>angive placeringen af dit <code>sitemap.xml</code></li>
+            </ul>
+            <p class="mt-3 text-sm text-neutral-700">
+              Husk: <strong>robots.txt blokerer crawling, ikke indeksering</strong>. URLs kan stadig dukke op, hvis de er linket eksternt.
+            </p>
+          </section>
+
+          <!-- Sådan bruger du generatoren -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Sådan bruger du værktøjet</h2>
+            <ol class="list-decimal pl-6 space-y-1">
+              <li>Indsæt dit sitemap-link (fx <code>https://www.ditdomæne.dk/sitemap.xml</code>)</li>
+              <li>Tilføj stier du vil <em>tillade</em> (sjældent nødvendigt) og <em>blokere</em></li>
+              <li>Kopiér eller download den færdige robots.txt</li>
+            </ol>
+            <p class="mt-3 text-sm text-neutral-700">
+              Placér filen i roden: <code>https://www.ditdomæne.dk/robots.txt</code>.
+            </p>
+            <a href="/robots-generator.html#generator" class="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
+              Gå direkte til generatoren
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" stroke-width="2"><path d="M7 17l10-10M7 7h10v10"/></svg>
+            </a>
+          </section>
+
+          <!-- Eksempler -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">Hurtige eksempler</h2>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <div class="rounded-xl border p-4 bg-neutral-50">
+                <p class="font-medium mb-2">Standard (tillad alt + sitemap)</p>
+<pre class="whitespace-pre-wrap text-xs">
+User-agent: *
+Sitemap: https://www.ditdomæne.dk/sitemap.xml
+</pre>
+              </div>
+              <div class="rounded-xl border p-4 bg-neutral-50">
+                <p class="font-medium mb-2">Blokér søgesider & carts</p>
+<pre class="whitespace-pre-wrap text-xs">
+User-agent: *
+Disallow: /?s=
+Disallow: /search
+Disallow: /cart
+Sitemap: https://www.ditdomæne.dk/sitemap.xml
+</pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- Typiske fejl -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Typiske fejl du skal undgå</h2>
+            <ul class="list-disc pl-6">
+              <li><strong>Blokere hele sitet ved en fejl:</strong> <code>Disallow: /</code> (brug kun midlertidigt)</li>
+              <li><strong>Tro at Disallow fjerner indeksering:</strong> den stopper kun crawling</li>
+              <li><strong>Glemt sitemap-linje:</strong> gør det sværere at finde nye sider</li>
+              <li><strong>Regler uden korrekt syntaks:</strong> fx mellemrum eller forkerte stier</li>
             </ul>
           </section>
 
-          <!-- Generator instruktion -->
+          <!-- Test & validering -->
           <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Sådan virker værktøjet</h2>
-            <ol class="list-decimal pl-6 space-y-1">
-              <li>Vælg hvilke sektioner eller filer du vil blokere</li>
-              <li>Tilføj evt. link til dit sitemap.xml</li>
-              <li>Klik på "Generér" og kopier den færdige robots.txt</li>
-            </ol>
-            <p class="mt-3 text-sm text-neutral-700">
-              Tip: Husk at placere din robots.txt i roden af dit domæne (<code>www.ditdomæne.dk/robots.txt</code>).
-            </p>
+            <h2 class="text-xl font-semibold mb-2">Test og validering</h2>
+            <ul class="list-disc pl-6">
+              <li>Tjek din fil live: <code>/robots.txt</code> (skal returnere 200)</li>
+              <li>Åbn Search Console &gt; Indstillinger &gt; Crawlstatistik for fejl</li>
+              <li>Valider stierne (case, trailing slash, wildcards)</li>
+            </ul>
           </section>
 
-          <!-- CTA til sitemap -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <p class="text-sm text-neutral-700">
-              Har du ikke allerede lavet et sitemap? Brug vores
-              <a href="/sitemap-generator.html" class="text-blue-600 hover:underline">sitemap-generator</a>.
-            </p>
+          <!-- Link til vores generator (inline værktøjet ligger på forsiden/SPA) -->
+          <section id="generator" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Generér robots.txt nu</h2>
+            <p>Brug vores gratis værktøj til at bygge robots.txt og kopier med ét klik.</p>
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a href="/" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Åbn værktøj på forsiden</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Lav sitemap.xml</a>
+            </div>
           </section>
 
           <!-- Sponsoreret CTA: Simply.com -->
@@ -95,8 +161,7 @@
         </article>
 
         <!-- Sidebar (kan bruges senere) -->
-        <aside class="lg:col-span-4">
-        </aside>
+        <aside class="lg:col-span-4"></aside>
       </div>
     </main>
 
