@@ -1,34 +1,36 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <!-- Header/nav -->
+    <!-- Fælles header/nav -->
     <script src="/assets/include-header.js?v=6" defer></script>
 
     <meta charset="utf-8" />
     <title>Robots.txt Generator – gratis SEO-værktøj | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik. Inkl. eksempler og typiske fejl.">
+    <meta name="description"
+          content="Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik. Inkl. eksempler, typiske fejl og validering." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://www.seohub.dk/robots-generator.html" />
 
-    <!-- Consent + Analytics -->
+    <!-- Cookie consent + GA4 loader -->
     <script src="/assets/consent-analytics.js" defer></script>
 
     <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Struktureret data -->
+    <!-- Struktureret data (WebPage) -->
     <script type="application/ld+json">
     {
       "@context":"https://schema.org",
       "@type":"WebPage",
       "name":"Robots.txt Generator",
-      "description":"Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik.",
       "url":"https://www.seohub.dk/robots-generator.html",
+      "description":"Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik.",
       "publisher":{"@type":"Organization","name":"Seohub.dk"}
     }
     </script>
   </head>
+
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
     <!-- Hero (grøn) -->
@@ -48,33 +50,51 @@
     <!-- Indhold -->
     <main class="max-w-6xl mx-auto px-4 pb-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Content -->
+
+        <!-- Hovedkolonne -->
         <article class="lg:col-span-8 space-y-6">
+
           <!-- Intro -->
           <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-2xl font-bold mb-3">Hvorfor bruge en robots.txt?</h2>
+            <h2 class="text-2xl font-bold mb-3">Hvad er robots.txt – og hvorfor er den vigtig?</h2>
             <p>
-              En <code>robots.txt</code>-fil fortæller søgemaskiner, hvilke dele af dit site de må og ikke må crawle. Den bruges til at:
+              <code>robots.txt</code> er en simpel tekstfil, der ligger i roden af dit domæne (fx <code>https://ditdomæne.dk/robots.txt</code>).
+              Den fortæller søgemaskiner (som Google), hvilke områder de må og ikke må <em>crawle</em>.
             </p>
-            <ul class="list-disc pl-6">
-              <li>undgå crawling af irrelevante områder (fx admin, søgesider, interne filmapper)</li>
-              <li>styre crawl-budget på større websites</li>
-              <li>angive placeringen af dit <code>sitemap.xml</code></li>
+            <ul class="list-disc pl-6 mt-2">
+              <li>Begræns crawling af irrelevante eller følsomme områder (fx <code>/wp-admin/</code> eller interne søgesider)</li>
+              <li>Skån dit crawlbudget på store websites</li>
+              <li>Link til dit <code>sitemap.xml</code> så nye sider findes hurtigere</li>
             </ul>
+            <div class="mt-3 text-sm text-neutral-700">
+              Bemærk: <strong>Disallow stopper crawling, ikke indeksering</strong>. En URL kan stadig optræde i søgeresultater, hvis den linkes udefra.
+            </div>
+          </section>
+
+          <!-- Sådan bruger du generatoren -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Sådan bruger du værktøjet</h2>
+            <ol class="list-decimal pl-6 space-y-1">
+              <li>Indsæt dit <strong>sitemap-link</strong> (valgfrit – anbefales)</li>
+              <li>Tilføj stier du vil <em>tillade</em> (sjældent nødvendigt) og <em>blokere</em></li>
+              <li>Klik <strong>Generér</strong> → kopiér eller download din robots.txt</li>
+            </ol>
             <p class="mt-3 text-sm text-neutral-700">
-              Husk: <strong>robots.txt blokerer crawling, ikke indeksering</strong>. URLs kan stadig dukke op, hvis de er linket eksternt.
+              Placér filen i webroden: <code>https://ditdomæne.dk/robots.txt</code> (ikke i en undermappe).
             </p>
           </section>
 
           <!-- Generator UI -->
           <section id="generator" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Generér robots.txt</h2>
+            <h2 class="text-xl font-semibold mb-4">Generér robots.txt</h2>
+
             <form id="robotsForm" class="space-y-4">
               <div>
                 <label class="block text-sm font-medium mb-1">Sitemap URL (valgfrit)</label>
                 <input id="sitemap" type="url" placeholder="https://www.ditdomæne.dk/sitemap.xml"
                        class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-emerald-200">
               </div>
+
               <div class="grid md:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium mb-1">Tillad (én pr. linje)</label>
@@ -87,6 +107,7 @@
                             class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-emerald-200"></textarea>
                 </div>
               </div>
+
               <div class="flex flex-wrap gap-2">
                 <button type="button" id="btnGen"
                         class="px-4 py-2 rounded-2xl text-white bg-emerald-600 hover:bg-emerald-700">
@@ -140,7 +161,17 @@ Sitemap: https://www.ditdomæne.dk/sitemap.xml
               <li><strong>Blokere hele sitet ved en fejl:</strong> <code>Disallow: /</code> (brug kun midlertidigt)</li>
               <li><strong>Tro at Disallow fjerner indeksering:</strong> den stopper kun crawling</li>
               <li><strong>Glemt sitemap-linje:</strong> gør det sværere at finde nye sider</li>
-              <li><strong>Regler uden korrekt syntaks:</strong> fx mellemrum eller forkerte stier</li>
+              <li><strong>Forkerte stier:</strong> tjek case, trailing slash og wildcards</li>
+            </ul>
+          </section>
+
+          <!-- Test & validering -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Test og validering</h2>
+            <ul class="list-disc pl-6">
+              <li>Tjek live: <code>/robots.txt</code> (skal returnere 200 OK)</li>
+              <li>GSC → Indstillinger → Crawlstatistik for at se eventuelle fejl</li>
+              <li>Valider dine regler på et par vigtige URLs</li>
             </ul>
           </section>
 
@@ -165,15 +196,15 @@ Sitemap: https://www.ditdomæne.dk/sitemap.xml
           </section>
         </article>
 
-        <!-- Sidebar (placeholder) -->
+        <!-- Sidebar (valgfri – tom for nu) -->
         <aside class="lg:col-span-4"></aside>
       </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Fælles footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Generator logic -->
+    <!-- Generator-logic -->
     <script>
       (function () {
         const $ = (id) => document.getElementById(id);
@@ -186,29 +217,24 @@ Sitemap: https://www.ditdomæne.dk/sitemap.xml
         const btnDownload = $('btnDownload');
 
         function buildRobots() {
-          const a = (allowEl.value || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
-          const d = (disallowEl.value || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
+          const allows = (allowEl.value || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
+          const disallows = (disallowEl.value || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
           const sitemap = sitemapEl.value.trim();
 
-          const allowLines = a.map(x => 'Allow: ' + x);
-          const disLines = d.map(x => 'Disallow: ' + x);
+          const lines = ['User-agent: *'];
+          if (allows.length) lines.push(...allows.map(x => 'Allow: ' + x));
+          if (disallows.length) lines.push(...disallows.map(x => 'Disallow: ' + x));
+          if (sitemap) { lines.push('', 'Sitemap: ' + sitemap); }
 
-          let out = ['User-agent: *'];
-          if (allowLines.length) out = out.concat(allowLines);
-          if (disLines.length) out = out.concat(disLines);
-          if (sitemap) out = out.concat(['', 'Sitemap: ' + sitemap]);
-
-          return out.join('\n').trim();
+          return lines.join('\n').trim();
         }
 
         function render() {
           previewEl.textContent = buildRobots();
         }
 
-        // events
-        [sitemapEl, allowEl, disallowEl].forEach(el => {
-          el.addEventListener('input', render);
-        });
+        // Events
+        [sitemapEl, allowEl, disallowEl].forEach(el => el.addEventListener('input', render));
         btnGen.addEventListener('click', render);
 
         btnCopy.addEventListener('click', async () => {
@@ -225,13 +251,11 @@ Sitemap: https://www.ditdomæne.dk/sitemap.xml
           const blob = new Blob([previewEl.textContent || buildRobots()], { type: 'text/plain;charset=utf-8' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
-          a.href = url;
-          a.download = 'robots.txt';
-          a.click();
+          a.href = url; a.download = 'robots.txt'; a.click();
           URL.revokeObjectURL(url);
         });
 
-        // initial
+        // Initial render
         render();
       })();
     </script>
