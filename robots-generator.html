@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <title>Robots.txt Generator – gratis SEO-værktøj | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik. Inkl. eksempler og fejl du skal undgå." />
+    <meta name="description" content="Lav en korrekt robots.txt-fil til dit website. Vælg hvad søgemaskiner må crawle, tilføj sitemap, og generér filen med ét klik. Inkl. eksempler og typiske fejl.">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://www.seohub.dk/robots-generator.html" />
 
@@ -31,14 +31,14 @@
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    <!-- Hero (Seohub blå) -->
+    <!-- Hero (grøn) -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
-             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
-          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj · SEO basics</p>
+             style="background:linear-gradient(135deg,#22c55e 0%,#16a34a 50%,#0d9488 100%)">
+          <p class="text-xs uppercase tracking-wider text-green-100/90 mb-2">Værktøj · SEO basics</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Robots.txt Generator</h1>
-          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+          <p class="text-green-100 text-lg md:text-xl max-w-3xl">
             Opret en korrekt robots.txt-fil og styr hvad søgemaskiner må (og ikke må) crawle.
           </p>
         </div>
@@ -66,22 +66,47 @@
             </p>
           </section>
 
-          <!-- Sådan bruger du generatoren -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Sådan bruger du værktøjet</h2>
-            <ol class="list-decimal pl-6 space-y-1">
-              <li>Indsæt dit sitemap-link (fx <code>https://www.ditdomæne.dk/sitemap.xml</code>)</li>
-              <li>Tilføj stier du vil <em>tillade</em> (sjældent nødvendigt) og <em>blokere</em></li>
-              <li>Kopiér eller download den færdige robots.txt</li>
-            </ol>
-            <p class="mt-3 text-sm text-neutral-700">
-              Placér filen i roden: <code>https://www.ditdomæne.dk/robots.txt</code>.
-            </p>
-            <a href="/robots-generator.html#generator" class="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
-              Gå direkte til generatoren
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2"><path d="M7 17l10-10M7 7h10v10"/></svg>
-            </a>
+          <!-- Generator UI -->
+          <section id="generator" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Generér robots.txt</h2>
+            <form id="robotsForm" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium mb-1">Sitemap URL (valgfrit)</label>
+                <input id="sitemap" type="url" placeholder="https://www.ditdomæne.dk/sitemap.xml"
+                       class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-emerald-200">
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium mb-1">Tillad (én pr. linje)</label>
+                  <textarea id="allow" rows="4" placeholder="/wp-admin/admin-ajax.php"
+                            class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-emerald-200"></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Bloker (én pr. linje)</label>
+                  <textarea id="disallow" rows="6" placeholder="/wp-admin/\n/?s=\n/search\n/cart"
+                            class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-emerald-200"></textarea>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" id="btnGen"
+                        class="px-4 py-2 rounded-2xl text-white bg-emerald-600 hover:bg-emerald-700">
+                  Generér
+                </button>
+                <button type="button" id="btnCopy"
+                        class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">
+                  Kopiér
+                </button>
+                <button type="button" id="btnDownload"
+                        class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">
+                  Download robots.txt
+                </button>
+              </div>
+
+              <div class="mt-4">
+                <h3 class="font-semibold mb-2">Forhåndsvisning</h3>
+                <pre id="preview" class="bg-neutral-900 text-neutral-100 rounded-xl p-4 whitespace-pre-wrap text-sm"></pre>
+              </div>
+            </form>
           </section>
 
           <!-- Eksempler -->
@@ -119,31 +144,11 @@ Sitemap: https://www.ditdomæne.dk/sitemap.xml
             </ul>
           </section>
 
-          <!-- Test & validering -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Test og validering</h2>
-            <ul class="list-disc pl-6">
-              <li>Tjek din fil live: <code>/robots.txt</code> (skal returnere 200)</li>
-              <li>Åbn Search Console &gt; Indstillinger &gt; Crawlstatistik for fejl</li>
-              <li>Valider stierne (case, trailing slash, wildcards)</li>
-            </ul>
-          </section>
-
-          <!-- Link til vores generator (inline værktøjet ligger på forsiden/SPA) -->
-          <section id="generator" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Generér robots.txt nu</h2>
-            <p>Brug vores gratis værktøj til at bygge robots.txt og kopier med ét klik.</p>
-            <div class="flex flex-wrap gap-3 mt-3">
-              <a href="/" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Åbn værktøj på forsiden</a>
-              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Lav sitemap.xml</a>
-            </div>
-          </section>
-
           <!-- Sponsoreret CTA: Simply.com -->
-          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
+          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 text-white">
             <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
             <h3 class="text-lg md:text-xl font-bold mb-2">Klar til at få dit website online?</h3>
-            <p class="text-blue-100 mb-4">
+            <p class="text-emerald-100 mb-4">
               Du har robots.txt på plads – næste skridt er at få dit site live.
               <strong>Simply.com</strong> gør det nemt at købe domæne & webhotel på få minutter.
             </p>
@@ -160,12 +165,75 @@ Sitemap: https://www.ditdomæne.dk/sitemap.xml
           </section>
         </article>
 
-        <!-- Sidebar (kan bruges senere) -->
+        <!-- Sidebar (placeholder) -->
         <aside class="lg:col-span-4"></aside>
       </div>
     </main>
 
     <!-- Footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
+
+    <!-- Generator logic -->
+    <script>
+      (function () {
+        const $ = (id) => document.getElementById(id);
+        const sitemapEl = $('sitemap');
+        const allowEl = $('allow');
+        const disallowEl = $('disallow');
+        const previewEl = $('preview');
+        const btnGen = $('btnGen');
+        const btnCopy = $('btnCopy');
+        const btnDownload = $('btnDownload');
+
+        function buildRobots() {
+          const a = (allowEl.value || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
+          const d = (disallowEl.value || '').split(/\n+/).map(x => x.trim()).filter(Boolean);
+          const sitemap = sitemapEl.value.trim();
+
+          const allowLines = a.map(x => 'Allow: ' + x);
+          const disLines = d.map(x => 'Disallow: ' + x);
+
+          let out = ['User-agent: *'];
+          if (allowLines.length) out = out.concat(allowLines);
+          if (disLines.length) out = out.concat(disLines);
+          if (sitemap) out = out.concat(['', 'Sitemap: ' + sitemap]);
+
+          return out.join('\n').trim();
+        }
+
+        function render() {
+          previewEl.textContent = buildRobots();
+        }
+
+        // events
+        [sitemapEl, allowEl, disallowEl].forEach(el => {
+          el.addEventListener('input', render);
+        });
+        btnGen.addEventListener('click', render);
+
+        btnCopy.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(previewEl.textContent || buildRobots());
+            btnCopy.textContent = 'Kopieret!';
+            setTimeout(() => btnCopy.textContent = 'Kopiér', 1200);
+          } catch (e) {
+            alert('Kunne ikke kopiere. Markér og kopier manuelt.');
+          }
+        });
+
+        btnDownload.addEventListener('click', () => {
+          const blob = new Blob([previewEl.textContent || buildRobots()], { type: 'text/plain;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'robots.txt';
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
+        // initial
+        render();
+      })();
+    </script>
   </body>
 </html>
