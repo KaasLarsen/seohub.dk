@@ -15,13 +15,35 @@
   `;
 
   function mount() {
+    // 1) Brug #footer hvis den findes
     let host = document.getElementById('footer');
-    if (!host) {
-      host = document.createElement('div');
-      document.body.appendChild(host);
+    if (host) {
+      host.innerHTML = html;
+      finalize(host);
+      return;
     }
+
+    // 2) Ellers: hvis der findes et <footer>, erstat det med vores markup
+    const existingFooter = document.querySelector('footer');
+    if (existingFooter) {
+      const wrapper = document.createElement('div');
+      wrapper.id = 'footer';
+      wrapper.innerHTML = html;
+      existingFooter.replaceWith(wrapper);
+      finalize(wrapper);
+      return;
+    }
+
+    // 3) Fald tilbage: opret en footer i bunden
+    host = document.createElement('div');
+    host.id = 'footer';
     host.innerHTML = html;
-    const yearEl = host.querySelector('#footer-year');
+    document.body.appendChild(host);
+    finalize(host);
+  }
+
+  function finalize(container) {
+    const yearEl = container.querySelector('#footer-year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   }
 
