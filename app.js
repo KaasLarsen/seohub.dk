@@ -432,8 +432,8 @@ function ContentBrief() {
 function App() {
   return React.createElement("main", { className:"max-w-6xl mx-auto px-4 pb-12 space-y-8" }, [
     React.createElement(BigHero, { key:"hero" }),
-    React.createElement(Sponsors, { key:"sponsors" }),   // LIGE UNDER HERO
     React.createElement(LatestPosts, { key:"latest" }),
+    React.createElement(Sponsors, { key:"sponsors" }),   // LIGE UNDER HERO
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
     React.createElement(RobotsTxt, { key:"rob" }),
