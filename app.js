@@ -32,69 +32,83 @@ function Card({ title, description, href, icon, children, className="" }) {
   return React.createElement("div", { className: `${base} ${className}` }, content);
 }
 
-/* ---------- HERO + 3 kort (som før) ---------- */
+/* ---------- STOR BLÅ HERO med 3 ikon-kort INDE I hero ---------- */
 function BigHero() {
-  const IconDoc = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
-    React.createElement("path", { d:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
-    React.createElement("polyline", { points:"14 2 14 8 20 8" })
+  // små inline-ikoner
+  const IconDoc = (
+    React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+      React.createElement("path", { d:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
+      React.createElement("polyline", { points:"14 2 14 8 20 8" })
+    )
   );
-  const IconBot = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
-    React.createElement("rect", { x:"3", y:"11", width:"18", height:"10", rx:"2" }),
-    React.createElement("circle", { cx:"12", cy:"5", r:"2" }),
-    React.createElement("path", { d:"M12 7v4" })
+  const IconBot = (
+    React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+      React.createElement("rect", { x:"3", y:"11", width:"18", height:"10", rx:"2" }),
+      React.createElement("circle", { cx:"12", cy:"5", r:"2" }),
+      React.createElement("path", { d:"M12 7v4" })
+    )
   );
-  const IconMap = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
-    React.createElement("polygon", { points:"2 6 9 3 15 6 22 3 22 18 15 21 9 18 2 21" }),
-    React.createElement("line", { x1:"9", y1:"3", x2:"9", y2:"18" }),
-    React.createElement("line", { x1:"15", y1:"6", x2:"15", y2:"21" })
+  const IconMap = (
+    React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+      React.createElement("polygon", { points:"2 6 9 3 15 6 22 3 22 18 15 21 9 18 2 21" }),
+      React.createElement("line", { x1:"9", y1:"3", x2:"9", y2:"18" }),
+      React.createElement("line", { x1:"15", y1:"6", x2:"15", y2:"21" })
+    )
   );
 
   return React.createElement("section", { className:"py-10 md:py-14" },
-    React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
-
-      // Hero-blok (stor blå)
+    React.createElement("div", { className:"max-w-6xl mx-auto px-4" },
       React.createElement("div", {
-        key:"hero",
         className:"rounded-2xl p-12 md:p-16 text-white shadow-lg",
         style:{ background: "linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)" }
       }, [
+        // Overtekst + titel + tekst
         React.createElement("p", { key:"k", className:"text-xs uppercase tracking-wider text-blue-100/90 mb-2" }, "Gratis SEO-værktøjer"),
         React.createElement("h1", { key:"h", className:"text-4xl md:text-5xl font-extrabold mb-3 leading-tight" },
           "Seohub – hurtige værktøjer til hverdags-SEO"
         ),
-        React.createElement("p", { key:"p", className:"text-blue-100 text-lg md:text-xl max-w-3xl" },
+        React.createElement("p", { key:"p", className:"text-blue-100 text-lg md:text-xl max-w-3xl mb-6 md:mb-8" },
           "SERP & meta, robots.txt, sitemap.xml, intern linkbuilder og flere små hjælperedskaber."
-        )
-      ]),
+        ),
 
-      // 3 kort under hero
-      React.createElement("div", { key:"grid", className:"grid md:grid-cols-3 gap-4 mt-6" }, [
-        React.createElement(Card, {
-          key:"serp",
-          href:"/serp-preview.html",
-          title:"SERP & Meta",
-          description:"Forhåndsvisning + længde-tjek.",
-          icon: IconDoc
-        }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →")),
-        React.createElement(Card, {
-          key:"robots",
-          href:"/robots-generator.html",
-          title:"Robots.txt",
-          description:"Byg og download.",
-          icon: IconBot
-        }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →")),
-        React.createElement(Card, {
-          key:"sitemap",
-          href:"/sitemap-generator.html",
-          title:"Sitemap.xml",
-          description:"Generér fra URL-liste.",
-          icon: IconMap
-        }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →"))
+        // 3 ikon-kort INDEN I hero (på blå baggrund)
+        React.createElement("div", { key:"grid", className:"grid md:grid-cols-3 gap-4" }, [
+          React.createElement("a", {
+            key:"serp",
+            href:"/serp-preview.html",
+            className:"group bg-white text-neutral-800 rounded-2xl p-5 md:p-6 shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
+          }, [
+            React.createElement("div", { key:"i", className:"mb-3 text-blue-700" }, IconDoc),
+            React.createElement("h3", { key:"t", className:"font-semibold" }, "SERP & Meta"),
+            React.createElement("p", { key:"d", className:"text-sm text-neutral-600 mt-1" }, "Forhåndsvisning + længde-tjek."),
+            React.createElement("div", { key:"cta", className:"text-sm text-blue-700 mt-3" }, "Åbn værktøj →")
+          ]),
+          React.createElement("a", {
+            key:"robots",
+            href:"/robots-generator.html",
+            className:"group bg-white text-neutral-800 rounded-2xl p-5 md:p-6 shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
+          }, [
+            React.createElement("div", { key:"i", className:"mb-3 text-blue-700" }, IconBot),
+            React.createElement("h3", { key:"t", className:"font-semibold" }, "Robots.txt"),
+            React.createElement("p", { key:"d", className:"text-sm text-neutral-600 mt-1" }, "Byg og download."),
+            React.createElement("div", { key:"cta", className:"text-sm text-blue-700 mt-3" }, "Åbn værktøj →")
+          ]),
+          React.createElement("a", {
+            key:"sitemap",
+            href:"/sitemap-generator.html",
+            className:"group bg-white text-neutral-800 rounded-2xl p-5 md:p-6 shadow hover:shadow-lg transition transform hover:-translate-y-0.5"
+          }, [
+            React.createElement("div", { key:"i", className:"mb-3 text-blue-700" }, IconMap),
+            React.createElement("h3", { key:"t", className:"font-semibold" }, "Sitemap.xml"),
+            React.createElement("p", { key:"d", className:"text-sm text-neutral-600 mt-1" }, "Generér fra URL-liste."),
+            React.createElement("div", { key:"cta", className:"text-sm text-blue-700 mt-3" }, "Åbn værktøj →")
+          ])
+        ])
       ])
-
-    ])
+    )
   );
 }
+
 
 /* ---------- Sponsoreret sektion (blå kort, flyttet op) ---------- */
 function Sponsors() {
