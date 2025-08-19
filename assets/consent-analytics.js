@@ -1,113 +1,78 @@
-/* =========================================================
-   SEOHub – Consent + Analytics + Footer Autoload
-   - Cookie banner (localStorage)
-   - GA (G-FBXNYF72EJ) efter samtykke
-   - Footer autoloader (/assets/include-footer.js)
-   ========================================================= */
+// /assets/consent-analytics.js — Consent + Google Analytics 4 (patched)
 
-/* -------------------------
-   Utils
-------------------------- */
-function seohubInjectScript(src, attrs = {}) {
-  if (document.querySelector(`script[data-seohub="${src}"]`)) return; // avoid duplicates
-  const s = document.createElement('script');
-  s.src = src;
-  s.defer = true;
-  s.setAttribute('data-seohub', src);
-  Object.entries(attrs).forEach(([k, v]) => s.setAttribute(k, v));
-  document.head.appendChild(s);
-}
+// Dit GA4 Measurement ID
+const GA_MEASUREMENT_ID = "G-FBXNYF72EJ";
 
-function seohubLoadGA(measurementId) {
-  if (!measurementId) return;
-  if (window.__seohubGA) return; // already loaded
-  window.__seohubGA = true;
+(function () {
+  let gaLoaded = false;
 
-  // gtag loader
-  const src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-  seohubInjectScript(src, { async: '' });
+  // Indsæt GA-scriptet
+  function loadGA() {
+    if (gaLoaded) return;
+    gaLoaded = true;
 
-  // init gtag
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  window.gtag = gtag;
-  gtag('js', new Date());
-  gtag('config', measurementId, { anonymize_ip: true });
-}
+    // Opret script tag
+    const gtagScript = document.createElement("script");
+    gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    gtagScript.async = true;
+    document.head.appendChild(gtagScript);
 
-/* -------------------------
-   Consent banner
-------------------------- */
-(function seohubConsent() {
-  const KEY = 'seohub_consent_v1';
-  const saved = (() => {
-    try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch { return null; }
-  })();
+    // Init dataLayer + gtag
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    window.gtag = gtag;
 
-  // If already decided, act and exit
-  if (saved && typeof saved === 'object') {
-    if (saved.analytics === true) {
-      seohubLoadGA('G-FBXNYF72EJ');
-    }
-    return;
+    gtag("js", new Date());
+    gtag("config", GA_MEASUREMENT_ID);
+
+    console.log("[ConsentAnalytics] GA init OK");
+
+    // Send første page_view manuelt (efter samtykke)
+    gtag("event", "page_view", {
+      page_title: document.title,
+      page_location: window.location.href,
+      page_path: window.location.pathname
+    });
+    console.log("[ConsentAnalytics] Første page_view sendt");
   }
 
-  // Styles (scoped)
-  const style = document.createElement('style');
-  style.textContent = `
-  .sh-consent-wrap{position:fixed;inset:auto 0 0 0;z-index:9999;background:#0b1220;color:#fff}
-  .sh-consent{max-width:1120px;margin:0 auto;padding:14px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  .sh-consent p{margin:0;font-size:14px;line-height:1.4;color:#dbe3ff}
-  .sh-consent a{color:#9ec5ff;text-decoration:underline}
-  .sh-consent .btns{margin-left:auto;display:flex;gap:8px}
-  .sh-btn{appearance:none;border:1px solid #2a3354;background:#131b2f;color:#fff;border-radius:10px;padding:8px 12px;font-size:14px;cursor:pointer}
-  .sh-btn.primary{background:#2563eb;border-color:#2563eb}
-  .sh-btn:hover{filter:brightness(1.05)}
-  @media (max-width:640px){.sh-consent .btns{margin-left:0;width:100%;justify-content:flex-start}}
-  `;
-  document.head.appendChild(style);
-
-  // Banner DOM
-  const wrap = document.createElement('div');
-  wrap.className = 'sh-consent-wrap';
-  wrap.innerHTML = `
-    <div class="sh-consent">
-      <p>
-        Vi bruger cookies til statistik (Google Analytics) for at forbedre SEOHub. 
-        Læs mere i <a href="/privatliv-cookies.html">Privatliv & cookies</a>.
-      </p>
-      <div class="btns">
-        <button class="sh-btn" data-action="deny">Afvis</button>
-        <button class="sh-btn primary" data-action="allow">Accepter</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(wrap);
-
-  const decide = (allow) => {
-    const value = { analytics: !!allow, time: Date.now() };
-    try { localStorage.setItem(KEY, JSON.stringify(value)); } catch {}
-    wrap.remove();
-    if (allow) {
-      seohubLoadGA('G-FBXNYF72EJ');
+  // --- Cookie Consent Banner ---
+  function showBanner() {
+    if (localStorage.getItem("cookie_consent") === "accepted") {
+      loadGA();
+      return; // Ingen banner, GA starter direkte
     }
-  };
 
-  wrap.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action]');
-    if (!btn) return;
-    if (btn.dataset.action === 'allow') decide(true);
-    if (btn.dataset.action === 'deny') decide(false);
-  });
-})();
+    const banner = document.createElement("div");
+    banner.id = "cookie-banner";
+    banner.className =
+      "fixed bottom-0 left-0 right-0 bg-neutral-900 text-white text-sm p-4 flex flex-col md:flex-row items-center justify-between z-50";
+    banner.innerHTML = `
+      <p class="mb-2 md:mb-0">Vi bruger cookies til statistik (Google Analytics). </p>
+      <div class="flex gap-2">
+        <button id="cookie-accept" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Accepter</button>
+        <button id="cookie-decline" class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-1 rounded">Afvis</button>
+      </div>
+    `;
+    document.body.appendChild(banner);
 
-/* -------------------------
-   Footer autoloader
-------------------------- */
-(function loadFooterOnce() {
-  if (window.__footerLoaded) return;
-  window.__footerLoaded = true;
+    document.getElementById("cookie-accept").addEventListener("click", () => {
+      localStorage.setItem("cookie_consent", "accepted");
+      banner.remove();
+      loadGA(); // Init GA + send første page_view
+    });
 
-  // Load /assets/include-footer.js which mounts a footer into #footer (or appends one)
-  seohubInjectScript('/assets/include-footer.js');
+    document.getElementById("cookie-decline").addEventListener("click", () => {
+      localStorage.setItem("cookie_consent", "declined");
+      banner.remove();
+      console.log("[ConsentAnalytics] Bruger afviste cookies");
+    });
+  }
+
+  // --- Init ---
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", showBanner);
+  } else {
+    showBanner();
+  }
 })();
