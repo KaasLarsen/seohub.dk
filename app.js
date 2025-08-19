@@ -1,5 +1,4 @@
-// /app.js — Komplet forside (stor blå hero + 3 kort, seneste indlæg, sponsorer, inline værktøjer)
-
+// /app.js — Forside med stor blå hero, sponsorer (blå kort) lige under, seneste indlæg og dine værktøjer
 const { useState, useMemo, useEffect } = React;
 
 /* ---------- UI helpers ---------- */
@@ -19,58 +18,22 @@ function Section({ title, description, children }) {
   );
 }
 
-function Card({ title, description, href, icon, children }) {
+function Card({ title, description, href, icon, children, className="" }) {
   const content = [
     icon ? React.createElement("div", { key:"i", className:"mb-3" }, icon) : null,
     title ? React.createElement("h3", { key:"t", className:"text-lg font-semibold leading-tight" }, title) : null,
     description ? React.createElement("p", { key:"d", className:"text-sm text-neutral-600 mt-1" }, description) : null,
     children ? React.createElement("div", { key:"c", className:"mt-3" }, children) : null
   ];
+  const base = "rounded-2xl border p-5 bg-white hover:shadow transition block";
   if (href) {
-    return React.createElement("a", { href, className:"rounded-2xl border p-5 bg-white hover:shadow transition block" }, content);
+    return React.createElement("a", { href, className: `${base} ${className}` }, content);
   }
-  return React.createElement("div", { className:"rounded-2xl border p-5 bg-white" }, content);
+  return React.createElement("div", { className: `${base} ${className}` }, content);
 }
 
-function TextInput({ label, value, onChange, placeholder, textarea=false, rows=3 }) {
-  return React.createElement(
-    "label",
-    { className: "block mb-3" },
-    [
-      label ? React.createElement("span", { key:"l", className:"block text-sm font-medium mb-1" }, label) : null,
-      textarea
-        ? React.createElement("textarea", { key:"ta", value, onChange:e=>onChange(e.target.value), placeholder, rows, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
-        : React.createElement("input", { key:"in", value, onChange:e=>onChange(e.target.value), placeholder, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
-    ]
-  );
-}
-
-function CopyButton({ getText, label="Kopiér" }) {
-  const [copied, setCopied] = useState(false);
-  return React.createElement("button", {
-    onClick: async () => {
-      try { await navigator.clipboard.writeText(getText()); setCopied(true); setTimeout(()=>setCopied(false), 1500); }
-      catch(e){ alert("Kunne ikke kopiere – markér og kopier manuelt."); }
-    },
-    className:"px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100"
-  }, copied ? "Kopieret!" : label);
-}
-
-function DownloadButton({ filename, getContent, label="Download" }) {
-  return React.createElement("button", {
-    onClick: ()=> {
-      const blob = new Blob([getContent()], { type:"text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
-    },
-    className:"px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100"
-  }, label);
-}
-
-/* ---------- Hero (STOR BLÅ) + 3 kort ---------- */
+/* ---------- HERO + 3 kort (som før) ---------- */
 function BigHero() {
-  // simple inline “ikoner” (SVG) for kortene
   const IconDoc = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
     React.createElement("path", { d:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
     React.createElement("polyline", { points:"14 2 14 8 20 8" })
@@ -89,7 +52,7 @@ function BigHero() {
   return React.createElement("section", { className:"py-10 md:py-14" },
     React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
 
-      // HERO-BLOK
+      // Hero-blok (stor blå)
       React.createElement("div", {
         key:"hero",
         className:"rounded-2xl p-12 md:p-16 text-white shadow-lg",
@@ -104,7 +67,7 @@ function BigHero() {
         )
       ]),
 
-      // 3 kort
+      // 3 kort under hero
       React.createElement("div", { key:"grid", className:"grid md:grid-cols-3 gap-4 mt-6" }, [
         React.createElement(Card, {
           key:"serp",
@@ -133,7 +96,123 @@ function BigHero() {
   );
 }
 
-/* ---------- Inline værktøjer ---------- */
+/* ---------- Sponsoreret sektion (blå kort, flyttet op) ---------- */
+function Sponsors() {
+  // Brug dine rigtige affiliate-links her:
+  const items = [
+    {
+      name: "Simply.com",
+      href: "https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1",
+      tagline: "Dansk webhosting & domæner"
+    },
+    {
+      name: "Morningscore",
+      href: "https://morningscore.io?fpr=seo43",
+      tagline: "SEO-værktøj der gør det simpelt"
+    },
+    {
+      name: "AI Links",
+      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555",
+      tagline: "AI-drevet linkanalyse"
+    }
+  ];
+  return React.createElement("section", { className:"py-8" },
+    React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
+      React.createElement("h2", { key:"h", className:"text-xl md:text-2xl font-semibold mb-6 text-center" }, "Sponsoreret (reklame)"),
+      React.createElement("div", { key:"g", className:"grid sm:grid-cols-3 gap-4" },
+        items.map(it =>
+          React.createElement("a", {
+            key: it.name,
+            href: it.href,
+            target:"_blank",
+            rel:"sponsored noopener nofollow",
+            className:"rounded-2xl p-5 md:p-6 text-white shadow-lg block",
+            style:{ background:"linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)" }
+          }, [
+            React.createElement("div", { key:"name", className:"font-semibold text-base" }, it.name),
+            React.createElement("div", { key:"tg", className:"text-sm text-blue-100 mt-1" }, it.tagline),
+            React.createElement("div", { key:"cta", className:"text-sm mt-3 underline" }, "Læs mere →")
+          ])
+        )
+      )
+    ])
+  );
+}
+
+/* ---------- Seneste indlæg (auto) ---------- */
+function LatestPosts() {
+  const [posts, setPosts] = useState(null);
+  const [err, setErr] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("/blog/posts.json", { cache: "no-cache" })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente posts.json")))
+      .then(data => {
+        if (!alive) return;
+        const sorted = [...data].sort((a,b) => (b.date || "").localeCompare(a.date || ""));
+        setPosts(sorted.slice(0,3));
+      })
+      .catch(e => { if (alive) setErr(e.message || "Fejl"); });
+    return () => { alive = false; };
+  }, []);
+
+  return React.createElement(Section, {
+    title: "Seneste indlæg",
+    description: "Nye guides og tjeklister fra bloggen."
+  },
+    err
+      ? React.createElement("p", { className:"text-sm text-red-600" }, err)
+      : !posts
+        ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
+        : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
+            posts.map(p => React.createElement(Card, {
+              key:p.slug,
+              title:p.title,
+              description:p.excerpt,
+              href:`/blog/${p.slug}.html`
+            },
+              React.createElement("div", { className:"text-xs text-neutral-500 mt-2" }, p.date)
+            ))
+          )
+  );
+}
+
+/* ---------- Små værktøjer (som før) ---------- */
+function TextInput({ label, value, onChange, placeholder, textarea=false, rows=3 }) {
+  return React.createElement(
+    "label",
+    { className: "block mb-3" },
+    [
+      label ? React.createElement("span", { key:"l", className:"block text-sm font-medium mb-1" }, label) : null,
+      textarea
+        ? React.createElement("textarea", { key:"ta", value, onChange:e=>onChange(e.target.value), placeholder, rows, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
+        : React.createElement("input", { key:"in", value, onChange:e=>onChange(e.target.value), placeholder, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
+    ]
+  );
+}
+function CopyButton({ getText, label="Kopiér" }) {
+  const [copied, setCopied] = useState(false);
+  return React.createElement("button", {
+    onClick: async () => {
+      try { await navigator.clipboard.writeText(getText()); setCopied(true); setTimeout(()=>setCopied(false), 1500); }
+      catch(e){ alert("Kunne ikke kopiere – markér og kopier manuelt."); }
+    },
+    className:"px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100"
+  }, copied ? "Kopieret!" : label);
+}
+function DownloadButton({ filename, getContent, label="Download" }) {
+  return React.createElement("button", {
+    onClick: ()=> {
+      const blob = new Blob([getContent()], { type:"text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+    },
+    className:"px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100"
+  }, label);
+}
+
 function KeywordIdeas() {
   const [seed, setSeed] = useState("");
   const ideas = useMemo(() => {
@@ -335,101 +414,18 @@ function ContentBrief() {
   );
 }
 
-/* ---------- Seneste indlæg (auto fra /blog/posts.json) ---------- */
-function LatestPosts() {
-  const [posts, setPosts] = useState(null);
-  const [err, setErr] = useState(null);
-
-  useEffect(() => {
-    let alive = true;
-    fetch("/blog/posts.json", { cache: "no-cache" })
-      .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente posts.json")))
-      .then(data => {
-        if (!alive) return;
-        const sorted = [...data].sort((a,b) => (b.date || "").localeCompare(a.date || ""));
-        setPosts(sorted.slice(0,3));
-      })
-      .catch(e => { if (alive) setErr(e.message || "Fejl"); });
-    return () => { alive = false; };
-  }, []);
-
-  return React.createElement(Section, {
-    title: "Seneste indlæg",
-    description: "Nye guides og tjeklister fra bloggen."
-  },
-    err
-      ? React.createElement("p", { className:"text-sm text-red-600" }, err)
-      : !posts
-        ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
-        : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
-            posts.map(p => React.createElement(Card, {
-              key:p.slug,
-              title:p.title,
-              description:p.excerpt,
-              href:`/blog/${p.slug}.html`
-            },
-              React.createElement("div", { className:"text-xs text-neutral-500 mt-2" }, p.date)
-            ))
-          )
-  );
-}
-
-/* ---------- Sponsorerede partnere (tekst, ingen billeder) ---------- */
-function Sponsors() {
-  const items = [
-    {
-      name: "AI Links",
-      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555",
-      tagline: "AI-drevet linkanalyse"
-    },
-    {
-      name: "Nemlinkbuilding.dk",
-      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=87346",
-      tagline: "Kvalitetslinks uden bøvl"
-    },
-    {
-      name: "CLKWEB",
-      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=99810",
-      tagline: "Teknisk SEO & udvikling"
-    }
-  ];
-  return React.createElement(Section, { title:"Sponsoreret", description:"Udvalgte partnere vi anbefaler (reklame)." },
-    React.createElement("div", { className:"grid sm:grid-cols-3 gap-4" },
-      items.map(it =>
-        React.createElement("a", {
-          key: it.name,
-          href: it.href,
-          target:"_blank",
-          rel:"sponsored noopener nofollow",
-          className:"rounded-2xl border p-5 bg-white hover:shadow transition block"
-        }, [
-          React.createElement("div", { key:"name", className:"font-semibold text-base" }, it.name),
-          React.createElement("div", { key:"tg", className:"text-sm text-neutral-600 mt-1" }, it.tagline),
-          React.createElement("div", { key:"cta", className:"text-sm text-blue-700 mt-3" }, "Læs mere →")
-        ])
-      )
-    )
-  );
-}
-
 /* ---------- App ---------- */
 function App() {
   return React.createElement("main", { className:"max-w-6xl mx-auto px-4 pb-12 space-y-8" }, [
     React.createElement(BigHero, { key:"hero" }),
-
-    // Inline værktøjer
+    React.createElement(Sponsors, { key:"sponsors" }),   // LIGE UNDER HERO
+    React.createElement(LatestPosts, { key:"latest" }),
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
     React.createElement(RobotsTxt, { key:"rob" }),
     React.createElement(SitemapXml, { key:"map" }),
     React.createElement(FaqSchema, { key:"faq" }),
-    React.createElement(ContentBrief, { key:"brief" }),
-
-    // Seneste indlæg
-    React.createElement(LatestPosts, { key:"latest" }),
-
-    // Sponsorer
-    React.createElement(Sponsors, { key:"sponsors" })
+    React.createElement(ContentBrief, { key:"brief" })
   ]);
 }
 
