@@ -1,5 +1,4 @@
-// /app.js — Forside m. stor hero + 3 ikon-kort, Seneste indlæg (auto fra /blog/posts.json) og Sponsorerede partnere.
-// Kontaktformularen er fjernet fra forsiden som ønsket.
+// /app.js — Forside med stor blå hero + 3 ikon-kort, Seneste indlæg (auto), sponsorer (uden billeder) og dine inline værktøjer.
 
 const { useState, useMemo, useEffect } = React;
 
@@ -28,7 +27,7 @@ function Card({ title, description, href, icon, children }) {
     children ? React.createElement("div", { key:"c", className:"mt-3" }, children) : null
   ];
   if (href) {
-    return React.createElement("a", { href, className:"rounded-2xl border p-5 bg-white hover:shadow transition" }, content);
+    return React.createElement("a", { href, className:"rounded-2xl border p-5 bg-white hover:shadow transition block" }, content);
   }
   return React.createElement("div", { className:"rounded-2xl border p-5 bg-white" }, content);
 }
@@ -69,7 +68,7 @@ function DownloadButton({ filename, getContent, label="Download" }) {
   }, label);
 }
 
-/* ---------- Værktøjer (små inline versioner) ---------- */
+/* ---------- Inline værktøjer ---------- */
 function KeywordIdeas() {
   const [seed, setSeed] = useState("");
   const ideas = useMemo(() => {
@@ -271,7 +270,7 @@ function ContentBrief() {
   );
 }
 
-/* ---------- NYT: Seneste indlæg (henter /blog/posts.json) ---------- */
+/* ---------- NYT: Seneste indlæg (auto fra /blog/posts.json) ---------- */
 function LatestPosts() {
   const [posts, setPosts] = useState(null);
   const [err, setErr] = useState(null);
@@ -282,7 +281,6 @@ function LatestPosts() {
       .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente posts.json")))
       .then(data => {
         if (!alive) return;
-        // Sorter nyeste først (efter date), tag de 3 første
         const sorted = [...data].sort((a,b) => (b.date || "").localeCompare(a.date || ""));
         setPosts(sorted.slice(0,3));
       })
@@ -311,25 +309,22 @@ function LatestPosts() {
   );
 }
 
-/* ---------- Sponsorerede partnere (uændret, men flyttes under Seneste indlæg) ---------- */
+/* ---------- Sponsorerede partnere (REN TEKST – ingen billeder) ---------- */
 function Sponsors() {
   const items = [
     {
       name: "AI Links",
       href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555",
-      img: "/assets/partners/ai-links.png",
       tagline: "AI-drevet linkanalyse"
     },
     {
       name: "Nemlinkbuilding.dk",
       href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=87346",
-      img: "/assets/partners/nemlinkbuilding.png",
       tagline: "Kvalitetslinks uden bøvl"
     },
     {
       name: "CLKWEB",
       href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=99810",
-      img: "/assets/partners/clkweb.png",
       tagline: "Teknisk SEO & udvikling"
     }
   ];
@@ -341,21 +336,35 @@ function Sponsors() {
           href: it.href,
           target:"_blank",
           rel:"sponsored noopener nofollow",
-          className:"rounded-2xl border p-4 bg-white hover:shadow transition flex items-center gap-3"
+          className:"rounded-2xl border p-5 bg-white hover:shadow transition block"
         }, [
-          React.createElement("img", { key:"img", src: it.img, alt: it.name, className:"h-8 w-auto object-contain" }),
-          React.createElement("div", { key:"txt" }, [
-            React.createElement("div", { key:"n", className:"font-semibold" }, it.name),
-            React.createElement("div", { key:"tg", className:"text-xs text-neutral-600" }, it.tagline)
-          ])
+          React.createElement("div", { key:"name", className:"font-semibold text-base" }, it.name),
+          React.createElement("div", { key:"tg", className:"text-sm text-neutral-600 mt-1" }, it.tagline),
+          React.createElement("div", { key:"cta", className:"text-sm text-blue-700 mt-3" }, "Læs mere →")
         ])
       )
     )
   );
 }
 
-/* ---------- Hero med 3 klikbare ikoner ---------- */
+/* ---------- Stor blå hero + 3 ikon-kort (som før) ---------- */
 function BigHero() {
+  // simple inline “ikoner” (SVG) for de tre kort
+  const IconDoc = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+    React.createElement("path", { d:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
+    React.createElement("polyline", { points:"14 2 14 8 20 8" })
+  );
+  const IconBot = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+    React.createElement("rect", { x:"3", y:"11", width:"18", height:"10", rx:"2" }),
+    React.createElement("circle", { cx:"12", cy:"5", r:"2" }),
+    React.createElement("path", { d:"M12 7v4" })
+  );
+  const IconMap = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+    React.createElement("polygon", { points:"2 6 9 3 15 6 22 3 22 18 15 21 9 18 2 21" }),
+    React.createElement("line", { x1:"9", y1:"3", x2:"9", y2:"18" }),
+    React.createElement("line", { x1:"15", y1:"6", x2:"15", y2:"21" })
+  );
+
   return React.createElement("section", { className:"py-8 md:py-12" },
     React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
       React.createElement("div", {
@@ -365,27 +374,31 @@ function BigHero() {
       }, [
         React.createElement("p", { key:"k", className:"text-xs uppercase tracking-wider text-blue-100/90 mb-2" }, "Gratis SEO-værktøjer"),
         React.createElement("h1", { key:"h", className:"text-4xl md:text-5xl font-extrabold mb-3 leading-tight" }, "Seohub – hurtige værktøjer til hverdags-SEO"),
-        React.createElement("p", { key:"p", className:"text-blue-100 text-lg md:text-xl max-w-3xl" }, "SERP & meta, robots.txt, sitemap.xml, intern linkbuilder og flere små hjælperedskaber.")
+        React.createElement("p", { key:"p", className:"text-blue-100 text-lg md:text-xl max-w-3xl" },
+          "SERP & meta, robots.txt, sitemap.xml, intern linkbuilder og flere små hjælperedskaber."
+        )
       ]),
-      // 3 ikon-kort under hero
       React.createElement("div", { key:"grid", className:"grid md:grid-cols-3 gap-4 mt-6" }, [
         React.createElement(Card, {
           key:"serp",
           href:"/serp-preview.html",
           title:"SERP & Meta",
-          description:"Forhåndsvisning + længde-tjek."
+          description:"Forhåndsvisning + længde-tjek.",
+          icon: IconDoc
         }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →")),
         React.createElement(Card, {
           key:"robots",
           href:"/robots-generator.html",
           title:"Robots.txt",
-          description:"Byg og download."
+          description:"Byg og download.",
+          icon: IconBot
         }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →")),
         React.createElement(Card, {
           key:"sitemap",
           href:"/sitemap-generator.html",
           title:"Sitemap.xml",
-          description:"Generér fra URL-liste."
+          description:"Generér fra URL-liste.",
+          icon: IconMap
         }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →"))
       ])
     ])
@@ -397,7 +410,7 @@ function App() {
   return React.createElement("main", { className:"max-w-6xl mx-auto px-4 pb-12 space-y-8" }, [
     React.createElement(BigHero, { key:"hero" }),
 
-    // Inline mini-værktøjer (kan skjules ved behov)
+    // Inline mini-værktøjer (som du kender dem)
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
     React.createElement(RobotsTxt, { key:"rob" }),
@@ -405,10 +418,10 @@ function App() {
     React.createElement(FaqSchema, { key:"faq" }),
     React.createElement(ContentBrief, { key:"brief" }),
 
-    // NYT: Seneste indlæg (viser automatisk 3 nyeste)
+    // Seneste indlæg (auto fra /blog/posts.json)
     React.createElement(LatestPosts, { key:"latest" }),
 
-    // Sponsorerede partnere (beholdt)
+    // Sponsorerede partnere (ren tekst – ingen billeder)
     React.createElement(Sponsors, { key:"sponsors" })
   ]);
 }
