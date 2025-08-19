@@ -1,75 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seohub.dk – SEO værktøjer og guides</title>
-  <meta name="description" content="Gratis SEO værktøjer, guides og indsigter til danske websites. Brug robots.txt generator, sitemap værktøj, SERP preview og meget mere.">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="/assets/include-header.js?v=5" defer></script>
-  <script src="/assets/include-footer.js" defer></script>
-  <script src="/assets/app.js?v=2" defer></script>
-</head>
-<body class="bg-gray-50 text-neutral-800">
+  <head>
+    <meta charset="utf-8" />
+    <title>Seohub – SEO værktøjer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Seohub er en enkel værktøjskasse til SEO: nøgleordsidéer, SERP-preview, title/meta-tjek, robots.txt, sitemap.xml, FAQ schema, content briefs m.m." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-  <!-- Hero -->
-  <section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-20">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Seohub.dk – Gratis SEO værktøjer</h1>
-      <p class="text-lg md:text-xl mb-8">Alt hvad du skal bruge til SEO: robots.txt, sitemap, SERP preview, linkbuilding og guides til at ranke i Google.</p>
-      <div class="grid md:grid-cols-3 gap-6 mt-10">
-        <div class="bg-white text-blue-700 rounded-xl p-6 shadow">
-          <div class="text-3xl mb-2">⚡</div>
-          <h3 class="font-semibold mb-2">Hurtige værktøjer</h3>
-          <p>Brug vores gratis SEO tools direkte i browseren.</p>
-        </div>
-        <div class="bg-white text-blue-700 rounded-xl p-6 shadow">
-          <div class="text-3xl mb-2">📈</div>
-          <h3 class="font-semibold mb-2">Guides til SEO</h3>
-          <p>Følg trin-for-trin guides til bedre rangering.</p>
-        </div>
-        <div class="bg-white text-blue-700 rounded-xl p-6 shadow">
-          <div class="text-3xl mb-2">🔗</div>
-          <h3 class="font-semibold mb-2">Linkbuilding</h3>
-          <p>Byg stærke links og få autoritet i Google.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- AdSense (beholdt på forsiden) -->
+    <meta name="google-adsense-account" content="ca-pub-7373148222153531">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7373148222153531" crossorigin="anonymous"></script>
 
-  <!-- Sponsorerede partnere -->
-  <section class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-2xl font-bold text-center mb-10">Sponsorerede partnere</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1" target="_blank" rel="nofollow noopener"
-           class="bg-blue-50 hover:bg-blue-100 rounded-xl p-6 shadow text-center">
-          <h3 class="font-semibold text-lg text-blue-700 mb-2">Simply.com</h3>
-          <p class="text-sm text-neutral-700">Domæner og webhosting til dit næste projekt.</p>
-        </a>
-        <a href="https://morningscore.io?fpr=seo43" target="_blank" rel="nofollow noopener"
-           class="bg-blue-50 hover:bg-blue-100 rounded-xl p-6 shadow text-center">
-          <h3 class="font-semibold text-lg text-blue-700 mb-2">Morningscore</h3>
-          <p class="text-sm text-neutral-700">SEO værktøj der gør optimering sjovt og simpelt.</p>
-        </a>
-        <a href="https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555" target="_blank" rel="nofollow noopener"
-           class="bg-blue-50 hover:bg-blue-100 rounded-xl p-6 shadow text-center">
-          <h3 class="font-semibold text-lg text-blue-700 mb-2">Nemlinkbuilding.dk</h3>
-          <p class="text-sm text-neutral-700">Få stærke backlinks til dit website nemt og hurtigt.</p>
-        </a>
-      </div>
-    </div>
-  </section>
+    <!-- Cookie consent + GA4 (vores fælles script) -->
+    <script src="/assets/consent-analytics.js" defer></script>
 
-  <!-- Seneste indlæg -->
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-2xl font-bold text-center mb-10">Seneste indlæg</h2>
-      <div id="latest-posts" class="grid md:grid-cols-3 gap-6">
-        <!-- Indlæser fra app.js -->
-      </div>
-    </div>
-  </section>
+    <!-- Global header/footer (samme på alle sider) -->
+    <script src="/assets/include-header.js?v=6" defer></script>
+    <script src="/assets/include-footer.js?v=2" defer></script>
 
-</body>
+    <!-- UI + React -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- App -->
+    <script type="module" src="/app.js"></script>
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+    <!-- Header indsættes automatisk ovenfor af include-header.js -->
+    <div id="root"></div>
+    <!-- Footer indsættes automatisk nedenfor af include-footer.js -->
+  </body>
 </html>
