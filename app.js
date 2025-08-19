@@ -1,23 +1,68 @@
-// /app.js — Forside med stor blå hero + 3 ikon-kort, Seneste indlæg (auto), sponsorer (uden billeder) og dine inline værktøjer.
+/* ---------- Stor BLÅ hero + 3 ikon-kort (fix) ---------- */
+function BigHero() {
+  // simple inline “ikoner” (SVG)
+  const IconDoc = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+    React.createElement("path", { d:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
+    React.createElement("polyline", { points:"14 2 14 8 20 8" })
+  );
+  const IconBot = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+    React.createElement("rect", { x:"3", y:"11", width:"18", height:"10", rx:"2" }),
+    React.createElement("circle", { cx:"12", cy:"5", r:"2" }),
+    React.createElement("path", { d:"M12 7v4" })
+  );
+  const IconMap = React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
+    React.createElement("polygon", { points:"2 6 9 3 15 6 22 3 22 18 15 21 9 18 2 21" }),
+    React.createElement("line", { x1:"9", y1:"3", x2:"9", y2:"18" }),
+    React.createElement("line", { x1:"15", y1:"6", x2:"15", y2:"21" })
+  );
 
-const { useState, useMemo, useEffect } = React;
+  return React.createElement("section", { className:"py-10 md:py-14" },
+    React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
 
-/* ---------- UI helpers ---------- */
-function Section({ title, description, children }) {
-  return React.createElement(
-    "section",
-    { className: "bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100" },
-    [
-      (title || description)
-        ? React.createElement("div", { key: "hd", className: "mb-4" }, [
-            title ? React.createElement("h2", { key:"t", className:"text-xl md:text-2xl font-semibold" }, title) : null,
-            description ? React.createElement("p", { key:"d", className:"text-neutral-600 mt-1" }, description) : null
-          ])
-        : null,
-      children
-    ]
+      // HERO-BLOK (stor, blå, fuld bredde inden for container)
+      React.createElement("div", {
+        key:"hero",
+        className:"rounded-2xl p-12 md:p-16 text-white shadow-lg",
+        style:{ background: "linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)" }
+      }, [
+        React.createElement("p", { key:"k", className:"text-xs uppercase tracking-wider text-blue-100/90 mb-2" }, "Gratis SEO-værktøjer"),
+        React.createElement("h1", { key:"h", className:"text-4xl md:text-5xl font-extrabold mb-3 leading-tight" },
+          "Seohub – hurtige værktøjer til hverdags-SEO"
+        ),
+        React.createElement("p", { key:"p", className:"text-blue-100 text-lg md:text-xl max-w-3xl" },
+          "SERP & meta, robots.txt, sitemap.xml, intern linkbuilder og flere små hjælperedskaber."
+        )
+      ]),
+
+      // 3 KORT UNDER HERO (med ikoner)
+      React.createElement("div", { key:"grid", className:"grid md:grid-cols-3 gap-4 mt-6" }, [
+        React.createElement(Card, {
+          key:"serp",
+          href:"/serp-preview.html",
+          title:"SERP & Meta",
+          description:"Forhåndsvisning + længde-tjek.",
+          icon: IconDoc
+        }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →")),
+        React.createElement(Card, {
+          key:"robots",
+          href:"/robots-generator.html",
+          title:"Robots.txt",
+          description:"Byg og download.",
+          icon: IconBot
+        }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →")),
+        React.createElement(Card, {
+          key:"sitemap",
+          href:"/sitemap-generator.html",
+          title:"Sitemap.xml",
+          description:"Generér fra URL-liste.",
+          icon: IconMap
+        }, React.createElement("div", { className:"text-sm text-blue-700" }, "Åbn værktøj →"))
+      ])
+
+    ])
   );
 }
+
 
 function Card({ title, description, href, icon, children }) {
   const content = [
