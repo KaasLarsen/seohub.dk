@@ -1,15 +1,17 @@
 <!doctype html>
 <html lang="da">
   <head>
+    <!-- Fælles header (logo + navigation, inkl. mobil burger) -->
     <script src="/assets/include-header.js?v=7" defer></script>
+
     <meta charset="utf-8" />
     <title>Lokal SEO guide 2025 – sådan dominerer du i Danmark | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Den komplette lokale SEO guide 2025: Google Business Profile, lokale links, anmeldelser, schema, mobilvenlighed og CTR-hacks til Danmark.">
+    <meta name="description" content="Den komplette lokale SEO guide 2025: Google Business Profile, anmeldelser, lokale links, LocalBusiness schema, mobilvenlighed og måling – til danske virksomheder.">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="canonical" href="https://www.seohub.dk/blog/lokal-seo-guide-2025.html" />
 
-    <!-- GA + cookie consent -->
+    <!-- Consent + GA (GA4 loader først efter samtykke) -->
     <script src="/assets/consent-analytics.js" defer></script>
 
     <!-- UI (Tailwind) -->
@@ -27,7 +29,7 @@
       "image":"https://www.seohub.dk/og-image.png",
       "mainEntityOfPage":"https://www.seohub.dk/blog/lokal-seo-guide-2025.html",
       "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
-      "description":"Komplet guide til lokal SEO i Danmark 2025: optimer Google Business Profile, få anmeldelser, lokale links og skab synlighed."
+      "description":"Komplet lokal SEO guide til danske virksomheder i 2025: optimer Google Business Profile, skaf anmeldelser og lokale links, brug LocalBusiness schema og mål resultater."
     }
     </script>
   </head>
@@ -37,11 +39,11 @@
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
-             style="background:linear-gradient(135deg,#0ea5e9 0%,#3b82f6 50%,#6366f1 100%)">
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
           <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · Lokal SEO</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Lokal SEO guide 2025 – sådan dominerer du i Danmark</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Lær hvordan du optimerer Google Business Profile, anmeldelser, links og schema for at vinde lokale kunder i 2025.
+            Sådan vinder du Maps og lokale søgeresultater: Google Business Profile, anmeldelser, lokale links, schema og mobilvenlighed.
           </p>
         </div>
       </div>
@@ -55,53 +57,64 @@
         <article class="lg:col-span-8 space-y-6">
 
           <!-- TL;DR -->
-          <section class="bg-white rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
             <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
             <ul class="list-disc pl-6 space-y-2">
-              <li>Optimer <strong>Google Business Profile</strong> fuldt ud med billeder, åbningstider og CTA.</li>
-              <li>Få <strong>flere anmeldelser</strong> – og svar altid professionelt.</li>
-              <li>Byg <strong>lokale links</strong> fra medier, foreninger, samarbejdspartnere.</li>
-              <li>Implementer <strong>LocalBusiness schema</strong> og mobiloptimering.</li>
+              <li>Udfyld <strong>Google Business Profile</strong> 100% (kategorier, services, billeder, åbningstider, CTA).</li>
+              <li>Skaf <strong>kontinuerlige anmeldelser</strong> og svar professionelt på alle.</li>
+              <li>Byg <strong>lokale links</strong> fra medier, foreninger, partnere og events.</li>
+              <li>Implementér <strong>LocalBusiness schema</strong> og sørg for mobil performance.</li>
             </ul>
           </section>
 
           <!-- 1) Google Business Profile -->
-          <section id="gbp" class="bg-white rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+          <section id="gbp" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
             <h2 class="text-2xl font-bold mb-3">1) Google Business Profile</h2>
-            <p>Udfyld ALT i din profil: åbningstider, services, beskrivelser, billeder og indlæg.  
-            Brug CTA’er som “Ring nu” eller “Få tilbud”.</p>
+            <ul class="list-disc pl-6">
+              <li>Vælg korrekt primær og sekundære kategorier.</li>
+              <li>Udfyld tjenester/produkter, beskrivelse og attributter.</li>
+              <li>Upload egne fotos (butik, team, cases) – opdater løbende.</li>
+              <li>Post nyheder/tilbud og brug CTA (“Ring nu”, “Få tilbud”).</li>
+            </ul>
           </section>
 
           <!-- 2) Anmeldelser -->
-          <section id="reviews" class="bg-white rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-2xl font-bold mb-3">2) Anmeldelser</h2>
-            <p>Opfordr glade kunder til at anmelde dig på Google. Svar på alle anmeldelser – også kritiske.  
-            Hyppige, positive anmeldelser giver både SEO- og CTR-boost.</p>
+          <section id="reviews" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">2) Anmeldelser: frekvens slår alt</h2>
+            <ul class="list-disc pl-6">
+              <li>Gør det let at anmelde (QR-kode, direkte link i mails/kvitteringer).</li>
+              <li>Bed om anmeldelser efter leveret værdi; svar pænt på ALT.</li>
+              <li>Fremhæv udvalgte anmeldelser på website (med samtykke).</li>
+            </ul>
           </section>
 
           <!-- 3) Lokale links -->
-          <section id="links" class="bg-white rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-2xl font-bold mb-3">3) Lokale links</h2>
+          <section id="links" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">3) Lokale links & omtaler</h2>
             <ul class="list-disc pl-6">
-              <li>Lokale medier og blogs</li>
-              <li>Sponsorater af events/klubber</li>
-              <li>Samarbejder med andre lokale erhverv</li>
+              <li>Lokale medier/blogs (presseudmelding, case, data, sponsorater).</li>
+              <li>Klubber/foreninger og events (sponsor-logo → link til dig).</li>
+              <li>Samarbejdspartnere/leverandører (partner- eller case-sider).</li>
             </ul>
           </section>
 
           <!-- 4) Schema & mobil -->
-          <section id="schema" class="bg-white rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-2xl font-bold mb-3">4) Schema & mobilvenlighed</h2>
-            <p>Brug LocalBusiness schema for at hjælpe Google med at forstå din virksomhed.  
-            Sørg for at dit site loader hurtigt og er 100% mobilvenligt.</p>
+          <section id="schema" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">4) LocalBusiness schema & mobilvenlighed</h2>
+            <ul class="list-disc pl-6">
+              <li>LocalBusiness/Organization schema (navn, adresse, telefon, åbningstider, geo).</li>
+              <li>Core Web Vitals: hurtig LCP, lav INP, stabil CLS – især på mobil.</li>
+              <li>Lav landingssider for dine vigtigste byer/områder (unikt indhold).</li>
+            </ul>
           </section>
 
           <!-- CTA -->
-          <section class="bg-white rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Klar til at vinde lokalt?</h2>
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
             <div class="flex flex-wrap gap-3">
               <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Tjek dine titles</a>
               <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Byg interne links</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Opdatér sitemap</a>
             </div>
           </section>
 
@@ -114,7 +127,7 @@
         <aside class="lg:col-span-4">
           <div class="lg:sticky lg:top-24 space-y-6">
             <!-- Indholdsoversigt -->
-            <div class="bg-white rounded-2xl shadow p-6 border border-neutral-100">
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
               <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
               <nav class="space-y-2 text-sm">
                 <a class="block hover:underline" href="#gbp">1) Google Business Profile</a>
@@ -124,12 +137,12 @@
               </nav>
             </div>
 
-            <!-- Sponsoreret -->
+            <!-- Sponsoreret anbefaling -->
             <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg"
-                 style="background:linear-gradient(135deg,#8b5cf6 0%,#6366f1 60%,#0ea5e9 100%)">
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
               <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret partner</div>
               <h3 class="text-lg font-extrabold mb-2">Boost lokal SEO med Morningscore</h3>
-              <p class="text-blue-100 mb-3">Få klar indsigt i lokale keywords og rangeringer i Danmark.</p>
+              <p class="text-blue-100 mb-3">Få klar indsigt i lokale keywords og placeringer i Danmark.</p>
               <a href="https://morningscore.io?fpr=seo43"
                  target="_blank" rel="sponsored noopener nofollow"
                  class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
@@ -147,7 +160,7 @@
       </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Fælles footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
   </body>
 </html>
