@@ -8,17 +8,12 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="canonical" href="https://www.seohub.dk/blog/"/>
 
-    <!-- Header + GA/consent -->
+    <!-- Fælles header + GA/consent -->
     <script src="/assets/include-header.js?v=7" defer></script>
     <script src="/assets/consent-analytics.js" defer></script>
-
-    <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-      html, body { max-width: 100%; overflow-x: hidden; }
-      .hidden { display: none; }
-    </style>
+    <style>html,body{max-width:100%;overflow-x:hidden}.hidden{display:none}</style>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900 overflow-x-hidden">
 
@@ -41,14 +36,12 @@
       <div id="statusBox" class="rounded-2xl border bg-white p-5 mb-6 text-sm text-neutral-700">
         Indlæser indlæg…
       </div>
-
       <div id="postsList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
     <!-- Footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
-
-    <!-- Ekstern script (CSP-venligt) -->
-    <script src="/assets/blog-index.js?v=2" defer></script>
+    <!-- Blog index script (ekstern pga. CSP) -->
+    <script src="/assets/blog-index.js?v=3" defer></script>
   </body>
 </html>
