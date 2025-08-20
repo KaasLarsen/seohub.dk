@@ -5,5 +5,126 @@
     "date": "2025-08-16",
     "excerpt": "Trin-for-trin guide til on-page, teknisk SEO, linkbuilding, søgeordsresearch og måling.",
     "tags": ["guide", "begynder", "2025"]
+  },
+  {
+    "slug": "seo-titler-der-ranker",
+    "title": "SEO-titler der ranker: længde, vinkler og CTR-hacks",
+    "date": "2025-08-13",
+    "excerpt": "Sådan skriver du titler Google elsker – med den rigtige længde, struktur og vinkler, der øger CTR.",
+    "tags": ["on-page", "copywriting"]
+  },
+  {
+    "slug": "sitemap-fejl-fixes",
+    "title": "De 7 mest almindelige sitemap-fejl (og hurtige fixes)",
+    "date": "2025-08-15",
+    "excerpt": "Sitemaps hjælper Google – men små fejl kan bremse crawling. Tjeklisten, der redder dine URL’er.",
+    "tags": ["teknisk seo"]
+  },
+  {
+    "slug": "intern-linkbuilding-strategi",
+    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
+    "date": "2025-08-13",
+    "excerpt": "Fordel linkjuice, byg hub-sider og brug ankertekster rigtigt. En praktisk guide til intern linkstruktur.",
+    "tags": ["intern linkbuilding", "information architecture"]
+  },
+  {
+    "slug": "core-web-vitals-2025",
+    "title": "Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS",
+    "date": "2025-08-13",
+    "excerpt": "Hurtige, konkrete forbedringer for performance: billedoptimering, caching, JS-split og font-loading.",
+    "tags": ["teknisk seo", "performance"]
+  },
+  {
+    "slug": "lokal-seo-danmark-guide",
+    "title": "Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP",
+    "date": "2025-08-13",
+    "excerpt": "Bliv synlig i lokale søgeresultater: Google Virksomhedsprofil, citations og lokale landingssider.",
+    "tags": ["lokal seo"]
+  },
+  {
+    "slug": "meta-descriptions-der-konverterer",
+    "title": "Meta descriptions der konverterer – 10 eksempler Google elsker",
+    "date": "2025-08-14",
+    "excerpt": "Skriv meta descriptions der løfter CTR. 10 eksempler, længde-tips, skabeloner og typiske fejl.",
+    "tags": ["on-page", "copywriting", "ctr"]
+  },
+  {
+    "slug": "intern-linkbuilding-guide",
+    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
+    "date": "2025-08-15",
+    "excerpt": "Fordel linkværdi, styrk relevans og gør det nemt for Google at forstå dit website.",
+    "tags": ["intern linkbuilding", "on-page", "linkstruktur"]
+  },
+
+  /* --------- 10 nye indlæg ---------- */
+  {
+    "slug": "content-marketing-seo",
+    "title": "Content marketing og SEO i 2025",
+    "date": "2025-08-21",
+    "excerpt": "Hvorfor content marketing og SEO hænger uløseligt sammen – og hvordan du laver en strategi, der virker.",
+    "tags": ["content marketing", "seo", "strategi"]
+  },
+  {
+    "slug": "seo-for-webshops-2025",
+    "title": "SEO for webshops i 2025",
+    "date": "2025-08-21",
+    "excerpt": "Den ultimative guide til webshop SEO i 2025 – optimering af kategorisider, produktsider og teknisk struktur.",
+    "tags": ["seo", "webshop", "2025"]
+  },
+  {
+    "slug": "seo-tools-til-begyndere-2025",
+    "title": "SEO tools til begyndere (2025)",
+    "date": "2025-08-21",
+    "excerpt": "Gratis og betalte SEO tools til nybegyndere – fra søgeordsanalyse til linkbuilding.",
+    "tags": ["seo-tools", "begyndere", "2025"]
+  },
+  {
+    "slug": "linkbuilding-strategier-der-virker",
+    "title": "Linkbuilding strategier der virker i 2025",
+    "date": "2025-08-21",
+    "excerpt": "De bedste metoder i 2025 – outreach, gæsteindlæg, niche-links og PR.",
+    "tags": ["linkbuilding", "seo", "strategi"]
+  },
+  {
+    "slug": "teknisk-seo-checkliste",
+    "title": "Teknisk SEO checkliste (2025)",
+    "date": "2025-08-21",
+    "excerpt": "Komplet tjekliste til crawlbarhed, hastighed, Core Web Vitals og indeksering.",
+    "tags": ["teknisk seo", "checkliste", "seo-guide"]
+  },
+  {
+    "slug": "local-seo-guide-danmark",
+    "title": "Local SEO guide til Danmark",
+    "date": "2025-08-21",
+    "excerpt": "Rangér lokalt i Danmark – Google Maps, anmeldelser og citations.",
+    "tags": ["local seo", "danmark", "lokal søgning"]
+  },
+  {
+    "slug": "seo-misforstaelser-2025",
+    "title": "De største SEO misforståelser i 2025",
+    "date": "2025-08-21",
+    "excerpt": "Undgå de klassiske myter, der koster trafik i 2025.",
+    "tags": ["seo", "myter", "begyndere"]
+  },
+  {
+    "slug": "ai-og-seo-fremtid",
+    "title": "AI og SEO – fremtidens søgemaskineoptimering",
+    "date": "2025-08-21",
+    "excerpt": "Hvordan AI ændrer SEO – content, analyse og personalisering.",
+    "tags": ["ai", "seo", "fremtid"]
+  },
+  {
+    "slug": "seo-case-study-2025",
+    "title": "SEO case study: Fra 0 til 10.000 besøgere",
+    "date": "2025-08-21",
+    "excerpt": "Konkrete tiltag, tidslinje og læringer fra en dansk case.",
+    "tags": ["case study", "seo", "trafik"]
+  },
+  {
+    "slug": "seo-tjek-af-din-hjemmeside",
+    "title": "Sådan laver du et SEO tjek af din hjemmeside",
+    "date": "2025-08-21",
+    "excerpt": "Lav selv et hurtigt SEO-tjek uden dyre værktøjer.",
+    "tags": ["seo-tjek", "hjemmeside", "begyndere"]
   }
 ]
