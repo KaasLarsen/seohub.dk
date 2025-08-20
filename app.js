@@ -108,6 +108,115 @@ function BigHero() {
     )
   );
 }
+/* ---------- Forside-søgning (blog + tools) ---------- */
+function HomeSearch() {
+  const { useState, useEffect, useMemo } = React;
+  const [q, setQ] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
+  // Hent posts.json én gang
+  useEffect(() => {
+    let alive = true;
+    fetch("/blog/posts.json")
+      .then(r => r.ok ? r.json() : [])
+      .then(data => { if (alive) { setPosts(Array.isArray(data) ? data : []); setLoaded(true); } })
+      .catch(() => { if (alive) { setPosts([]); setLoaded(true); } });
+    return () => { alive = false; };
+  }, []);
+
+  // Statiske tools (matcher også på søgning)
+  const tools = [
+    { title: "SERP & Meta", path: "/serp-preview.html", tags: ["serp","title","meta","description","ctr"] },
+    { title: "Robots.txt generator", path: "/robots-generator.html", tags: ["robots","crawl","blokering","allow","disallow"] },
+    { title: "Sitemap.xml generator", path: "/sitemap-generator.html", tags: ["sitemap","xml","indeksering","urls"] },
+    { title: "Intern linkbuilder", path: "/internal-link-builder.html", tags: ["intern links","linkbuilding","ankertekst","struktur"] },
+  ];
+
+  const results = useMemo(() => {
+    const query = q.trim().toLowerCase();
+    if (!query) return { posts: [], tools: [] };
+
+    const matchText = (t="") => t.toLowerCase().includes(query);
+    const postHits = posts.filter(p =>
+      matchText(p.title || "") ||
+      matchText(p.excerpt || "") ||
+      (Array.isArray(p.tags) && p.tags.some(t => matchText(String(t))))
+    ).slice(0, 8);
+
+    const toolHits = tools.filter(t =>
+      matchText(t.title) || (t.tags && t.tags.some(x => matchText(x)))
+    ).slice(0, 4);
+
+    return { posts: postHits, tools: toolHits };
+  }, [q, posts]);
+
+  return React.createElement("section",
+    { className: "max-w-6xl mx-auto px-4 -mt-6 md:-mt-8" }, // trækker lidt op under hero
+    React.createElement("div",
+      { className: "rounded-2xl p-5 md:p-6 bg-white/80 backdrop-blur border border-neutral-100 shadow" },
+      [
+        // Input
+        React.createElement("div", { key:"i", className:"flex items-center gap-3" }, [
+          React.createElement("input", {
+            key:"input",
+            type:"search",
+            value:q,
+            onChange:e=>setQ(e.target.value),
+            placeholder:"Søg i blog og værktøjer…",
+            className:"w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200",
+            "aria-label":"Søg"
+          }),
+          q ? React.createElement("button", {
+            key:"clear",
+            onClick:()=>setQ(""),
+            className:"text-sm px-3 py-2 rounded-xl border bg-neutral-50 hover:bg-neutral-100"
+          }, "Ryd") : null
+        ]),
+
+        // Empty/help state
+        (!q && loaded) ? React.createElement("p", { key:"h", className:"mt-3 text-sm text-neutral-600" },
+          "Tip: Prøv “intern links”, “sitemap”, “title” eller “lokal seo”."
+        ) : null,
+
+        // Results
+        (q && (results.posts.length || results.tools.length)) ? React.createElement("div", { key:"res", className:"mt-5 grid md:grid-cols-12 gap-6" }, [
+          // Blog resultater
+          React.createElement("div", { key:"posts", className:"md:col-span-8 space-y-3" }, [
+            React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Blogindlæg"),
+            React.createElement("div", { key:"list", className:"space-y-3" },
+              results.posts.map((p,i) => React.createElement("a", {
+                key:i, href:`/blog/${p.slug}.html`,
+                className:"block rounded-2xl border bg-white p-4 hover:shadow"
+              }, [
+                React.createElement("div", { key:"t", className:"font-semibold" }, p.title),
+                React.createElement("div", { key:"e", className:"text-sm text-neutral-600 mt-1" }, p.excerpt || ""),
+                (p.tags && p.tags.length) ? React.createElement("div", { key:"tags", className:"mt-2 flex flex-wrap gap-2" },
+                  p.tags.slice(0,5).map((t,j) => React.createElement("span", {
+                    key:j, className:"text-xs px-2 py-1 rounded-full bg-neutral-100"
+                  }, String(t)))) : null
+              ]))
+            )
+          ]),
+
+          // Tool matches
+          React.createElement("aside", { key:"tools", className:"md:col-span-4 space-y-3" }, [
+            React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Værktøjer"),
+            React.createElement("div", { key:"list", className:"space-y-3" },
+              results.tools.map((t,i) => React.createElement("a", {
+                key:i, href:t.path,
+                className:"block rounded-2xl border bg-white p-4 hover:shadow"
+              }, [
+                React.createElement("div", { key:"t", className:"font-semibold" }, t.title),
+                React.createElement("div", { key:"p", className:"text-xs text-neutral-600 mt-1" }, (t.tags||[]).slice(0,3).join(" • "))
+              ]))
+            )
+          ])
+        ]) : (q && loaded) ? React.createElement("p", { key:"no", className:"mt-4 text-sm text-neutral-600" }, "Ingen match – prøv et andet søgeord.") : null
+      ]
+    )
+  );
+}
 
 
 /* ---------- Sponsoreret sektion (blå kort, flyttet op) ---------- */
