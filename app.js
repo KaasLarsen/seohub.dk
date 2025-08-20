@@ -1,4 +1,4 @@
-// /app.js — Forside med stor blå hero, sponsorer (blå kort) lige under, seneste indlæg og dine værktøjer
+// /app.js — Forside med stor blå hero, søgning, sponsorer, seneste indlæg og værktøjer
 const { useState, useMemo, useEffect } = React;
 
 /* ---------- UI helpers ---------- */
@@ -17,9 +17,6 @@ function Section({ title, description, children }) {
     ]
   );
 }
-// ... i retur-arrayet fra App(), lige UNDER hero-komponenten:
-React.createElement(HomeSearch, { key:"homesearch" }),
-
 function Card({ title, description, href, icon, children, className="" }) {
   const content = [
     icon ? React.createElement("div", { key:"i", className:"mb-3" }, icon) : null,
@@ -28,15 +25,13 @@ function Card({ title, description, href, icon, children, className="" }) {
     children ? React.createElement("div", { key:"c", className:"mt-3" }, children) : null
   ];
   const base = "rounded-2xl border p-5 bg-white hover:shadow transition block";
-  if (href) {
-    return React.createElement("a", { href, className: `${base} ${className}` }, content);
-  }
-  return React.createElement("div", { className: `${base} ${className}` }, content);
+  return href
+    ? React.createElement("a", { href, className: `${base} ${className}` }, content)
+    : React.createElement("div", { className: `${base} ${className}` }, content);
 }
 
 /* ---------- STOR BLÅ HERO med 3 ikon-kort INDE I hero ---------- */
 function BigHero() {
-  // små inline-ikoner
   const IconDoc = (
     React.createElement("svg", { className:"w-6 h-6", viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"2", strokeLinecap:"round", strokeLinejoin:"round" },
       React.createElement("path", { d:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
@@ -64,7 +59,6 @@ function BigHero() {
         className:"rounded-2xl p-12 md:p-16 text-white shadow-lg",
         style:{ background: "linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)" }
       }, [
-        // Overtekst + titel + tekst
         React.createElement("p", { key:"k", className:"text-xs uppercase tracking-wider text-blue-100/90 mb-2" }, "Gratis SEO-værktøjer"),
         React.createElement("h1", { key:"h", className:"text-4xl md:text-5xl font-extrabold mb-3 leading-tight" },
           "Seohub – hurtige værktøjer til hverdags-SEO"
@@ -72,8 +66,6 @@ function BigHero() {
         React.createElement("p", { key:"p", className:"text-blue-100 text-lg md:text-xl max-w-3xl mb-6 md:mb-8" },
           "SERP & meta, robots.txt, sitemap.xml, intern linkbuilder og flere små hjælperedskaber."
         ),
-
-        // 3 ikon-kort INDEN I hero (på blå baggrund)
         React.createElement("div", { key:"grid", className:"grid md:grid-cols-3 gap-4" }, [
           React.createElement("a", {
             key:"serp",
@@ -110,14 +102,13 @@ function BigHero() {
     )
   );
 }
+
 /* ---------- Forside-søgning (blog + tools) ---------- */
 function HomeSearch() {
-  const { useState, useEffect, useMemo } = React;
   const [q, setQ] = useState("");
   const [posts, setPosts] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  // Hent posts.json én gang
   useEffect(() => {
     let alive = true;
     fetch("/blog/posts.json")
@@ -127,7 +118,6 @@ function HomeSearch() {
     return () => { alive = false; };
   }, []);
 
-  // Statiske tools (matcher også på søgning)
   const tools = [
     { title: "SERP & Meta", path: "/serp-preview.html", tags: ["serp","title","meta","description","ctr"] },
     { title: "Robots.txt generator", path: "/robots-generator.html", tags: ["robots","crawl","blokering","allow","disallow"] },
@@ -154,11 +144,10 @@ function HomeSearch() {
   }, [q, posts]);
 
   return React.createElement("section",
-    { className: "max-w-6xl mx-auto px-4 -mt-6 md:-mt-8" }, // trækker lidt op under hero
+    { className: "max-w-6xl mx-auto px-4 -mt-6 md:-mt-8" },
     React.createElement("div",
       { className: "rounded-2xl p-5 md:p-6 bg-white/80 backdrop-blur border border-neutral-100 shadow" },
       [
-        // Input
         React.createElement("div", { key:"i", className:"flex items-center gap-3" }, [
           React.createElement("input", {
             key:"input",
@@ -175,15 +164,10 @@ function HomeSearch() {
             className:"text-sm px-3 py-2 rounded-xl border bg-neutral-50 hover:bg-neutral-100"
           }, "Ryd") : null
         ]),
-
-        // Empty/help state
         (!q && loaded) ? React.createElement("p", { key:"h", className:"mt-3 text-sm text-neutral-600" },
           "Tip: Prøv “intern links”, “sitemap”, “title” eller “lokal seo”."
         ) : null,
-
-        // Results
         (q && (results.posts.length || results.tools.length)) ? React.createElement("div", { key:"res", className:"mt-5 grid md:grid-cols-12 gap-6" }, [
-          // Blog resultater
           React.createElement("div", { key:"posts", className:"md:col-span-8 space-y-3" }, [
             React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Blogindlæg"),
             React.createElement("div", { key:"list", className:"space-y-3" },
@@ -200,8 +184,6 @@ function HomeSearch() {
               ]))
             )
           ]),
-
-          // Tool matches
           React.createElement("aside", { key:"tools", className:"md:col-span-4 space-y-3" }, [
             React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Værktøjer"),
             React.createElement("div", { key:"list", className:"space-y-3" },
@@ -220,26 +202,12 @@ function HomeSearch() {
   );
 }
 
-
-/* ---------- Sponsoreret sektion (blå kort, flyttet op) ---------- */
+/* ---------- Sponsorer (blå kort) ---------- */
 function Sponsors() {
-  // Brug dine rigtige affiliate-links her:
   const items = [
-    {
-      name: "Simply.com",
-      href: "https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1",
-      tagline: "Dansk webhosting & domæner"
-    },
-    {
-      name: "Morningscore",
-      href: "https://morningscore.io?fpr=seo43",
-      tagline: "SEO-værktøj der gør det simpelt"
-    },
-    {
-      name: "AI Links",
-      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555",
-      tagline: "AI-drevet linkanalyse"
-    }
+    { name: "Simply.com", href: "https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1", tagline: "Dansk webhosting & domæner" },
+    { name: "Morningscore", href: "https://morningscore.io?fpr=seo43", tagline: "SEO-værktøj der gør det simpelt" },
+    { name: "AI Links", href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555", tagline: "AI-drevet linkanalyse" }
   ];
   return React.createElement("section", { className:"py-8" },
     React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
@@ -264,7 +232,7 @@ function Sponsors() {
   );
 }
 
-/* ---------- Seneste indlæg (auto) ---------- */
+/* ---------- Seneste indlæg ---------- */
 function LatestPosts() {
   const [posts, setPosts] = useState(null);
   const [err, setErr] = useState(null);
@@ -303,13 +271,13 @@ function LatestPosts() {
   );
 }
 
-/* ---------- Små værktøjer (som før) ---------- */
+/* ---------- Små værktøjer ---------- */
 function TextInput({ label, value, onChange, placeholder, textarea=false, rows=3 }) {
   return React.createElement(
     "label",
     { className: "block mb-3" },
     [
-      label ? React.createElement("span", { key:"l", className:"block text-sm font-medium mb-1" }, label) : null,
+      label ? React.createElement("span", { key:"l", className: "block text-sm font-medium mb-1" }, label) : null,
       textarea
         ? React.createElement("textarea", { key:"ta", value, onChange:e=>onChange(e.target.value), placeholder, rows, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
         : React.createElement("input", { key:"in", value, onChange:e=>onChange(e.target.value), placeholder, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
@@ -543,8 +511,9 @@ function ContentBrief() {
 function App() {
   return React.createElement("main", { className:"max-w-6xl mx-auto px-4 pb-12 space-y-8" }, [
     React.createElement(BigHero, { key:"hero" }),
+    React.createElement(HomeSearch, { key:"homesearch" }), // LIGE under hero
+    React.createElement(Sponsors, { key:"sponsors" }),     // Sponsorer oppe på siden
     React.createElement(LatestPosts, { key:"latest" }),
-    React.createElement(Sponsors, { key:"sponsors" }),   // LIGE UNDER HERO
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
     React.createElement(RobotsTxt, { key:"rob" }),
