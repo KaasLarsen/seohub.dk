@@ -17,6 +17,7 @@
 
     <style>
       html, body { max-width: 100%; overflow-x: hidden; }
+      .hidden { display: none; }
     </style>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900 overflow-x-hidden">
@@ -37,16 +38,20 @@
 
     <!-- Liste -->
     <main class="max-w-6xl mx-auto px-4 pb-12">
-      <div id="statusBox" class="col-span-full rounded-2xl border bg-white p-5 mb-6 text-sm text-neutral-600">
+      <div id="statusBox" class="rounded-2xl border bg-white p-5 mb-6 text-sm text-neutral-700">
         Indlæser indlæg…
       </div>
+
       <div id="postsList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Hvis alt fejler, vis “rå” JSON herunder (fyldes fra JS) -->
+      <pre id="rawJson" class="hidden mt-6 text-xs bg-white p-4 rounded-2xl border overflow-auto"></pre>
     </main>
 
     <!-- Footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Blog index script (ekstern pga. CSP) -->
-    <script src="/assets/blog-index.js?v=1" defer></script>
+    <!-- Ekstern script (CSP-venligt) -->
+    <script src="/assets/blog-index.js?v=2" defer></script>
   </body>
 </html>
