@@ -1,118 +1,202 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <script src="/assets/include-footer.js" defer></script>
+    <!-- Fælles header/nav (mobil burger, aktivt link osv.) -->
     <script src="/assets/include-header.js?v=6" defer></script>
+
     <meta charset="utf-8" />
-    <title>Meta descriptions der konverterer – 10 eksempler Google elsker – Seohub</title>
+    <title>Meta descriptions der konverterer – 10 eksempler Google elsker | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Lær at skrive meta descriptions, der løfter CTR i Google. 10 konkrete eksempler, længde-tips, skabeloner og typiske fejl – test dem i vores SERP-værktøj." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="canonical" href="https://seohub.dk/blog/meta-descriptions-der-konverterer.html" />
+    <link rel="canonical" href="https://www.seohub.dk/blog/meta-descriptions-der-konverterer.html" />
 
-    <!-- Fælles header/GA/cookie -->
-    <script src="/assets/include-header.js" defer></script>
-    <!-- Tailwind -->
+    <!-- Cookie consent + Google Analytics efter samtykke -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Article JSON-LD -->
+    <!-- Article structured data -->
     <script type="application/ld+json">
     {
       "@context":"https://schema.org",
       "@type":"Article",
       "headline":"Meta descriptions der konverterer – 10 eksempler Google elsker",
-      "description":"Lær at skrive meta descriptions, der løfter CTR i Google. 10 konkrete eksempler, længde-tips, skabeloner og typiske fejl.",
-      "author":{"@type":"Person","name":"Seohub"},
-      "publisher":{"@type":"Organization","name":"Seohub","logo":{"@type":"ImageObject","url":"https://seohub.dk/favicon.svg"}},
-      "mainEntityOfPage":"https://seohub.dk/blog/meta-descriptions-der-konverterer.html",
-      "datePublished":"2025-08-14",
-      "dateModified":"2025-08-15"
+      "author":{"@type":"Organization","name":"Seohub.dk"},
+      "datePublished":"2025-08-16",
+      "dateModified":"2025-08-16",
+      "image":"https://www.seohub.dk/og-image.png",
+      "mainEntityOfPage":"https://www.seohub.dk/blog/meta-descriptions-der-konverterer.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
+      "description":"Lær at skrive meta descriptions, der løfter CTR i Google. 10 konkrete eksempler, længde-tips, skabeloner og typiske fejl – test dem i vores SERP-værktøj."
     }
     </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-    <!-- Header -->
-    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
-      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-        <a href="/" class="font-semibold">Seohub.dk</a>
-        <nav class="text-sm text-neutral-600 space-x-4">
-          <a href="/">Forside</a>
-          <a href="/serp-preview.html">SERP</a>
-          <a href="/robots-generator.html">Robots</a>
-          <a href="/sitemap-generator.html">Sitemap</a>
-          <a href="/internal-link-builder.html">Intern links</a>
-          <a href="/blog/">Blog</a>
-        </nav>
-      </div>
-    </header>
 
-    <!-- HERO -->
+    <!-- Hero -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
-        <div class="rounded-2xl p-12 md:p-20 text-white shadow-lg" style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
-          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Meta descriptions der konverterer – 10 eksempler Google elsker</h1>
-          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">Hæv din CTR i søgeresultaterne med korte, præcise og værdifulde beskrivelser.</p>
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · On-page SEO</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">
+            Meta descriptions der konverterer – 10 eksempler Google elsker
+          </h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Hæv din CTR i søgeresultaterne med korte, præcise og værdifulde beskrivelser. Få længde-tips, skabeloner og typiske fejl – og test dem i vores SERP-værktøj.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- CONTENT -->
-    <main class="max-w-3xl mx-auto px-4 pb-16">
-      <article class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <p class="text-sm text-neutral-500 mb-6">Opdateret: 15. august 2025 • Læsetid: 7 min</p>
+    <!-- Layout -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        <h2 class="text-2xl font-semibold mb-3">Hvad er en god meta description?</h2>
-        <p class="text-neutral-700 mb-4">
-          En god meta description opsummerer sidens værdi på <strong>140–160 tegn</strong>, matcher søgeintentionen og nævner din USP.
-          Brug vores <a class="text-blue-700 underline" href="/serp-preview.html">SERP & Meta-værktøj</a> til at tjekke længden live.
-        </p>
+        <!-- Article -->
+        <article class="lg:col-span-8 space-y-6">
+          <!-- TL;DR -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Hold dig omkring <strong>140–160 tegn</strong> (fokus på værdi fremfor længde).</li>
+              <li>Vis <strong>USP</strong> og konkret værdi, og slut med en <strong>klar CTA</strong>.</li>
+              <li>Match <strong>søgeintention</strong> og genbrug termer fra din titel.</li>
+              <li>Undgå generiske salgspitches – skriv specifikt og menneskeligt.</li>
+              <li>Test variationer i vores <a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP-preview</a> og mål CTR i Search Console.</li>
+            </ul>
+          </section>
 
-        <h2 class="text-2xl font-semibold mb-3">Skabeloner du kan kopiere</h2>
-        <div class="rounded-xl bg-neutral-50 border p-4 text-sm space-y-2">
-          <p><code>[Løsning] til [målgruppe] – [USP/benefit]. Lær hvordan i guiden.</code></p>
-          <p><code>Få [resultat] på [tid]. Tjekliste + skabelon. Opdateret [år].</code></p>
-          <p><code>[Emne]: trin-for-trin forklaring med eksempler. Gratis skabelon.</code></p>
-        </div>
+          <!-- Hvad & hvorfor -->
+          <section id="hvad" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Hvad er en meta description – og hvorfor betyder den noget?</h2>
+            <p>
+              En meta description er den korte tekstsnip, der som regel vises under sidetitlen i Googles resultater. Den er ikke en direkte rankingfaktor,
+              men den påvirker <strong>CTR</strong> – og højere CTR kan indirekte styrke dine placeringer.
+            </p>
+            <p class="mt-2">
+              En god description opsummerer siden, skaber forventningsafstemning og lokker med en tydelig næste handling.
+            </p>
+          </section>
 
-        <h2 class="text-2xl font-semibold mt-8 mb-3">10 eksempler</h2>
-        <ul class="list-disc pl-5 text-neutral-700 space-y-2">
-          <li>“SEO-titler: Se best practices + eksempler. Skabelon inkluderet.”</li>
-          <li>“Lokal SEO i Danmark: Boost synlighed i Maps. Kom i gang i dag.”</li>
-          <li>“Core Web Vitals: Hurtige fixes til LCP/INP/CLS. Tjekliste + værktøjer.”</li>
-          <!-- forkortet liste for luft -->
-        </ul>
+          <!-- Længde og struktur -->
+          <section id="laengde" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Længde, struktur og best practices</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Længde:</strong> 140–160 tegn er et godt pejlemærke (afhængigt af pixels og enhed).</li>
+              <li><strong>Struktur:</strong> <em>Værdi</em> + <em>social proof/USP</em> + <em>CTA</em> (fx “Se tjekliste”).</li>
+              <li><strong>Sprog:</strong> konkret, aktivt og menneskeligt – undgå fluffy buzzwords.</li>
+              <li><strong>Relevans:</strong> match søgeintention og brug ord/termer fra din titel.</li>
+              <li><strong>Unik:</strong> hver side skal have en unik description – ingen duplikater.</li>
+            </ul>
+            <p class="mt-3">
+              Brug vores <a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP-preview</a> til at tjekke længde og udseende.
+            </p>
+          </section>
 
-        <h2 class="text-2xl font-semibold mt-8 mb-3">Typiske fejl</h2>
-        <ul class="list-disc pl-5 text-neutral-700 space-y-2">
-          <li>For generisk tekst (“Velkommen…”).</li>
-          <li>For lang/afkortes i SERP.</li>
-          <li>Mangler USP’er og handlingsord.</li>
-        </ul>
+          <!-- 10 eksempler -->
+          <section id="eksempler" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-4">10 eksempler, der løfter CTR</h2>
+            <div class="space-y-3 text-sm">
+              <div class="rounded-xl border p-4 bg-neutral-50">“Lær on-page SEO trin-for-trin med skabeloner og tjeklister. Få bedre placeringer og højere CTR. <strong>Se guiden</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Kom i gang med lokal SEO: Google Virksomhedsprofil, anmeldelser og NAP. <strong>Praktisk guide for danske virksomheder</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Optimer Core Web Vitals (LCP, INP, CLS) med konkrete quick-wins. <strong>Se eksempler og værktøjer</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Sitemap.xml på 5 minutter: sådan gør du rigtigt – og undgår faldgruber. <strong>Gratis generator inkluderet</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Robots.txt forklaret: hvilke sider skal crawles – og hvilke ikke? <strong>Byg din fil online</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Intern linkbuilding, der rykker: fordel linkværdi og styrk dine vigtigste sider. <strong>Trin-for-trin</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Keyword-idéer på sekunder: generér long-tails, spørgsmål og vinkler. <strong>Gratis værktøj</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Meta descriptions, der sælger: 10 eksempler + skabeloner. <strong>Brug vores SERP-preview</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“SEO for begyndere: alt du skal vide – uden fluff. <strong>Kom i gang i dag</strong>.”</div>
+              <div class="rounded-xl border p-4 bg-neutral-50">“Teknisk SEO gjort enkelt: hastighed, crawling og indeksering. <strong>Tjekliste og værktøjer</strong>.”</div>
+            </div>
+          </section>
 
-        <div class="mt-8 p-5 rounded-xl bg-neutral-50 border">
-          <p class="mb-1"><strong>Relaterede værktøjer</strong></p>
-          <ul class="list-disc pl-5 text-neutral-700">
-            <li><a class="text-blue-700 underline" href="/serp-preview.html">SERP & Meta preview</a></li>
-            <li><a class="text-blue-700 underline" href="/internal-link-builder.html">Intern Link Builder</a></li>
-            <li><a class="text-blue-700 underline" href="/sitemap-generator.html">Sitemap generator</a></li>
-          </ul>
-        </div>
+          <!-- Skabeloner -->
+          <section id="skabeloner" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Skabeloner du kan tilpasse</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Guide:</strong> “Lær [emne] trin-for-trin med eksempler og tjekliste. Få bedre resultater i dag. <strong>Se guiden</strong>.”</li>
+              <li><strong>Produkt/kategori:</strong> “[kategori] for [målgruppe] – sammenlign, find tilbud og køb trygt. <strong>Se udvalget</strong>.”</li>
+              <li><strong>Lokal side:</strong> “[ydelse] i [by]: priser, anmeldelser og hurtig booking. <strong>Kontakt os i dag</strong>.”</li>
+              <li><strong>Blog/viden:</strong> “Forstå [begreb] med eksempler og bedste praksis. <strong>Læs mere</strong>.”</li>
+            </ul>
+          </section>
 
-        <hr class="my-8 border-neutral-200" />
-        <p class="text-sm text-neutral-500">Kategori: On-page • Tags: meta description, CTR, copywriting</p>
-      </article>
+          <!-- Typiske fejl -->
+          <section id="fejl" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Typiske fejl (undgå dem)</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Generiske tekster som “Vi tilbyder kvalitet til gode priser”. Bliv <em>konkret</em>.</li>
+              <li>For lange beskrivelser, der trunkeres – vigtig pointe forsvinder.</li>
+              <li>Duplikerede descriptions på tværs af sider.</li>
+              <li>Manglende CTA – hvad er næste skridt?</li>
+              <li>Ignorerer søgeintention (informativ vs. kommerciel).</li>
+            </ul>
+          </section>
+
+          <!-- Mål og test -->
+          <section id="maaling" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Mål, test og forbedr</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Tjek CTR i <strong>Google Search Console</strong> pr. side og pr. søgeforespørgsel.</li>
+              <li>Iterér: test 2–3 varianter over 4–6 uger.</li>
+              <li>Brug <a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP-preview</a> til at tjekke længde/udseende før publicering.</li>
+            </ul>
+          </section>
+
+          <!-- CTA -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+            <p>Test og finpuds dine descriptions på få minutter:</p>
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Åbn SERP-preview</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Opdatér sitemap</a>
+            </div>
+          </section>
+
+          <!-- Back to top -->
+          <div class="text-right">
+            <a href="#top" class="inline-block mt-2 text-sm text-blue-600 hover:underline">Til toppen ↑</a>
+          </div>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            <!-- TOC -->
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+              <nav class="space-y-2 text-sm">
+                <a class="block hover:underline" href="#hvad">Hvad & hvorfor</a>
+                <a class="block hover:underline" href="#laengde">Længde & struktur</a>
+                <a class="block hover:underline" href="#eksempler">10 eksempler</a>
+                <a class="block hover:underline" href="#skabeloner">Skabeloner</a>
+                <a class="block hover:underline" href="#fejl">Typiske fejl</a>
+                <a class="block hover:underline" href="#maaling">Måling & test</a>
+              </nav>
+              <hr class="my-4">
+              <p class="text-xs text-neutral-500">Tip: Test længde og visning i <a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP-preview</a>.</p>
+            </div>
+
+            <!-- Relaterede værktøjer -->
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h3 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Relaterede værktøjer</h3>
+              <ul class="space-y-2 text-sm">
+                <li><a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP & Meta</a> – tjek længde og udseende</li>
+                <li><a class="text-blue-600 hover:underline" href="/internal-link-builder.html">Intern linkbuilder</a> – stærk linkstruktur</li>
+                <li><a class="text-blue-600 hover:underline" href="/sitemap-generator.html">Sitemap.xml generator</a></li>
+                <li><a class="text-blue-600 hover:underline" href="/robots-generator.html">Robots.txt generator</a></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+
+      </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
-      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
-        <p>© 2025 Seohub – seohub.dk</p>
-        <nav class="flex items-center gap-4">
-          <a class="hover:underline" href="/blog/">Blog</a>
-          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
-          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
-        </nav>
-      </div>
-    </footer>
+    <!-- Fælles footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
   </body>
 </html>
