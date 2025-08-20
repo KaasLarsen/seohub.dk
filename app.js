@@ -17,6 +17,8 @@ function Section({ title, description, children }) {
     ]
   );
 }
+// ... i retur-arrayet fra App(), lige UNDER hero-komponenten:
+React.createElement(HomeSearch, { key:"homesearch" }),
 
 function Card({ title, description, href, icon, children, className="" }) {
   const content = [
