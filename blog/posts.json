@@ -22,41 +22,41 @@
   },
   {
     "slug": "intern-linkbuilding-strategi",
-    "title": "Intern linkbuilding strategi – sådan bygger du stærke links",
-    "date": "2025-08-14",
-    "excerpt": "Sådan strukturerer du interne links, så du styrker autoritet, CTR og konvertering.",
-    "tags": ["linkbuilding", "intern seo"]
+    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
+    "date": "2025-08-13",
+    "excerpt": "Fordel linkjuice, byg hub-sider og brug ankertekster rigtigt. En praktisk guide til intern linkstruktur.",
+    "tags": ["intern linkbuilding", "information architecture"]
   },
   {
     "slug": "core-web-vitals-2025",
-    "title": "Core Web Vitals i 2025 – optimering der giver rankings",
-    "date": "2025-08-12",
-    "excerpt": "LCP, INP og CLS – forstå Googles signaler og få konkrete optimeringer.",
-    "tags": ["performance", "teknisk seo"]
+    "title": "Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS",
+    "date": "2025-08-13",
+    "excerpt": "Hurtige, konkrete forbedringer for performance: billedoptimering, caching, JS-split og font-loading.",
+    "tags": ["teknisk seo", "performance"]
   },
   {
     "slug": "lokal-seo-danmark-guide",
-    "title": "Lokal SEO i Danmark – guide til Google Maps og lokale søgninger",
-    "date": "2025-08-11",
-    "excerpt": "Fra Google Virksomhedsprofil til lokale citations – sådan ranker du i dit område.",
-    "tags": ["lokal seo", "maps"]
+    "title": "Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP",
+    "date": "2025-08-13",
+    "excerpt": "Bliv synlig i lokale søgeresultater: Google Virksomhedsprofil, citations og lokale landingssider.",
+    "tags": ["lokal seo"]
   },
   {
     "slug": "meta-descriptions-der-konverterer",
-    "title": "Meta descriptions der konverterer – eksempler og tips",
-    "date": "2025-08-10",
-    "excerpt": "Lær at skrive meta descriptions, der både ranker og får klik.",
-    "tags": ["on-page", "copywriting"]
+    "title": "Meta descriptions der konverterer – 10 eksempler Google elsker",
+    "date": "2025-08-14",
+    "excerpt": "Skriv meta descriptions der løfter CTR. 10 eksempler, længde-tips, skabeloner og typiske fejl.",
+    "tags": ["on-page", "copywriting", "ctr"]
   },
   {
     "slug": "intern-linkbuilding-guide",
-    "title": "Den komplette guide til intern linkbuilding",
-    "date": "2025-08-09",
-    "excerpt": "Sådan arbejder du struktureret med interne links i 2025.",
-    "tags": ["linkbuilding", "intern seo"]
+    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
+    "date": "2025-08-15",
+    "excerpt": "Fordel linkværdi, styrk relevans og gør det nemt for Google at forstå dit website.",
+    "tags": ["intern linkbuilding", "on-page", "linkstruktur"]
   },
 
-  <!-- Nye 10 indlæg fra ZIP -->
+  /* --------- 10 nye indlæg (ZIP) ---------- */
   {
     "slug": "content-marketing-seo",
     "title": "Content marketing & SEO – sådan spiller de sammen",
