@@ -1,4 +1,4 @@
-// /app.js — Forside med stor blå hero, søgning, sponsorer, seneste indlæg og værktøjer
+// /app.js — Forside med stor blå hero, søgning m. overskrift, sponsorer, seneste indlæg + værktøjer
 const { useState, useMemo, useEffect } = React;
 
 /* ---------- UI helpers ---------- */
@@ -17,6 +17,7 @@ function Section({ title, description, children }) {
     ]
   );
 }
+
 function Card({ title, description, href, icon, children, className="" }) {
   const content = [
     icon ? React.createElement("div", { key:"i", className:"mb-3" }, icon) : null,
@@ -25,9 +26,8 @@ function Card({ title, description, href, icon, children, className="" }) {
     children ? React.createElement("div", { key:"c", className:"mt-3" }, children) : null
   ];
   const base = "rounded-2xl border p-5 bg-white hover:shadow transition block";
-  return href
-    ? React.createElement("a", { href, className: `${base} ${className}` }, content)
-    : React.createElement("div", { className: `${base} ${className}` }, content);
+  if (href) return React.createElement("a", { href, className: `${base} ${className}` }, content);
+  return React.createElement("div", { className: `${base} ${className}` }, content);
 }
 
 /* ---------- STOR BLÅ HERO med 3 ikon-kort INDE I hero ---------- */
@@ -103,7 +103,7 @@ function BigHero() {
   );
 }
 
-/* ---------- Forside-søgning (blog + tools) ---------- */
+/* ---------- Forside-søgning (med overskrift) ---------- */
 function HomeSearch() {
   const [q, setQ] = useState("");
   const [posts, setPosts] = useState([]);
@@ -143,11 +143,13 @@ function HomeSearch() {
     return { posts: postHits, tools: toolHits };
   }, [q, posts]);
 
-  return React.createElement("section",
+  return React.createElement(
+    "section",
     { className: "max-w-6xl mx-auto px-4 -mt-6 md:-mt-8" },
     React.createElement("div",
       { className: "rounded-2xl p-5 md:p-6 bg-white/80 backdrop-blur border border-neutral-100 shadow" },
       [
+        React.createElement("h2", { key:"h2", className:"text-xl font-semibold text-neutral-800 mb-3 text-center" }, "🔍 Søg på Seohub.dk"),
         React.createElement("div", { key:"i", className:"flex items-center gap-3" }, [
           React.createElement("input", {
             key:"input",
@@ -167,36 +169,40 @@ function HomeSearch() {
         (!q && loaded) ? React.createElement("p", { key:"h", className:"mt-3 text-sm text-neutral-600" },
           "Tip: Prøv “intern links”, “sitemap”, “title” eller “lokal seo”."
         ) : null,
-        (q && (results.posts.length || results.tools.length)) ? React.createElement("div", { key:"res", className:"mt-5 grid md:grid-cols-12 gap-6" }, [
-          React.createElement("div", { key:"posts", className:"md:col-span-8 space-y-3" }, [
-            React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Blogindlæg"),
-            React.createElement("div", { key:"list", className:"space-y-3" },
-              results.posts.map((p,i) => React.createElement("a", {
-                key:i, href:`/blog/${p.slug}.html`,
-                className:"block rounded-2xl border bg-white p-4 hover:shadow"
-              }, [
-                React.createElement("div", { key:"t", className:"font-semibold" }, p.title),
-                React.createElement("div", { key:"e", className:"text-sm text-neutral-600 mt-1" }, p.excerpt || ""),
-                (p.tags && p.tags.length) ? React.createElement("div", { key:"tags", className:"mt-2 flex flex-wrap gap-2" },
-                  p.tags.slice(0,5).map((t,j) => React.createElement("span", {
-                    key:j, className:"text-xs px-2 py-1 rounded-full bg-neutral-100"
-                  }, String(t)))) : null
-              ]))
-            )
-          ]),
-          React.createElement("aside", { key:"tools", className:"md:col-span-4 space-y-3" }, [
-            React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Værktøjer"),
-            React.createElement("div", { key:"list", className:"space-y-3" },
-              results.tools.map((t,i) => React.createElement("a", {
-                key:i, href:t.path,
-                className:"block rounded-2xl border bg-white p-4 hover:shadow"
-              }, [
-                React.createElement("div", { key:"t", className:"font-semibold" }, t.title),
-                React.createElement("div", { key:"p", className:"text-xs text-neutral-600 mt-1" }, (t.tags||[]).slice(0,3).join(" • "))
-              ]))
-            )
-          ])
-        ]) : (q && loaded) ? React.createElement("p", { key:"no", className:"mt-4 text-sm text-neutral-600" }, "Ingen match – prøv et andet søgeord.") : null
+        (q && (results.posts.length || results.tools.length))
+          ? React.createElement("div", { key:"res", className:"mt-5 grid md:grid-cols-12 gap-6" }, [
+              React.createElement("div", { key:"posts", className:"md:col-span-8 space-y-3" }, [
+                React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Blogindlæg"),
+                React.createElement("div", { key:"list", className:"space-y-3" },
+                  results.posts.map((p,i) => React.createElement("a", {
+                    key:i, href:`/blog/${p.slug}.html`,
+                    className:"block rounded-2xl border bg-white p-4 hover:shadow"
+                  }, [
+                    React.createElement("div", { key:"t", className:"font-semibold" }, p.title),
+                    React.createElement("div", { key:"e", className:"text-sm text-neutral-600 mt-1" }, p.excerpt || ""),
+                    (p.tags && p.tags.length) ? React.createElement("div", { key:"tags", className:"mt-2 flex flex-wrap gap-2" },
+                      p.tags.slice(0,5).map((t,j) => React.createElement("span", {
+                        key:j, className:"text-xs px-2 py-1 rounded-full bg-neutral-100"
+                      }, String(t)))) : null
+                  ]))
+                )
+              ]),
+              React.createElement("aside", { key:"tools", className:"md:col-span-4 space-y-3" }, [
+                React.createElement("h3", { key:"h", className:"text-sm font-semibold uppercase tracking-wide text-neutral-600" }, "Værktøjer"),
+                React.createElement("div", { key:"list", className:"space-y-3" },
+                  results.tools.map((t,i) => React.createElement("a", {
+                    key:i, href:t.path,
+                    className:"block rounded-2xl border bg-white p-4 hover:shadow"
+                  }, [
+                    React.createElement("div", { key:"t", className:"font-semibold" }, t.title),
+                    React.createElement("div", { key:"p", className:"text-xs text-neutral-600 mt-1" }, (t.tags||[]).slice(0,3).join(" • "))
+                  ]))
+                )
+              ])
+            ])
+          : (q && loaded)
+            ? React.createElement("p", { key:"no", className:"mt-4 text-sm text-neutral-600" }, "Ingen match – prøv et andet søgeord.")
+            : null
       ]
     )
   );
@@ -215,10 +221,7 @@ function Sponsors() {
       React.createElement("div", { key:"g", className:"grid sm:grid-cols-3 gap-4" },
         items.map(it =>
           React.createElement("a", {
-            key: it.name,
-            href: it.href,
-            target:"_blank",
-            rel:"sponsored noopener nofollow",
+            key: it.name, href: it.href, target:"_blank", rel:"sponsored noopener nofollow",
             className:"rounded-2xl p-5 md:p-6 text-white shadow-lg block",
             style:{ background:"linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)" }
           }, [
@@ -232,7 +235,7 @@ function Sponsors() {
   );
 }
 
-/* ---------- Seneste indlæg ---------- */
+/* ---------- Seneste indlæg (auto) ---------- */
 function LatestPosts() {
   const [posts, setPosts] = useState(null);
   const [err, setErr] = useState(null);
@@ -260,29 +263,20 @@ function LatestPosts() {
         ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
         : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
             posts.map(p => React.createElement(Card, {
-              key:p.slug,
-              title:p.title,
-              description:p.excerpt,
-              href:`/blog/${p.slug}.html`
-            },
-              React.createElement("div", { className:"text-xs text-neutral-500 mt-2" }, p.date)
-            ))
+              key:p.slug, title:p.title, description:p.excerpt, href:`/blog/${p.slug}.html`
+            }, React.createElement("div", { className:"text-xs text-neutral-500 mt-2" }, p.date)))
           )
   );
 }
 
 /* ---------- Små værktøjer ---------- */
 function TextInput({ label, value, onChange, placeholder, textarea=false, rows=3 }) {
-  return React.createElement(
-    "label",
-    { className: "block mb-3" },
-    [
-      label ? React.createElement("span", { key:"l", className: "block text-sm font-medium mb-1" }, label) : null,
-      textarea
-        ? React.createElement("textarea", { key:"ta", value, onChange:e=>onChange(e.target.value), placeholder, rows, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
-        : React.createElement("input", { key:"in", value, onChange:e=>onChange(e.target.value), placeholder, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
-    ]
-  );
+  return React.createElement("label", { className:"block mb-3" }, [
+    label ? React.createElement("span", { key:"l", className:"block text-sm font-medium mb-1" }, label) : null,
+    textarea
+      ? React.createElement("textarea", { key:"ta", value, onChange:e=>onChange(e.target.value), placeholder, rows, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
+      : React.createElement("input", { key:"in", value, onChange:e=>onChange(e.target.value), placeholder, className:"w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" })
+  ]);
 }
 function CopyButton({ getText, label="Kopiér" }) {
   const [copied, setCopied] = useState(false);
@@ -511,8 +505,8 @@ function ContentBrief() {
 function App() {
   return React.createElement("main", { className:"max-w-6xl mx-auto px-4 pb-12 space-y-8" }, [
     React.createElement(BigHero, { key:"hero" }),
-    React.createElement(HomeSearch, { key:"homesearch" }), // LIGE under hero
-    React.createElement(Sponsors, { key:"sponsors" }),     // Sponsorer oppe på siden
+    React.createElement(HomeSearch, { key:"homesearch" }),
+    React.createElement(Sponsors, { key:"sponsors" }),     // LIGE UNDER SØGNING
     React.createElement(LatestPosts, { key:"latest" }),
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
