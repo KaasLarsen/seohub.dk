@@ -1,96 +1,166 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <script src="/assets/include-footer.js" defer></script>
-    <script src="/assets/include-header.js?v=6" defer></script>
-    <meta charset="utf-8" />
-    <title>Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP – Seohub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Bliv synlig i lokale søgeresultater: opsætning af Google Virksomhedsprofil, NAP-konsistens, lokale landingssider og anmeldelser. Kom i gang i dag." />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="canonical" href="https://seohub.dk/blog/lokal-seo-danmark-guide.html" />
+    <!-- Fælles header (logo + navigation, inkl. mobil burger) -->
+    <script src="/assets/include-header.js?v=7" defer></script>
 
-    <script src="/assets/include-header.js" defer></script>
+    <meta charset="utf-8" />
+    <title>Lokal SEO guide 2025 – sådan dominerer du i Danmark | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Den komplette lokale SEO guide 2025: Google Business Profile, anmeldelser, lokale links, LocalBusiness schema, mobilvenlighed og måling – til danske virksomheder.">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://www.seohub.dk/blog/lokal-seo-guide-2025.html" />
+
+    <!-- Consent + GA (GA4 loader først efter samtykke) -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- UI (Tailwind) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Article schema -->
     <script type="application/ld+json">
     {
       "@context":"https://schema.org",
       "@type":"Article",
-      "headline":"Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP",
-      "description":"Bliv synlig i lokale søgeresultater: Google Virksomhedsprofil, NAP, lokale landingssider og anmeldelser.",
-      "author":{"@type":"Person","name":"Seohub"},
-      "publisher":{"@type":"Organization","name":"Seohub","logo":{"@type":"ImageObject","url":"https://seohub.dk/favicon.svg"}},
-      "mainEntityOfPage":"https://seohub.dk/blog/lokal-seo-danmark-guide.html",
-      "datePublished":"2025-08-13",
-      "dateModified":"2025-08-15"
+      "headline":"Lokal SEO guide 2025 – sådan dominerer du i Danmark",
+      "author":{"@type":"Organization","name":"Seohub.dk"},
+      "datePublished":"2025-08-21",
+      "dateModified":"2025-08-21",
+      "image":"https://www.seohub.dk/og-image.png",
+      "mainEntityOfPage":"https://www.seohub.dk/blog/lokal-seo-guide-2025.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
+      "description":"Komplet lokal SEO guide til danske virksomheder i 2025: optimer Google Business Profile, skaf anmeldelser og lokale links, brug LocalBusiness schema og mål resultater."
     }
     </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-    <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
-      <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
-        <a href="/" class="font-semibold">Seohub.dk</a>
-        <nav class="text-sm text-neutral-600 space-x-4">
-          <a href="/">Forside</a>
-          <a href="/serp-preview.html">SERP</a>
-          <a href="/robots-generator.html">Robots</a>
-          <a href="/sitemap-generator.html">Sitemap</a>
-          <a href="/internal-link-builder.html">Intern links</a>
-          <a href="/blog/">Blog</a>
-        </nav>
-      </div>
-    </header>
 
+    <!-- Hero -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
-        <div class="rounded-2xl p-12 md:p-20 text-white shadow-lg" style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
-          <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP</h1>
-          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">Opsæt din profil rigtigt, opbyg troværdighed – og vind de lokale søgninger.</p>
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · Lokal SEO</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Lokal SEO guide 2025 – sådan dominerer du i Danmark</h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Sådan vinder du Maps og lokale søgeresultater: Google Business Profile, anmeldelser, lokale links, schema og mobilvenlighed.
+          </p>
         </div>
       </div>
     </section>
 
-    <main class="max-w-3xl mx-auto px-4 pb-16">
-      <article class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <p class="text-sm text-neutral-500 mb-6">Opdateret: 15. august 2025 • Læsetid: 9 min</p>
+    <!-- Layout -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        <h2 class="text-2xl font-semibold mb-3">Google Virksomhedsprofil (GBP)</h2>
-        <ul class="list-disc pl-5 text-neutral-700 space-y-2">
-          <li>Udfyld alle felter, især kategorier og åbningstider.</li>
-          <li>Tilføj billeder, produkter/tjenester og indlæg.</li>
-          <li>Besvar anmeldelser og spørgsmål løbende.</li>
-        </ul>
+        <!-- Artikel -->
+        <article class="lg:col-span-8 space-y-6">
 
-        <h2 class="text-2xl font-semibold mt-8 mb-3">NAP-konsistens</h2>
-        <p class="text-neutral-700 mb-4">Navn, adresse og telefon skal være identiske på tværs af hele nettet.</p>
+          <!-- TL;DR -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Udfyld <strong>Google Business Profile</strong> 100% (kategorier, services, billeder, åbningstider, CTA).</li>
+              <li>Skaf <strong>kontinuerlige anmeldelser</strong> og svar professionelt på alle.</li>
+              <li>Byg <strong>lokale links</strong> fra medier, foreninger, partnere og events.</li>
+              <li>Implementér <strong>LocalBusiness schema</strong> og sørg for mobil performance.</li>
+            </ul>
+          </section>
 
-        <h2 class="text-2xl font-semibold mb-3">Lokale landingssider</h2>
-        <p class="text-neutral-700 mb-4">Lav stærke sider per by/område med kundecases, ruter, åbningstider og lokale billeder.</p>
+          <!-- 1) Google Business Profile -->
+          <section id="gbp" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">1) Google Business Profile</h2>
+            <ul class="list-disc pl-6">
+              <li>Vælg korrekt primær og sekundære kategorier.</li>
+              <li>Udfyld tjenester/produkter, beskrivelse og attributter.</li>
+              <li>Upload egne fotos (butik, team, cases) – opdater løbende.</li>
+              <li>Post nyheder/tilbud og brug CTA (“Ring nu”, “Få tilbud”).</li>
+            </ul>
+          </section>
 
-        <div class="mt-8 p-5 rounded-xl bg-neutral-50 border">
-          <p class="mb-1"><strong>Relaterede værktøjer</strong></p>
-          <ul class="list-disc pl-5 text-neutral-700">
-            <li><a class="text-blue-700 underline" href="/serp-preview.html">SERP & Meta preview</a></li>
-            <li><a class="text-blue-700 underline" href="/internal-link-builder.html">Intern Link Builder</a></li>
-            <li><a class="text-blue-700 underline" href="/sitemap-generator.html">Sitemap generator</a></li>
-          </ul>
-        </div>
+          <!-- 2) Anmeldelser -->
+          <section id="reviews" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">2) Anmeldelser: frekvens slår alt</h2>
+            <ul class="list-disc pl-6">
+              <li>Gør det let at anmelde (QR-kode, direkte link i mails/kvitteringer).</li>
+              <li>Bed om anmeldelser efter leveret værdi; svar pænt på ALT.</li>
+              <li>Fremhæv udvalgte anmeldelser på website (med samtykke).</li>
+            </ul>
+          </section>
 
-        <hr class="my-8 border-neutral-200" />
-        <p class="text-sm text-neutral-500">Kategori: Lokal SEO • Tags: Google Maps, reviews, NAP</p>
-      </article>
+          <!-- 3) Lokale links -->
+          <section id="links" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">3) Lokale links & omtaler</h2>
+            <ul class="list-disc pl-6">
+              <li>Lokale medier/blogs (presseudmelding, case, data, sponsorater).</li>
+              <li>Klubber/foreninger og events (sponsor-logo → link til dig).</li>
+              <li>Samarbejdspartnere/leverandører (partner- eller case-sider).</li>
+            </ul>
+          </section>
+
+          <!-- 4) Schema & mobil -->
+          <section id="schema" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">4) LocalBusiness schema & mobilvenlighed</h2>
+            <ul class="list-disc pl-6">
+              <li>LocalBusiness/Organization schema (navn, adresse, telefon, åbningstider, geo).</li>
+              <li>Core Web Vitals: hurtig LCP, lav INP, stabil CLS – især på mobil.</li>
+              <li>Lav landingssider for dine vigtigste byer/områder (unikt indhold).</li>
+            </ul>
+          </section>
+
+          <!-- CTA -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+            <div class="flex flex-wrap gap-3">
+              <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Tjek dine titles</a>
+              <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Byg interne links</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Opdatér sitemap</a>
+            </div>
+          </section>
+
+          <div class="text-right">
+            <a href="#top" class="inline-block mt-2 text-sm text-blue-600 hover:underline">Til toppen ↑</a>
+          </div>
+        </article>
+
+        <!-- Sticky TOC + sponsor -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            <!-- Indholdsoversigt -->
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+              <nav class="space-y-2 text-sm">
+                <a class="block hover:underline" href="#gbp">1) Google Business Profile</a>
+                <a class="block hover:underline" href="#reviews">2) Anmeldelser</a>
+                <a class="block hover:underline" href="#links">3) Lokale links</a>
+                <a class="block hover:underline" href="#schema">4) Schema & mobil</a>
+              </nav>
+            </div>
+
+            <!-- Sponsoreret anbefaling -->
+            <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret partner</div>
+              <h3 class="text-lg font-extrabold mb-2">Boost lokal SEO med Morningscore</h3>
+              <p class="text-blue-100 mb-3">Få klar indsigt i lokale keywords og placeringer i Danmark.</p>
+              <a href="https://morningscore.io?fpr=seo43"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+                Prøv Morningscore gratis
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
     </main>
 
-    <footer class="mt-12 border-t bg-white/80 backdrop-blur">
-      <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-500">
-        <p>© 2025 Seohub – seohub.dk</p>
-        <nav class="flex items-center gap-4">
-          <a class="hover:underline" href="/blog/">Blog</a>
-          <a class="hover:underline" href="/privatliv-cookies.html">Privatliv & cookies</a>
-          <a class="hover:underline" href="mailto:info@seohub.dk">Kontakt</a>
-        </nav>
-      </div>
-    </footer>
+    <!-- Fælles footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
   </body>
 </html>
