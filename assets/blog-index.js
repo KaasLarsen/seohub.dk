@@ -1,4 +1,4 @@
-// /assets/blog-index.js (v3 PRODUCTION) — loader /blog/posts.json og renderer kort
+// /assets/blog-index.js (v4 — robust fejlvisning)
 (function () {
   function $(id) { return document.getElementById(id); }
   const listEl   = $("postsList");
@@ -26,7 +26,7 @@
 
   function renderPosts(posts) {
     if (!Array.isArray(posts) || posts.length === 0) {
-      setStatus(`<span class="text-red-600">Ingen indlæg fundet.</span>`);
+      setStatus(`<span class="text-red-600">Ingen indlæg fundet i posts.json.</span>`);
       return;
     }
     posts.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
@@ -34,16 +34,51 @@
     hideStatus();
   }
 
+  async function fetchJson(url) {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      throw new Error(`JSON parse fejl for ${url}: ${e.message}`);
+    }
+  }
+
   async function init() {
     if (!listEl || !statusEl) return;
+
+    // Primær sti
+    const url1 = `/blog/posts.json?v=${Date.now()}`;
+    // Fallback (hvis nogen har lagt den et forkert sted)
+    const url2 = `/posts.json?v=${Date.now()}`;
+
     try {
-      const url = `/blog/posts.json?v=${Date.now()}`; // cache-bust
-      const res = await fetch(url, { cache: "no-store", credentials: "same-origin" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const json = await res.json();
-      renderPosts(json);
+      let data;
+      try {
+        data = await fetchJson(url1);
+      } catch (e1) {
+        console.warn("[Blog] Primær failede:", e1.message);
+        try {
+          data = await fetchJson(url2);
+        } catch (e2) {
+          setStatus(`
+            <div class="text-red-600 font-semibold mb-1">Kunne ikke hente indlæg.</div>
+            <div class="text-neutral-700 text-sm">
+              Fejl:
+              <div class="mt-1 p-2 rounded bg-neutral-50 border"><code>${e1.message}</code></div>
+              <div class="mt-1 p-2 rounded bg-neutral-50 border"><code>${e2.message}</code></div>
+            </div>
+            <div class="text-neutral-500 text-xs mt-2">
+              Løsning: Sørg for at <code>/blog/posts.json</code> findes i public-mappen og er gyldig JSON (uden kommentarer/trailing komma).
+            </div>
+          `);
+          return;
+        }
+      }
+      renderPosts(data);
     } catch (e) {
-      setStatus(`<div class="text-red-600">Kunne ikke hente indlæg.</div>`);
+      setStatus(`<div class="text-red-600">Uventet fejl: ${e.message}</div>`);
     }
   }
 
