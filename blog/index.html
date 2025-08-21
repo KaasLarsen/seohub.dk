@@ -60,42 +60,59 @@
   <script src="/assets/include-footer.js?v=2" defer></script>
 
   <!-- Minimal inline JS: hent og vis ALLE indlæg -->
-  <script>
-    (function(){
-      const $list  = document.getElementById("list");
-      const $count = document.getElementById("count");
-      const $empty = document.getElementById("empty");
-      const $fatal = document.getElementById("fatal");
+ <script>
+(function(){
+  const $list  = document.getElementById("list");
+  const $count = document.getElementById("count");
+  const $empty = document.getElementById("empty");
+  const $fatal = document.getElementById("fatal");
 
-      function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
 
-      fetch("/blog/posts.json", { cache: "no-store" })
-        .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
-        .then(txt => {
-          if (txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON) – forkert sti eller fejlside?");
-          const data = JSON.parse(txt);
-          if (!Array.isArray(data)) throw new Error("JSON er ikke et array");
-          const posts = data.slice().sort((a,b) => String(b.date||"").localeCompare(String(a.date||"")));
+  async function fetchJsonWithFallback() {
+    const v = Date.now(); // cache-buster
+    const tries = [
+      `/blog/posts.json?v=${v}`,
+      `/posts.json?v=${v}`
+    ];
+    let lastErr;
+    for (const url of tries) {
+      try {
+        const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const txt = await r.text();
+        if (txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON) – forkert sti/fejlside");
+        const json = JSON.parse(txt);
+        if (!Array.isArray(json)) throw new Error("JSON er ikke et array");
+        return json;
+      } catch(e) {
+        lastErr = e;
+        // prøv næste
+      }
+    }
+    throw lastErr || new Error("Ukendt fejl");
+  }
 
-          if (!posts.length) {
-            $empty.classList.remove("hidden");
-            return;
-          }
+  fetchJsonWithFallback()
+    .then(data => {
+      const posts = data.slice().sort((a,b) => String(b.date||"").localeCompare(String(a.date||"")));
+      if (!posts.length) { $empty.classList.remove("hidden"); return; }
+      $count.textContent = posts.length + " indlæg";
+      $list.innerHTML = posts.map(p => `
+        <a href="/blog/${esc(p.slug)}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
+          ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
+          <div class="mt-3 text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
+        </a>
+      `).join("");
+    })
+    .catch(e => {
+      console.error("[blog]", e);
+      $fatal.classList.remove("hidden");
+      $fatal.innerHTML = `Kunne ikke hente indlæg. Tjek at <a class="underline" href="/blog/posts.json" target="_blank" rel="noopener">/blog/posts.json</a> findes, er gyldig JSON og ligger i /blog.`;
+    });
+})();
+</script>
 
-          $count.textContent = posts.length + " indlæg";
-          $list.innerHTML = posts.map(p => `
-            <a href="/blog/${esc(p.slug)}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-              <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
-              ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
-              <div class="mt-3 text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
-            </a>
-          `).join("");
-        })
-        .catch(e => {
-          console.error("[blog-simple]", e);
-          $fatal.classList.remove("hidden");
-        });
-    })();
-  </script>
 </body>
 </html>
