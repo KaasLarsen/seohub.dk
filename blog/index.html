@@ -213,6 +213,12 @@
       }
 
       function esc(s) { return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+<script>
+  fetch("/blog/posts.json")
+    .then(r => r.text())
+    .then(txt => { console.log("posts.json raw:", txt); })
+    .catch(e => { console.error("Fejl henter posts.json:", e); });
+</script>
 
       // Søg UI
       $q.addEventListener("input", () => {
