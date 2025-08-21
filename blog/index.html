@@ -7,7 +7,7 @@
   <meta charset="utf-8" />
   <title>Blog – alle indlæg | Seohub.dk</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Seohub Blog – samlet liste over alle vores indlæg og guides." />
+  <meta name="description" content="Seohub Blog – samlet liste over alle vores SEO-guides og artikler." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://www.seohub.dk/blog/">
 
@@ -20,7 +20,7 @@
 </head>
 <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-  <!-- Hero (samme stil som resten) -->
+  <!-- Hero (blå, som resten) -->
   <section class="py-10 md:py-14">
     <div class="max-w-6xl mx-auto px-4">
       <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
@@ -41,17 +41,80 @@
         <div id="count" class="text-sm text-neutral-500"></div>
       </div>
 
-      <!-- Liste -->
-      <div id="list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- fyldes af script -->
+      <!-- Fallback: statisk liste (ALTID synlig). JS skjuler den kun hvis posts.json hentes korrekt -->
+      <div id="fallback-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Læg ALLE kendte indlæg her som links (virker uden JS) -->
+        <a href="/blog/seo-for-begyndere-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">SEO for begyndere – Den komplette guide 2025</div>
+        </a>
+        <a href="/blog/seo-titler-der-ranker.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">SEO-titler der ranker: længde, vinkler og CTR-hacks</div>
+        </a>
+        <a href="/blog/sitemap-fejl-fixes.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">De 7 mest almindelige sitemap-fejl (og hurtige fixes)</div>
+        </a>
+        <a href="/blog/intern-linkbuilding-strategi.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Avanceret intern linkbuilding strategi</div>
+        </a>
+        <a href="/blog/core-web-vitals-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Core Web Vitals i 2025 – sådan klarer du kravet</div>
+        </a>
+        <a href="/blog/lokal-seo-danmark-guide.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Lokal SEO i Danmark – den fulde guide</div>
+        </a>
+        <a href="/blog/meta-descriptions-der-konverterer.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Meta descriptions der konverterer i 2025</div>
+        </a>
+        <a href="/blog/intern-linkbuilding-guide.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Intern linkbuilding guide 2025</div>
+        </a>
+
+        <!-- Nye/nyere vi har snakket om -->
+        <a href="/blog/seo-audit-guide-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">SEO audit guide 2025 – tjekliste & værktøjer</div>
+        </a>
+        <a href="/blog/voice-search-seo.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Voice search SEO – optimer til stemmesøgning</div>
+        </a>
+        <a href="/blog/ai-content-seo.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">AI-content & SEO – bedste praksis i 2025</div>
+        </a>
+        <a href="/blog/ecommerce-seo-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">E-commerce SEO 2025 – kategorier, produkter og filtre</div>
+        </a>
+        <a href="/blog/mobile-first-seo.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Mobile-first SEO – sådan vinder du på mobil</div>
+        </a>
+        <a href="/blog/seo-mistakes-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">De største SEO-fejl i 2025 (og hvordan du undgår dem)</div>
+        </a>
+        <a href="/blog/keyword-research-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Keyword research i 2025 – metoder og værktøjer</div>
+        </a>
+        <a href="/blog/linkbuilding-trends-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Linkbuilding trends 2025 – hvad virker nu?</div>
+        </a>
+        <a href="/blog/local-seo-strategier.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Lokal SEO – strategier, der skaber synlighed</div>
+        </a>
+        <a href="/blog/serp-features-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">SERP features i 2025 – sådan får du synlighed</div>
+        </a>
+        <a href="/blog/content-marketing-seo.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Content marketing & SEO – sådan spiller det sammen</div>
+        </a>
+        <a href="/blog/teknisk-seo-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">Teknisk SEO 2025 – tjekliste</div>
+        </a>
       </div>
 
-      <!-- Tom/fejl -->
+      <!-- Dynamisk container (bruges KUN hvis posts.json loader) -->
+      <div id="list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 hidden"></div>
+
+      <!-- Fejlbeskeder -->
       <p id="empty" class="mt-6 text-sm text-neutral-600 hidden">Ingen indlæg fundet.</p>
       <p id="fatal" class="mt-6 text-sm text-red-600 hidden">
-        Kunne ikke hente indlæg. Tjek at
-        <a class="underline" href="/blog/posts.json" target="_blank" rel="noopener">/blog/posts.json</a>
-        findes og er gyldig JSON.
+        Kunne ikke hente indlæg. Fallback-listen vises i stedet.
       </p>
     </section>
   </main>
@@ -59,60 +122,47 @@
   <!-- Fælles footer -->
   <script src="/assets/include-footer.js?v=2" defer></script>
 
-  <!-- Minimal inline JS: hent og vis ALLE indlæg -->
- <script>
-(function(){
-  const $list  = document.getElementById("list");
-  const $count = document.getElementById("count");
-  const $empty = document.getElementById("empty");
-  const $fatal = document.getElementById("fatal");
+  <!-- Robust JS: forsøg posts.json → ellers behold fallback -->
+  <script>
+    (function(){
+      const $fallback = document.getElementById("fallback-list");
+      const $list     = document.getElementById("list");
+      const $count    = document.getElementById("count");
+      const $empty    = document.getElementById("empty");
+      const $fatal    = document.getElementById("fatal");
 
-  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+      function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
 
-  async function fetchJsonWithFallback() {
-    const v = Date.now(); // cache-buster
-    const tries = [
-      `/blog/posts.json?v=${v}`,
-      `/posts.json?v=${v}`
-    ];
-    let lastErr;
-    for (const url of tries) {
-      try {
-        const r = await fetch(url, { cache: "no-store" });
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const txt = await r.text();
-        if (txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON) – forkert sti/fejlside");
-        const json = JSON.parse(txt);
-        if (!Array.isArray(json)) throw new Error("JSON er ikke et array");
-        return json;
-      } catch(e) {
-        lastErr = e;
-        // prøv næste
-      }
-    }
-    throw lastErr || new Error("Ukendt fejl");
-  }
+      // Prøv at hente /blog/posts.json — hvis det fejler, rører vi ikke fallback.
+      const url = `/blog/posts.json?v=${Date.now()}`;
+      fetch(url, { cache: "no-store" })
+        .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+        .then(txt => {
+          if (!txt || txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON)");
+          const data = JSON.parse(txt);
+          if (!Array.isArray(data)) throw new Error("JSON er ikke et array");
 
-  fetchJsonWithFallback()
-    .then(data => {
-      const posts = data.slice().sort((a,b) => String(b.date||"").localeCompare(String(a.date||"")));
-      if (!posts.length) { $empty.classList.remove("hidden"); return; }
-      $count.textContent = posts.length + " indlæg";
-      $list.innerHTML = posts.map(p => `
-        <a href="/blog/${esc(p.slug)}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-          <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
-          ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
-          <div class="mt-3 text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
-        </a>
-      `).join("");
-    })
-    .catch(e => {
-      console.error("[blog]", e);
-      $fatal.classList.remove("hidden");
-      $fatal.innerHTML = `Kunne ikke hente indlæg. Tjek at <a class="underline" href="/blog/posts.json" target="_blank" rel="noopener">/blog/posts.json</a> findes, er gyldig JSON og ligger i /blog.`;
-    });
-})();
-</script>
+          // Render dynamisk: skjul fallback, vis list.
+          const posts = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+          if (!posts.length) { $empty.classList.remove("hidden"); return; }
 
+          $fallback.classList.add("hidden");
+          $list.classList.remove("hidden");
+
+          $count.textContent = posts.length + " indlæg";
+          $list.innerHTML = posts.map(p => `
+            <a href="/blog/${esc(p.slug)}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+              <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
+              ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
+              <div class="mt-3 text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
+            </a>
+          `).join("");
+        })
+        .catch(e => {
+          console.warn("[blog index] bruger fallback:", e && e.message ? e.message : e);
+          $fatal.classList.remove("hidden"); // vi viser bare info – fallbacklisten er der jo
+        });
+    })();
+  </script>
 </body>
 </html>
