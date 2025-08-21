@@ -1,163 +1,107 @@
-// /assets/blog-index.js v2 — robust blogindex m. logs
-(function () {
-  const LOG = (...a) => console.log("[blog-index]", ...a);
-  const ERR = (...a) => console.error("[blog-index]", ...a);
+// /assets/blog-index.js — loader posts.json, styrer søgning, fallback m.m.
+(function(){
+  const $list   = document.getElementById("list");
+  const $count  = document.getElementById("count");
+  const $fatal  = document.getElementById("fatal");
+  const $q      = document.getElementById("searchInput");
+  const $clear  = document.getElementById("searchClear");
+  const $seed   = document.getElementById("fallback-list");
 
-  const FEATURED = [
-    "seo-for-begyndere-2025",
-    "intern-linkbuilding-strategi",
-    "core-web-vitals-2025"
-  ];
-
-  let ALL = [];
-  let TAGS = [];
+  let ALL = [];   // alle posts (fra posts.json eller fallback)
   let query = "";
-  let activeTag = "alle";
 
-  // Grab elements (MÅ MATCHE index.html)
-  const $q            = document.getElementById("q");
-  const $clear        = document.getElementById("clearBtn");
-  const $chips        = document.getElementById("tagChips");
-  const $list         = document.getElementById("list");
-  const $count        = document.getElementById("count");
-  const $empty        = document.getElementById("empty");
-  const $fatal        = document.getElementById("fatal");
-  const $featuredWrap = document.getElementById("featuredWrap");
-  const $featuredGrid = document.getElementById("featuredGrid");
+  const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 
-  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-
-  async function loadPosts() {
-    const ts = Date.now();
-    const tryUrls = [
-      "/blog/posts.json?ts="+ts,     // korrekt placering (anbefalet)
-      "posts.json?ts="+ts,           // relativ fallback (hvis hostet i /blog/)
-      "/posts.json?ts="+ts           // root fallback (hvis nogen har lagt den i roden)
-    ];
-    let lastErr = null;
-    for (const url of tryUrls) {
-      try {
-        LOG("fetch", url);
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status} @ ${url}`);
-        let txt = await res.text();
-        if (txt.trim().startsWith("<")) throw new Error(`Modtog HTML (ikke JSON) @ ${url}`);
-        txt = txt.replace(/^\uFEFF/, ""); // fjern BOM
-        const data = JSON.parse(txt);
-        if (!Array.isArray(data)) throw new Error(`JSON er ikke array @ ${url}`);
-        LOG("OK fra", url, `(${data.length} indlæg)`);
-        return data;
-      } catch (e) { lastErr = e; ERR(e.message); }
+  function renderList(arr){
+    if (!arr.length) {
+      $list.innerHTML = '<p class="text-sm text-neutral-600">Ingen indlæg matcher søgningen.</p>';
+      return;
     }
-    throw lastErr || new Error("Kunne ikke indlæse posts.json fra nogen kendt placering.");
-  }
+    $list.innerHTML = arr.map(p => {
+      const tags = Array.isArray(p.tags) ? p.tags.slice(0,6).map(t => `
+        <button data-tag="${esc(String(t))}"
+                class="text-xs px-2 py-1 rounded-full bg-neutral-100 hover:bg-neutral-200">${esc(String(t))}</button>`).join(" ") : "";
+      return `
+        <a href="/blog/${esc(p.slug)}.html"
+           class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+          <div class="font-semibold">${esc(p.title||"Uden titel")}</div>
+          ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
+          <div class="mt-3 flex items-center justify-between">
+            <div class="text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
+            ${tags ? `<div class="flex flex-wrap gap-2">${tags}</div>` : ""}
+          </div>
+        </a>`;
+    }).join("");
 
-  function buildTags() {
-    const freq = new Map();
-    ALL.forEach(p => {
-      (Array.isArray(p.tags)?p.tags:[]).forEach(t=>{
-        const k = String(t||"").trim().toLowerCase();
-        if (!k) return;
-        freq.set(k,(freq.get(k)||0)+1);
+    // tag klik => filter
+    $list.querySelectorAll('button[data-tag]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const t = btn.getAttribute('data-tag') || "";
+        query = t;
+        $q.value = t;
+        $clear.classList.toggle('hidden', !query.trim());
+        performSearch();
       });
     });
-    TAGS = Array.from(freq.keys()).sort((a,b)=>a.localeCompare(b));
-
-    $chips.innerHTML = "";
-    const add = (label,val)=>{
-      const btn = document.createElement("button");
-      btn.type="button";
-      btn.className="chip text-sm";
-      btn.textContent=label;
-      btn.dataset.value=val;
-      if (val===activeTag) btn.classList.add("chip-active");
-      btn.addEventListener("click", ()=>{
-        activeTag = val;
-        $chips.querySelectorAll("button").forEach(b=>b.classList.remove("chip-active"));
-        btn.classList.add("chip-active");
-        render();
-      });
-      $chips.appendChild(btn);
-    };
-    add("Alle","alle");
-    TAGS.forEach(t=>add(t,t));
-    LOG("tags", TAGS);
   }
 
-  function applyFilters(list){
-    let out=list;
-    if (activeTag!=="alle"){
-      out = out.filter(p => Array.isArray(p.tags) && p.tags.map(String).map(x=>x.toLowerCase()).includes(activeTag));
-    }
-    if (query){
-      const q = query.toLowerCase();
-      out = out.filter(p =>
-        (p.title||"").toLowerCase().includes(q) ||
-        (p.excerpt||"").toLowerCase().includes(q) ||
-        (Array.isArray(p.tags) && p.tags.some(t => String(t).toLowerCase().includes(q)))
-      );
-    }
-    return out;
+  function performSearch(){
+    const q = query.trim().toLowerCase();
+    const arr = !q ? ALL : ALL.filter(p=>{
+      const txt = `${p.title||""} ${p.excerpt||""} ${(p.tags||[]).join(" ")}`.toLowerCase();
+      return txt.includes(q);
+    });
+    $count.textContent = `${ALL.length} indlæg${q ? ` · ${arr.length} match` : ""}`;
+    renderList(arr);
   }
 
-  function CardHTML(p, featured=false){
-    const tags = (Array.isArray(p.tags)?p.tags:[]).slice(0,4);
-    return `
-      <a href="/blog/${p.slug}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-        ${featured?'<div class="text-[11px] uppercase tracking-wide text-blue-700 mb-2">Udvalgt</div>':''}
-        <div class="font-semibold">${esc(p.title||"Uden titel")}</div>
-        ${p.excerpt?`<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>`:""}
-        <div class="mt-3 flex items-center justify-between text-xs text-neutral-500">
-          <span>${p.date?esc(p.date):""}</span>
-          <span class="flex gap-2">${tags.map(t=>`<span class="px-2 py-1 rounded-full bg-neutral-100">${esc(String(t))}</span>`).join("")}</span>
-        </div>
-      </a>
-    `;
+  function buildFromFallback(){
+    const items = Array.from($seed.querySelectorAll('a[href]')).map(a => {
+      const href = a.getAttribute('href') || "";
+      const slug = (href.split('/').pop() || "").replace(/\.html$/i, "");
+      const title = a.getAttribute('data-title') || a.textContent.trim() || slug;
+      const excerpt = a.getAttribute('data-excerpt') || "";
+      const date = a.getAttribute('data-date') || "";
+      const tags = (a.getAttribute('data-tags') || "").split(',').map(s=>s.trim()).filter(Boolean);
+      return { slug, title, excerpt, date, tags };
+    });
+    ALL = items.sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
   }
 
-  function renderFeatured(){
-    const items = ALL.filter(p=>FEATURED.includes(p.slug));
-    if (!items.length){ $featuredWrap.classList.add("hidden"); return; }
-    $featuredWrap.classList.remove("hidden");
-    $featuredGrid.innerHTML = items.map(p=>CardHTML(p,true)).join("");
-  }
-
-  function render(){
-    const filtered = applyFilters(ALL);
-    $count.textContent = filtered.length ? `${filtered.length} indlæg` : "";
-    $empty.classList.toggle("hidden", filtered.length>0);
-    $list.innerHTML = filtered.map(p=>CardHTML(p,false)).join("");
-    LOG("render", {q:query, tag:activeTag, count:filtered.length});
-  }
-
-  // UI events
+  // events for søg
   if ($q) {
-    $q.addEventListener("input", ()=>{
-      query = $q.value.trim();
-      if ($clear) $clear.classList.toggle("hidden", query.length===0);
-      render();
+    $q.addEventListener('input', ()=>{
+      query = $q.value;
+      $clear.classList.toggle('hidden', !query.trim());
+      performSearch();
     });
   }
   if ($clear) {
-    $clear.addEventListener("click", ()=>{
-      $q.value=""; query=""; $clear.classList.add("hidden"); render();
+    $clear.addEventListener('click', ()=>{
+      $q.value = ""; query = "";
+      $clear.classList.add('hidden');
+      performSearch();
     });
   }
 
-  // Init
-  document.addEventListener("DOMContentLoaded", () => {
-    LOG("DOMContentLoaded");
-    loadPosts()
-      .then(data=>{
-        ALL = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
-        LOG("posts loaded", ALL.length);
-        buildTags();
-        renderFeatured();
-        render();
-      })
-      .catch(err=>{
-        ERR(err);
-        if ($fatal) $fatal.classList.remove("hidden");
-      });
-  });
+  // 1) Prøv at hente posts.json
+  const url = `/blog/posts.json?v=${Date.now()}`;
+  fetch(url, { cache: "no-store" })
+    .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+    .then(txt => {
+      if (!txt || txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON)");
+      const data = JSON.parse(txt);
+      if (!Array.isArray(data)) throw new Error("JSON er ikke et array");
+      ALL = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+      $fatal.classList.add('hidden');
+      performSearch();
+    })
+    .catch(err => {
+      console.warn("[blog] posts.json fejl:", err && err.message ? err.message : err);
+      // 2) Fald tilbage: byg liste ud fra fallback-“seed”
+      buildFromFallback();
+      $fatal.classList.remove('hidden');
+      performSearch();
+    });
 })();
