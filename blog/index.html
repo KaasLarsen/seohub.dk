@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="da">
 <head>
-  <!-- Header/nav (fælles) -->
   <script src="/assets/include-header.js?v=6" defer></script>
 
   <meta charset="utf-8" />
@@ -11,12 +10,8 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://www.seohub.dk/blog/">
 
-  <!-- GA + cookie consent -->
   <script src="/assets/consent-analytics.js" defer></script>
-
-  <!-- UI -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
     html, body { overflow-x: hidden; }
     .chip { border-radius: 9999px; padding:.375rem .625rem; border:1px solid #e5e7eb; background:#fff; }
@@ -83,7 +78,6 @@
     </section>
   </main>
 
-  <!-- Footer -->
   <script src="/assets/include-footer.js?v=2" defer></script>
 
   <script>
@@ -110,138 +104,130 @@
       const $featuredWrap = document.getElementById("featuredWrap");
       const $featuredGrid = document.getElementById("featuredGrid");
 
-      // --- Robust loader for posts.json (prøver flere stier) ---
+      function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+
       async function loadPosts() {
         const ts = Date.now();
-        const candidates = [
-          `/blog/posts.json?ts=${ts}`,
-          `posts.json?ts=${ts}`,
-          `/posts.json?ts=${ts}`
+        const urls = [
+          "/blog/posts.json?ts="+ts,  // korrekt placering
+          "posts.json?ts="+ts,        // relativt fallback
+          "/posts.json?ts="+ts        // root fallback (hvis nogen har lagt den dér)
         ];
-        let lastErr = null;
-        for (const url of candidates) {
+        let lastErr=null;
+        for (const url of urls) {
           try {
-            const txt = await fetch(url, { cache: "no-store" }).then(r => r.text());
-            if (txt.trim().startsWith("<")) throw new Error("Fik HTML i stedet for JSON fra " + url);
-            const data = JSON.parse(txt.replace(/^\uFEFF/, "")); // fjern evt. BOM
-            if (!Array.isArray(data)) throw new Error("JSON er ikke et array fra " + url);
-            $diag.textContent = "Loaded: " + url;
-            $diag.classList.remove("hidden");
+            const res = await fetch(url, { cache:"no-store" });
+            if (!res.ok) throw new Error("HTTP "+res.status+" @ "+url);
+            let txt = await res.text();
+            if (txt.trim().startsWith("<")) throw new Error("Fik HTML i stedet for JSON @ "+url);
+            txt = txt.replace(/^\uFEFF/, ""); // fjern BOM
+            const data = JSON.parse(txt);
+            if (!Array.isArray(data)) throw new Error("JSON er ikke et array @ "+url);
+            $diag.textContent = "Loaded: "+url;
+            $diag.classList.add("hidden"); // skjul diagnose når alt ok
             return data;
-          } catch (e) {
+          } catch(e) {
             lastErr = e;
-            console.warn("posts.json load failed at", url, e);
           }
         }
-        throw lastErr || new Error("Kunne ikke hente posts.json");
+        throw lastErr || new Error("Kunne ikke indlæse posts.json");
       }
 
       function buildTags() {
         const freq = new Map();
         ALL.forEach(p => {
-          (Array.isArray(p.tags) ? p.tags : []).forEach(t => {
-            const key = String(t || "").trim().toLowerCase();
-            if (!key) return;
-            freq.set(key, (freq.get(key) || 0) + 1);
+          (Array.isArray(p.tags)?p.tags:[]).forEach(t=>{
+            const k = String(t||"").trim().toLowerCase();
+            if (!k) return;
+            freq.set(k,(freq.get(k)||0)+1);
           });
         });
-        TAGS = Array.from(freq.entries()).sort((a,b)=>b[1]-a[1]).map(([t])=>t);
+        TAGS = Array.from(freq.keys()).sort((a,b)=>a.localeCompare(b));
 
         $chips.innerHTML = "";
-        const addChip = (label, value) => {
+        const add = (label,val)=>{
           const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "chip text-sm";
-          btn.textContent = label;
-          btn.dataset.value = value;
-          if (value === activeTag) btn.classList.add("chip-active");
-          btn.addEventListener("click", () => {
-            activeTag = value;
-            $chips.querySelectorAll("button").forEach(b => b.classList.remove("chip-active"));
+          btn.type="button";
+          btn.className="chip text-sm";
+          btn.textContent=label;
+          btn.dataset.value=val;
+          if (val===activeTag) btn.classList.add("chip-active");
+          btn.addEventListener("click", ()=>{
+            activeTag = val;
+            $chips.querySelectorAll("button").forEach(b=>b.classList.remove("chip-active"));
             btn.classList.add("chip-active");
             render();
           });
           $chips.appendChild(btn);
         };
-        addChip("Alle", "alle");
-        TAGS.forEach(t => addChip(t, t));
+        add("Alle","alle");
+        TAGS.forEach(t=>add(t,t));
       }
 
-      function applyFilters(list) {
-        let out = list;
-        if (activeTag !== "alle") {
+      function applyFilters(list){
+        let out=list;
+        if (activeTag!=="alle"){
           out = out.filter(p => Array.isArray(p.tags) && p.tags.map(String).map(x=>x.toLowerCase()).includes(activeTag));
         }
-        if (query) {
+        if (query){
           const q = query.toLowerCase();
           out = out.filter(p =>
-            (p.title || "").toLowerCase().includes(q) ||
-            (p.excerpt || "").toLowerCase().includes(q) ||
+            (p.title||"").toLowerCase().includes(q) ||
+            (p.excerpt||"").toLowerCase().includes(q) ||
             (Array.isArray(p.tags) && p.tags.some(t => String(t).toLowerCase().includes(q)))
           );
         }
         return out;
       }
 
-      function renderFeatured() {
-        const items = ALL.filter(p => FEATURED.includes(p.slug));
-        if (!items.length) return;
-        $featuredWrap.classList.remove("hidden");
-        $featuredGrid.innerHTML = items.map(p => CardHTML(p, true)).join("");
-      }
-
-      function render() {
-        const filtered = applyFilters(ALL);
-        $count.textContent = filtered.length ? `${filtered.length} indlæg` : "";
-        $empty.classList.toggle("hidden", filtered.length > 0);
-        $list.innerHTML = filtered.map(p => CardHTML(p, false)).join("");
-      }
-
-      function CardHTML(p, featured=false) {
-        const tags = (Array.isArray(p.tags) ? p.tags : []).slice(0, 4);
+      function CardHTML(p, featured=false){
+        const tags = (Array.isArray(p.tags)?p.tags:[]).slice(0,4);
         return `
           <a href="/blog/${p.slug}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            ${featured ? '<div class="text-[11px] uppercase tracking-wide text-blue-700 mb-2">Udvalgt</div>' : ''}
-            <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
-            ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
+            ${featured?'<div class="text-[11px] uppercase tracking-wide text-blue-700 mb-2">Udvalgt</div>':''}
+            <div class="font-semibold">${esc(p.title||"Uden titel")}</div>
+            ${p.excerpt?`<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>`:""}
             <div class="mt-3 flex items-center justify-between text-xs text-neutral-500">
-              <span>${p.date ? esc(p.date) : ""}</span>
-              <span class="flex gap-2">${tags.map(t => `<span class="px-2 py-1 rounded-full bg-neutral-100">${esc(String(t))}</span>`).join("")}</span>
+              <span>${p.date?esc(p.date):""}</span>
+              <span class="flex gap-2">${tags.map(t=>`<span class="px-2 py-1 rounded-full bg-neutral-100">${esc(String(t))}</span>`).join("")}</span>
             </div>
           </a>
         `;
       }
 
-      function esc(s) { return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
-<script>
-  fetch("/blog/posts.json")
-    .then(r => r.text())
-    .then(txt => { console.log("posts.json raw:", txt); })
-    .catch(e => { console.error("Fejl henter posts.json:", e); });
-</script>
+      function renderFeatured(){
+        const items = ALL.filter(p=>FEATURED.includes(p.slug));
+        if (!items.length){ $featuredWrap.classList.add("hidden"); return; }
+        $featuredWrap.classList.remove("hidden");
+        $featuredGrid.innerHTML = items.map(p=>CardHTML(p,true)).join("");
+      }
+
+      function render(){
+        const filtered = applyFilters(ALL);
+        $count.textContent = filtered.length ? `${filtered.length} indlæg` : "";
+        $empty.classList.toggle("hidden", filtered.length>0);
+        $list.innerHTML = filtered.map(p=>CardHTML(p,false)).join("");
+      }
 
       // Søg UI
-      $q.addEventListener("input", () => {
+      $q.addEventListener("input", ()=>{
         query = $q.value.trim();
-        $clear.classList.toggle("hidden", query.length === 0);
+        $clear.classList.toggle("hidden", query.length===0);
         render();
       });
-      $clear.addEventListener("click", () => {
-        $q.value = "";
-        query = "";
-        $clear.classList.add("hidden");
-        render();
+      $clear.addEventListener("click", ()=>{
+        $q.value=""; query=""; $clear.classList.add("hidden"); render();
       });
 
       // Init
       loadPosts()
-        .then(data => {
-          ALL = data.slice().sort((a,b) => String(b.date||"").localeCompare(String(a.date||"")));
+        .then(data=>{
+          ALL = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
           buildTags();
           renderFeatured();
           render();
         })
-        .catch(err => {
+        .catch(err=>{
           console.error(err);
           $fatal.classList.remove("hidden");
         });
