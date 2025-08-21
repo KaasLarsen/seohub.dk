@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <title>Generér sitemap fra posts.json | Seohub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Fælles header/GA/consent hvis du vil (valgfrit) -->
+    <script src="/assets/consent-analytics.js" defer></script>
+    <script src="/assets/include-header.js?v=6" defer></script>
+    <script src="/assets/include-footer.js?v=2" defer></script>
+    <!-- UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+    <!-- Hero -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-10 md:p-12 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
+          <h1 class="text-3xl md:text-4xl font-extrabold mb-2 leading-tight">Generér sitemap.xml fra posts.json</h1>
+          <p class="text-blue-100 text-base md:text-lg max-w-3xl">
+            Klik én knap → få et færdigt sitemap for forside, værktøjer, blog og alle indlæg.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- App -->
+    <main class="max-w-6xl mx-auto px-4 pb-14">
+      <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <div class="grid lg:grid-cols-12 gap-6">
+          <section class="lg:col-span-8 space-y-4">
+            <div class="grid md:grid-cols-2 gap-4">
+              <label class="block">
+                <span class="block text-sm font-medium mb-1">Basisdomæne</span>
+                <input id="baseUrl" class="w-full border rounded-xl p-3" value="https://seohub.dk" />
+                <p class="text-xs text-neutral-500 mt-1">uden trailing /</p>
+              </label>
+              <label class="block">
+                <span class="block text-sm font-medium mb-1">Standard <code>lastmod</code> for statiske sider</span>
+                <input id="lastmodStatic" class="w-full border rounded-xl p-3" />
+                <p class="text-xs text-neutral-500 mt-1">format: YYYY-MM-DD (tom = dagens dato)</p>
+              </label>
+            </div>
+
+            <div>
+              <span class="block text-sm font-medium mb-2">Inkluder statiske sider</span>
+              <div class="text-sm text-neutral-600">
+                Forside, værktøjer, blogoversigt og juridiske sider er for-udfyldt nedenfor. Redigér gerne.
+              </div>
+              <textarea id="staticPaths" rows="7"
+                class="mt-2 w-full border rounded-xl p-3 font-mono text-sm">/
+ /serp-preview.html
+ /robots-generator.html
+ /sitemap-generator.html
+ /internal-link-builder.html
+ /blog/
+ /privatliv-cookies.html</textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <button id="buildBtn" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Generér sitemap</button>
+              <button id="downloadBtn" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50" disabled>Download sitemap.xml</button>
+              <button id="copyBtn" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50" disabled>Kopiér til udklip</button>
+            </div>
+
+            <div id="status" class="text-sm text-neutral-600"></div>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium mb-2">Resultat (sitemap.xml)</label>
+              <textarea id="output" rows="18" class="w-full border rounded-xl p-3 font-mono text-sm" readonly></textarea>
+            </div>
+          </section>
+
+          <aside class="lg:col-span-4">
+            <div class="lg:sticky lg:top-24">
+              <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+                <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Sådan gør du</h2>
+                <ol class="list-decimal pl-6 space-y-2 text-sm">
+                  <li>Tryk <strong>Generér sitemap</strong> (henter automatisk <code>/blog/posts.json</code>).</li>
+                  <li>Download filen <strong>sitemap.xml</strong>.</li>
+                  <li>Upload den i roden (<code>/</code>) af dit site og deploy.</li>
+                  <li>Genindsend sitemap i Search Console (hvis nødvendigt).</li>
+                </ol>
+                <hr class="my-4">
+                <p class="text-xs text-neutral-500">
+                  Værktøjet sætter <code>lastmod</code> for blogindlæg til deres <code>date</code> fra <code>posts.json</code>. 
+                  Statiske sider bruger feltet ovenfor (tom = dagens dato). <code>changefreq</code> og <code>priority</code> er fornuftige defaults.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      async function fetchPosts() {
+        const res = await fetch('/blog/posts.json', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Kunne ikke hente /blog/posts.json');
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('posts.json er ikke et array');
+        return data;
+      }
+
+      function xmlEscape(s) {
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&apos;');
+      }
+
+      function todayISO() {
+        const d = new Date();
+        return d.toISOString().slice(0,10);
+      }
+
+      function buildEntry(loc, lastmod, changefreq, priority) {
+        const parts = [];
+        parts.push('  <url>');
+        parts.push('    <loc>' + xmlEscape(loc) + '</loc>');
+        if (lastmod) parts.push('    <lastmod>' + xmlEscape(lastmod) + '</lastmod>');
+        if (changefreq) parts.push('    <changefreq>' + xmlEscape(changefreq) + '</changefreq>');
+        if (priority) parts.push('    <priority>' + xmlEscape(priority) + '</priority>');
+        parts.push('  </url>');
+        return parts.join('\n');
+      }
+
+      async function generateSitemap() {
+        const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, '');
+        const staticRaw = document.getElementById('staticPaths').value;
+        let staticDate = document.getElementById('lastmodStatic').value.trim();
+        if (!staticDate) staticDate = todayISO();
+
+        const status = document.getElementById('status');
+        const output = document.getElementById('output');
+        const dlBtn = document.getElementById('downloadBtn');
+        const copyBtn = document.getElementById('copyBtn');
+
+        status.textContent = 'Henter posts.json…';
+        output.value = '';
+        dlBtn.disabled = true;
+        copyBtn.disabled = true;
+
+        try {
+          const posts = await fetchPosts(); // [{slug,title,date,...}]
+          status.textContent = 'Bygger XML…';
+
+          // statiske stier
+          const statics = staticRaw
+            .split(/\n+/).map(s => s.trim()).filter(Boolean)
+            .map(p => baseUrl + (p.startsWith('/') ? p : '/' + p));
+
+          // start dokument
+          const lines = [];
+          lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+          lines.push('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+
+          // Forside først hvis den er med
+          const homeIdx = statics.indexOf(baseUrl + '/');
+          const staticSet = new Set(statics);
+          if (homeIdx !== -1) {
+            lines.push(buildEntry(baseUrl + '/', staticDate, 'weekly', '0.8'));
+            staticSet.delete(baseUrl + '/');
+          }
+
+          // Værktøjer + blogoversigt + juridisk (resten af statics)
+          Array.from(staticSet).forEach(u => {
+            const isBlogIndex = /\/blog\/?$/.test(u);
+            const cf = isBlogIndex ? 'weekly' : 'monthly';
+            const pr = isBlogIndex ? '0.6' : '0.6';
+            lines.push(buildEntry(u, staticDate, cf, pr));
+          });
+
+          // Blogindlæg
+          posts.forEach(p => {
+            if (!p.slug) return;
+            const url = baseUrl + '/blog/' + p.slug + '.html';
+            const lastmod = (p.date && /^\d{4}-\d{2}-\d{2}$/.test(p.date)) ? p.date : staticDate;
+            lines.push(buildEntry(url, lastmod, 'monthly', '0.5'));
+          });
+
+          lines.push('</urlset>');
+
+          const xml = lines.join('\n');
+          output.value = xml;
+          status.textContent = 'Klar ✔︎';
+          dlBtn.disabled = false;
+          copyBtn.disabled = false;
+        } catch (e) {
+          status.textContent = 'Fejl: ' + (e.message || e);
+        }
+      }
+
+      function downloadSitemap() {
+        const xml = document.getElementById('output').value;
+        const blob = new Blob([xml], { type: 'application/xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'sitemap.xml'; a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function copyOutput() {
+        const ta = document.getElementById('output');
+        ta.select();
+        document.execCommand('copy');
+      }
+
+      document.getElementById('buildBtn').addEventListener('click', generateSitemap);
+      document.getElementById('downloadBtn').addEventListener('click', downloadSitemap);
+      document.getElementById('copyBtn').addEventListener('click', copyOutput);
+
+      // Autofyld lastmod felt med i dag
+      document.getElementById('lastmodStatic').placeholder = new Date().toISOString().slice(0,10);
+    </script>
+  </body>
+</html>
