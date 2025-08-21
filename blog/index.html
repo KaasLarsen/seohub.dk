@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="da">
 <head>
-  <!-- Fælles header/nav -->
+  <!-- Header/nav (fælles) -->
   <script src="/assets/include-header.js?v=6" defer></script>
 
   <meta charset="utf-8" />
@@ -18,10 +18,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* Undgå horisontal scroll på mobil */
     html, body { overflow-x: hidden; }
-    /* Små chips */
-    .chip { border-radius: 9999px; padding: .375rem .625rem; border: 1px solid #e5e7eb; background:#fff; }
+    .chip { border-radius: 9999px; padding:.375rem .625rem; border:1px solid #e5e7eb; background:#fff; }
     .chip-active { background:#eef2ff; border-color:#c7d2fe; color:#3730a3; font-weight:600; }
   </style>
 </head>
@@ -42,7 +40,7 @@
   </section>
 
   <main class="max-w-6xl mx-auto px-4 pb-16">
-    <!-- Controls: søg + tags -->
+    <!-- Controls -->
     <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
       <div class="grid md:grid-cols-12 gap-4 md:gap-6 items-start">
         <!-- Søg -->
@@ -58,10 +56,11 @@
 
         <!-- Tags -->
         <div class="md:col-span-7">
-          <label class="block text-sm font-medium mb-2">Filtrér efter emne</label>
+          <label class="block text-sm font-medium mb-2">Emner</label>
           <div id="tagChips" class="flex flex-wrap gap-2"></div>
         </div>
       </div>
+      <p id="diag" class="mt-3 text-xs text-neutral-400 hidden"></p>
     </section>
 
     <!-- Featured -->
@@ -78,6 +77,9 @@
       </div>
       <div id="list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       <p id="empty" class="mt-6 text-sm text-neutral-600 hidden">Ingen indlæg matcher dine filtre.</p>
+      <p id="fatal" class="mt-6 text-sm text-red-600 hidden">
+        Kunne ikke hente indlæg. Tjek at <a class="underline" href="/blog/posts.json" target="_blank" rel="noopener">/blog/posts.json</a> findes og er gyldig JSON.
+      </p>
     </section>
   </main>
 
@@ -86,60 +88,65 @@
 
   <script>
     (function () {
-      // 1) Konfiguration af "Udvalgte" – angiv de slugs du vil fremhæve
       const FEATURED = [
         "seo-for-begyndere-2025",
         "intern-linkbuilding-strategi",
         "core-web-vitals-2025"
       ];
 
-      // 2) State
-      let ALL = [];            // alle posts fra posts.json
-      let TAGS = [];           // unikke tags
-      let query = "";          // søgetekst
-      let activeTag = "alle";  // valgt tag
+      let ALL = [];
+      let TAGS = [];
+      let query = "";
+      let activeTag = "alle";
 
-      // 3) DOM
       const $q = document.getElementById("q");
       const $clear = document.getElementById("clearBtn");
       const $chips = document.getElementById("tagChips");
       const $list = document.getElementById("list");
       const $count = document.getElementById("count");
       const $empty = document.getElementById("empty");
+      const $fatal = document.getElementById("fatal");
+      const $diag = document.getElementById("diag");
       const $featuredWrap = document.getElementById("featuredWrap");
       const $featuredGrid = document.getElementById("featuredGrid");
 
-      // 4) Hent posts.json
-      fetch("/blog/posts.json", { cache: "no-cache" })
-        .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente posts.json")))
-        .then(data => {
-          ALL = Array.isArray(data) ? data : [];
-          // sortér nyeste først
-          ALL.sort((a,b) => String(b.date || "").localeCompare(String(a.date || "")));
-          buildTags();
-          renderFeatured();
-          render();
-        })
-        .catch(err => {
-          console.warn(err);
-          $list.innerHTML = '<div class="text-sm text-red-600">Kunne ikke hente indlæg.</div>';
-        });
+      // --- Robust loader for posts.json (prøver flere stier) ---
+      async function loadPosts() {
+        const ts = Date.now();
+        const candidates = [
+          `/blog/posts.json?ts=${ts}`,
+          `posts.json?ts=${ts}`,
+          `/posts.json?ts=${ts}`
+        ];
+        let lastErr = null;
+        for (const url of candidates) {
+          try {
+            const txt = await fetch(url, { cache: "no-store" }).then(r => r.text());
+            if (txt.trim().startsWith("<")) throw new Error("Fik HTML i stedet for JSON fra " + url);
+            const data = JSON.parse(txt.replace(/^\uFEFF/, "")); // fjern evt. BOM
+            if (!Array.isArray(data)) throw new Error("JSON er ikke et array fra " + url);
+            $diag.textContent = "Loaded: " + url;
+            $diag.classList.remove("hidden");
+            return data;
+          } catch (e) {
+            lastErr = e;
+            console.warn("posts.json load failed at", url, e);
+          }
+        }
+        throw lastErr || new Error("Kunne ikke hente posts.json");
+      }
 
-      // 5) Byg tag-liste
       function buildTags() {
         const freq = new Map();
         ALL.forEach(p => {
           (Array.isArray(p.tags) ? p.tags : []).forEach(t => {
-            const key = String(t).trim().toLowerCase();
+            const key = String(t || "").trim().toLowerCase();
             if (!key) return;
             freq.set(key, (freq.get(key) || 0) + 1);
           });
         });
-        TAGS = Array.from(freq.entries())
-          .sort((a,b) => b[1] - a[1]) // mest brugte først
-          .map(([t]) => t);
+        TAGS = Array.from(freq.entries()).sort((a,b)=>b[1]-a[1]).map(([t])=>t);
 
-        // Render chips: "alle" + tags
         $chips.innerHTML = "";
         const addChip = (label, value) => {
           const btn = document.createElement("button");
@@ -150,7 +157,6 @@
           if (value === activeTag) btn.classList.add("chip-active");
           btn.addEventListener("click", () => {
             activeTag = value;
-            // opdatér aktiv styling
             $chips.querySelectorAll("button").forEach(b => b.classList.remove("chip-active"));
             btn.classList.add("chip-active");
             render();
@@ -161,20 +167,6 @@
         TAGS.forEach(t => addChip(t, t));
       }
 
-      // 6) Søg-UI
-      $q.addEventListener("input", () => {
-        query = $q.value.trim();
-        $clear.classList.toggle("hidden", query.length === 0);
-        render();
-      });
-      $clear.addEventListener("click", () => {
-        $q.value = "";
-        query = "";
-        $clear.classList.add("hidden");
-        render();
-      });
-
-      // 7) Filtrering
       function applyFilters(list) {
         let out = list;
         if (activeTag !== "alle") {
@@ -191,15 +183,13 @@
         return out;
       }
 
-      // 8) Udvalgte
       function renderFeatured() {
         const items = ALL.filter(p => FEATURED.includes(p.slug));
-        if (!items.length) return; // intet at vise
+        if (!items.length) return;
         $featuredWrap.classList.remove("hidden");
         $featuredGrid.innerHTML = items.map(p => CardHTML(p, true)).join("");
       }
 
-      // 9) Render liste
       function render() {
         const filtered = applyFilters(ALL);
         $count.textContent = filtered.length ? `${filtered.length} indlæg` : "";
@@ -207,26 +197,48 @@
         $list.innerHTML = filtered.map(p => CardHTML(p, false)).join("");
       }
 
-      // 10) Card HTML
       function CardHTML(p, featured=false) {
         const tags = (Array.isArray(p.tags) ? p.tags : []).slice(0, 4);
         return `
           <a href="/blog/${p.slug}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
             ${featured ? '<div class="text-[11px] uppercase tracking-wide text-blue-700 mb-2">Udvalgt</div>' : ''}
-            <div class="font-semibold">${escapeHTML(p.title || "Uden titel")}</div>
-            ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${escapeHTML(p.excerpt)}</div>` : ""}
+            <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
+            ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
             <div class="mt-3 flex items-center justify-between text-xs text-neutral-500">
-              <span>${p.date ? escapeHTML(p.date) : ""}</span>
-              <span class="flex gap-2">${tags.map(t => `<span class="px-2 py-1 rounded-full bg-neutral-100">${escapeHTML(String(t))}</span>`).join("")}</span>
+              <span>${p.date ? esc(p.date) : ""}</span>
+              <span class="flex gap-2">${tags.map(t => `<span class="px-2 py-1 rounded-full bg-neutral-100">${esc(String(t))}</span>`).join("")}</span>
             </div>
           </a>
         `;
       }
 
-      // 11) Simple escape (for en sikkerheds skyld)
-      function escapeHTML(s) {
-        return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-      }
+      function esc(s) { return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
+
+      // Søg UI
+      $q.addEventListener("input", () => {
+        query = $q.value.trim();
+        $clear.classList.toggle("hidden", query.length === 0);
+        render();
+      });
+      $clear.addEventListener("click", () => {
+        $q.value = "";
+        query = "";
+        $clear.classList.add("hidden");
+        render();
+      });
+
+      // Init
+      loadPosts()
+        .then(data => {
+          ALL = data.slice().sort((a,b) => String(b.date||"").localeCompare(String(a.date||"")));
+          buildTags();
+          renderFeatured();
+          render();
+        })
+        .catch(err => {
+          console.error(err);
+          $fatal.classList.remove("hidden");
+        });
     })();
   </script>
 </body>
