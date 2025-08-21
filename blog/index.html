@@ -43,12 +43,12 @@
           </div>
         </div>
 
-        <!-- Søg (vises kun når posts.json hentes OK) -->
-        <div id="searchWrap" class="hidden mb-5">
+        <!-- Søg (vises altid; virker både med posts.json og fallback) -->
+        <div id="searchWrap" class="mb-5">
           <div class="flex items-center gap-2">
             <input id="searchInput" type="search"
                    placeholder="Søg i blogindlæg (titel, uddrag, tags)…"
-                   className="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
+                   class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
             <button id="searchClear"
                     class="px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100 hidden">
               Ryd
@@ -59,54 +59,23 @@
           </p>
         </div>
 
-        <!-- Dynamisk liste (hidden indtil posts.json er hentet) -->
-        <div id="list" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <!-- Dynamisk liste -->
+        <div id="list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-        <!-- Fallback-liste (vises hvis posts.json fejler) -->
-        <div id="fallback-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Tilpas/udvid statisk fallback som du vil -->
-          <a href="/blog/seo-for-begyndere-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">SEO for begyndere – Den komplette guide 2025</div>
-            <div class="text-sm text-neutral-600 mt-1">Trin-for-trin guide til on-page, teknisk SEO, linkbuilding, keyword research og måling.</div>
-            <div class="mt-3 text-xs text-neutral-500">2025-08-16</div>
-          </a>
-
-          <a href="/blog/seo-titler-der-ranker.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">SEO-titler der ranker: længde, vinkler og CTR-hacks</div>
-            <div class="text-sm text-neutral-600 mt-1">Sådan skriver du titler Google elsker – og som får klik.</div>
-            <div class="mt-3 text-xs text-neutral-500">2025-08-13</div>
-          </a>
-
-          <a href="/blog/sitemap-fejl-fixes.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">De 7 mest almindelige sitemap-fejl (og hurtige fixes)</div>
-            <div class="text-sm text-neutral-600 mt-1">Tjeklisten, der redder dine URL’er fra crawl-problemer.</div>
-            <div class="mt-3 text-xs text-neutral-500">2025-08-15</div>
-          </a>
-
-          <a href="/blog/intern-linkbuilding-strategi.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">Avanceret intern linkbuilding strategi</div>
-            <div class="text-sm text-neutral-600 mt-1">Fordel linkværdi og styrk relevans.</div>
-            <div class="mt-3 text-xs text-neutral-500">2025-08-12</div>
-          </a>
-
-          <a href="/blog/core-web-vitals-2025.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">Core Web Vitals i 2025 – sådan klarer du kravene</div>
-            <div class="text-sm text-neutral-600 mt-1">Hurtige, konkrete performanceforbedringer.</div>
-            <div class="mt-3 text-xs text-neutral-500">2025-08-11</div>
-          </a>
-
-          <a href="/blog/lokal-seo-danmark-guide.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">Lokal SEO i Danmark – den fulde guide</div>
-            <div class="text-sm text-neutral-600 mt-1">Maps, NAP, anmeldelser og lokale landingssider.</div>
-            <div class="mt-3 text-xs text-neutral-500">2025-08-10</div>
-          </a>
-
-          <!-- smid gerne flere fallback-links ind her, hvis du vil -->
+        <!-- Fallback-liste (bruges KUN som rå-kilde hvis posts.json fejler; skjules efter boot) -->
+        <div id="fallback-list" class="hidden">
+          <!-- Du kan lægge alle dine kendte indlæg her som “seed”, hvis du vil have flere ved fetch-fejl -->
+          <a href="/blog/seo-for-begyndere-2025.html" data-title="SEO for begyndere – Den komplette guide 2025" data-excerpt="Trin-for-trin guide til on-page, teknisk SEO, linkbuilding, keyword research og måling." data-date="2025-08-16" data-tags="guide,begynder,2025"></a>
+          <a href="/blog/seo-titler-der-ranker.html" data-title="SEO-titler der ranker: længde, vinkler og CTR-hacks" data-excerpt="Sådan skriver du titler Google elsker – og som får klik." data-date="2025-08-13" data-tags="on-page,copywriting"></a>
+          <a href="/blog/sitemap-fejl-fixes.html" data-title="De 7 mest almindelige sitemap-fejl (og hurtige fixes)" data-excerpt="Tjeklisten, der redder dine URL’er fra crawl-problemer." data-date="2025-08-15" data-tags="teknisk seo"></a>
+          <a href="/blog/intern-linkbuilding-strategi.html" data-title="Avanceret intern linkbuilding strategi" data-excerpt="Fordel linkværdi og styrk relevans." data-date="2025-08-12" data-tags="linkbuilding,teknisk seo"></a>
+          <a href="/blog/core-web-vitals-2025.html" data-title="Core Web Vitals i 2025 – sådan klarer du kravene" data-excerpt="Hurtige, konkrete performanceforbedringer." data-date="2025-08-11" data-tags="core web vitals,teknisk seo"></a>
+          <a href="/blog/lokal-seo-danmark-guide.html" data-title="Lokal SEO i Danmark – den fulde guide" data-excerpt="Maps, NAP, anmeldelser og lokale landingssider." data-date="2025-08-10" data-tags="lokal seo,google maps"></a>
         </div>
 
-        <!-- fejlbesked (skjult som udgangspunkt) -->
+        <!-- fejlbesked (vises kun hvis posts.json fejler) -->
         <p id="fatal" class="hidden mt-4 text-sm text-amber-600">
-          Kunne ikke hente posts.json – viser statisk liste.
+          Kunne ikke hente posts.json – viser data fra fallback. (Tjek /blog/posts.json for JSON-fejl eller cache.)
         </p>
       </section>
     </main>
@@ -117,66 +86,89 @@
     <!-- Logic (dynamik + søgning) -->
     <script>
     (function(){
-      const $fallback = document.getElementById("fallback-list");
-      const $list     = document.getElementById("list");
-      const $count    = document.getElementById("count");
-      const $fatal    = document.getElementById("fatal");
+      const $list   = document.getElementById("list");
+      const $count  = document.getElementById("count");
+      const $fatal  = document.getElementById("fatal");
+      const $q      = document.getElementById("searchInput");
+      const $clear  = document.getElementById("searchClear");
+      const $seed   = document.getElementById("fallback-list");
 
-      // Søg UI
-      const $searchWrap = document.getElementById("searchWrap");
-      const $q          = document.getElementById("searchInput");
-      const $clear      = document.getElementById("searchClear");
-
-      let ALL = [];   // alle posts
+      let ALL = [];   // alle posts (fra posts.json eller fallback)
       let query = "";
 
-      function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+      const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 
-      function render(){
-        const q = query.trim().toLowerCase();
-        const arr = !q ? ALL : ALL.filter(p=>{
-          const txt = \`\${p.title||""} \${p.excerpt||""} \${(p.tags||[]).join(" ")}\`.toLowerCase();
-          return txt.includes(q);
-        });
-
+      function renderList(arr){
         if (!arr.length) {
           $list.innerHTML = '<p class="text-sm text-neutral-600">Ingen indlæg matcher søgningen.</p>';
-          $count.textContent = \`\${ALL.length} indlæg · 0 match\`;
           return;
         }
-
-        $list.innerHTML = arr.map(p=>{
-          const tags = Array.isArray(p.tags) ? p.tags.slice(0,6).map(t=>\`
+        $list.innerHTML = arr.map(p => {
+          const tags = Array.isArray(p.tags) ? p.tags.slice(0,6).map(t => \`
             <button data-tag="\${esc(String(t))}"
                     class="text-xs px-2 py-1 rounded-full bg-neutral-100 hover:bg-neutral-200">\${esc(String(t))}</button>\`).join(" ") : "";
           return \`
-          <a href="/blog/\${esc(p.slug)}.html"
-             class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-            <div class="font-semibold">\${esc(p.title||"Uden titel")}</div>
-            \${p.excerpt ? \`<div class="text-sm text-neutral-600 mt-1">\${esc(p.excerpt)}</div>\` : ""}
-            <div class="mt-3 flex items-center justify-between">
-              <div class="text-xs text-neutral-500">\${p.date ? esc(p.date) : ""}</div>
-              \${tags ? \`<div class="flex flex-wrap gap-2">\${tags}</div>\` : ""}
-            </div>
-          </a>\`;
+            <a href="/blog/\${esc(p.slug)}.html"
+               class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+              <div class="font-semibold">\${esc(p.title||"Uden titel")}</div>
+              \${p.excerpt ? \`<div class="text-sm text-neutral-600 mt-1">\${esc(p.excerpt)}</div>\` : ""}
+              <div class="mt-3 flex items-center justify-between">
+                <div class="text-xs text-neutral-500">\${p.date ? esc(p.date) : ""}</div>
+                \${tags ? \`<div class="flex flex-wrap gap-2">\${tags}</div>\` : ""}
+              </div>
+            </a>\`;
         }).join("");
 
-        // klik på tag => filter
+        // tag klik => filter
         $list.querySelectorAll('button[data-tag]').forEach(btn=>{
           btn.addEventListener('click', (e)=>{
             e.preventDefault();
             const t = btn.getAttribute('data-tag') || "";
             query = t;
-            if ($q) $q.value = t;
-            if ($clear) $clear.classList.toggle("hidden", !query);
-            render();
+            $q.value = t;
+            $clear.classList.toggle('hidden', !query.trim());
+            performSearch();
           });
         });
-
-        $count.textContent = \`\${ALL.length} indlæg\${q ? \` · \${arr.length} match\` : ""}\`;
       }
 
-      // Hent posts.json robust
+      function performSearch(){
+        const q = query.trim().toLowerCase();
+        const arr = !q ? ALL : ALL.filter(p=>{
+          const txt = \`\${p.title||""} \${p.excerpt||""} \${(p.tags||[]).join(" ")}\`.toLowerCase();
+          return txt.includes(q);
+        });
+        $count.textContent = \`\${ALL.length} indlæg\${q ? \` · \${arr.length} match\` : ""}\`;
+        renderList(arr);
+      }
+
+      function buildFromFallback(){
+        const items = Array.from($seed.querySelectorAll('a[href]')).map(a => {
+          const href = a.getAttribute('href') || "";
+          const slug = (href.split('/').pop() || "").replace(/\.html$/i, "");
+          const title = a.getAttribute('data-title') || a.textContent.trim() || slug;
+          const excerpt = a.getAttribute('data-excerpt') || "";
+          const date = a.getAttribute('data-date') || "";
+          const tags = (a.getAttribute('data-tags') || "").split(',').map(s=>s.trim()).filter(Boolean);
+          return { slug, title, excerpt, date, tags };
+        });
+        // sorter nyeste først
+        ALL = items.sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+      }
+
+      // events for søg
+      $q.addEventListener('input', ()=>{
+        query = $q.value;
+        $clear.classList.toggle('hidden', !query.trim());
+        performSearch();
+      });
+      $clear.addEventListener('click', ()=>{
+        $q.value = ""; query = "";
+        $clear.classList.add('hidden');
+        performSearch();
+      });
+
+      // 1) Prøv at hente posts.json
       const url = \`/blog/posts.json?v=\${Date.now()}\`;
       fetch(url, { cache: "no-store" })
         .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
@@ -184,38 +176,17 @@
           if (!txt || txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON)");
           const data = JSON.parse(txt);
           if (!Array.isArray(data)) throw new Error("JSON er ikke et array");
-
           ALL = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
-
-          // skift til dynamik
-          $fallback.classList.add("hidden");
-          $list.classList.remove("hidden");
-          $searchWrap.classList.remove("hidden");
-
-          render();
+          $fatal.classList.add('hidden');
+          performSearch();
         })
-        .catch(e => {
-          console.warn("[blog] posts.json fallback:", e && e.message ? e.message : e);
-          $fatal.classList.remove("hidden");
-          // lader fallback stå, skjul søg
-          $searchWrap.classList.add("hidden");
+        .catch(err => {
+          console.warn("[blog] posts.json fejl:", err && err.message ? err.message : err);
+          // 2) Fald tilbage: byg liste ud fra fallback-“seed”
+          buildFromFallback();
+          $fatal.classList.remove('hidden');
+          performSearch();
         });
-
-      // Søg UI events
-      if ($q) {
-        $q.addEventListener("input", ()=>{
-          query = $q.value;
-          $clear.classList.toggle("hidden", !query.trim());
-          if (ALL.length) render();
-        });
-      }
-      if ($clear) {
-        $clear.addEventListener("click", ()=>{
-          $q.value = ""; query = "";
-          $clear.classList.add("hidden");
-          if (ALL.length) render();
-        });
-      }
     })();
     </script>
   </body>
