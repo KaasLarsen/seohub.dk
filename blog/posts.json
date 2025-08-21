@@ -56,75 +56,74 @@
     "tags": ["linkbuilding", "seo-guide"]
   },
 
-  <!-- NYE 10 INDLÆG -->
   {
-    "slug": "content-marketing-seo",
-    "title": "Content marketing & SEO – Den perfekte kombination",
+    "slug": "seo-audit-guide-2025",
+    "title": "SEO audit guide 2025 – tjekliste og værktøjer",
     "date": "2025-08-18",
-    "excerpt": "Sådan bruger du content marketing til at booste din SEO og skabe autoritet.",
-    "tags": ["content marketing", "seo"]
-  },
-  {
-    "slug": "seo-audit-tjekliste",
-    "title": "SEO audit tjekliste – gennemgå dit site trin-for-trin",
-    "date": "2025-08-18",
-    "excerpt": "Fuld tjekliste til en SEO audit: fra crawl errors til UX og Core Web Vitals.",
+    "excerpt": "Komplet SEO audit fra A–Z: crawl, on-page, teknisk, links, CWV og prioritering.",
     "tags": ["seo audit", "teknisk seo"]
   },
   {
-    "slug": "linkbuilding-2025",
-    "title": "Linkbuilding i 2025 – hvad virker stadig?",
+    "slug": "voice-search-seo",
+    "title": "Voice search SEO – sådan optimerer du til stemmesøgning",
     "date": "2025-08-18",
-    "excerpt": "Sådan får du kvalitetslinks i 2025 – outreach, gæsteindlæg og kreative metoder.",
-    "tags": ["linkbuilding", "seo"]
-  },
-  {
-    "slug": "ai-og-seo",
-    "title": "AI og SEO – sådan ændrer kunstig intelligens spillet",
-    "date": "2025-08-18",
-    "excerpt": "Hvordan AI ændrer content, søgeadfærd og Googles algoritmer.",
-    "tags": ["ai", "seo", "fremtid"]
-  },
-  {
-    "slug": "voice-search-2025",
-    "title": "Voice search i 2025 – optimer dit indhold til stemmesøgning",
-    "date": "2025-08-18",
-    "excerpt": "Alt du skal vide om voice search og hvordan du optimerer dit indhold til det.",
+    "excerpt": "Udtalte søgninger kræver andre vinkler. Lær hvordan du fanger trafikken.",
     "tags": ["voice search", "seo"]
   },
   {
-    "slug": "e-commerce-seo",
-    "title": "E-commerce SEO guide 2025",
+    "slug": "ai-content-seo",
+    "title": "AI-content & SEO – bedste praksis i 2025",
     "date": "2025-08-18",
-    "excerpt": "SEO-strategier der skaber salg i webshops: kategorisider, produktbeskrivelser og tekniske krav.",
+    "excerpt": "Sådan bruger du AI uden at tabe kvalitet, E-E-A-T og rankings.",
+    "tags": ["ai", "content", "eeat"]
+  },
+  {
+    "slug": "ecommerce-seo-2025",
+    "title": "E-commerce SEO 2025 – kategorier, produkter og filtre",
+    "date": "2025-08-18",
+    "excerpt": "Praktisk guide til webshops: facetter, intern søgning, schema og performance.",
     "tags": ["e-commerce", "seo"]
   },
   {
-    "slug": "seo-mobil-2025",
-    "title": "Mobil SEO i 2025 – sådan optimerer du til mobile-first",
+    "slug": "mobile-first-seo",
+    "title": "Mobile-first SEO – sådan vinder du på mobil",
     "date": "2025-08-18",
-    "excerpt": "Google kører mobile-first – lær hvordan du optimerer til mobiloplevelsen.",
+    "excerpt": "Google vurderer på mobil først. Tjekliste til UX, hastighed og indhold.",
     "tags": ["mobil", "seo"]
   },
   {
-    "slug": "seo-tools-2025",
-    "title": "De bedste SEO tools i 2025",
+    "slug": "seo-mistakes-2025",
+    "title": "De største SEO-fejl i 2025 (og hvordan du undgår dem)",
     "date": "2025-08-18",
-    "excerpt": "Fra Ahrefs til Morningscore – de bedste værktøjer til SEO i 2025.",
-    "tags": ["seo tools", "værktøjer"]
+    "excerpt": "Fra tyndt indhold til crawl traps – her er faldgruberne og løsningerne.",
+    "tags": ["seo", "fejl"]
   },
   {
-    "slug": "seo-strategi-2025",
-    "title": "SEO strategi 2025 – sådan vinder du på Google",
+    "slug": "keyword-research-2025",
+    "title": "Keyword research i 2025 – metoder og værktøjer",
     "date": "2025-08-18",
-    "excerpt": "Komplet guide til SEO strategi: mål, måling, indhold, links og teknisk setup.",
-    "tags": ["seo strategi", "seo guide"]
+    "excerpt": "Fra seed til cluster: spørgsmål, intents og topical authority.",
+    "tags": ["keywords", "research"]
   },
   {
-    "slug": "seo-fremtid-2025",
-    "title": "SEO i fremtiden – 2025 og frem",
+    "slug": "linkbuilding-trends-2025",
+    "title": "Linkbuilding trends 2025 – hvad virker nu?",
     "date": "2025-08-18",
-    "excerpt": "Et kig i krystalkuglen: hvad bringer fremtiden for SEO efter 2025?",
-    "tags": ["seo", "fremtid"]
+    "excerpt": "Kvalitet over kvantitet, digital PR og data-indhold, der tiltrækker links.",
+    "tags": ["linkbuilding", "trends"]
+  },
+  {
+    "slug": "local-seo-strategier",
+    "title": "Lokal SEO – strategier, der skaber synlighed",
+    "date": "2025-08-18",
+    "excerpt": "Maps, NAP, anmeldelser og lokale landingssider – sådan gør du.",
+    "tags": ["lokal seo", "maps"]
+  },
+  {
+    "slug": "serp-features-2025",
+    "title": "SERP features i 2025 – sådan får du synlighed",
+    "date": "2025-08-18",
+    "excerpt": "FAQ, HowTo, snippets og visuals – struktureret data der virker.",
+    "tags": ["serp", "features"]
   }
 ]
