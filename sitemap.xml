@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- Forside -->
   <url>
     <loc>https://seohub.dk/</loc>
@@ -34,26 +35,6 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Juridisk / info -->
-  <url>
-    <loc>https://seohub.dk/privatliv-cookies.html</loc>
-    <lastmod>2025-08-21</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/om-os.html</loc>
-    <lastmod>2025-08-21</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/kontakt.html</loc>
-    <lastmod>2025-08-21</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
   <!-- Blog oversigt -->
   <url>
     <loc>https://seohub.dk/blog/</loc>
@@ -62,20 +43,105 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Eksisterende blogindlæg -->
-  <url><loc>https://seohub.dk/blog/seo-for-begyndere-2025.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/sitemap-fejl-fixes.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/intern-linkbuilding-strategi.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/core-web-vitals-2025.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/lokal-seo-danmark-guide.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/meta-descriptions-der-konverterer.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/intern-linkbuilding-guide.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <!-- Blogindlæg gamle -->
+  <url>
+    <loc>https://seohub.dk/blog/seo-for-begyndere-2025.html</loc>
+    <lastmod>2025-08-16</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc>
+    <lastmod>2025-08-13</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/sitemap-fejl-fixes.html</loc>
+    <lastmod>2025-08-15</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/intern-linkbuilding-strategi.html</loc>
+    <lastmod>2025-08-12</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/core-web-vitals-2025.html</loc>
+    <lastmod>2025-08-11</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/lokal-seo-danmark-guide.html</loc>
+    <lastmod>2025-08-10</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/meta-descriptions-der-konverterer.html</loc>
+    <lastmod>2025-08-09</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/intern-linkbuilding-guide.html</loc>
+    <lastmod>2025-08-08</lastmod>
+    <priority>0.5</priority>
+  </url>
 
-  <!-- NYE blogindlæg (pakken) -->
-  <url><loc>https://seohub.dk/blog/teknisk-seo-tjekliste-2025.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/lokal-seo-landingpages.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/linkbuilding-for-begyndere.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/seo-audit-tjekliste.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://seohub.dk/blog/schema-markup-guide.html</loc><lastmod>2025-08-21</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <!-- Blogindlæg nye -->
+  <url>
+    <loc>https://seohub.dk/blog/seo-audit-guide-2025.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/voice-search-seo.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/ai-content-seo.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/ecommerce-seo-2025.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/mobile-first-seo.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/seo-mistakes-2025.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/keyword-research-2025.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/linkbuilding-trends-2025.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/local-seo-strategier.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://seohub.dk/blog/serp-features-2025.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Juridisk -->
+  <url>
+    <loc>https://seohub.dk/privatliv-cookies.html</loc>
+    <lastmod>2025-08-15</lastmod>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
