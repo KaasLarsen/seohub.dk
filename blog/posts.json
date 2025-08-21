@@ -1,5 +1,40 @@
 [
   {
+    "slug": "teknisk-seo-tjekliste-2025",
+    "title": "Teknisk SEO tjekliste (2025): Hastighed, crawling & indeksering",
+    "date": "2025-08-21",
+    "excerpt": "Den praktiske tjekliste til teknisk SEO i 2025: Core Web Vitals, crawling, indeksering, sitemap, robots.txt, canonicals og structured data.",
+    "tags": ["seo","guide"]
+  },
+  {
+    "slug": "lokal-seo-landingpages",
+    "title": "Lokal SEO: Sådan bygger du landingssider, der vinder i Danmark",
+    "date": "2025-08-21",
+    "excerpt": "Guide til lokale landingssider: søgeintention, NAP, anmeldelser, interne links, schema og Google Virksomhedsprofil.",
+    "tags": ["seo","guide"]
+  },
+  {
+    "slug": "linkbuilding-for-begyndere",
+    "title": "Linkbuilding for begyndere: Sikker strategi uden bøvl",
+    "date": "2025-08-21",
+    "excerpt": "Praktisk introduktion til linkbuilding: typer af links, outreach, gæsteindlæg, PR og risiko-minimering.",
+    "tags": ["seo","guide"]
+  },
+  {
+    "slug": "seo-audit-tjekliste",
+    "title": "SEO audit tjekliste: Hurtig status på 60 minutter",
+    "date": "2025-08-21",
+    "excerpt": "Din 60-minutters audit: on-page, teknik, links og indhold. Konkrete checks og værktøjer til at finde lavthængende frugter.",
+    "tags": ["seo","guide"]
+  },
+  {
+    "slug": "schema-markup-guide",
+    "title": "Schema markup (JSON-LD): Sådan får du rigere resultater",
+    "date": "2025-08-21",
+    "excerpt": "Lær at implementere schema markup (JSON-LD) for artikler, FAQ og lokale virksomheder – og undgå typiske fejl.",
+    "tags": ["seo","guide"]
+  }
+  {
     "slug": "content-marketing-seo",
     "title": "Content marketing & SEO – sådan spiller de sammen",
     "date": "2025-08-21",
