@@ -55,7 +55,20 @@
     "excerpt": "Komplet begyndervejledning til effektiv intern linkbuilding.",
     "tags": ["linkbuilding", "seo-guide"]
   },
-
+  {
+    "slug": "content-marketing-seo",
+    "title": "Content marketing & SEO – sådan arbejder du datadrevet",
+    "date": "2025-08-18",
+    "excerpt": "Fra content-ideer og briefs til publicering, intern links og måling – en praktisk playbook.",
+    "tags": ["content", "strategi", "seo"]
+  },
+  {
+    "slug": "teknisk-seo-2025",
+    "title": "Teknisk SEO i 2025 – performance, crawling og struktur",
+    "date": "2025-08-18",
+    "excerpt": "Prioriteringer der rykker: CWV, rendering, log-analyse, facetter og sitemap-hygiejne.",
+    "tags": ["teknisk seo", "performance"]
+  },
   {
     "slug": "seo-audit-guide-2025",
     "title": "SEO audit guide 2025 – tjekliste og værktøjer",
