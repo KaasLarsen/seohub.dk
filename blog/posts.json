@@ -1,75 +1,5 @@
 [
   {
-    "slug": "teknisk-seo-tjekliste-2025",
-    "title": "Teknisk SEO tjekliste (2025): Hastighed, crawling & indeksering",
-    "date": "2025-08-21",
-    "excerpt": "Den praktiske tjekliste til teknisk SEO i 2025: Core Web Vitals, crawling, indeksering, sitemap, robots.txt, canonicals og structured data.",
-    "tags": ["seo","guide"]
-  },
-  {
-    "slug": "lokal-seo-landingpages",
-    "title": "Lokal SEO: Sådan bygger du landingssider, der vinder i Danmark",
-    "date": "2025-08-21",
-    "excerpt": "Guide til lokale landingssider: søgeintention, NAP, anmeldelser, interne links, schema og Google Virksomhedsprofil.",
-    "tags": ["seo","guide"]
-  },
-  {
-    "slug": "linkbuilding-for-begyndere",
-    "title": "Linkbuilding for begyndere: Sikker strategi uden bøvl",
-    "date": "2025-08-21",
-    "excerpt": "Praktisk introduktion til linkbuilding: typer af links, outreach, gæsteindlæg, PR og risiko-minimering.",
-    "tags": ["seo","guide"]
-  },
-  {
-    "slug": "seo-audit-tjekliste",
-    "title": "SEO audit tjekliste: Hurtig status på 60 minutter",
-    "date": "2025-08-21",
-    "excerpt": "Din 60-minutters audit: on-page, teknik, links og indhold. Konkrete checks og værktøjer til at finde lavthængende frugter.",
-    "tags": ["seo","guide"]
-  },
-  {
-    "slug": "schema-markup-guide",
-    "title": "Schema markup (JSON-LD): Sådan får du rigere resultater",
-    "date": "2025-08-21",
-    "excerpt": "Lær at implementere schema markup (JSON-LD) for artikler, FAQ og lokale virksomheder – og undgå typiske fejl.",
-    "tags": ["seo","guide"]
-  }
-  {
-    "slug": "content-marketing-seo",
-    "title": "Content marketing & SEO – sådan spiller de sammen",
-    "date": "2025-08-21",
-    "excerpt": "Byg en content-maskine, der skaffer organisk trafik og leads: strategi, content-hubs, intern linking og måling.",
-    "tags": ["strategi", "content", "seo"]
-  },
-  {
-    "slug": "on-page-seo-tjekliste-2025",
-    "title": "On-page SEO tjekliste (2025)",
-    "date": "2025-08-21",
-    "excerpt": "Den praktiske on-page SEO tjekliste til 2025: titles, meta, H1–H3, indhold, intern linkstruktur, schema, Core Web Vitals, billeder og URL’er.",
-    "tags": ["on-page", "tjekliste", "seo-guide"]
-  },
-  {
-    "slug": "seo-audit-checkliste",
-    "title": "SEO audit tjekliste: hurtig status på dit site",
-    "date": "2025-08-21",
-    "excerpt": "Kom hurtigt rundt om teknisk SEO, on-page, links og indhold. Find de største muligheder på få timer.",
-    "tags": ["teknisk seo", "tjekliste", "audit"]
-  },
-  {
-    "slug": "linkbuilding-2025",
-    "title": "Linkbuilding i 2025: hvad virker stadig?",
-    "date": "2025-08-21",
-    "excerpt": "Fokuser på kvalitet, relevans og rigtige signaler. Taktikker, ankertekster, outreach-skabeloner og måling.",
-    "tags": ["linkbuilding", "strategi"]
-  },
- {
-  "slug": "lokal-seo-danmark-guide",
-  "title": "Lokal SEO guide 2025: Bliv synlig i dit nærområde",
-  "date": "2025-08-16",
-  "excerpt": "Alt om lokal SEO i 2025 – Google Business Profile, anmeldelser, lokale links og mobilvenlighed.",
-  "tags": ["lokal seo", "2025", "synlighed"]
-},
-  {
     "slug": "seo-for-begyndere-2025",
     "title": "SEO for begyndere – Den komplette guide 2025",
     "date": "2025-08-16",
@@ -77,52 +7,89 @@
     "tags": ["guide", "begynder", "2025"]
   },
   {
-    "slug": "sitemap-fejl-fixes",
-    "title": "De 7 mest almindelige sitemap-fejl (og hurtige fixes)",
-    "date": "2025-08-15",
-    "excerpt": "Sitemaps hjælper Google – men små fejl kan bremse crawling. Tjeklisten, der redder dine URL’er.",
-    "tags": ["teknisk seo", "sitemap"]
-  },
-  {
-    "slug": "intern-linkbuilding-strategi",
-    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
-    "date": "2025-08-15",
-    "excerpt": "Fordel linkjuice, byg hub-sider og brug ankertekster rigtigt. En praktisk guide til intern linkstruktur.",
-    "tags": ["intern linkbuilding", "information architecture"]
-  },
-  {
-    "slug": "intern-linkbuilding-guide",
-    "title": "Intern linkbuilding: den enkle strategi der løfter dine vigtigste sider",
-    "date": "2025-08-15",
-    "excerpt": "Fordel linkværdi, styrk relevans og gør det nemt for Google at forstå dit website. Tjekliste og workflows.",
-    "tags": ["intern linkbuilding", "on-page", "linkstruktur"]
-  },
-  {
-    "slug": "meta-descriptions-der-konverterer",
-    "title": "Meta descriptions der konverterer – 10 eksempler Google elsker",
-    "date": "2025-08-14",
-    "excerpt": "Skriv meta descriptions, der løfter CTR. 10 eksempler, længde-tips, skabeloner og typiske fejl.",
-    "tags": ["on-page", "copywriting", "ctr"]
-  },
-  {
-    "slug": "core-web-vitals-2025",
-    "title": "Core Web Vitals i 2025: sådan forbedrer du LCP, INP og CLS",
-    "date": "2025-08-13",
-    "excerpt": "Konkrete performanceforbedringer: billedoptimering, caching, JS-split og font-loading.",
-    "tags": ["teknisk seo", "performance"]
-  },
-  {
-    "slug": "lokal-seo-guide-danmark",
-    "title": "Lokal SEO i Danmark: komplet guide til Maps, anmeldelser og NAP",
-    "date": "2025-08-13",
-    "excerpt": "Bliv synlig i lokale søgeresultater: Google Virksomhedsprofil, citations og lokale landingssider.",
-    "tags": ["lokal seo", "danmark"]
-  },
-  {
     "slug": "seo-titler-der-ranker",
     "title": "SEO-titler der ranker: længde, vinkler og CTR-hacks",
     "date": "2025-08-13",
     "excerpt": "Sådan skriver du titler Google elsker – med den rigtige længde, struktur og vinkler, der øger CTR.",
     "tags": ["on-page", "copywriting"]
+  },
+  {
+    "slug": "sitemap-fejl-fixes",
+    "title": "De 7 mest almindelige sitemap-fejl (og hurtige fixes)",
+    "date": "2025-08-15",
+    "excerpt": "Sitemaps hjælper Google – men små fejl kan bremse crawling. Tjeklisten, der redder dine URL’er.",
+    "tags": ["teknisk seo"]
+  },
+  {
+    "slug": "intern-linkbuilding-strategi",
+    "title": "Intern linkbuilding strategi 2025 – sådan gør du",
+    "date": "2025-08-12",
+    "excerpt": "Sådan bygger du stærke interne links, der booster crawl, brugeroplevelse og rankings.",
+    "tags": ["linkbuilding", "on-page"]
+  },
+  {
+    "slug": "core-web-vitals-2025",
+    "title": "Core Web Vitals i 2025 – guide til bedre brugeroplevelse",
+    "date": "2025-08-10",
+    "excerpt": "Sådan forbedrer du LCP, FID og CLS og får bedre placeringer i Google.",
+    "tags": ["teknisk seo", "performance"]
+  },
+  {
+    "slug": "lokal-seo-danmark-guide",
+    "title": "Lokal SEO i Danmark – guide 2025",
+    "date": "2025-08-09",
+    "excerpt": "Optimer din virksomhed til lokale søgninger med Google Business, anmeldelser og lokal linkbuilding.",
+    "tags": ["lokal seo"]
+  },
+  {
+    "slug": "meta-descriptions-der-konverterer",
+    "title": "Meta descriptions der konverterer",
+    "date": "2025-08-08",
+    "excerpt": "Sådan skriver du lokkende meta descriptions, der øger din CTR i søgeresultaterne.",
+    "tags": ["on-page", "copywriting"]
+  },
+  {
+    "slug": "intern-linkbuilding-guide",
+    "title": "Intern linkbuilding guide – tips og værktøjer",
+    "date": "2025-08-07",
+    "excerpt": "En praktisk guide til at styrke din SEO med effektiv intern linkstruktur.",
+    "tags": ["linkbuilding", "teknisk seo"]
+  },
+
+  <!-- NYE INDLÆG -->
+  {
+    "slug": "teknisk-seo-tjekliste-2025",
+    "title": "Teknisk SEO tjekliste 2025 – hold styr på alt det vigtige",
+    "date": "2025-08-21",
+    "excerpt": "Den komplette tekniske SEO tjekliste for 2025 – fra crawling og indexing til Core Web Vitals.",
+    "tags": ["teknisk seo", "tjekliste"]
+  },
+  {
+    "slug": "lokal-seo-landingpages",
+    "title": "Lokal SEO landingpages – sådan bygger du dem",
+    "date": "2025-08-21",
+    "excerpt": "Få flere lokale kunder med optimerede landingssider, der matcher byer og services.",
+    "tags": ["lokal seo", "content"]
+  },
+  {
+    "slug": "linkbuilding-for-begyndere",
+    "title": "Linkbuilding for begyndere – kom godt i gang",
+    "date": "2025-08-21",
+    "excerpt": "En praktisk introduktion til linkbuilding – lær hvordan du får relevante og stærke backlinks.",
+    "tags": ["linkbuilding", "begynder"]
+  },
+  {
+    "slug": "seo-audit-tjekliste",
+    "title": "SEO audit tjekliste – tjek dit website trin-for-trin",
+    "date": "2025-08-21",
+    "excerpt": "Sådan laver du en grundig SEO-audit og finder fejl og forbedringsmuligheder på dit site.",
+    "tags": ["seo audit", "tjekliste"]
+  },
+  {
+    "slug": "schema-markup-guide",
+    "title": "Schema markup guide – få rich snippets i 2025",
+    "date": "2025-08-21",
+    "excerpt": "En guide til schema markup, structured data og hvordan du får rich results i Google.",
+    "tags": ["schema", "teknisk seo"]
   }
 ]
