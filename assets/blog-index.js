@@ -1,90 +1,150 @@
-// /assets/blog-index.js (v4 — robust fejlvisning)
+// /assets/blog-index.js — Blogindex: søgning, tags, featured, liste
 (function () {
-  function $(id) { return document.getElementById(id); }
-  const listEl   = $("postsList");
-  const statusEl = $("statusBox");
+  const FEATURED = [
+    "seo-for-begyndere-2025",
+    "intern-linkbuilding-strategi",
+    "core-web-vitals-2025"
+  ];
 
-  function setStatus(html) {
-    if (!statusEl) return;
-    statusEl.innerHTML = html;
-    statusEl.classList.remove("hidden");
+  let ALL = [];
+  let TAGS = [];
+  let query = "";
+  let activeTag = "alle";
+
+  const $q = document.getElementById("q");
+  const $clear = document.getElementById("clearBtn");
+  const $chips = document.getElementById("tagChips");
+  const $list = document.getElementById("list");
+  const $count = document.getElementById("count");
+  const $empty = document.getElementById("empty");
+  const $fatal = document.getElementById("fatal");
+  const $diag = document.getElementById("diag");
+  const $featuredWrap = document.getElementById("featuredWrap");
+  const $featuredGrid = document.getElementById("featuredGrid");
+
+  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+
+  async function loadPosts() {
+    const ts = Date.now();
+    const urls = [
+      "/blog/posts.json?ts="+ts,  // korrekt placering
+      "posts.json?ts="+ts,        // relativ fallback
+      "/posts.json?ts="+ts        // root fallback
+    ];
+    let lastErr=null;
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, { cache:"no-store" });
+        if (!res.ok) throw new Error("HTTP "+res.status+" @ "+url);
+        let txt = await res.text();
+        if (txt.trim().startsWith("<")) throw new Error("Fik HTML i stedet for JSON @ "+url);
+        txt = txt.replace(/^\uFEFF/, ""); // fjern BOM
+        const data = JSON.parse(txt);
+        if (!Array.isArray(data)) throw new Error("JSON er ikke et array @ "+url);
+        $diag.textContent = "Loaded: "+url;
+        $diag.classList.add("hidden");
+        return data;
+      } catch(e) { lastErr = e; }
+    }
+    throw lastErr || new Error("Kunne ikke indlæse posts.json");
   }
-  function hideStatus() { statusEl && statusEl.classList.add("hidden"); }
 
-  function cardTemplate(p) {
-    const href = `/blog/${p.slug}.html`;
-    const tags = (p.tags || []).map(t => `<span class="px-2 py-1 rounded-full text-xs bg-neutral-100">${t}</span>`).join(" ");
+  function buildTags() {
+    const freq = new Map();
+    ALL.forEach(p => {
+      (Array.isArray(p.tags)?p.tags:[]).forEach(t=>{
+        const k = String(t||"").trim().toLowerCase();
+        if (!k) return;
+        freq.set(k,(freq.get(k)||0)+1);
+      });
+    });
+    TAGS = Array.from(freq.keys()).sort((a,b)=>a.localeCompare(b));
+
+    $chips.innerHTML = "";
+    const add = (label,val)=>{
+      const btn = document.createElement("button");
+      btn.type="button";
+      btn.className="chip text-sm";
+      btn.textContent=label;
+      btn.dataset.value=val;
+      if (val===activeTag) btn.classList.add("chip-active");
+      btn.addEventListener("click", ()=>{
+        activeTag = val;
+        $chips.querySelectorAll("button").forEach(b=>b.classList.remove("chip-active"));
+        btn.classList.add("chip-active");
+        render();
+      });
+      $chips.appendChild(btn);
+    };
+    add("Alle","alle");
+    TAGS.forEach(t=>add(t,t));
+  }
+
+  function applyFilters(list){
+    let out=list;
+    if (activeTag!=="alle"){
+      out = out.filter(p => Array.isArray(p.tags) && p.tags.map(String).map(x=>x.toLowerCase()).includes(activeTag));
+    }
+    if (query){
+      const q = query.toLowerCase();
+      out = out.filter(p =>
+        (p.title||"").toLowerCase().includes(q) ||
+        (p.excerpt||"").toLowerCase().includes(q) ||
+        (Array.isArray(p.tags) && p.tags.some(t => String(t).toLowerCase().includes(q)))
+      );
+    }
+    return out;
+  }
+
+  function CardHTML(p, featured=false){
+    const tags = (Array.isArray(p.tags)?p.tags:[]).slice(0,4);
     return `
-      <a href="${href}" class="block rounded-2xl border bg-white p-5 shadow-sm hover:shadow-md transition">
-        <div class="text-xs text-neutral-500 mb-1">${p.date || ""}</div>
-        <h2 class="text-lg font-semibold leading-snug mb-2">${p.title}</h2>
-        <p class="text-sm text-neutral-600 mb-3">${p.excerpt || ""}</p>
-        <div class="flex flex-wrap gap-2">${tags}</div>
+      <a href="/blog/${p.slug}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+        ${featured?'<div class="text-[11px] uppercase tracking-wide text-blue-700 mb-2">Udvalgt</div>':''}
+        <div class="font-semibold">${esc(p.title||"Uden titel")}</div>
+        ${p.excerpt?`<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>`:""}
+        <div class="mt-3 flex items-center justify-between text-xs text-neutral-500">
+          <span>${p.date?esc(p.date):""}</span>
+          <span class="flex gap-2">${tags.map(t=>`<span class="px-2 py-1 rounded-full bg-neutral-100">${esc(String(t))}</span>`).join("")}</span>
+        </div>
       </a>
     `;
   }
 
-  function renderPosts(posts) {
-    if (!Array.isArray(posts) || posts.length === 0) {
-      setStatus(`<span class="text-red-600">Ingen indlæg fundet i posts.json.</span>`);
-      return;
-    }
-    posts.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-    listEl.innerHTML = posts.map(cardTemplate).join("");
-    hideStatus();
+  function renderFeatured(){
+    const items = ALL.filter(p=>FEATURED.includes(p.slug));
+    if (!items.length){ $featuredWrap.classList.add("hidden"); return; }
+    $featuredWrap.classList.remove("hidden");
+    $featuredGrid.innerHTML = items.map(p=>CardHTML(p,true)).join("");
   }
 
-  async function fetchJson(url) {
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-    const text = await res.text();
-    try {
-      return JSON.parse(text);
-    } catch (e) {
-      throw new Error(`JSON parse fejl for ${url}: ${e.message}`);
-    }
+  function render(){
+    const filtered = applyFilters(ALL);
+    $count.textContent = filtered.length ? `${filtered.length} indlæg` : "";
+    $empty.classList.toggle("hidden", filtered.length>0);
+    $list.innerHTML = filtered.map(p=>CardHTML(p,false)).join("");
   }
 
-  async function init() {
-    if (!listEl || !statusEl) return;
+  // Søg UI
+  $q.addEventListener("input", ()=>{
+    query = $q.value.trim();
+    $clear.classList.toggle("hidden", query.length===0);
+    render();
+  });
+  $clear.addEventListener("click", ()=>{
+    $q.value=""; query=""; $clear.classList.add("hidden"); render();
+  });
 
-    // Primær sti
-    const url1 = `/blog/posts.json?v=${Date.now()}`;
-    // Fallback (hvis nogen har lagt den et forkert sted)
-    const url2 = `/posts.json?v=${Date.now()}`;
-
-    try {
-      let data;
-      try {
-        data = await fetchJson(url1);
-      } catch (e1) {
-        console.warn("[Blog] Primær failede:", e1.message);
-        try {
-          data = await fetchJson(url2);
-        } catch (e2) {
-          setStatus(`
-            <div class="text-red-600 font-semibold mb-1">Kunne ikke hente indlæg.</div>
-            <div class="text-neutral-700 text-sm">
-              Fejl:
-              <div class="mt-1 p-2 rounded bg-neutral-50 border"><code>${e1.message}</code></div>
-              <div class="mt-1 p-2 rounded bg-neutral-50 border"><code>${e2.message}</code></div>
-            </div>
-            <div class="text-neutral-500 text-xs mt-2">
-              Løsning: Sørg for at <code>/blog/posts.json</code> findes i public-mappen og er gyldig JSON (uden kommentarer/trailing komma).
-            </div>
-          `);
-          return;
-        }
-      }
-      renderPosts(data);
-    } catch (e) {
-      setStatus(`<div class="text-red-600">Uventet fejl: ${e.message}</div>`);
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  // Init
+  loadPosts()
+    .then(data=>{
+      ALL = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+      buildTags();
+      renderFeatured();
+      render();
+    })
+    .catch(err=>{
+      console.error(err);
+      $fatal.classList.remove("hidden");
+    });
 })();
