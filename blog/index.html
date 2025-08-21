@@ -138,45 +138,114 @@
 
   <!-- Robust JS: forsøg posts.json → ellers behold fallback -->
   <script>
-    (function(){
-      const $fallback = document.getElementById("fallback-list");
-      const $list     = document.getElementById("list");
-      const $count    = document.getElementById("count");
-      const $empty    = document.getElementById("empty");
-      const $fatal    = document.getElementById("fatal");
+(function(){
+  const $fallback = document.getElementById("fallback-list");
+  const $list     = document.getElementById("list");
+  const $count    = document.getElementById("count");
+  const $empty    = document.getElementById("empty");
+  const $fatal    = document.getElementById("fatal");
 
-      function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  // Søg UI
+  const $searchWrap = document.getElementById("searchWrap");
+  const $q          = document.getElementById("searchInput");
+  const $clear      = document.getElementById("searchClear");
+  const $hint       = document.getElementById("searchHint");
 
-      // Prøv at hente /blog/posts.json — hvis det fejler, rører vi ikke fallback.
-      const url = `/blog/posts.json?v=${Date.now()}`;
-      fetch(url, { cache: "no-store" })
-        .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
-        .then(txt => {
-          if (!txt || txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON)");
-          const data = JSON.parse(txt);
-          if (!Array.isArray(data)) throw new Error("JSON er ikke et array");
+  let ALL = [];      // alle posts (fra posts.json)
+  let query = "";    // aktiv søgestreng
 
-          // Render dynamisk: skjul fallback, vis list.
-          const posts = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
-          if (!posts.length) { $empty.classList.remove("hidden"); return; }
+  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
 
-          $fallback.classList.add("hidden");
-          $list.classList.remove("hidden");
+  function render(posts){
+    // filtrér
+    const q = query.trim().toLowerCase();
+    const arr = !q ? posts : posts.filter(p=>{
+      const txt = `${p.title||""} ${p.excerpt||""} ${(p.tags||[]).join(" ")}`.toLowerCase();
+      return txt.includes(q);
+    });
 
-          $count.textContent = posts.length + " indlæg";
-          $list.innerHTML = posts.map(p => `
-            <a href="/blog/${esc(p.slug)}.html" class="block rounded-2xl border bg-white p-5 hover:shadow transition">
-              <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
-              ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
-              <div class="mt-3 text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
-            </a>
-          `).join("");
-        })
-        .catch(e => {
-          console.warn("[blog index] bruger fallback:", e && e.message ? e.message : e);
-          $fatal.classList.remove("hidden"); // vi viser bare info – fallbacklisten er der jo
-        });
-    })();
-  </script>
+    // tomt?
+    if (!arr.length) {
+      $list.innerHTML = `<p class="text-sm text-neutral-600">Ingen indlæg matcher søgningen.</p>`;
+      $count.textContent = `${posts.length} indlæg · 0 match`;
+      return;
+    }
+
+    $list.innerHTML = arr.map(p => {
+      const tags = Array.isArray(p.tags) ? p.tags.slice(0,6).map(t=>`
+        <button data-tag="${esc(String(t))}"
+                class="text-xs px-2 py-1 rounded-full bg-neutral-100 hover:bg-neutral-200">
+          ${esc(String(t))}
+        </button>`).join(" ") : "";
+
+      return `
+      <a href="/blog/${esc(p.slug)}.html"
+         class="block rounded-2xl border bg-white p-5 hover:shadow transition">
+        <div class="font-semibold">${esc(p.title || "Uden titel")}</div>
+        ${p.excerpt ? `<div class="text-sm text-neutral-600 mt-1">${esc(p.excerpt)}</div>` : ""}
+        <div class="mt-3 flex items-center justify-between">
+          <div class="text-xs text-neutral-500">${p.date ? esc(p.date) : ""}</div>
+          ${tags ? `<div class="flex flex-wrap gap-2">${tags}</div>` : ""}
+        </div>
+      </a>`;
+    }).join("");
+
+    // klik på tag filtrerer
+    $list.querySelectorAll('button[data-tag]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const t = btn.getAttribute('data-tag') || "";
+        query = t;
+        $q.value = t;
+        $clear.classList.toggle("hidden", !query);
+        render(ALL);
+      });
+    });
+
+    $count.textContent = `${posts.length} indlæg${q ? ` · ${arr.length} match` : ""}`;
+  }
+
+  // Hent posts.json robust
+  const url = `/blog/posts.json?v=${Date.now()}`;
+  fetch(url, { cache: "no-store" })
+    .then(r => { if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+    .then(txt => {
+      if (!txt || txt.trim().startsWith("<")) throw new Error("Fik HTML (ikke JSON)");
+      const data = JSON.parse(txt);
+      if (!Array.isArray(data)) throw new Error("JSON er ikke et array");
+
+      // Skift til dynamisk visning
+      ALL = data.slice().sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+      $fallback.classList.add("hidden");
+      $list.classList.remove("hidden");
+      $searchWrap.classList.remove("hidden"); // vis søg
+
+      render(ALL);
+    })
+    .catch(e => {
+      console.warn("[blog index] bruger fallback:", e && e.message ? e.message : e);
+      $fatal.classList.remove("hidden");
+      // Vi rører ikke fallback-listen – søg skjules.
+      if ($searchWrap) $searchWrap.classList.add("hidden");
+    });
+
+  // Søg UI events
+  if ($q) {
+    $q.addEventListener("input", ()=>{
+      query = $q.value;
+      $clear.classList.toggle("hidden", !query.trim());
+      if (ALL.length) render(ALL);
+    });
+  }
+  if ($clear) {
+    $clear.addEventListener("click", ()=>{
+      $q.value = ""; query = "";
+      $clear.classList.add("hidden");
+      if (ALL.length) render(ALL);
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
