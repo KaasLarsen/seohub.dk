@@ -1,63 +1,168 @@
 <!doctype html>
 <html lang="da">
 <head>
-<script src="/assets/include-header.js?v=6" defer></script><script src="/assets/consent-analytics.js" defer></script><script src="https://cdn.tailwindcss.com"></script>
-<meta charset="utf-8">
-<title>SEO tip #10 til bedre rankings i 2025 | Seohub.dk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Et praktisk tip du kan implementere for at forbedre synligheden.">
-<link rel="canonical" href="https://www.seohub.dk/blog/seo-tip-10.html">
+  <script src="/assets/include-header.js?v=6" defer></script>
+  <meta charset="utf-8" />
+  <title>SEO tip #10: Sitelinks Search Box – sådan får du søgeboks i Google | Seohub.dk</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Tilføj en Sitelinks Search Box i Google med WebSite + SearchAction JSON-LD. Få trin-for-trin, skabelon og faldgruber – 2025-guide." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://www.seohub.dk/blog/seo-tip-10.html" />
+
+  <!-- Samtykke + GA -->
+  <script src="/assets/consent-analytics.js" defer></script>
+  <!-- UI -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Structured data: Article -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"SEO tip #10: Sitelinks Search Box – sådan får du søgeboks i Google",
+    "author":{"@type":"Organization","name":"Seohub.dk"},
+    "datePublished":"2025-08-21",
+    "dateModified":"2025-08-21",
+    "image":"https://www.seohub.dk/og-image.png",
+    "mainEntityOfPage":"https://www.seohub.dk/blog/seo-tip-10.html",
+    "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
+    "description":"Implementér WebSite + SearchAction JSON-LD korrekt, så Google kan vise en søgeboks under dit brand resultat."
+  }
+  </script>
 </head>
-<body class="bg-neutral-50 text-neutral-900">
-<section class="py-12">
-  <div class="max-w-5xl mx-auto px-4">
-    <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white p-10 rounded-2xl">
-      <h1 class="text-4xl font-bold mb-4">SEO tip #10 til bedre rankings i 2025</h1>
-      <p class="text-lg">Et praktisk tip du kan implementere for at forbedre synligheden.</p>
+<body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+  <!-- Hero -->
+  <section class="py-10 md:py-14">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+           style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+        <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · Tip</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">
+          SEO tip #10: Sitelinks Search Box – sådan får du søgeboks i Google
+        </h1>
+        <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+          Brug WebSite + SearchAction JSON-LD korrekt, så Google kan vise intern søgning direkte i dit brand-resultat.
+        </p>
+      </div>
     </div>
-  </div>
-</section>
-<main class="max-w-5xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12">
-  <article class="lg:col-span-8 space-y-6">
-    <section class="bg-white rounded-2xl shadow p-6 md:p-8 border">
-      <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
-      <p>Et praktisk tip du kan implementere for at forbedre synligheden.</p>
-      <p class="text-sm text-neutral-600">Tags: seo, tips</p>
-    </section>
-    
-        <section id="tip" class="bg-white rounded-2xl shadow p-6 md:p-8 border">
-          <h2 class="text-2xl font-bold mb-3">Tip</h2>
-          <p class='mb-3'>Detaljeret forklaring af hvordan du implementerer dette tip.</p><p class='mb-3'>Fordele ved at gøre det rigtigt.</p>
+  </section>
+
+  <main class="max-w-6xl mx-auto px-4 pb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <!-- Article -->
+      <article class="lg:col-span-8 space-y-6">
+
+        <!-- TL;DR -->
+        <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border">
+          <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Tilføj <strong>WebSite</strong> JSON-LD med <strong>SearchAction</strong> (også for “target” + “query-input”).</li>
+            <li>Din interne søgning skal virke offentligt (ingen login), og returnere relevante resultater.</li>
+            <li>Brug et stabilt søge-URL-mønster (fx <code>/soeg?q=</code> eller <code>/?s=</code>).</li>
+            <li>Google vælger selv at vise boksen – korrekt markup + god brandtrafik øger chancen.</li>
+          </ul>
         </section>
-        
-    
-<div class="rounded-2xl p-6 md:p-8 bg-gradient-to-r from-blue-600 to-indigo-500 text-white shadow-lg">
-  <p class="text-xs uppercase mb-2">Annonce</p>
-  <h3 class="text-xl font-bold mb-2">Hosting hos Simply.com</h3>
-  <p class="mb-3">Stabil hosting, hurtige servere og dansk support. Perfekt til SEO‑projekter.</p>
-  <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
-     target="_blank" rel="sponsored noopener nofollow"
-     class="bg-white text-neutral-900 px-4 py-2 rounded-lg font-semibold">Se tilbud</a>
-</div>
 
-    
-<div class="rounded-2xl p-6 md:p-8 bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg">
-  <p class="text-xs uppercase mb-2">Annonce</p>
-  <h3 class="text-xl font-bold mb-2">Morningscore SEO værktøj</h3>
-  <p class="mb-3">Få indblik i søgeord, links og trafik med et simpelt værktøj.</p>
-  <a href="https://morningscore.io?fpr=seo43"
-     target="_blank" rel="sponsored noopener nofollow"
-     class="bg-white text-neutral-900 px-4 py-2 rounded-lg font-semibold">Prøv gratis</a>
-</div>
+        <!-- Hvorfor -->
+        <section id="hvorfor" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border">
+          <h2 class="text-2xl font-bold mb-3">Hvorfor en Sitelinks Search Box?</h2>
+          <p>
+            En søgeboks under dit brand-resultat lader brugerne hoppe direkte til interne søgeresultater på dit site.
+            Det kan reducere pogo-sticking, give hurtigere svar og øge engagement på vigtige sider.
+          </p>
+        </section>
 
-  </article>
-  <aside class="lg:col-span-4">
-    <div class="sticky top-24 bg-white rounded-2xl shadow p-6 border">
-      <h2 class="text-sm font-bold mb-3">Indholdsoversigt</h2>
-      <a href="#tip" class="block hover:underline">Tip</a>
+        <!-- Implementering -->
+        <section id="implementering" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border">
+          <h2 class="text-2xl font-bold mb-3">Implementering trin for trin</h2>
+          <ol class="list-decimal pl-6 space-y-2">
+            <li>Sørg for, at din interne søgning er tilgængelig for alle (ingen login, ingen blokering i robots.txt).</li>
+            <li>Brug et konsistent søge-parameter (fx <code>https://eksempel.dk/soeg?q=sporgsmaal</code>).</li>
+            <li>Tilføj WebSite JSON-LD med SearchAction (se skabelon nedenfor).</li>
+            <li>Test i Rich Results Test og overvåg Search Console.</li>
+          </ol>
+        </section>
+
+        <!-- JSON-LD skabelon -->
+        <section id="jsonld" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border">
+          <h2 class="text-2xl font-bold mb-3">Skabelon: WebSite + SearchAction (JSON-LD)</h2>
+<pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.eksempel.dk/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.eksempel.dk/soeg?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</pre>
+          <p class="mt-3 text-sm text-neutral-600">
+            Tip: Har din søgning et andet parameter (fx <code>?s=</code>), så ret <code>target</code> til
+            <code>https://www.eksempel.dk/?s={search_term_string}</code>.
+          </p>
+        </section>
+
+        <!-- UX & måling -->
+        <section id="ux" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border">
+          <h2 class="text-2xl font-bold mb-3">UX, kvalitet og måling</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            <li>Vis tydelige titler, uddrag og brødkrummer i interne søgeresultater.</li>
+            <li>Sortér efter relevans; håndtér stavefejl og synonymer, hvis muligt.</li>
+            <li>Mål på sessions fra brand-søgninger, samt klikdybde og konverteringer.</li>
+          </ul>
+        </section>
+
+        <!-- Sponsorblok -->
+        <section class="rounded-2xl p-6 md:p-8 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+          <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+          <h3 class="text-xl md:text-2xl font-extrabold mb-2">Simply.com – hurtigt domæne & stabil hosting</h3>
+          <p class="text-blue-100 mb-3">
+            Få et stabilt fundament til dit site og din interne søgning. Nem opsætning, dansk support.
+          </p>
+          <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+             target="_blank" rel="sponsored noopener nofollow"
+             class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+            Se priser hos Simply.com →
+          </a>
+        </section>
+
+        <!-- Næste skridt -->
+        <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border">
+          <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Vælg dit URL-mønster for søgning (<code>/soeg?q=</code> eller <code>/?s=</code>).</li>
+            <li>Implementér JSON-LD skabelonen på forsiden.</li>
+            <li>Test og monitorér, og forbedr løbende resultatsiden for søgning.</li>
+          </ul>
+        </section>
+
+        <div class="text-right">
+          <a href="#top" class="inline-block mt-2 text-sm text-blue-600 hover:underline">Til toppen ↑</a>
+        </div>
+      </article>
+
+      <!-- Sticky TOC -->
+      <aside class="lg:col-span-4">
+        <div class="lg:sticky lg:top-24 bg-white/70 backdrop-blur rounded-2xl shadow p-6 border">
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+          <nav class="space-y-2 text-sm">
+            <a class="block hover:underline" href="#hvorfor">Hvorfor search box?</a>
+            <a class="block hover:underline" href="#implementering">Implementering</a>
+            <a class="block hover:underline" href="#jsonld">JSON-LD skabelon</a>
+            <a class="block hover:underline" href="#ux">UX & måling</a>
+          </nav>
+        </div>
+      </aside>
+
     </div>
-  </aside>
-</main>
-<script src="/assets/include-footer.js?v=2" defer></script>
+  </main>
+
+  <!-- Fælles footer -->
+  <script src="/assets/include-footer.js?v=2" defer></script>
 </body>
 </html>
