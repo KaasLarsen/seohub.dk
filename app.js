@@ -208,24 +208,76 @@ function HomeSearch() {
   );
 }
 
-/* ---------- Sponsorer (blå kort) ---------- */
+/* ---------- Sponsorer (mobil-karussel + 4-grid på desktop) ---------- */
 function Sponsors() {
   const items = [
-    { name: "Simply.com", href: "https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1", tagline: "Dansk webhosting & domæner" },
-    { name: "Morningscore", href: "https://morningscore.io?fpr=seo43", tagline: "SEO-værktøj der gør det simpelt" },
-    { name: "AI Links", href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555", tagline: "AI-drevet linkanalyse" }
+    {
+      name: "Simply.com",
+      href: "https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1&epi=homepage_sponsors",
+      tagline: "Dansk webhosting & domæner"
+    },
+    {
+      name: "Morningscore",
+      href: "https://morningscore.io?fpr=seo43&epi=homepage_sponsors",
+      tagline: "SEO-værktøj der gør det simpelt"
+    },
+    {
+      name: "AI Links",
+      href: "https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555&epi=homepage_sponsors",
+      tagline: "AI-drevet linkanalyse"
+    },
+    {
+      name: "DanDomain",
+      href: "https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1&epi=homepage_sponsors",
+      tagline: "Domæner & hosting til virksomheder"
+    }
   ];
+
+  // Blå gradient vi genbruger på alle kort
+  const cardBg = "linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)";
+
   return React.createElement("section", { className:"py-8" },
     React.createElement("div", { className:"max-w-6xl mx-auto px-4" }, [
-      React.createElement("h2", { key:"h", className:"text-xl md:text-2xl font-semibold mb-6 text-center" }, "Sponsoreret (reklame)"),
-      React.createElement("div", { key:"g", className:"grid sm:grid-cols-3 gap-4" },
+      React.createElement("div", { key:"hd", className:"flex items-center justify-between mb-4" },
+        React.createElement("h2", { className:"text-xl md:text-2xl font-semibold" }, "Sponsoreret (reklame)")
+      ),
+
+      // Mobil: vandret scroll-snap karussel
+      React.createElement("div", {
+        key:"carousel",
+        className:"md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2",
+        style: { scrollbarWidth: "thin" }
+      },
         items.map(it =>
           React.createElement("a", {
-            key: it.name, href: it.href, target:"_blank", rel:"sponsored noopener nofollow",
-            className:"rounded-2xl p-5 md:p-6 text-white shadow-lg block",
-            style:{ background:"linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)" }
+            key: it.name,
+            href: it.href,
+            target: "_blank",
+            rel: "sponsored noopener nofollow", // vigtigt: ikke 'noreferrer'
+            onClick: () => { try { window.trackAffiliateClick && window.trackAffiliateClick(it.name, "homepage_sponsors"); } catch(_) {} },
+            className:"snap-start shrink-0 w-72 rounded-2xl p-5 text-white shadow-lg block",
+            style: { background: cardBg }
           }, [
-            React.createElement("div", { key:"name", className:"font-semibold text-base" }, it.name),
+            React.createElement("div", { key:"nm", className:"font-semibold text-base" }, it.name),
+            React.createElement("div", { key:"tg", className:"text-sm text-blue-100 mt-1" }, it.tagline),
+            React.createElement("div", { key:"cta", className:"text-sm mt-3 underline" }, "Læs mere →")
+          ])
+        )
+      ),
+
+      // Desktop: 4-kolonne grid
+      React.createElement("div", { key:"grid", className:"hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4" },
+        items.map(it =>
+          React.createElement("a", {
+            key: it.name,
+            href: it.href,
+            target: "_blank",
+            rel: "sponsored noopener nofollow",
+            onClick: () => { try { window.trackAffiliateClick && window.trackAffiliateClick(it.name, "homepage_sponsors"); } catch(_) {} },
+            className:"rounded-2xl p-6 text-white shadow-lg block hover:shadow-xl transition",
+            style: { background: cardBg }
+          }, [
+            React.createElement("div", { key:"nm", className:"font-semibold" }, it.name),
             React.createElement("div", { key:"tg", className:"text-sm text-blue-100 mt-1" }, it.tagline),
             React.createElement("div", { key:"cta", className:"text-sm mt-3 underline" }, "Læs mere →")
           ])
@@ -234,6 +286,7 @@ function Sponsors() {
     ])
   );
 }
+
 
 /* ---------- Seneste indlæg (auto) ---------- */
 function LatestPosts() {
