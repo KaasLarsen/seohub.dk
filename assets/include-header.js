@@ -6,6 +6,7 @@
     { href: "/sitemap-generator.html", label: "Sitemap.xml", key: "/sitemap-generator.html" },
     { href: "/internal-link-builder.html", label: "Intern links", key: "/internal-link-builder.html" },
     { href: "/redirect-checker.html", label: "Redirect Checker", key: "/redirect-checker.html" },
+    { href: "/heading-analyzer.html", label: "Heading Analyzer", key: "/heading-analyzer.html" },
   ];
 
   const html = `
