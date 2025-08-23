@@ -1,32 +1,21 @@
 <!doctype html>
 <html lang="da">
   <head>
+    <!-- Header/nav (burger + aktivt link) -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+
     <meta charset="utf-8" />
-    <title>Page Speed Quick-Check (proxy) | Seohub.dk</title>
+    <title>Page Speed Quick-Check | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Hurtig, praktisk hastigheds-check af en side: hentetid (via proxy), HTML-størrelse, billeder, scripts, stylesheets og basis-SEO.">
+    <meta name="description"
+          content="Hurtig page speed-fornemmelse: hent HTML via proxy og få et overblik over tunge elementer, antal scripts, billeder m.m." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <!-- Cookie consent + GA (som vi bruger overalt) -->
+    <!-- Cookie consent + GA (din fælles loader) -->
     <script src="/assets/consent-analytics.js" defer></script>
-
-    <!-- Global header/footer -->
-    <script src="/assets/include-header.js?v=7" defer></script>
-    <script src="/assets/include-footer.js?v=2" defer></script>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Structured data -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebPage",
-      "name":"Page Speed Quick-Check",
-      "url":"https://www.seohub.dk/page-speed-quick-check.html",
-      "description":"Hurtig, praktisk hastigheds-check af en side: hentetid (via proxy), HTML-størrelse, billeder, scripts, stylesheets og basis-SEO."
-    }
-    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
     <!-- Hero -->
@@ -37,7 +26,9 @@
           <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Page Speed Quick-Check</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Få et lynhurtigt overblik: “proxy-hentetid”, HTML-størrelse, antal billeder/scripts/styles, title-længde og viewport.
+            Indtast en URL, så henter vi HTML’en via en sikker proxy og giver dig et hurtigt overblik
+            (scripts, billeder, CSS, meta-tags m.m.). Det er <em>ikke</em> en erstatning for Lighthouse,
+            men et lynhurtigt “temperatur-tjek”.
           </p>
         </div>
       </div>
@@ -45,207 +36,198 @@
 
     <!-- App -->
     <main class="max-w-6xl mx-auto px-4 pb-12 space-y-8">
-      <!-- Input -->
+      <!-- Formular -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-xl md:text-2xl font-semibold mb-3">Test en URL</h2>
-        <div class="md:flex items-end gap-3">
-          <label class="block md:flex-1 mb-3 md:mb-0">
-            <span class="block text-sm font-medium mb-1">URL</span>
-            <input id="ps-url" type="url" placeholder="fx https://www.eksempel.dk/"
+        <h2 class="text-xl md:text-2xl font-semibold mb-4">Tjek en side</h2>
+        <form id="speedForm" class="grid md:grid-cols-6 gap-3">
+          <div class="md:col-span-5">
+            <label class="block text-sm font-medium mb-1" for="url">URL</label>
+            <input id="url" name="url" type="url" required
+                   placeholder="https://www.eksempel.dk/"
                    class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
-          </label>
-          <button id="ps-run"
-                  class="px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
-            Kør
-          </button>
-        </div>
-        <p class="text-xs text-neutral-500 mt-2">
-          Note: Vi bruger en gratis proxy (AllOrigins). Tider er vejledende. For dyb performance: brug PageSpeed Insights/WebPageTest nedenfor.
-        </p>
+          </div>
+          <div class="md:col-span-1 flex items-end">
+            <button id="runBtn" type="submit"
+                    class="w-full px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
+              Kør
+            </button>
+          </div>
+          <p id="hint" class="md:col-span-6 text-xs text-neutral-500">
+            Tip: Nogle sites blokerer bots/proxy’er. Hvis svaret fejler, prøv en anden URL.
+          </p>
+        </form>
+      </section>
+
+      <!-- Status / fejl -->
+      <section id="statusWrap" class="hidden bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <div id="status" class="text-sm text-neutral-700">Indlæser…</div>
       </section>
 
       <!-- Resultater -->
-      <section id="ps-results" class="hidden bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-xl md:text-2xl font-semibold mb-4">Resultater</h2>
+      <section id="results" class="hidden space-y-6">
+        <!-- Oversigt -->
+        <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+          <h2 class="text-xl md:text-2xl font-semibold mb-4">Overblik</h2>
+          <div id="summary" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
-          <!-- Målinger -->
-          <div>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div class="rounded-2xl border p-4 bg-white">
-                <div class="text-xs uppercase text-neutral-500">Proxy-hentetid (ca.)</div>
-                <div id="ps-time" class="text-2xl font-bold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border p-4 bg-white">
-                <div class="text-xs uppercase text-neutral-500">HTML-størrelse</div>
-                <div id="ps-size" class="text-2xl font-bold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border p-4 bg-white">
-                <div class="text-xs uppercase text-neutral-500">Billeder (img)</div>
-                <div id="ps-imgs" class="text-2xl font-bold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border p-4 bg-white">
-                <div class="text-xs uppercase text-neutral-500">Scripts</div>
-                <div id="ps-scripts" class="text-2xl font-bold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border p-4 bg-white">
-                <div class="text-xs uppercase text-neutral-500">Stylesheets (link rel=stylesheet)</div>
-                <div id="ps-css" class="text-2xl font-bold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border p-4 bg-white">
-                <div class="text-xs uppercase text-neutral-500">Title-længde</div>
-                <div id="ps-titlelen" class="text-2xl font-bold mt-1">–</div>
-              </div>
-            </div>
+        <!-- Detaljer -->
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h3 class="text-lg font-semibold mb-3">HTML-head checks</h3>
+            <ul id="headChecks" class="list-disc pl-5 space-y-1 text-sm"></ul>
           </div>
-
-          <!-- Kvalitets-tjek -->
-          <div class="space-y-3">
-            <div class="rounded-2xl border p-4 bg-white">
-              <div class="text-xs uppercase text-neutral-500 mb-1">Title</div>
-              <div id="ps-title" class="text-sm break-words">–</div>
-            </div>
-            <div class="rounded-2xl border p-4 bg-white">
-              <div class="text-xs uppercase text-neutral-500 mb-1">Viewport</div>
-              <div id="ps-viewport" class="text-sm">–</div>
-            </div>
-            <div class="rounded-2xl border p-4 bg-white">
-              <div class="text-xs uppercase text-neutral-500 mb-1">Meta description (uddrag)</div>
-              <div id="ps-desc" class="text-sm break-words text-neutral-700">–</div>
-            </div>
+          <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h3 class="text-lg font-semibold mb-3">Tunge “mistænkte” (heuristik)</h3>
+            <ul id="suspects" class="list-disc pl-5 space-y-1 text-sm"></ul>
           </div>
         </div>
 
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a id="ps-psi" target="_blank" rel="noopener"
-             class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Åbn i PageSpeed Insights</a>
-          <a id="ps-wpt" target="_blank" rel="noopener"
-             class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Åbn i WebPageTest</a>
-        </div>
-
-        <p id="ps-note" class="text-xs text-neutral-500 mt-3">
-          * Proxy-hentetid inkluderer netværk → proxy → målsite → proxy → dig. Brug PSI/WPT for præcis måling af CWV.
-        </p>
-      </section>
-
-      <!-- CTA (frivillig) -->
-      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <div>
-            <h3 class="text-lg font-semibold">Vil du forbedre din score?</h3>
-            <p class="text-sm text-neutral-600">Tjek vores andre værktøjer – og få hosting/domæne på få minutter.</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">SERP & Meta</a>
-            <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.txt</a>
-            <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Sitemap.xml</a>
-            <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Intern links</a>
-          </div>
-        </div>
+        <!-- Rå HTML (fold-ud) -->
+        <details class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+          <summary class="cursor-pointer font-semibold">Vis rå HTML (debug)</summary>
+          <pre id="raw" class="mt-4 bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-xs whitespace-pre-wrap"></pre>
+        </details>
       </section>
     </main>
 
+    <!-- Footer -->
+    <script src="/assets/include-footer.js?v=3" defer></script>
+
+    <!-- Logik -->
     <script>
-      (function(){
-        const $u = document.getElementById('ps-url');
-        const $b = document.getElementById('ps-run');
-        const $wrap = document.getElementById('ps-results');
+      (function () {
+        const $form   = document.getElementById('speedForm');
+        const $url    = document.getElementById('url');
+        const $run    = document.getElementById('runBtn');
+        const $status = document.getElementById('status');
+        const $statusWrap = document.getElementById('statusWrap');
+        const $results = document.getElementById('results');
+        const $summary = document.getElementById('summary');
+        const $head   = document.getElementById('headChecks');
+        const $sus    = document.getElementById('suspects');
+        const $raw    = document.getElementById('raw');
 
-        const $time = document.getElementById('ps-time');
-        const $size = document.getElementById('ps-size');
-        const $imgs = document.getElementById('ps-imgs');
-        const $scripts = document.getElementById('ps-scripts');
-        const $css = document.getElementById('ps-css');
-        const $title = document.getElementById('ps-title');
-        const $titlelen = document.getElementById('ps-titlelen');
-        const $viewport = document.getElementById('ps-viewport');
-        const $desc = document.getElementById('ps-desc');
-
-        const $psi = document.getElementById('ps-psi');
-        const $wpt = document.getElementById('ps-wpt');
-
-        function normUrl(v){
-          v = (v || "").trim();
-          if (!v) return "";
-          if (!/^https?:\/\//i.test(v)) v = "https://" + v;
-          try { return new URL(v).href; } catch(e){ return ""; }
+        // Hjælpere
+        function showStatus(msg) {
+          $statusWrap.classList.remove('hidden');
+          $status.textContent = msg;
         }
-        function prettyBytes(n){
-          if (!Number.isFinite(n)) return "–";
-          if (n < 1024) return n + " B";
-          if (n < 1024*1024) return (n/1024).toFixed(1) + " kB";
-          return (n/(1024*1024)).toFixed(2) + " MB";
+        function hideStatus() {
+          $statusWrap.classList.add('hidden');
+        }
+        function showResults() {
+          $results.classList.remove('hidden');
+        }
+        function clearResults() {
+          $summary.innerHTML = '';
+          $head.innerHTML = '';
+          $sus.innerHTML = '';
+          $raw.textContent = '';
+          $results.classList.add('hidden');
+        }
+        function card(label, value) {
+          const div = document.createElement('div');
+          div.className = 'rounded-2xl border p-4 bg-white';
+          div.innerHTML = '<div class="text-xs text-neutral-500 mb-1">'+label+'</div>'
+                        + '<div class="text-xl font-semibold">'+value+'</div>';
+          return div;
+        }
+        function li(text, ok = true) {
+          const li = document.createElement('li');
+          li.innerHTML = ok
+            ? '<span class="text-green-700">'+text+'</span>'
+            : '<span class="text-amber-700">'+text+'</span>';
+          return li;
         }
 
-        async function run(){
-          const url = normUrl($u.value);
-          if (!url) { alert("Indsæt en gyldig URL"); return; }
+        // Hovedfunktion
+        async function run(url) {
+          clearResults();
+          showStatus('Henter HTML…');
 
-          // Links til eksterne test
-          $psi.href = "https://pagespeed.web.dev/analysis?url=" + encodeURIComponent(url);
-          $wpt.href = "https://www.webpagetest.org/?url=" + encodeURIComponent(url);
+          let target = url.trim();
+          if (!/^https?:\/\//i.test(target)) {
+            target = 'https://' + target;
+          }
 
-          // Kald via AllOrigins raw endpoint (returnerer HTML som text, CORS-enabled)
-          const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url) + "&disableCache=true";
+          // Brug AllOrigins (CORS-proxy). Husk: vercel.json skal have api.allorigins.win i connect-src.
+          const apiUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target);
 
-          $wrap.classList.remove('hidden');
-          $time.textContent = "…";
-          $size.textContent = "…";
-          $imgs.textContent = "…";
-          $scripts.textContent = "…";
-          $css.textContent = "…";
-          $title.textContent = "…";
-          $titlelen.textContent = "…";
-          $viewport.textContent = "…";
-          $desc.textContent = "…";
-
-          let t0 = performance.now();
+          let htmlText = '';
           try {
-            const res = await fetch(proxy, { cache: "no-cache" });
-            const txt = await res.text();
+            const t0 = performance.now();
+            const res = await fetch(apiUrl, { cache: 'no-cache' });
             const t1 = performance.now();
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            htmlText = await res.text();
 
-            // Ca. hentetid via proxy
-            $time.textContent = Math.max(0, Math.round(t1 - t0)) + " ms";
+            // Basal parsing
+            const size = new Blob([htmlText]).size; // bytes
+            const doc = new DOMParser().parseFromString(htmlText, 'text/html');
 
-            // Størrelse (beregn via Blob for korrekte bytes)
-            const bytes = new Blob([txt]).size;
-            $size.textContent = prettyBytes(bytes);
+            // Heuristikker
+            const scripts = Array.from(doc.querySelectorAll('script[src]'));
+            const styles  = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
+            const imgs    = Array.from(doc.querySelectorAll('img'));
+            const hasViewport = !!doc.querySelector('meta[name="viewport"]');
+            const hasCharset  = !!doc.querySelector('meta[charset]');
+            const inlineStyles = Array.from(doc.querySelectorAll('style')).map(s => s.textContent || '').join('\\n');
+            const inlineSize = new Blob([inlineStyles]).size;
 
-            // Parse HTML
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(txt, "text/html");
+            // “Mistænkte” (store filnavne/extensions)
+            const suspects = [];
+            scripts.forEach(s => { const u=(s.getAttribute('src')||''); if (/\.(min\.)?js(\?|$)/i.test(u)) suspects.push(u); });
+            styles.forEach(l => { const u=(l.getAttribute('href')||''); if (/\.css(\?|$)/i.test(u)) suspects.push(u); });
+            imgs.forEach(i => { const u=(i.getAttribute('src')||''); if (/\.(png|jpg|jpeg|gif|webp|svg)(\?|$)/i.test(u)) suspects.push(u); });
 
-            // Title
-            const title = (doc.querySelector("title")?.textContent || "").trim();
-            $title.textContent = title || "—";
-            $titlelen.textContent = title ? String(title.length) : "0";
+            // Output
+            hideStatus();
+            showResults();
 
-            // Viewport
-            const vp = doc.querySelector('meta[name="viewport"]')?.getAttribute('content') || "—";
-            $viewport.textContent = vp;
+            $summary.appendChild(card('Downloadtid (proxy)', ( (t1 - t0) / 1000 ).toFixed(2) + ' s'));
+            $summary.appendChild(card('HTML-størrelse', (size/1024).toFixed(1) + ' KB'));
+            $summary.appendChild(card('Scripts (eksterne)', scripts.length));
+            $summary.appendChild(card('Billeder', imgs.length));
+            $summary.appendChild(card('Stylesheets', styles.length));
+            $summary.appendChild(card('Inline CSS', (inlineSize/1024).toFixed(1) + ' KB'));
 
-            // Meta description (uddrag)
-            const md = doc.querySelector('meta[name="description"]')?.getAttribute('content') || "—";
-            $desc.textContent = md;
+            $head.appendChild(li(hasViewport ? 'Har &lt;meta name="viewport"&gt;' : 'Mangler &lt;meta name="viewport"&gt;', hasViewport));
+            $head.appendChild(li(hasCharset  ? 'Har &lt;meta charset&gt;' : 'Mangler &lt;meta charset&gt;', hasCharset));
 
-            // Counts
-            $imgs.textContent = String(doc.querySelectorAll("img").length);
-            $scripts.textContent = String(doc.querySelectorAll("script").length);
-            $css.textContent = String(doc.querySelectorAll('link[rel="stylesheet"]').length);
+            if (suspects.length) {
+              suspects.slice(0, 30).forEach(u => $sus.appendChild(li(u, true)));
+              if (suspects.length > 30) {
+                $sus.appendChild(li('… +' + (suspects.length - 30) + ' flere', true));
+              }
+            } else {
+              $sus.appendChild(li('Ingen åbenlyse tunge filer fundet (heuristik).', true));
+            }
 
-          } catch (e){
-            console.error(e);
-            alert("Kunne ikke hente siden via proxy. Tjek at din CSP tillader https://api.allorigins.win og prøv igen.");
-            $time.textContent = "fejl";
-            $size.textContent = "fejl";
+            // Debug
+            $raw.textContent = htmlText;
+
+          } catch (err) {
+            console.error(err);
+            showStatus('Kunne ikke hente HTML (' + (err.message || 'ukendt fejl') + '). Tjek at URL’en er offentlig og ikke blokerer bots.');
           }
         }
 
-        document.getElementById('ps-run').addEventListener('click', run);
-        document.getElementById('ps-url').addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') { e.preventDefault(); run(); }
+        // Formular-submit
+        $form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const v = $url.value || '';
+          if (!v.trim()) return;
+          run(v);
         });
+
+        // Auto-kør hvis der er ?url= i querystring
+        const params = new URLSearchParams(location.search);
+        if (params.has('url')) {
+          const preset = params.get('url');
+          $url.value = preset;
+          run(preset);
+        }
       })();
     </script>
   </body>
