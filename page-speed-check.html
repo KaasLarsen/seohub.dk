@@ -1,20 +1,15 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <!-- Header/nav (burger + aktivt link) -->
     <script src="/assets/include-header.js?v=7" defer></script>
 
     <meta charset="utf-8" />
     <title>Page Speed Quick-Check | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description"
-          content="Hurtig page speed-fornemmelse: hent HTML via proxy og få et overblik over tunge elementer, antal scripts, billeder m.m." />
+          content="Hurtig page speed-fornemmelse: hent HTML via proxy og få et overblik over scripts, billeder, CSS, meta-tags m.m." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-
-    <!-- Cookie consent + GA (din fælles loader) -->
     <script src="/assets/consent-analytics.js" defer></script>
-
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
@@ -26,9 +21,8 @@
           <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Page Speed Quick-Check</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Indtast en URL, så henter vi HTML’en via en sikker proxy og giver dig et hurtigt overblik
-            (scripts, billeder, CSS, meta-tags m.m.). Det er <em>ikke</em> en erstatning for Lighthouse,
-            men et lynhurtigt “temperatur-tjek”.
+            Indtast en URL, så henter vi HTML’en via proxy og giver et hurtigt overblik.
+            Det er ikke Lighthouse – bare et lynhurtigt sundhedstjek.
           </p>
         </div>
       </div>
@@ -52,7 +46,7 @@
               Kør
             </button>
           </div>
-          <p id="hint" class="md:col-span-6 text-xs text-neutral-500">
+          <p class="md:col-span-6 text-xs text-neutral-500">
             Tip: Nogle sites blokerer bots/proxy’er. Hvis svaret fejler, prøv en anden URL.
           </p>
         </form>
@@ -83,7 +77,7 @@
           </div>
         </div>
 
-        <!-- Rå HTML (fold-ud) -->
+        <!-- Rå HTML -->
         <details class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
           <summary class="cursor-pointer font-semibold">Vis rå HTML (debug)</summary>
           <pre id="raw" class="mt-4 bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-xs whitespace-pre-wrap"></pre>
@@ -91,15 +85,12 @@
       </section>
     </main>
 
-    <!-- Footer -->
     <script src="/assets/include-footer.js?v=3" defer></script>
 
-    <!-- Logik -->
     <script>
       (function () {
         const $form   = document.getElementById('speedForm');
         const $url    = document.getElementById('url');
-        const $run    = document.getElementById('runBtn');
         const $status = document.getElementById('status');
         const $statusWrap = document.getElementById('statusWrap');
         const $results = document.getElementById('results');
@@ -108,23 +99,23 @@
         const $sus    = document.getElementById('suspects');
         const $raw    = document.getElementById('raw');
 
-        // Hjælpere
+        const proxyPrimary = (target) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target);
+        const proxyFallback = (target) => {
+          // r.jina.ai kræver http/https i URL’en men vi giver blot “http(s)://…” efter domæne
+          // Format: https://r.jina.ai/http://example.com/… (det virker også med https)
+          const u = new URL(target);
+          return 'https://r.jina.ai/' + u.protocol + '//' + u.hostname + (u.port ? (':' + u.port) : '') + (u.pathname || '/') + (u.search || '');
+        };
+
         function showStatus(msg) {
           $statusWrap.classList.remove('hidden');
           $status.textContent = msg;
         }
-        function hideStatus() {
-          $statusWrap.classList.add('hidden');
-        }
-        function showResults() {
-          $results.classList.remove('hidden');
-        }
-        function clearResults() {
-          $summary.innerHTML = '';
-          $head.innerHTML = '';
-          $sus.innerHTML = '';
-          $raw.textContent = '';
-          $results.classList.add('hidden');
+        function hideStatus(){ $statusWrap.classList.add('hidden'); }
+        function showResults(){ $results.classList.remove('hidden'); }
+        function clearResults(){
+          $summary.innerHTML = ''; $head.innerHTML = ''; $sus.innerHTML = '';
+          $raw.textContent = ''; $results.classList.add('hidden');
         }
         function card(label, value) {
           const div = document.createElement('div');
@@ -141,51 +132,54 @@
           return li;
         }
 
-        // Hovedfunktion
-        async function run(url) {
-          clearResults();
-          showStatus('Henter HTML…');
-
-          let target = url.trim();
-          if (!/^https?:\/\//i.test(target)) {
-            target = 'https://' + target;
-          }
-
-          // Brug AllOrigins (CORS-proxy). Husk: vercel.json skal have api.allorigins.win i connect-src.
-          const apiUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target);
-
-          let htmlText = '';
+        async function fetchHTML(target) {
+          // 1) Prøv AllOrigins
           try {
             const t0 = performance.now();
-            const res = await fetch(apiUrl, { cache: 'no-cache' });
+            const res = await fetch(proxyPrimary(target), { cache: 'no-cache' });
             const t1 = performance.now();
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            htmlText = await res.text();
+            if (!res.ok) throw new Error('AllOrigins HTTP ' + res.status);
+            const text = await res.text();
+            return { text, ms: (t1 - t0) };
+          } catch (e) {
+            // 2) Fallback til r.jina.ai
+            const t0 = performance.now();
+            const res2 = await fetch(proxyFallback(target), { cache: 'no-cache' });
+            const t1 = performance.now();
+            if (!res2.ok) throw new Error('Fallback HTTP ' + res2.status);
+            const text2 = await res2.text();
+            return { text: text2, ms: (t1 - t0) };
+          }
+        }
 
-            // Basal parsing
-            const size = new Blob([htmlText]).size; // bytes
+        async function run(url) {
+          clearResults();
+          showStatus('Henter HTML via proxy…');
+
+          let target = url.trim();
+          if (!/^https?:\/\//i.test(target)) target = 'https://' + target;
+
+          try {
+            const { text: htmlText, ms } = await fetchHTML(target);
+
+            const size = new Blob([htmlText]).size;
             const doc = new DOMParser().parseFromString(htmlText, 'text/html');
 
-            // Heuristikker
             const scripts = Array.from(doc.querySelectorAll('script[src]'));
             const styles  = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
             const imgs    = Array.from(doc.querySelectorAll('img'));
             const hasViewport = !!doc.querySelector('meta[name="viewport"]');
             const hasCharset  = !!doc.querySelector('meta[charset]');
-            const inlineStyles = Array.from(doc.querySelectorAll('style')).map(s => s.textContent || '').join('\\n');
+            const inlineStyles = Array.from(doc.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
             const inlineSize = new Blob([inlineStyles]).size;
 
-            // “Mistænkte” (store filnavne/extensions)
             const suspects = [];
             scripts.forEach(s => { const u=(s.getAttribute('src')||''); if (/\.(min\.)?js(\?|$)/i.test(u)) suspects.push(u); });
             styles.forEach(l => { const u=(l.getAttribute('href')||''); if (/\.css(\?|$)/i.test(u)) suspects.push(u); });
             imgs.forEach(i => { const u=(i.getAttribute('src')||''); if (/\.(png|jpg|jpeg|gif|webp|svg)(\?|$)/i.test(u)) suspects.push(u); });
 
-            // Output
-            hideStatus();
-            showResults();
-
-            $summary.appendChild(card('Downloadtid (proxy)', ( (t1 - t0) / 1000 ).toFixed(2) + ' s'));
+            hideStatus(); showResults();
+            $summary.appendChild(card('Proxy-downloadtid', (ms/1000).toFixed(2) + ' s'));
             $summary.appendChild(card('HTML-størrelse', (size/1024).toFixed(1) + ' KB'));
             $summary.appendChild(card('Scripts (eksterne)', scripts.length));
             $summary.appendChild(card('Billeder', imgs.length));
@@ -197,35 +191,31 @@
 
             if (suspects.length) {
               suspects.slice(0, 30).forEach(u => $sus.appendChild(li(u, true)));
-              if (suspects.length > 30) {
-                $sus.appendChild(li('… +' + (suspects.length - 30) + ' flere', true));
-              }
+              if (suspects.length > 30) $sus.appendChild(li('… +' + (suspects.length - 30) + ' flere', true));
             } else {
               $sus.appendChild(li('Ingen åbenlyse tunge filer fundet (heuristik).', true));
             }
 
-            // Debug
             $raw.textContent = htmlText;
 
           } catch (err) {
             console.error(err);
-            showStatus('Kunne ikke hente HTML (' + (err.message || 'ukendt fejl') + '). Tjek at URL’en er offentlig og ikke blokerer bots.');
+            showStatus('Kunne ikke hente HTML: ' + (err.message || 'ukendt fejl') + '. Prøv en anden URL.');
           }
         }
 
-        // Formular-submit
-        $form.addEventListener('submit', (e) => {
+        document.getElementById('speedForm').addEventListener('submit', (e) => {
           e.preventDefault();
           const v = $url.value || '';
           if (!v.trim()) return;
           run(v);
         });
 
-        // Auto-kør hvis der er ?url= i querystring
+        // Auto-run via ?url=
         const params = new URLSearchParams(location.search);
         if (params.has('url')) {
           const preset = params.get('url');
-          $url.value = preset;
+          document.getElementById('url').value = preset;
           run(preset);
         }
       })();
