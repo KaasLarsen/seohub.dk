@@ -1,14 +1,17 @@
-// /assets/include-header.js (v7) — Dropdown "Værktøjer", mobil burger, aktivt link
+<!-- /assets/include-header.js  (v7, unified nav for mobile+desktop) -->
+<script>
 (function () {
-  const TOOLS = [
-    { href: "/serp-preview.html", label: "SERP & Meta", key: "/serp-preview.html" },
-    { href: "/robots-generator.html", label: "Robots.txt", key: "/robots-generator.html" },
-    { href: "/sitemap-generator.html", label: "Sitemap.xml", key: "/sitemap-generator.html" },
+  // ÉN liste som både mobil og desktop bygger fra
+  const NAV_ITEMS = [
+    { href: "/",                       label: "Forside",      key: "/" },
+    { href: "/serp-preview.html",      label: "SERP",         key: "/serp-preview.html" },
+    { href: "/robots-generator.html",  label: "Robots",       key: "/robots-generator.html" },
+    { href: "/sitemap-generator.html", label: "Sitemap",      key: "/sitemap-generator.html" },
     { href: "/internal-link-builder.html", label: "Intern links", key: "/internal-link-builder.html" },
-    { href: "/heading-analyzer.html", label: "Heading Analyzer", key: "/heading-analyzer.html" },
-    { href: "/meta-tag-generator.html", label: "Meta tags", key: "/meta-tag-generator.html" },
-    { href: "/broken-link-checker.html", label: "Broken Links", key: "/broken-link-checker.html" },
-    { href: "/page-speed-check.html", label: "Page Speed", key: "/page-speed-check.html" },
+    { href: "/meta-tag-generator.html",label: "Meta tags",    key: "/meta-tag-generator.html" },
+    { href: "/page-speed-check.html",  label: "Page Speed",   key: "/page-speed-check.html" },
+    { href: "/blog/",                  label: "Blog",         key: "/blog" }
+    // (Ingen Redirect Checker)
   ];
 
   const html = `
@@ -30,45 +33,12 @@
         </svg>
       </button>
 
-      <!-- Nav wrapper -->
+      <!-- Samme nav bruges til mobil (dropdown) og desktop -->
       <nav id="siteNav"
         class="hidden md:flex text-sm text-neutral-600 gap-4
                absolute left-0 right-0 top-full bg-white/95 backdrop-blur border-b
                md:static md:border-0 md:bg-transparent md:backdrop-blur-0 md:items-center md:justify-end p-4 md:p-0">
-
-        <a href="/" data-page="/">Forside</a>
-
-        <!-- Desktop: Tools dropdown -->
-        <div class="relative hidden md:block" id="toolsDesktop">
-          <button type="button"
-            class="inline-flex items-center gap-1 px-2 py-1 rounded hover:bg-neutral-50"
-            aria-haspopup="true" aria-expanded="false" id="toolsBtn">
-            Værktøjer
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <div id="toolsMenu"
-               class="hidden absolute right-0 mt-2 w-64 rounded-xl border bg-white shadow-lg overflow-hidden">
-            <div class="py-2" id="toolsMenuItems"></div>
-          </div>
-        </div>
-
-        <!-- Mobil: Tools accordion -->
-        <div class="md:hidden w-full" id="toolsMobile">
-          <button type="button"
-            class="w-full flex items-center justify-between rounded-lg border p-3 bg-white">
-            <span>Værktøjer</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-          <div class="hidden mt-2 rounded-lg border bg-white" id="toolsMobileList"></div>
-        </div>
-
-        <a href="/blog/" data-page="/blog/">Blog</a>
+        <!-- Links injiceres via JS -->
       </nav>
     </div>
   </header>
@@ -85,132 +55,66 @@
     const lp = normalizePath(linkPath);
     const cp = normalizePath(currentPath);
     if (lp === "/") return cp === "/";
+    // Markér også som aktiv når man er på en underside under /blog/
     return cp === lp || cp.startsWith(lp + "/");
   }
 
-  function buildToolsList(container, itemClass) {
-    container.innerHTML = "";
-    TOOLS.forEach(t => {
-      const a = document.createElement("a");
-      a.href = t.href;
-      a.textContent = t.label;
-      a.className = itemClass;
-      a.setAttribute("data-tool", t.key);
-      container.appendChild(a);
-    });
-  }
-
-  function markActive(navEl) {
-    const current = window.location.pathname;
-    // Top-level links
-    navEl.querySelectorAll('a[data-page]').forEach(link => {
-      const lp = link.getAttribute('data-page') || "";
-      if (isActive(lp, current)) {
-        link.classList.add("font-semibold","text-blue-600");
-      }
-    });
-    // Tools items (both desktop + mobile)
-    const matchTool = TOOLS.find(t => isActive(t.key, current));
-    if (matchTool) {
-      navEl.querySelectorAll('[data-tool]').forEach(a => {
-        if (isActive(a.getAttribute('data-tool'), current)) {
-          a.classList.add("bg-neutral-50","text-blue-700","font-medium");
-        }
-      });
-      // also highlight the "Værktøjer"-button
-      const btn = navEl.querySelector("#toolsBtn");
-      if (btn) btn.classList.add("font-semibold","text-blue-600");
-    }
+  function renderLinks(navEl) {
+    navEl.innerHTML = NAV_ITEMS.map(it =>
+      `<a href="${it.href}" data-page="${it.key}">${it.label}</a>`
+    ).join("");
   }
 
   function mount() {
-    // Fjern eksisterende header (undgå dublering)
-    const existing = document.querySelector('header');
+    // Fjern evt. eksisterende header for at undgå dubletter
+    const existing = document.querySelector("header");
     if (existing) existing.remove();
 
-    const wrap = document.createElement('div');
+    // Indsæt markup
+    const wrap = document.createElement("div");
     wrap.innerHTML = html;
-    document.body.insertBefore(wrap.firstElementChild, document.body.firstChild);
+    const headerEl = wrap.firstElementChild;
+    document.body.insertBefore(headerEl, document.body.firstChild);
 
-    const btn = document.getElementById('navToggle');
-    const nav = document.getElementById('siteNav');
+    const nav = document.getElementById("siteNav");
+    renderLinks(nav);
 
-    // Burger
-    function closeNav() { nav.classList.add('hidden'); btn && btn.setAttribute('aria-expanded','false'); }
-    function openNav() { nav.classList.remove('hidden'); btn && btn.setAttribute('aria-expanded','true'); }
+    // Toggle (mobil)
+    const btn = document.getElementById("navToggle");
+    function closeNav() { nav.classList.add("hidden"); btn.setAttribute("aria-expanded","false"); }
+    function openNav()  { nav.classList.remove("hidden"); btn.setAttribute("aria-expanded","true"); }
 
     if (btn && nav) {
-      btn.addEventListener('click', () => {
-        const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.addEventListener("click", () => {
+        const open = btn.getAttribute("aria-expanded") === "true";
         open ? closeNav() : openNav();
       });
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
-      window.addEventListener('resize', () => {
+      // Luk ved klik på link på mobil
+      nav.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          if (window.matchMedia('(max-width: 767px)').matches) closeNav();
+        });
+      });
+      // Luk på Escape
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeNav(); });
+      // Luk når man resizer op til desktop
+      window.addEventListener("resize", () => {
         if (window.matchMedia('(min-width: 768px)').matches) closeNav();
       });
     }
 
-    // Tools: build desktop dropdown & mobile list
-    const toolsMenuItems = document.getElementById("toolsMenuItems");
-    const toolsMenu = document.getElementById("toolsMenu");
-    const toolsBtn = document.getElementById("toolsBtn");
-    const toolsMobile = document.getElementById("toolsMobile");
-    const toolsMobileList = document.getElementById("toolsMobileList");
-
-    if (toolsMenuItems) {
-      buildToolsList(toolsMenuItems, "block px-4 py-2 hover:bg-neutral-50");
-    }
-    if (toolsMobileList) {
-      buildToolsList(toolsMobileList, "block px-4 py-2 hover:bg-neutral-50 border-t first:border-t-0");
-    }
-
-    // Desktop dropdown open/close
-    if (toolsBtn && toolsMenu) {
-      let dropdownOpen = false;
-      function openDD() { toolsMenu.classList.remove("hidden"); toolsBtn.setAttribute("aria-expanded","true"); dropdownOpen = true; }
-      function closeDD() { toolsMenu.classList.add("hidden"); toolsBtn.setAttribute("aria-expanded","false"); dropdownOpen = false; }
-
-      toolsBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdownOpen ? closeDD() : openDD();
-      });
-      document.addEventListener("click", (e) => {
-        if (!dropdownOpen) return;
-        const inside = toolsMenu.contains(e.target) || toolsBtn.contains(e.target);
-        if (!inside) closeDD();
-      });
-      // også åbne på hover (desktop)
-      const toolsWrap = document.getElementById("toolsDesktop");
-      if (toolsWrap) {
-        toolsWrap.addEventListener("mouseenter", openDD);
-        toolsWrap.addEventListener("mouseleave", closeDD);
-      }
-    }
-
-    // Mobile accordion
-    if (toolsMobile && toolsMobileList) {
-      const btn = toolsMobile.querySelector("button");
-      btn.addEventListener("click", () => {
-        toolsMobileList.classList.toggle("hidden");
-      });
-    }
-
-    // Luk mobilnav ved klik på link (god UX)
-    if (nav) {
-      nav.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          if (window.matchMedia('(max-width: 767px)').matches) closeNav();
-        });
-      });
-    }
-
-    // Aktiv markering
-    if (nav) markActive(nav);
+    // Aktivt link highlight
+    const current = window.location.pathname;
+    nav.querySelectorAll("a[data-page]").forEach(link => {
+      const lp = link.getAttribute("data-page") || "";
+      if (isActive(lp, current)) link.classList.add("font-semibold", "text-blue-600");
+    });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mount);
   } else {
     mount();
   }
 })();
+</script>
