@@ -1,21 +1,20 @@
-// /assets/include-header.js  (v8 – samlet menu m. Værktøjer-dropdown + mobil-accordion)
+// /assets/include-header.js  (v7 – ENS værktøjsliste på desktop + mobil)
 (function () {
-  // --- Links ---
+  // Vedligehold links ét sted:
   const TOOLS = [
-    { href: "/serp-preview.html",      label: "SERP & Meta",         key: "/serp-preview.html" },
-    { href: "/robots-generator.html",  label: "Robots.txt",          key: "/robots-generator.html" },
-    { href: "/sitemap-generator.html", label: "Sitemap.xml",         key: "/sitemap-generator.html" },
+    { href: "/serp-preview.html",          label: "SERP & Meta",        key: "/serp-preview.html" },
+    { href: "/robots-generator.html",      label: "Robots.txt",         key: "/robots-generator.html" },
+    { href: "/sitemap-generator.html",     label: "Sitemap.xml",        key: "/sitemap-generator.html" },
     { href: "/internal-link-builder.html", label: "Intern linkbuilder", key: "/internal-link-builder.html" },
-    { href: "/meta-tag-generator.html",label: "Meta tags",           key: "/meta-tag-generator.html" },
-    { href: "/page-speed-check.html",  label: "Page Speed",          key: "/page-speed-check.html" },
-    { href: "/redirect-checker.html",  label: "Redirect Checker",    key: "/redirect-checker.html" },
+    { href: "/meta-tag-generator.html",    label: "Meta tags",          key: "/meta-tag-generator.html" },
+    { href: "/page-speed-check.html",      label: "Page Speed",         key: "/page-speed-check.html" },
+    { href: "/redirect-checker.html",      label: "Redirect Checker",   key: "/redirect-checker.html" }
   ];
   const TOP = [
     { href: "/",      label: "Forside", key: "/" },
-    { href: "/blog/", label: "Blog",    key: "/blog" },
+    { href: "/blog/", label: "Blog",    key: "/blog" }
   ];
 
-  // --- Markup ---
   const html = `
   <header class="border-b bg-white/80 backdrop-blur sticky top-0 z-40">
     <div class="max-w-6xl mx-auto p-4 flex items-center justify-between">
@@ -27,11 +26,14 @@
         type="button">
         <span class="sr-only">Åbn menu</span>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-             class="pointer-events-none"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
 
-      <!-- Nav container (bruges til både desktop og mobil) -->
+      <!-- Nav container -->
       <nav id="siteNav"
         class="hidden md:flex text-sm text-neutral-600 gap-4
                absolute left-0 right-0 top-full bg-white/95 backdrop-blur border-b
@@ -42,7 +44,6 @@
   </header>
   `;
 
-  // --- Utils ---
   function normalizePath(p) {
     if (!p) return "/";
     let out = p.replace(/index\.html$/i, "");
@@ -56,12 +57,12 @@
     return cp === lp || cp.startsWith(lp + "/");
   }
 
-  // --- Render nav links (desktop + mobil) ---
   function renderNav(inner) {
-    // Top links
-    const topLinks = TOP.map(it => `<a class="block md:inline-block py-2 md:py-0" href="${it.href}" data-page="${it.key}">${it.label}</a>`).join("");
+    const topLinks = TOP.map(it =>
+      `<a class="block md:inline-block py-2 md:py-0" href="${it.href}" data-page="${it.key}">${it.label}</a>`
+    ).join("");
 
-    // Desktop dropdown for Værktøjer
+    // Desktop dropdown – bruger samme TOOLS-array
     const toolsDesktop = `
       <div class="relative hidden md:block" id="toolsDesktop">
         <button id="toolsBtn" type="button"
@@ -70,13 +71,13 @@
           <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5.23 7.21a.75.75 0 011.06.02L10 11.127l3.71-3.896a.75.75 0 111.08 1.04l-4.24 4.457a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z"/></svg>
         </button>
         <div id="toolsMenu"
-             class="absolute right-0 mt-2 w-64 rounded-xl border bg-white shadow-lg p-2 hidden">
+             class="absolute right-0 mt-2 w-64 rounded-xl border bg-white shadow-lg p-2 hidden z-50">
           ${TOOLS.map(t => `<a class="block rounded-lg px-3 py-2 hover:bg-neutral-50" href="${t.href}" data-page="${t.key}">${t.label}</a>`).join("")}
         </div>
       </div>
     `;
 
-    // Mobil accordion for Værktøjer
+    // Mobil accordion – samme TOOLS-array
     const toolsMobile = `
       <div class="md:hidden border-t pt-2 mt-2" id="toolsMobile">
         <button id="toolsMobBtn" type="button"
@@ -99,17 +100,17 @@
     `;
   }
 
-  // --- Mount / behaviour ---
   function mount() {
+    // Fjern gammel header for at undgå dubletter
     const existing = document.querySelector("header");
     if (existing) existing.remove();
 
+    // Indsæt ny
     const wrap = document.createElement("div");
     wrap.innerHTML = html;
-    const headerEl = wrap.firstElementChild;
-    document.body.insertBefore(headerEl, document.body.firstChild);
+    document.body.insertBefore(wrap.firstElementChild, document.body.firstChild);
 
-    const nav = document.getElementById("siteNav");
+    const nav   = document.getElementById("siteNav");
     const inner = document.getElementById("navInner");
     renderNav(inner);
 
@@ -117,39 +118,34 @@
     const btn = document.getElementById("navToggle");
     function closeNav() { nav.classList.add("hidden"); btn?.setAttribute("aria-expanded","false"); }
     function openNav()  { nav.classList.remove("hidden"); btn?.setAttribute("aria-expanded","true"); }
-
     if (btn && nav) {
       btn.addEventListener("click", () => {
         const open = btn.getAttribute("aria-expanded") === "true";
         open ? closeNav() : openNav();
       });
-      // Luk på resize til desktop
       window.addEventListener("resize", () => {
         if (window.matchMedia('(min-width: 768px)').matches) closeNav();
       });
-      // Luk på ESC
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeNav(); });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeNav(); });
     }
 
-    // Desktop: Værktøjer dropdown
+    // Desktop dropdown
     const toolsBtn  = document.getElementById("toolsBtn");
     const toolsMenu = document.getElementById("toolsMenu");
     if (toolsBtn && toolsMenu) {
       let open = false;
       const openMenu  = () => { toolsMenu.classList.remove("hidden"); open = true; };
       const closeMenu = () => { toolsMenu.classList.add("hidden"); open = false; };
-      toolsBtn.addEventListener("click", (e) => { e.stopPropagation(); open ? closeMenu() : openMenu(); });
-      document.addEventListener("click", (e) => { if (open && !toolsMenu.contains(e.target) && e.target !== toolsBtn) closeMenu(); });
+      toolsBtn.addEventListener("click", e => { e.stopPropagation(); open ? closeMenu() : openMenu(); });
+      document.addEventListener("click", e => { if (open && !toolsMenu.contains(e.target) && e.target !== toolsBtn) closeMenu(); });
       window.addEventListener("scroll", closeMenu, { passive: true });
     }
 
-    // Mobil: Værktøjer accordion
+    // Mobil accordion
     const toolsMobBtn  = document.getElementById("toolsMobBtn");
     const toolsMobWrap = document.getElementById("toolsMobWrap");
     if (toolsMobBtn && toolsMobWrap) {
-      toolsMobBtn.addEventListener("click", () => {
-        toolsMobWrap.classList.toggle("hidden");
-      });
+      toolsMobBtn.addEventListener("click", () => toolsMobWrap.classList.toggle("hidden"));
     }
 
     // Aktivt link highlight
