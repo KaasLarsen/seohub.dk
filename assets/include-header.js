@@ -7,6 +7,7 @@
     { href: "/internal-link-builder.html", label: "Intern links", key: "/internal-link-builder.html" },
     { href: "/redirect-checker.html", label: "Redirect Checker", key: "/redirect-checker.html" },
     { href: "/heading-analyzer.html", label: "Heading Analyzer", key: "/heading-analyzer.html" },
+    { href: "/meta-tag-generator.html", label: "Meta tags", key: "/meta-tag-generator.html" },
   ];
 
   const html = `
