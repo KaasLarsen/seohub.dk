@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <title>Meta Tag Generator – Seohub.dk</title>
+  <meta name="description" content="Gratis Meta Tag Generator – lav title tag, meta description, robots, canonical, Open Graph og Twitter tags. Kopiér hele head-snippet med ét klik." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Global styles + includes fra projektet -->
+  <link rel="stylesheet" href="/assets/style.css" />
+  <script src="/assets/include-header.js" defer></script>
+  <script src="/assets/include-footer.js" defer></script>
+
+  <!-- Let, lokalt stylescope til værktøjets UI (ikke overlappende med globale klasser) -->
+  <style>
+    .meta-tool{--gap:16px}
+    .meta-tool .grid{display:grid;gap:var(--gap)}
+    @media(min-width:980px){.meta-tool .grid-2{grid-template-columns:1fr 1fr}}
+    .meta-tool .card{background:var(--card-bg, #fff);border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:16px}
+    .meta-tool .section-title{font-size:1.125rem;margin:0 0 8px}
+    .meta-tool label{font-weight:600;display:block;margin:12px 0 6px}
+    .meta-tool input[type="text"],
+    .meta-tool input[type="url"],
+    .meta-tool input[type="number"],
+    .meta-tool textarea,
+    .meta-tool select{width:100%;padding:10px 12px;border:1px solid rgba(0,0,0,.15);border-radius:8px;font:inherit}
+    .meta-tool textarea{min-height:110px;resize:vertical}
+    .meta-tool .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .meta-tool .badge{display:inline-flex;align-items:center;font-size:.8rem;border-radius:999px;padding:4px 10px;border:1px solid rgba(0,0,0,.12);background:#f7f7f7}
+    .meta-tool .badge.ok{border-color:#cce5cc;background:#f1fbf1}
+    .meta-tool .badge.warn{border-color:#ffe09e;background:#fff8e2}
+    .meta-tool .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .meta-tool button{cursor:pointer;border:1px solid rgba(0,0,0,.15);background:#0f62fe;color:#fff;border-radius:10px;padding:10px 14px;font-weight:600}
+    .meta-tool button.secondary{background:#fff;color:#111}
+    .meta-tool .muted{color:#666;font-size:.9rem}
+    .meta-tool .preview{border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:16px;background:#fff}
+    /* SERP-lignende forhåndsvisning */
+    .serp .url{color:#1a7f37;font-size:.9rem;margin-bottom:3px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+    .serp .title{color:#1a0dab;font-size:1.1rem;line-height:1.3;margin:2px 0 6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .serp .desc{color:#3c4043;font-size:.95rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    /* SoMe kort-mock */
+    .og-card{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center}
+    .og-card .img{width:100%;aspect-ratio:1.9/1;object-fit:cover;background:#eef1f5;border:1px solid rgba(0,0,0,.08);border-radius:8px}
+    .code{background:#0b1020;color:#e6f3ff;border-radius:10px;padding:14px;overflow:auto;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-size:.9rem}
+    .sponsor-grid{display:grid;gap:12px}
+    @media(min-width:880px){.sponsor-grid{grid-template-columns:repeat(4,1fr)}}
+    .sponsor-card{border-radius:14px;padding:14px;color:#111;background:linear-gradient(135deg,#eef2ff,#e6fffb)}
+    .sponsor-card a{display:block;font-weight:700;text-decoration:none}
+  </style>
+</head>
+<body>
+
+  <!-- Header indsættes centralt -->
+  <div id="header"></div>
+
+  <main class="container meta-tool" style="margin-top:24px;margin-bottom:48px">
+    <h1>📝 meta tag generator</h1>
+    <p class="muted">Lav title, meta description, robots, canonical, Open Graph og Twitter tags. Få live preview og kopiér hele <code>&lt;head&gt;</code>-snippettet med ét klik.</p>
+
+    <div class="grid grid-2" style="margin-top:18px">
+      <!-- Venstre kolonne: inputfelter -->
+      <section class="card">
+        <h2 class="section-title">grundlæggende</h2>
+
+        <label for="title">title tag</label>
+        <input id="title" type="text" placeholder="Fx: Gratis Meta Tag Generator – Optimer dine snippets" maxlength="120" />
+        <div class="row">
+          <span id="titleCount" class="badge">0 tegn</span>
+          <span id="titleHint" class="muted">anbefalet: 50–60 tegn</span>
+        </div>
+
+        <label for="description">meta description</label>
+        <textarea id="description" placeholder="Kort, handlingsorienteret beskrivelse på ca. 150–160 tegn."></textarea>
+        <div class="row">
+          <span id="descCount" class="badge">0 tegn</span>
+          <span id="descHint" class="muted">anbefalet: 140–160 tegn</span>
+        </div>
+
+        <label for="url">url (til canonical &amp; og:url)</label>
+        <input id="url" type="url" placeholder="https://ditdomæne.dk/sti/side" />
+
+        <label for="favicon">favicon (valgfri)</label>
+        <input id="favicon" type="url" placeholder="https://ditdomæne.dk/favicon.ico" />
+
+        <div class="row" style="margin-top:10px">
+          <div>
+            <input id="autoSlug" type="checkbox" checked />
+            <label for="autoSlug" style="display:inline;font-weight:500">brug title som og:title / twitter:title</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">robots &amp; indeks</h2>
+
+        <div class="row">
+          <label class="badge"><input type="radio" name="indexing" value="index" checked />&nbsp;index</label>
+          <label class="badge"><input type="radio" name="indexing" value="noindex" />&nbsp;noindex</label>
+          <label class="badge"><input type="radio" name="following" value="follow" checked />&nbsp;follow</label>
+          <label class="badge"><input type="radio" name="following" value="nofollow" />&nbsp;nofollow</label>
+        </div>
+
+        <div class="grid" style="margin-top:12px">
+          <div class="row" style="gap:8px">
+            <label for="maxSnippet" class="muted" style="margin:0">max-snippet</label>
+            <input id="maxSnippet" type="number" min="-1" placeholder="-1 = ubegrænset" style="max-width:160px" />
+          </div>
+          <div class="row" style="gap:8px">
+            <label for="maxImg" class="muted" style="margin:0">max-image-preview</label>
+            <select id="maxImg" style="max-width:200px">
+              <option value="">—</option>
+              <option value="none">none</option>
+              <option value="standard">standard</option>
+              <option value="large">large</option>
+            </select>
+          </div>
+          <div class="row" style="gap:8px">
+            <label for="maxVideo" class="muted" style="margin:0">max-video-preview</label>
+            <input id="maxVideo" type="number" min="-1" placeholder="-1 = ubegrænset" style="max-width:160px" />
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <span id="robotsPreview" class="badge">robots: index, follow</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">open graph</h2>
+
+        <label for="ogTitle">og:title</label>
+        <input id="ogTitle" type="text" placeholder="Hvis tom: bruges title" />
+
+        <label for="ogDesc">og:description</label>
+        <textarea id="ogDesc" placeholder="Hvis tom: bruges meta description"></textarea>
+
+        <label for="ogUrl">og:url</label>
+        <input id="ogUrl" type="url" placeholder="Hvis tom: bruges URL ovenfor" />
+
+        <label for="ogImage">og:image</label>
+        <input id="ogImage" type="url" placeholder="https://ditdomæne.dk/billede.jpg" />
+
+        <div class="row">
+          <div style="min-width:180px">
+            <label for="ogType">og:type</label>
+            <select id="ogType">
+              <option value="website">website</option>
+              <option value="article">article</option>
+            </select>
+          </div>
+          <div style="min-width:220px">
+            <label for="ogSite">og:site_name</label>
+            <input id="ogSite" type="text" placeholder="Fx: Seohub.dk" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">twitter</h2>
+
+        <div class="row">
+          <div style="min-width:200px">
+            <label for="twCard">twitter:card</label>
+            <select id="twCard">
+              <option value="summary_large_image">summary_large_image</option>
+              <option value="summary">summary</option>
+            </select>
+          </div>
+          <div style="min-width:220px">
+            <label for="twSite">twitter:site</label>
+            <input id="twSite" type="text" placeholder="@dinprofil" />
+          </div>
+          <div style="min-width:220px">
+            <label for="twCreator">twitter:creator</label>
+            <input id="twCreator" type="text" placeholder="@forfatter" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Højre kolonne: previews + output -->
+      <section class="card">
+        <h2 class="section-title">google preview</h2>
+        <div class="preview serp">
+          <div class="url" id="pvUrl">ditdomæne.dk/sti/side</div>
+          <div class="title" id="pvTitle">Din title vises her</div>
+          <div class="desc" id="pvDesc">Din meta description forhåndsvises her. Hold den kort og præcis for at øge CTR.</div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <span id="serpScore" class="badge">score: –</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">social preview</h2>
+        <div class="preview og-card">
+          <img id="pvOgImg" class="img" alt="" />
+          <div>
+            <div class="muted" id="pvOgSite">Seohub.dk</div>
+            <div style="font-weight:700" id="pvOgTitle">Din Open Graph title</div>
+            <div class="muted" id="pvOgDesc" style="margin-top:4px">Din Open Graph description</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">genereret &lt;head&gt;-snippet</h2>
+        <div id="code" class="code" spellcheck="false"></div>
+        <div class="actions" style="margin-top:12px">
+          <button id="copyAll">kopiér snippet</button>
+          <button id="downloadHead" class="secondary">download som head.html</button>
+          <button id="resetForm" class="secondary">nulstil</button>
+          <span class="muted" id="saveStateHint">automatisk gemt i din browser</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sponsoreret sektion (samme partnere som i cheat sheet) -->
+    <section style="margin-top:28px">
+      <h2 class="section-title">sponsoreret</h2>
+      <div class="sponsor-grid">
+        <div class="sponsor-card">
+          <div class="muted">hosting</div>
+          <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1" target="_blank" rel="nofollow sponsored noopener">Simply.com</a>
+          <div class="muted">Hurtig dansk webhosting</div>
+        </div>
+        <div class="sponsor-card">
+          <div class="muted">seo værktøj</div>
+          <a href="https://morningscore.io?fpr=seo43" target="_blank" rel="nofollow sponsored noopener">Morningscore</a>
+          <div class="muted">Alt-i-én SEO suite</div>
+        </div>
+        <div class="sponsor-card">
+          <div class="muted">ai værktøjer</div>
+          <a href="https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555" target="_blank" rel="nofollow sponsored noopener">AI Links</a>
+          <div class="muted">Udvalgte AI-ressourcer</div>
+        </div>
+        <div class="sponsor-card">
+          <div class="muted">domæner &amp; hosting</div>
+          <a href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1" target="_blank" rel="nofollow sponsored noopener">DanDomain</a>
+          <div class="muted">Domæner og shops</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer indsættes centralt -->
+  <div id="footer"></div>
+
+  <!-- Consent-baseret GA (som i cheat sheet) -->
+  <script src="/assets/consent-analytics.js" defer></script>
+
+  <!-- App-logic for værktøjet -->
+  <script>
+    // Helpers
+    const $ = (id) => document.getElementById(id);
+    const q = (sel) => document.querySelector(sel);
+
+    // Felter
+    const titleEl = $('title');
+    const descEl = $('description');
+    const urlEl = $('url');
+    const faviconEl = $('favicon');
+
+    const autoSlugEl = $('autoSlug');
+
+    const ogTitleEl = $('ogTitle');
+    const ogDescEl = $('ogDesc');
+    const ogUrlEl = $('ogUrl');
+    const ogImgEl = $('ogImage');
+    const ogTypeEl = $('ogType');
+    const ogSiteEl = $('ogSite');
+
+    const twCardEl = $('twCard');
+    const twSiteEl = $('twSite');
+    const twCreatorEl = $('twCreator');
+
+    const maxSnippetEl = $('maxSnippet');
+    const maxImgEl = $('maxImg');
+    const maxVideoEl = $('maxVideo');
+
+    const titleCount = $('titleCount');
+    const descCount = $('descCount');
+    const titleHint = $('titleHint');
+    const descHint = $('descHint');
+
+    const robotsPreview = $('robotsPreview');
+
+    const pvUrl = $('pvUrl');
+    const pvTitle = $('pvTitle');
+    const pvDesc = $('pvDesc');
+    const pvOgImg = $('pvOgImg');
+    const pvOgSite = $('pvOgSite');
+    const pvOgTitle = $('pvOgTitle');
+    const pvOgDesc = $('pvOgDesc');
+    const serpScore = $('serpScore');
+
+    const codeBox = $('code');
+    const copyAllBtn = $('copyAll');
+    const downloadBtn = $('downloadHead');
+    const resetBtn = $('resetForm');
+
+    // Persistence
+    const STORAGE_KEY = 'seohub_meta_tool_v1';
+    const saveState = () => {
+      const state = collectState();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    };
+    const loadState = () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const s = JSON.parse(raw);
+        // assign if exists
+        for (const [id, val] of Object.entries(s)) {
+          const el = $(id);
+          if (!el) continue;
+          if (el.type === 'checkbox' || el.type === 'radio') {
+            el.checked = !!val;
+          } else {
+            el.value = val;
+          }
+        }
+        // radios
+        if (s.indexing) q(`input[name="indexing"][value="${s.indexing}"]`)?.click();
+        if (s.following) q(`input[name="following"][value="${s.following}"]`)?.click();
+      } catch(e){}
+    };
+
+    function collectState(){
+      const indexing = document.querySelector('input[name="indexing"]:checked')?.value || 'index';
+      const following = document.querySelector('input[name="following"]:checked')?.value || 'follow';
+      return {
+        title: titleEl.value.trim(),
+        description: descEl.value.trim(),
+        url: urlEl.value.trim(),
+        favicon: faviconEl.value.trim(),
+        autoSlug: autoSlugEl.checked,
+        ogTitle: ogTitleEl.value.trim(),
+        ogDesc: ogDescEl.value.trim(),
+        ogUrl: ogUrlEl.value.trim(),
+        ogImage: ogImgEl.value.trim(),
+        ogType: ogTypeEl.value,
+        ogSite: ogSiteEl.value.trim(),
+        twCard: twCardEl.value,
+        twSite: twSiteEl.value.trim(),
+        twCreator: twCreatorEl.value.trim(),
+        indexing, following,
+        maxSnippet: maxSnippetEl.value,
+        maxImg: maxImgEl.value,
+        maxVideo: maxVideoEl.value
+      };
+    }
+
+    // Robots builder
+    function buildRobots(indexing, following, maxSnippet, maxImg, maxVideo){
+      const parts = [indexing, following].filter(Boolean);
+      if (maxSnippet !== '') parts.push(`max-snippet:${maxSnippet}`);
+      if (maxImg) parts.push(`max-image-preview:${maxImg}`);
+      if (maxVideo !== '') parts.push(`max-video-preview:${maxVideo}`);
+      return parts.join(', ');
+    }
+
+    // Head snippet builder
+    function buildHeadSnippet(s){
+      const lines = [];
+      // title
+      if (s.title) lines.push(`<title>${escapeHtml(s.title)}</title>`);
+      if (s.description) lines.push(`<meta name="description" content="${escapeHtml(s.description)}">`);
+      if (s.favicon) lines.push(`<link rel="icon" href="${escapeHtml(s.favicon)}">`);
+      if (s.url) lines.push(`<link rel="canonical" href="${escapeHtml(s.url)}">`);
+
+      const robots = buildRobots(s.indexing, s.following, s.maxSnippet, s.maxImg, s.maxVideo);
+      lines.push(`<meta name="robots" content="${escapeHtml(robots)}">`);
+
+      // Open Graph
+      const ogTitle = s.ogTitle || s.title;
+      const ogDesc = s.ogDesc || s.description;
+      const ogUrl  = s.ogUrl  || s.url;
+
+      if (ogTitle) lines.push(`<meta property="og:title" content="${escapeHtml(ogTitle)}">`);
+      if (ogDesc) lines.push(`<meta property="og:description" content="${escapeHtml(ogDesc)}">`);
+      if (ogUrl) lines.push(`<meta property="og:url" content="${escapeHtml(ogUrl)}">`);
+      if (s.ogImage) lines.push(`<meta property="og:image" content="${escapeHtml(s.ogImage)}">`);
+      if (s.ogType) lines.push(`<meta property="og:type" content="${escapeHtml(s.ogType)}">`);
+      if (s.ogSite) lines.push(`<meta property="og:site_name" content="${escapeHtml(s.ogSite)}">`);
+
+      // Twitter
+      if (s.twCard) lines.push(`<meta name="twitter:card" content="${escapeHtml(s.twCard)}">`);
+      if (ogTitle) lines.push(`<meta name="twitter:title" content="${escapeHtml(ogTitle)}">`);
+      if (ogDesc) lines.push(`<meta name="twitter:description" content="${escapeHtml(ogDesc)}">`);
+      if (s.ogImage) lines.push(`<meta name="twitter:image" content="${escapeHtml(s.ogImage)}">`);
+      if (s.twSite) lines.push(`<meta name="twitter:site" content="${escapeHtml(s.twSite)}">`);
+      if (s.twCreator) lines.push(`<meta name="twitter:creator" content="${escapeHtml(s.twCreator)}">`);
+
+      return lines.map(l => '  ' + l).join('\n');
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;');
+    }
+
+    function updateCounts(){
+      const t = titleEl.value.trim();
+      const d = descEl.value.trim();
+
+      titleCount.textContent = `${t.length} tegn`;
+      descCount.textContent = `${d.length} tegn`;
+
+      // badges OK/WARN
+      titleCount.classList.toggle('ok', t.length >= 50 && t.length <= 60);
+      titleCount.classList.toggle('warn', (t.length > 0 && (t.length < 45 || t.length > 65)));
+      descCount.classList.toggle('ok', d.length >= 140 && d.length <= 160);
+      descCount.classList.toggle('warn', (d.length > 0 && (d.length < 120 || d.length > 170)));
+    }
+
+    function scoreSerp(title, desc){
+      let score = 0;
+      if (title.length >= 50 && title.length <= 60) score += 40;
+      else if (title.length >= 45 && title.length <= 65) score += 25;
+
+      if (desc.length >= 140 && desc.length <= 160) score += 40;
+      else if (desc.length >= 120 && desc.length <= 170) score += 25;
+
+      if (title && desc) score += 10;
+      return Math.min(100, score);
+    }
+
+    function updatePreviews(){
+      const s = collectState();
+
+      // SERP preview
+      pvUrl.textContent = s.url ? new URL(s.url).host + (new URL(s.url).pathname || '/') : 'ditdomæne.dk/sti/side';
+      pvTitle.textContent = s.title || 'Din title vises her';
+      pvDesc.textContent = s.description || 'Din meta description forhåndsvises her. Hold den kort og præcis for at øge CTR.';
+      serpScore.textContent = 'score: ' + (scoreSerp(s.title, s.description) || '–');
+
+      // SoMe preview
+      const ogTitle = (s.autoSlug && s.title) ? s.title : (s.ogTitle || s.title);
+      const ogDesc = s.ogDesc || s.description || '';
+      pvOgSite.textContent = s.ogSite || 'Seohub.dk';
+      pvOgTitle.textContent = ogTitle || 'Din Open Graph title';
+      pvOgDesc.textContent = ogDesc || 'Din Open Graph description';
+
+      if (s.ogImage) {
+        pvOgImg.src = s.ogImage;
+        pvOgImg.alt = 'Open Graph image';
+      } else {
+        pvOgImg.removeAttribute('src');
+        pvOgImg.alt = '';
+      }
+
+      // Robots preview
+      robotsPreview.textContent = 'robots: ' + buildRobots(s.indexing, s.following, s.maxSnippet, s.maxImg, s.maxVideo);
+
+      // Code box
+      const headSnippet = buildHeadSnippet(s);
+      codeBox.textContent = `<head>\n${headSnippet}\n</head>`;
+    }
+
+    function onInputChange(){
+      updateCounts();
+      // automatisk udfyld OG fields hvis valgt
+      if (autoSlugEl.checked){
+        if (!ogTitleEl.value) ogTitleEl.placeholder = 'Hvis tom: bruges title';
+        if (!ogDescEl.value) ogDescEl.placeholder = 'Hvis tom: bruges meta description';
+      }
+      saveState();
+      updatePreviews();
+    }
+
+    function copyToClipboard(text){
+      if (navigator.clipboard && window.isSecureContext){
+        return navigator.clipboard.writeText(text);
+      }
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      return Promise.resolve();
+    }
+
+    // Event wiring
+    function wire(){
+      const inputs = document.querySelectorAll('input, textarea, select');
+      inputs.forEach(el => el.addEventListener('input', onInputChange));
+      document.querySelectorAll('input[name="indexing"], input[name="following"]').forEach(r => r.addEventListener('change', onInputChange));
+
+      copyAllBtn.addEventListener('click', () => {
+        copyToClipboard(codeBox.textContent).then(()=>{
+          copyAllBtn.textContent = 'kopieret ✔';
+          setTimeout(()=> copyAllBtn.textContent = 'kopiér snippet', 1200);
+        });
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        const blob = new Blob([codeBox.textContent], {type:'text/html;charset=utf-8'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'head.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+
+      resetBtn.addEventListener('click', () => {
+        localStorage.removeItem(STORAGE_KEY);
+        document.querySelectorAll('input[type="text"], input[type="url"], input[type="number"], textarea').forEach(e => e.value = '');
+        // defaults
+        q('input[name="indexing"][value="index"]').checked = true;
+        q('input[name="following"][value="follow"]').checked = true;
+        maxImgEl.value = '';
+        autoSlugEl.checked = true;
+        onInputChange();
+      });
+    }
+
+    // Init
+    loadState();
+    wire();
+    onInputChange();
+  </script>
+</body>
+</html>
