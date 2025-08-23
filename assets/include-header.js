@@ -5,7 +5,6 @@
     { href: "/robots-generator.html", label: "Robots.txt", key: "/robots-generator.html" },
     { href: "/sitemap-generator.html", label: "Sitemap.xml", key: "/sitemap-generator.html" },
     { href: "/internal-link-builder.html", label: "Intern links", key: "/internal-link-builder.html" },
-    { href: "/redirect-checker.html", label: "Redirect Checker", key: "/redirect-checker.html" },
     { href: "/heading-analyzer.html", label: "Heading Analyzer", key: "/heading-analyzer.html" },
     { href: "/meta-tag-generator.html", label: "Meta tags", key: "/meta-tag-generator.html" },
     { href: "/broken-link-checker.html", label: "Broken Links", key: "/broken-link-checker.html" },
