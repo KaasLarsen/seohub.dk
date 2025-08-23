@@ -8,6 +8,7 @@
     { href: "/redirect-checker.html", label: "Redirect Checker", key: "/redirect-checker.html" },
     { href: "/heading-analyzer.html", label: "Heading Analyzer", key: "/heading-analyzer.html" },
     { href: "/meta-tag-generator.html", label: "Meta tags", key: "/meta-tag-generator.html" },
+    { href: "/broken-link-checker.html", label: "Broken Links", key: "/broken-link-checker.html" }
   ];
 
   const html = `
