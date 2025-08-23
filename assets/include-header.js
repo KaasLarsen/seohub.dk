@@ -1,17 +1,16 @@
-<!-- /assets/include-header.js  (v7, unified nav for mobile+desktop) -->
-<script>
+// /assets/include-header.js  (v7 – unified nav for mobile + desktop, no <script> tags here)
 (function () {
-  // ÉN liste som både mobil og desktop bygger fra
+  // ÉN kilde til links (bruges af både mobil og desktop)
   const NAV_ITEMS = [
-    { href: "/",                       label: "Forside",      key: "/" },
-    { href: "/serp-preview.html",      label: "SERP",         key: "/serp-preview.html" },
-    { href: "/robots-generator.html",  label: "Robots",       key: "/robots-generator.html" },
-    { href: "/sitemap-generator.html", label: "Sitemap",      key: "/sitemap-generator.html" },
+    { href: "/",                       label: "Forside",        key: "/" },
+    { href: "/serp-preview.html",      label: "SERP",           key: "/serp-preview.html" },
+    { href: "/robots-generator.html",  label: "Robots",         key: "/robots-generator.html" },
+    { href: "/sitemap-generator.html", label: "Sitemap",        key: "/sitemap-generator.html" },
     { href: "/internal-link-builder.html", label: "Intern links", key: "/internal-link-builder.html" },
-    { href: "/meta-tag-generator.html",label: "Meta tags",    key: "/meta-tag-generator.html" },
-    { href: "/page-speed-check.html",  label: "Page Speed",   key: "/page-speed-check.html" },
-    { href: "/blog/",                  label: "Blog",         key: "/blog" }
-    // (Ingen Redirect Checker)
+    { href: "/meta-tag-generator.html",label: "Meta tags",      key: "/meta-tag-generator.html" },
+    { href: "/page-speed-check.html",  label: "Page Speed",     key: "/page-speed-check.html" },
+    { href: "/redirect-checker.html",  label: "Redirect Checker", key: "/redirect-checker.html" },
+    { href: "/blog/",                  label: "Blog",           key: "/blog" }
   ];
 
   const html = `
@@ -33,7 +32,7 @@
         </svg>
       </button>
 
-      <!-- Samme nav bruges til mobil (dropdown) og desktop -->
+      <!-- Samme nav til mobil (dropdown) og desktop -->
       <nav id="siteNav"
         class="hidden md:flex text-sm text-neutral-600 gap-4
                absolute left-0 right-0 top-full bg-white/95 backdrop-blur border-b
@@ -55,7 +54,6 @@
     const lp = normalizePath(linkPath);
     const cp = normalizePath(currentPath);
     if (lp === "/") return cp === "/";
-    // Markér også som aktiv når man er på en underside under /blog/
     return cp === lp || cp.startsWith(lp + "/");
   }
 
@@ -117,4 +115,3 @@
     mount();
   }
 })();
-</script>
