@@ -1,35 +1,22 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <!-- Global header (mobil menu + aktivt link) -->
-    <script src="/assets/include-header.js?v=7" defer></script>
-
     <meta charset="utf-8" />
-    <title>Redirect Checker – tjek 301/302 & kæder | Seohub.dk</title>
+    <title>Redirect Checker – følg redirect-kæden | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Gratis redirect checker: se 301/302/307, Location-mål, kædelængde og slutstatus. Få øje på 302-fejl, loops og lange kæder.">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="canonical" href="https://www.seohub.dk/redirect-checker.html" />
+    <meta name="description" content="Tjek redirect-kæder og HTTP-statuskoder. SeHop → endelig destination, Location-headers og content-type.">
 
-    <!-- Cookie consent + Analytics loader (GA4 efter samtykke) -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <!-- Fælles header/nav + GA/consent -->
+    <script src="/assets/include-header.js?v=7" defer></script>
     <script src="/assets/consent-analytics.js" defer></script>
 
-    <!-- UI -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Strukturdata (WebPage) -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebPage",
-      "name":"Redirect Checker – tjek 301/302 & kæder",
-      "url":"https://www.seohub.dk/redirect-checker.html",
-      "description":"Gratis redirect checker: se 301/302, kæder og slutstatus."
-    }
-    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-    <!-- Hero -->
+
+    <!-- Hero (samme stil som de andre værktøjer) -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
@@ -37,238 +24,59 @@
           <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Redirect Checker</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Tjek 301/302/307, se Location-mål og hele kæden – find 302-fejl, loops og unødige hop.
+            Indtast en URL og se hele redirect-kæden (HTTP-status, Location og content-type).
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Værktøj -->
+    <!-- App -->
     <main class="max-w-6xl mx-auto px-4 pb-16">
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-xl font-semibold mb-4">Tjek en URL</h2>
-        <form id="checkForm" class="space-y-4" onsubmit="return false;">
+        <form id="rc-form" class="space-y-4">
           <label class="block">
             <span class="block text-sm font-medium mb-1">URL der skal tjekkes</span>
-            <input id="urlInput" type="url" required
-                   placeholder="https://ditdomæne.dk/sti"
-                   class="w-full border rounded-2xl px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
+            <input id="rc-url" type="url" required placeholder="https://eksempel.dk/…"
+                   class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
           </label>
-
-          <div class="grid sm:grid-cols-3 gap-3">
-            <label class="flex items-center gap-2 text-sm">
-              <input id="useHead" type="checkbox" class="rounded" checked>
-              Brug HEAD først (hurtigere)
-            </label>
-            <label class="flex items-center gap-2 text-sm">
-              <input id="followMax" type="number" min="1" max="15" value="10"
-                     class="w-20 border rounded-xl px-2 py-1">
-              <span>Max hop</span>
-            </label>
-            <button id="runBtn"
+          <div class="flex items-center gap-3">
+            <button id="rc-run" type="submit"
                     class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
-              Tjek redirect-kæde
+              Kør
             </button>
+            <button id="rc-clear" type="button"
+                    class="px-4 py-2 rounded-2xl border bg-neutral-50 hover:bg-neutral-100">
+              Ryd
+            </button>
+            <span id="rc-status" class="text-sm text-neutral-600"></span>
           </div>
-          <p class="text-xs text-neutral-600">
-            Tip: Hvis et domæne blokerer CORS, kan vi ikke læse status/headers i browseren. Så viser vi
-            <em>opaqueredirect/CORS blokeret</em> på det hop. Prøv evt. uden HEAD eller test en anden URL.
-          </p>
         </form>
 
-        <div id="resultWrap" class="mt-6 hidden">
-          <h3 class="text-lg font-semibold mb-3">Resultater</h3>
-          <div id="summary" class="text-sm mb-3 text-neutral-700"></div>
-          <div id="chain" class="space-y-3"></div>
-        </div>
-
-        <template id="hopTpl">
-          <div class="rounded-2xl border bg-white p-4">
-            <div class="flex items-center justify-between gap-3">
-              <div class="text-sm text-neutral-700 font-mono break-all hop-url"></div>
-              <span class="text-xs px-2 py-1 rounded-full hop-badge"></span>
-            </div>
-            <div class="mt-2 text-sm text-neutral-600 hop-extra"></div>
-          </div>
-        </template>
+        <div id="rc-results" class="mt-6 space-y-4"></div>
       </section>
 
-      <!-- CTA: DanDomain -->
-      <section class="max-w-3xl mx-auto mt-10 mb-2 px-0">
-        <div class="rounded-2xl border bg-gradient-to-r from-blue-50 to-indigo-50 p-6 text-center shadow-sm">
-          <p class="text-sm text-neutral-700 mb-3">💡 Skal du have din side online uden bøvl?</p>
-          <a href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1&epi=redirect_checker"
+      <!-- Diskret sponsor-CTA -->
+      <section class="mt-8">
+        <div class="rounded-2xl p-6 md:p-8 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+          <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+          <h3 class="text-xl md:text-2xl font-extrabold mb-2">DanDomain – domæner & hosting</h3>
+          <p class="text-blue-100 mb-3">
+            Klar til at sætte dit site rigtigt op? Få stabil hosting og domæner hos DanDomain.
+          </p>
+          <a href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1"
              target="_blank" rel="sponsored noopener nofollow"
-             onclick="try{trackAffiliateClick && trackAffiliateClick('DanDomain','redirect_checker')}catch(_){}"
-             class="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
-            Start hos DanDomain →
+             class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+            Se løsninger hos DanDomain →
           </a>
         </div>
       </section>
     </main>
 
-    <!-- Footer (fælles) -->
+    <!-- Footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <script>
-    // Lille helper til GA event, hvis defineret globalt andre steder
-    function trackAffiliateClick(partner, placement) {
-      try {
-        if (window.gtag) {
-          window.gtag('event', 'affiliate_click', {
-            event_category: 'affiliate',
-            event_label: partner + ' | ' + placement,
-            partner, placement, page_path: location.pathname
-          });
-        }
-      } catch(_) {}
-    }
-
-    (function () {
-      const $form = document.getElementById('checkForm');
-      const $url = document.getElementById('urlInput');
-      const $head = document.getElementById('useHead');
-      const $max = document.getElementById('followMax');
-      const $btn  = document.getElementById('runBtn');
-
-      const $wrap = document.getElementById('resultWrap');
-      const $summary = document.getElementById('summary');
-      const $chain = document.getElementById('chain');
-      const $tpl = document.getElementById('hopTpl');
-
-      async function tryFetch(u, useHead) {
-        // Vi prøver HEAD først, fald tilbage til GET hvis HEAD blokeres
-        const methods = useHead ? ['HEAD','GET'] : ['GET'];
-        for (const m of methods) {
-          try {
-            const res = await fetch(u, { method: m, redirect: 'manual' });
-            return { ok: true, res, method: m };
-          } catch (e) {
-            // prøv næste metode
-          }
-        }
-        return { ok: false, err: 'Network/CORS-fejl' };
-      }
-
-      async function check(url, opts) {
-        const visited = [];
-        let current = url;
-        let hops = 0;
-        const start = performance.now();
-
-        while (hops < opts.max) {
-          hops++;
-          const out = { url: current };
-
-          const attempt = await tryFetch(current, opts.useHead);
-          if (!attempt.ok) {
-            out.status = 'Fejl';
-            out.note = attempt.err || 'Ukendt netværksfejl';
-            visited.push(out);
-            break;
-          }
-
-          const res = attempt.res;
-          // CORS-opaque?
-          if (res.type === 'opaqueredirect') {
-            out.status = 'opaqueredirect';
-            out.method = attempt.method;
-            out.note = 'CORS/redirect blokeret – kan ikke læse headers';
-            visited.push(out);
-            // vi kan ikke læse Location → stop
-            break;
-          }
-
-          out.status = res.status + '';
-          out.method = attempt.method;
-
-          // 3xx?
-          if (res.status >= 300 && res.status < 400) {
-            const loc = res.headers.get('Location');
-            out.location = loc || '(mangler Location-header)';
-            visited.push(out);
-
-            if (!loc) break;
-
-            // Byg absolut URL hvis relativ
-            try {
-              const next = new URL(loc, current).toString();
-              // loop-sikring
-              if (visited.some(h => h.url === next)) {
-                visited.push({ url: next, status: 'Loop', note: 'Redirect loop detekteret' });
-                break;
-              }
-              current = next;
-              continue;
-            } catch (e) {
-              visited.push({ url: loc, status: 'Fejl', note: 'Ugyldig Location-URL' });
-              break;
-            }
-          } else {
-            // slut
-            out.note = 'Endelig destination';
-            visited.push(out);
-            break;
-          }
-        }
-
-        const ms = Math.round(performance.now() - start);
-        return { chain: visited, time: ms };
-      }
-
-      function badgeClass(code) {
-        if (code === 'opaqueredirect') return 'bg-amber-100 text-amber-800';
-        if (code === 'Loop') return 'bg-red-100 text-red-700';
-        const n = parseInt(code, 10);
-        if (isNaN(n)) return 'bg-neutral-100 text-neutral-700';
-        if (n >= 200 && n < 300) return 'bg-green-100 text-green-800';
-        if (n >= 300 && n < 400) return 'bg-blue-100 text-blue-800';
-        if (n >= 400 && n < 500) return 'bg-amber-100 text-amber-800';
-        return 'bg-red-100 text-red-700';
-      }
-
-      function render(result) {
-        $chain.innerHTML = '';
-        $wrap.classList.remove('hidden');
-
-        $summary.textContent = `Hop i alt: ${result.chain.length} · Tid: ${result.time} ms`;
-
-        result.chain.forEach((hop, idx) => {
-          const node = $tpl.content.firstElementChild.cloneNode(true);
-          node.querySelector('.hop-url').textContent = `${idx+1}. ${hop.url}`;
-          const $b = node.querySelector('.hop-badge');
-          $b.textContent = hop.status;
-          $b.className = 'text-xs px-2 py-1 rounded-full hop-badge ' + badgeClass(hop.status);
-          const extra = [];
-          if (hop.method) extra.push(`metode: ${hop.method}`);
-          if (hop.location) extra.push(`→ Location: ${hop.location}`);
-          if (hop.note) extra.push(hop.note);
-          node.querySelector('.hop-extra').textContent = extra.join(' · ');
-          $chain.appendChild(node);
-        });
-      }
-
-      $btn.addEventListener('click', async () => {
-        const url = ($url.value || '').trim();
-        if (!url) return;
-        $btn.disabled = true; $btn.textContent = 'Tjekker…';
-        $wrap.classList.add('hidden');
-        $chain.innerHTML = ''; $summary.textContent = '';
-
-        try {
-          const out = await check(url, {
-            useHead: document.getElementById('useHead').checked,
-            max: Math.max(1, Math.min(15, parseInt(document.getElementById('followMax').value || '10', 10)))
-          });
-          render(out);
-        } catch (e) {
-          $wrap.classList.remove('hidden');
-          $summary.textContent = 'Fejl: ' + (e && e.message ? e.message : 'ukendt fejl');
-        } finally {
-          $btn.disabled = false; $btn.textContent = 'Tjek redirect-kæde';
-        }
-      });
-    })();
-    </script>
+    <!-- App JS -->
+    <script src="/assets/redirect-checker.js" defer></script>
   </body>
 </html>
