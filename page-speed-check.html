@@ -1,23 +1,35 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <!-- Fælles header/GA -->
-    <script src="/assets/consent-analytics.js" defer></script>
-    <script src="/assets/include-header.js?v=7" defer></script>
-
     <meta charset="utf-8" />
-    <title>Page Speed Quick-Check | Seohub.dk</title>
+    <title>Page Speed Quick-Check (proxy) | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Hurtigt Page Speed-tjek: mål svartid, estimer side-størrelse og tæl ressourcer. Få en enkel indikator på performance – uden at åbne Lighthouse." />
+    <meta name="description" content="Hurtig, praktisk hastigheds-check af en side: hentetid (via proxy), HTML-størrelse, billeder, scripts, stylesheets og basis-SEO.">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="canonical" href="https://www.seohub.dk/page-speed-check.html" />
 
-    <!-- UI -->
+    <!-- Cookie consent + GA (som vi bruger overalt) -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- Global header/footer -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+    <script src="/assets/include-footer.js?v=2" defer></script>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebPage",
+      "name":"Page Speed Quick-Check",
+      "url":"https://www.seohub.dk/page-speed-quick-check.html",
+      "description":"Hurtig, praktisk hastigheds-check af en side: hentetid (via proxy), HTML-størrelse, billeder, scripts, stylesheets og basis-SEO."
+    }
+    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-
-    <!-- Hero (samme stil som øvrige undersider) -->
+    <!-- Hero -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
@@ -25,254 +37,215 @@
           <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
           <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Page Speed Quick-Check</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Mål svar/TTFB, estimer side-størrelse og tæl ressourcer. Et lynhurtigt indtryk af performance – uden Lighthouse.
+            Få et lynhurtigt overblik: “proxy-hentetid”, HTML-størrelse, antal billeder/scripts/styles, title-længde og viewport.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Værktøj -->
-    <main class="max-w-6xl mx-auto px-4 pb-12">
+    <!-- App -->
+    <main class="max-w-6xl mx-auto px-4 pb-12 space-y-8">
+      <!-- Input -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-xl md:text-2xl font-semibold mb-2">Tjek en side</h2>
-        <p class="text-neutral-600 mb-4">Indtast en URL. Vi forsøger først direkte, og hvis CORS blokerer, bruger vi en sikker læse-proxy.</p>
-
-        <!-- Form -->
-        <form id="checkForm" class="grid md:grid-cols-12 gap-3" onsubmit="return false">
-          <div class="md:col-span-9">
-            <label class="block text-sm font-medium mb-1" for="urlInput">URL</label>
-            <input id="urlInput" type="url" placeholder="https://ditdomæne.dk/"
-              class="w-full border rounded-2xl px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200" required>
-          </div>
-          <div class="md:col-span-3 flex items-end">
-            <button id="runBtn" class="w-full px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
-              Kør tjek
-            </button>
-          </div>
-        </form>
-
-        <!-- Status/fejl -->
-        <div id="statusBox" class="hidden mt-4 text-sm"></div>
-
-        <!-- Resultater -->
-        <div id="results" class="mt-6 grid md:grid-cols-12 gap-4 hidden">
-          <!-- Venstre: tal/kort -->
-          <div class="md:col-span-8 space-y-4">
-            <div class="grid sm:grid-cols-3 gap-4">
-              <div class="rounded-2xl border bg-white p-4">
-                <div class="text-xs uppercase text-neutral-500">Svartid (ms)</div>
-                <div id="ttfbEl" class="text-2xl font-semibold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border bg-white p-4">
-                <div class="text-xs uppercase text-neutral-500">Est. HTML-størrelse</div>
-                <div id="sizeEl" class="text-2xl font-semibold mt-1">–</div>
-              </div>
-              <div class="rounded-2xl border bg-white p-4">
-                <div class="text-xs uppercase text-neutral-500">Ressourcer</div>
-                <div class="mt-1">
-                  <div class="text-sm"><span class="text-neutral-500">Billeder:</span> <span id="imgsEl">–</span></div>
-                  <div class="text-sm"><span class="text-neutral-500">Scripts:</span> <span id="jsEl">–</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border bg-white p-4">
-              <div class="text-xs uppercase text-neutral-500 mb-1">Vurdering</div>
-              <div id="gradeEl" class="text-lg font-semibold">–</div>
-              <p id="tipsEl" class="text-sm text-neutral-600 mt-2"></p>
-            </div>
-
-            <div class="rounded-2xl border bg-white p-4">
-              <div class="text-xs uppercase text-neutral-500 mb-1">HTML-preview (første ~50 kB)</div>
-              <pre id="previewEl" class="text-xs overflow-auto whitespace-pre-wrap max-h-64"></pre>
-            </div>
-          </div>
-
-          <!-- Højre: CTA/links -->
-          <aside class="md:col-span-4 space-y-4">
-            <div class="rounded-2xl p-5 text-white shadow-lg"
-                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
-              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
-              <h3 class="text-xl font-extrabold mb-2">Mål rigtige Core Web Vitals</h3>
-              <p class="text-blue-100 mb-3">Få konkrete CWV‐målinger og SEO-indsigt.</p>
-              <a href="https://morningscore.io?fpr=seo43" target="_blank" rel="sponsored noopener nofollow"
-                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
-                Prøv Morningscore
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
-              </a>
-            </div>
-
-            <div class="rounded-2xl p-5 text-white shadow-lg"
-                 style="background:linear-gradient(135deg,#06b6d4 0%,#3b82f6 60%,#6366f1 100%)">
-              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret</div>
-              <h3 class="text-xl font-extrabold mb-2">Domain & Hosting</h3>
-              <p class="text-blue-100 mb-3">Klar til at forbedre hastigheden? Vælg stabil hosting.</p>
-              <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
-                 target="_blank" rel="sponsored noopener nofollow"
-                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
-                Simply.com →
-              </a>
-            </div>
-          </aside>
+        <h2 class="text-xl md:text-2xl font-semibold mb-3">Test en URL</h2>
+        <div class="md:flex items-end gap-3">
+          <label class="block md:flex-1 mb-3 md:mb-0">
+            <span class="block text-sm font-medium mb-1">URL</span>
+            <input id="ps-url" type="url" placeholder="fx https://www.eksempel.dk/"
+                   class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
+          </label>
+          <button id="ps-run"
+                  class="px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
+            Kør
+          </button>
         </div>
+        <p class="text-xs text-neutral-500 mt-2">
+          Note: Vi bruger en gratis proxy (AllOrigins). Tider er vejledende. For dyb performance: brug PageSpeed Insights/WebPageTest nedenfor.
+        </p>
       </section>
 
-      <!-- Hjælp/faq -->
-      <section class="mt-6 bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-xl font-semibold mb-2">Hvordan virker dette?</h2>
-        <ul class="list-disc pl-6 text-sm text-neutral-700 space-y-2">
-          <li>Vi måler fetch-svartid (ca. “TTFB”) og estimerer HTML-størrelse ved at downloade siden.</li>
-          <li>Hvis siden blokerer CORS, henter vi via en læse-proxy (kun til analyse).</li>
-          <li>Ressource-tælling (img/script) sker ved at parse den hentede HTML (hvis muligt).</li>
-          <li>For fulde CWV: Brug PageSpeed Insights eller et værktøj som Morningscore.</li>
-        </ul>
+      <!-- Resultater -->
+      <section id="ps-results" class="hidden bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <h2 class="text-xl md:text-2xl font-semibold mb-4">Resultater</h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Målinger -->
+          <div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="rounded-2xl border p-4 bg-white">
+                <div class="text-xs uppercase text-neutral-500">Proxy-hentetid (ca.)</div>
+                <div id="ps-time" class="text-2xl font-bold mt-1">–</div>
+              </div>
+              <div class="rounded-2xl border p-4 bg-white">
+                <div class="text-xs uppercase text-neutral-500">HTML-størrelse</div>
+                <div id="ps-size" class="text-2xl font-bold mt-1">–</div>
+              </div>
+              <div class="rounded-2xl border p-4 bg-white">
+                <div class="text-xs uppercase text-neutral-500">Billeder (img)</div>
+                <div id="ps-imgs" class="text-2xl font-bold mt-1">–</div>
+              </div>
+              <div class="rounded-2xl border p-4 bg-white">
+                <div class="text-xs uppercase text-neutral-500">Scripts</div>
+                <div id="ps-scripts" class="text-2xl font-bold mt-1">–</div>
+              </div>
+              <div class="rounded-2xl border p-4 bg-white">
+                <div class="text-xs uppercase text-neutral-500">Stylesheets (link rel=stylesheet)</div>
+                <div id="ps-css" class="text-2xl font-bold mt-1">–</div>
+              </div>
+              <div class="rounded-2xl border p-4 bg-white">
+                <div class="text-xs uppercase text-neutral-500">Title-længde</div>
+                <div id="ps-titlelen" class="text-2xl font-bold mt-1">–</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kvalitets-tjek -->
+          <div class="space-y-3">
+            <div class="rounded-2xl border p-4 bg-white">
+              <div class="text-xs uppercase text-neutral-500 mb-1">Title</div>
+              <div id="ps-title" class="text-sm break-words">–</div>
+            </div>
+            <div class="rounded-2xl border p-4 bg-white">
+              <div class="text-xs uppercase text-neutral-500 mb-1">Viewport</div>
+              <div id="ps-viewport" class="text-sm">–</div>
+            </div>
+            <div class="rounded-2xl border p-4 bg-white">
+              <div class="text-xs uppercase text-neutral-500 mb-1">Meta description (uddrag)</div>
+              <div id="ps-desc" class="text-sm break-words text-neutral-700">–</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a id="ps-psi" target="_blank" rel="noopener"
+             class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Åbn i PageSpeed Insights</a>
+          <a id="ps-wpt" target="_blank" rel="noopener"
+             class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Åbn i WebPageTest</a>
+        </div>
+
+        <p id="ps-note" class="text-xs text-neutral-500 mt-3">
+          * Proxy-hentetid inkluderer netværk → proxy → målsite → proxy → dig. Brug PSI/WPT for præcis måling af CWV.
+        </p>
+      </section>
+
+      <!-- CTA (frivillig) -->
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-lg font-semibold">Vil du forbedre din score?</h3>
+            <p class="text-sm text-neutral-600">Tjek vores andre værktøjer – og få hosting/domæne på få minutter.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">SERP & Meta</a>
+            <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.txt</a>
+            <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Sitemap.xml</a>
+            <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Intern links</a>
+          </div>
+        </div>
       </section>
     </main>
 
-    <!-- Footer -->
-    <script src="/assets/include-footer.js?v=2" defer></script>
-
-    <!-- App script -->
     <script>
-      (function () {
-        const $form   = document.getElementById('checkForm');
-        const $url    = document.getElementById('urlInput');
-        const $btn    = document.getElementById('runBtn');
-        const $status = document.getElementById('statusBox');
-        const $wrap   = document.getElementById('results');
+      (function(){
+        const $u = document.getElementById('ps-url');
+        const $b = document.getElementById('ps-run');
+        const $wrap = document.getElementById('ps-results');
 
-        const $ttfb   = document.getElementById('ttfbEl');
-        const $size   = document.getElementById('sizeEl');
-        const $imgs   = document.getElementById('imgsEl');
-        const $js     = document.getElementById('jsEl');
-        const $grade  = document.getElementById('gradeEl');
-        const $tips   = document.getElementById('tipsEl');
-        const $prev   = document.getElementById('previewEl');
+        const $time = document.getElementById('ps-time');
+        const $size = document.getElementById('ps-size');
+        const $imgs = document.getElementById('ps-imgs');
+        const $scripts = document.getElementById('ps-scripts');
+        const $css = document.getElementById('ps-css');
+        const $title = document.getElementById('ps-title');
+        const $titlelen = document.getElementById('ps-titlelen');
+        const $viewport = document.getElementById('ps-viewport');
+        const $desc = document.getElementById('ps-desc');
 
-        function normalizeUrl(input) {
-          let u = input.trim();
-          if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
-          try { return new URL(u).href; } catch { return null; }
+        const $psi = document.getElementById('ps-psi');
+        const $wpt = document.getElementById('ps-wpt');
+
+        function normUrl(v){
+          v = (v || "").trim();
+          if (!v) return "";
+          if (!/^https?:\/\//i.test(v)) v = "https://" + v;
+          try { return new URL(v).href; } catch(e){ return ""; }
         }
-        function proxyUrl(u) {
-          // CORS-læseproxy for HTML
-          const isHttps = /^https:\/\//i.test(u);
-          return 'https://r.jina.ai/' + (isHttps ? 'https://' : 'http://') + u.replace(/^https?:\/\//,'');
-        }
-        function prettyBytes(n) {
-          if (n < 1024) return n + ' B';
-          if (n < 1024*1024) return (n/1024).toFixed(1) + ' kB';
-          return (n/1024/1024).toFixed(2) + ' MB';
-        }
-        function assess(ttfbMs, bytes, imgs, scripts) {
-          // Meget grov vurdering
-          let score = 100;
-          if (ttfbMs > 600) score -= Math.min(40, Math.round((ttfbMs-600)/10));
-          if (bytes  > 120*1024) score -= Math.min(25, Math.round((bytes-120*1024)/(20*1024)));
-          if (imgs   > 20) score -= Math.min(15, (imgs-20));
-          if (scripts> 20) score -= Math.min(20, (scripts-20));
-
-          let label = 'God';
-          if (score < 75) label = 'Middel';
-          if (score < 55) label = 'Langsom';
-
-          const tips = [];
-          if (ttfbMs > 600) tips.push('Høj TTFB – tjek hosting, caching og server-lokation.');
-          if (bytes > 200*1024) tips.push('Stor HTML – minificér, fjern unødvendig markup og inlinet CSS/JS.');
-          if (imgs > 15) tips.push('Mange billeder – komprimér og lazy-load.');
-          if (scripts > 10) tips.push('Mange scripts – fjern/udskyd 3.-parts scripts.');
-
-          return { label, score: Math.max(0, score), tips: tips.join(' ') || 'Ser fint ud som et quick-check.' };
+        function prettyBytes(n){
+          if (!Number.isFinite(n)) return "–";
+          if (n < 1024) return n + " B";
+          if (n < 1024*1024) return (n/1024).toFixed(1) + " kB";
+          return (n/(1024*1024)).toFixed(2) + " MB";
         }
 
-        async function runCheck() {
-          const u = normalizeUrl($url.value || '');
-          if (!u) { $status.className = 'mt-4 text-sm text-red-600'; $status.textContent = 'Ugyldig URL.'; $status.classList.remove('hidden'); return; }
+        async function run(){
+          const url = normUrl($u.value);
+          if (!url) { alert("Indsæt en gyldig URL"); return; }
 
-          $btn.disabled = true;
-          $status.className = 'mt-4 text-sm text-neutral-600';
-          $status.textContent = 'Henter…';
-          $status.classList.remove('hidden');
-          $wrap.classList.add('hidden');
+          // Links til eksterne test
+          $psi.href = "https://pagespeed.web.dev/analysis?url=" + encodeURIComponent(url);
+          $wpt.href = "https://www.webpagetest.org/?url=" + encodeURIComponent(url);
 
-          let html = '';
-          let ttfb = null;
-          let usedProxy = false;
+          // Kald via AllOrigins raw endpoint (returnerer HTML som text, CORS-enabled)
+          const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url) + "&disableCache=true";
 
-          async function tryFetch(targetUrl) {
-            const t0 = performance.now();
-            const r = await fetch(targetUrl, { mode: 'cors' });
-            const t1 = performance.now();
-            const txt = await r.text();
-            return { ok: r.ok, text: txt, ttfb: Math.round(t1 - t0) };
-          }
-
-          // 1) Direkte
-          try {
-            const res = await tryFetch(u);
-            if (res.ok) {
-              ttfb = res.ttfb;
-              html = res.text;
-            } else {
-              throw new Error('Direkte fetch ikke OK');
-            }
-          } catch (e) {
-            // 2) Proxy
-            try {
-              const res2 = await tryFetch(proxyUrl(u));
-              if (res2.text && res2.text.length) {
-                usedProxy = true;
-                ttfb = res2.ttfb; // proxy-målt
-                html = res2.text;
-              } else {
-                throw new Error('Proxy gav tomt svar');
-              }
-            } catch (e2) {
-              $btn.disabled = false;
-              $status.className = 'mt-4 text-sm text-red-600';
-              $status.textContent = 'Kunne ikke hente siden (CORS eller netværksfejl).';
-              return;
-            }
-          }
-
-          // Estimer størrelse (HTML kun)
-          const bytes = new Blob([html]).size;
-
-          // Prøv at parse HTML for at tælle tags (proxy kan returnere “læst tekst” – så bliver tal = 0)
-          let imgCount = 0, scriptCount = 0, preview = '';
-          try {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            if (doc && doc.documentElement) {
-              imgCount = doc.querySelectorAll('img').length;
-              scriptCount = doc.querySelectorAll('script').length;
-              preview = doc.documentElement.outerHTML.slice(0, 50000);
-            } else {
-              preview = html.slice(0, 50000);
-            }
-          } catch {
-            preview = html.slice(0, 50000);
-          }
-
-          // Vurder
-          const { label, score, tips } = assess(ttfb, bytes, imgCount, scriptCount);
-
-          // Render
-          $ttfb.textContent = String(ttfb || '–');
-          $size.textContent = prettyBytes(bytes);
-          $imgs.textContent = imgCount || 0;
-          $js.textContent = scriptCount || 0;
-          $grade.textContent = `${label} · score ${score}/100`;
-          $tips.textContent = tips;
-          $prev.textContent = preview;
-
-          $status.className = 'mt-4 text-sm text-green-700';
-          $status.textContent = usedProxy ? 'Færdig (via proxy pga. CORS).' : 'Færdig.';
           $wrap.classList.remove('hidden');
-          $btn.disabled = false;
+          $time.textContent = "…";
+          $size.textContent = "…";
+          $imgs.textContent = "…";
+          $scripts.textContent = "…";
+          $css.textContent = "…";
+          $title.textContent = "…";
+          $titlelen.textContent = "…";
+          $viewport.textContent = "…";
+          $desc.textContent = "…";
+
+          let t0 = performance.now();
+          try {
+            const res = await fetch(proxy, { cache: "no-cache" });
+            const txt = await res.text();
+            const t1 = performance.now();
+
+            // Ca. hentetid via proxy
+            $time.textContent = Math.max(0, Math.round(t1 - t0)) + " ms";
+
+            // Størrelse (beregn via Blob for korrekte bytes)
+            const bytes = new Blob([txt]).size;
+            $size.textContent = prettyBytes(bytes);
+
+            // Parse HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(txt, "text/html");
+
+            // Title
+            const title = (doc.querySelector("title")?.textContent || "").trim();
+            $title.textContent = title || "—";
+            $titlelen.textContent = title ? String(title.length) : "0";
+
+            // Viewport
+            const vp = doc.querySelector('meta[name="viewport"]')?.getAttribute('content') || "—";
+            $viewport.textContent = vp;
+
+            // Meta description (uddrag)
+            const md = doc.querySelector('meta[name="description"]')?.getAttribute('content') || "—";
+            $desc.textContent = md;
+
+            // Counts
+            $imgs.textContent = String(doc.querySelectorAll("img").length);
+            $scripts.textContent = String(doc.querySelectorAll("script").length);
+            $css.textContent = String(doc.querySelectorAll('link[rel="stylesheet"]').length);
+
+          } catch (e){
+            console.error(e);
+            alert("Kunne ikke hente siden via proxy. Tjek at din CSP tillader https://api.allorigins.win og prøv igen.");
+            $time.textContent = "fejl";
+            $size.textContent = "fejl";
+          }
         }
 
-        document.getElementById('runBtn').addEventListener('click', runCheck);
+        document.getElementById('ps-run').addEventListener('click', run);
+        document.getElementById('ps-url').addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); run(); }
+        });
       })();
     </script>
   </body>
