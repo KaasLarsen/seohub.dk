@@ -2,81 +2,250 @@
 <html lang="da">
   <head>
     <meta charset="utf-8" />
-    <title>Redirect Checker – følg redirect-kæden | Seohub.dk</title>
+    <title>Redirect Checker (klient-only) – Se destination og evt. kæde | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Tjek redirect-kæder og HTTP-statuskoder. SeHop → endelig destination, Location-headers og content-type.">
-
+    <meta name="description" content="Tjek redirect: fuld kæde for seohub.dk og bedste-gæt destination for eksterne domæner – direkte i browseren, uden server.">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <!-- Fælles header/nav + GA/consent -->
-    <script src="/assets/include-header.js?v=7" defer></script>
-    <script src="/assets/consent-analytics.js" defer></script>
+    <link rel="canonical" href="https://www.seohub.dk/redirect-checker.html" />
 
-    <!-- Tailwind -->
+    <!-- Fælles scripts -->
+    <script src="/assets/consent-analytics.js" defer></script>
+    <script src="/assets/include-header.js?v=7" defer></script>
+    <script src="/assets/include-footer.js?v=2" defer></script>
+
+    <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* sikkerhed mod horisontal scroll på mobil */
+      html, body { max-width: 100%; overflow-x: hidden; }
+      .break-any { overflow-wrap: anywhere; word-break: break-word; }
+    </style>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
 
-    <!-- Hero (samme stil som de andre værktøjer) -->
+    <!-- Hero (match din blå stil) -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
              style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
           <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
-          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Redirect Checker</h1>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Redirect Checker (klient-only)</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Indtast en URL og se hele redirect-kæden (HTTP-status, Location og content-type).
+            Fuld kæde for <strong>seohub.dk</strong>. For eksterne domæner ser du den endelige destination (bedste gæt) – alt kører i din browser.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- App -->
-    <main class="max-w-6xl mx-auto px-4 pb-16">
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <!-- Formular -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <form id="rc-form" class="space-y-4">
-          <label class="block">
-            <span class="block text-sm font-medium mb-1">URL der skal tjekkes</span>
-            <input id="rc-url" type="url" required placeholder="https://eksempel.dk/…"
-                   class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
-          </label>
-          <div class="flex items-center gap-3">
-            <button id="rc-run" type="submit"
-                    class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
-              Kør
-            </button>
-            <button id="rc-clear" type="button"
-                    class="px-4 py-2 rounded-2xl border bg-neutral-50 hover:bg-neutral-100">
-              Ryd
-            </button>
-            <span id="rc-status" class="text-sm text-neutral-600"></span>
+        <form id="rcForm" class="grid md:grid-cols-12 gap-4">
+          <div class="md:col-span-9">
+            <label class="block text-sm font-medium mb-1">URL</label>
+            <input id="rcUrl" type="url" required placeholder="https://eksempel.dk"
+                   class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200" />
+            <p class="text-xs text-neutral-500 mt-1">Skal starte med http:// eller https:// (vi prepender https:// hvis du glemmer det).</p>
+          </div>
+          <div class="md:col-span-3 flex items-end">
+            <button class="w-full px-4 py-3 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Kør</button>
           </div>
         </form>
 
-        <div id="rc-results" class="mt-6 space-y-4"></div>
+        <div class="mt-4 text-xs text-neutral-600">
+          <strong>Note:</strong> Browsere blokerer læsning af redirect-headers for fremmede domæner (CORS). Derfor:
+          <ul class="list-disc pl-5 mt-1 space-y-1">
+            <li><strong>seohub.dk:</strong> Vi viser hele kæden (status + Location) med fetch.</li>
+            <li><strong>andre domæner:</strong> Vi viser typisk den endelige destination via et usynligt <code>&lt;img&gt;</code> (ingen status eller kæde).</li>
+          </ul>
+        </div>
+
+        <!-- Output -->
+        <div id="rcOut" class="mt-6 space-y-4 hidden">
+          <div id="rcError" class="hidden rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800"></div>
+          <div id="rcHint" class="hidden rounded-xl border bg-amber-50 p-4 text-sm text-amber-800"></div>
+          <div id="rcResult" class="space-y-4"></div>
+        </div>
       </section>
 
-      <!-- Diskret sponsor-CTA -->
-      <section class="mt-8">
-        <div class="rounded-2xl p-6 md:p-8 text-white shadow-lg"
-             style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
-          <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
-          <h3 class="text-xl md:text-2xl font-extrabold mb-2">DanDomain – domæner & hosting</h3>
-          <p class="text-blue-100 mb-3">
-            Klar til at sætte dit site rigtigt op? Få stabil hosting og domæner hos DanDomain.
-          </p>
-          <a href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1"
-             target="_blank" rel="sponsored noopener nofollow"
-             class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
-            Se løsninger hos DanDomain →
-          </a>
+      <!-- Hjælp + CTA -->
+      <section class="mt-8 grid md:grid-cols-3 gap-4">
+        <div class="rounded-2xl border bg-white p-5">
+          <h3 class="font-semibold">Tip</h3>
+          <p class="text-sm text-neutral-600 mt-1">Brug 301 for permanente redirects og hold kæden kort (1–2 hop). Undgå mixed content (http → https) issues.</p>
         </div>
+        <div class="rounded-2xl border bg-white p-5">
+          <h3 class="font-semibold">Relevante værktøjer</h3>
+          <ul class="text-sm text-blue-600 mt-1 space-y-1">
+            <li><a class="hover:underline" href="/serp-preview.html">SERP & Meta</a></li>
+            <li><a class="hover:underline" href="/sitemap-generator.html">Sitemap.xml generator</a></li>
+            <li><a class="hover:underline" href="/robots-generator.html">Robots.txt generator</a></li>
+          </ul>
+        </div>
+        <a href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1"
+           target="_blank" rel="sponsored noopener nofollow"
+           class="rounded-2xl p-5 text-white shadow-lg block"
+           style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+          <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret</div>
+          <div class="font-semibold text-base">DanDomain</div>
+          <div class="text-sm text-blue-100 mt-1">Domæner & hosting til virksomheder</div>
+          <div class="text-sm mt-3 underline">Læs mere →</div>
+        </a>
       </section>
     </main>
 
-    <!-- Footer -->
-    <script src="/assets/include-footer.js?v=2" defer></script>
+    <script>
+      (function () {
+        const $form = document.getElementById("rcForm");
+        const $url  = document.getElementById("rcUrl");
+        const $out  = document.getElementById("rcOut");
+        const $err  = document.getElementById("rcError");
+        const $hint = document.getElementById("rcHint");
+        const $res  = document.getElementById("rcResult");
 
-    <!-- App JS -->
-    <script src="/assets/redirect-checker.js" defer></script>
+        function showError(msg) {
+          $out.classList.remove("hidden");
+          $err.classList.remove("hidden");
+          $err.textContent = msg;
+          $hint.classList.add("hidden");
+          $res.innerHTML = "";
+        }
+        function showHint(msg) {
+          $out.classList.remove("hidden");
+          $hint.classList.remove("hidden");
+          $hint.textContent = msg;
+        }
+        function clearMsgs() {
+          $err.classList.add("hidden");
+          $err.textContent = "";
+          $hint.classList.add("hidden");
+          $hint.textContent = "";
+        }
+        function escapeHtml(s) {
+          return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        // Følg redirects for same-origin (seohub.dk)
+        async function followSameOriginChain(startUrl, maxHops = 10) {
+          const hops = [];
+          let current = startUrl;
+          for (let i = 0; i < maxHops; i++) {
+            const t0 = performance.now();
+            const resp = await fetch(current, { method: "GET", redirect: "manual" });
+            const t1 = performance.now();
+            const status = resp.status;
+            const location = resp.headers.get("location");
+            hops.push({ url: current, status, location, time_ms: Math.round(t1 - t0) });
+            if ([301,302,303,307,308].includes(status) && location) {
+              current = new URL(location, current).toString();
+              // Hvis næste hop går cross-origin, stopper vi (kan ikke læse videre)
+              const sameHost = new URL(current, location).host === window.location.host;
+              if (!sameHost) break;
+              continue;
+            }
+            break;
+          }
+          return hops;
+        }
+
+        // “Bedste-gæt” slutdestination for cross-origin via <img>
+        function resolveViaImage(url, timeoutMs = 8000) {
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            let done = false;
+            const timer = setTimeout(() => {
+              if (done) return;
+              done = true;
+              img.src = "";
+              reject(new Error("Timeout"));
+            }, timeoutMs);
+
+            img.onload = () => {
+              if (done) return;
+              done = true;
+              clearTimeout(timer);
+              // currentSrc er ofte den endelige ressource-URL efter evt. redirects
+              resolve(img.currentSrc || img.src || url);
+            };
+            img.onerror = () => {
+              if (done) return;
+              done = true;
+              clearTimeout(timer);
+              // Nogle endpoints er ikke billeder → prøv alligevel at rapportere sidste kendte src
+              resolve(img.currentSrc || img.src || url);
+            };
+
+            // Nogle servers blokerer hotlink – vi prøver stadig
+            img.referrerPolicy = "no-referrer";
+            img.src = url;
+          });
+        }
+
+        $form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearMsgs();
+          $out.classList.remove("hidden");
+          $res.innerHTML = '<div class="text-sm text-neutral-600">Kører…</div>';
+
+          let u = ($url.value || "").trim();
+          if (!u) return showError("Angiv en URL.");
+          if (!/^https?:\/\//i.test(u)) u = "https://" + u;
+
+          try {
+            const target = new URL(u);
+            const sameHost = target.host === window.location.host;
+
+            if (sameHost) {
+              // Fuld kæde (same-origin)
+              const hops = await followSameOriginChain(target.toString(), 10);
+              const final = hops[hops.length - 1] || { url: target.toString() };
+
+              // Render
+              const parts = [];
+              parts.push(`<div class="rounded-xl border bg-white p-4">
+                <div class="text-sm text-neutral-600">Endelig destination</div>
+                <div class="font-semibold break-any">${escapeHtml(final.url)}</div>
+              </div>`);
+              parts.push(`<div class="rounded-xl border bg-white p-4">
+                <div class="font-semibold mb-3">Kæde (${hops.length} hop)</div>
+                <ol class="space-y-2">` +
+                  hops.map((h,i)=>`
+                    <li class="rounded-lg border bg-neutral-50 p-3">
+                      <div class="text-xs text-neutral-600 mb-1">Hop ${i+1} · ${h.time_ms ?? "?"} ms</div>
+                      <div class="text-sm"><span class="font-mono">HTTP ${h.status}</span> – ${escapeHtml(h.url)}</div>
+                      ${h.location ? `<div class="text-xs text-neutral-500 mt-1">→ Location: ${escapeHtml(h.location)}</div>` : ""}
+                    </li>
+                  `).join("") +
+                `</ol>
+              </div>`);
+              $res.innerHTML = parts.join("");
+
+            } else {
+              // Cross-origin: bedste-gæt destination via <img>
+              showHint("Cross-origin: vi kan ikke læse redirect-headers pga. CORS. Viser bedste-gæt på endelig destination.");
+              let finalUrl;
+              try {
+                finalUrl = await resolveViaImage(target.toString());
+              } catch(_) {
+                finalUrl = target.toString();
+              }
+              $res.innerHTML = `
+                <div class="rounded-xl border bg-white p-4">
+                  <div class="text-sm text-neutral-600">Estimeret destination (bedste gæt)</div>
+                  <div class="font-semibold break-any">${escapeHtml(finalUrl)}</div>
+                </div>
+                <div class="rounded-xl border bg-white p-4 text-sm text-neutral-600">
+                  <p>Vil du være helt sikker? Åbn linket i en ny fane og tjek adresselinjen:</p>
+                  <p class="mt-2"><a class="text-blue-600 hover:underline break-any" href="${escapeHtml(u)}" target="_blank" rel="noopener">Åbn ${escapeHtml(u)} →</a></p>
+                </div>
+              `;
+            }
+          } catch (err) {
+            console.error(err);
+            showError("Ugyldig URL.");
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
