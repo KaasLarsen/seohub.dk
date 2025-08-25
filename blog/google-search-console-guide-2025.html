@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <!-- Global header/nav -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+
+    <meta charset="utf-8" />
+    <title>Google Search Console guide (2025) – sådan bruger du GSC rigtigt | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="Den komplette Google Search Console guide 2025. Lær opsætning, verifikation, Performance-rapporten, Page indexing, URL-inspektion, sitemaps, Core Web Vitals, Discover og fejlrettelser." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://www.seohub.dk/blog/google-search-console-guide-2025.html" />
+
+    <!-- Consent + GA4 -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Article",
+      "headline":"Google Search Console guide (2025) – sådan bruger du GSC rigtigt",
+      "author":{"@type":"Organization","name":"Seohub.dk"},
+      "datePublished":"2025-08-25",
+      "dateModified":"2025-08-25",
+      "image":"https://www.seohub.dk/og-image.png",
+      "mainEntityOfPage":"https://www.seohub.dk/blog/google-search-console-guide-2025.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
+      "description":"Den komplette Google Search Console guide 2025. Lær opsætning, verifikation, Performance-rapporten, Page indexing, URL-inspektion, sitemaps, Core Web Vitals, Discover og fejlrettelser."
+    }
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Hero (blå som resten af bloggen) -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · Guide</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">
+            Google Search Console guide (2025)
+          </h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Den praktiske guide til opsætning, rapporter og fejlretning – så du kan udnytte GSC til vækst i 2025.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Content -->
+        <article class="lg:col-span-8 space-y-6">
+
+          <!-- TL;DR -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Opret domæne-ejerskab</strong> (DNS) i stedet for URL-prefix, så alle subdomæner og protokoller dækkes.</li>
+              <li><strong>Indsend sitemap</strong> og tjek <em>Page indexing</em> for blokerede/udelukkede sider.</li>
+              <li>Brug <strong>Performance</strong> til at finde søgeord med lav CTR og sider med stort potentiale.</li>
+              <li>Tjek <strong>Experience/Core Web Vitals</strong> og ret hastigheds-/UX-problemer først på top-sider.</li>
+              <li>Overvåg <strong>Links, Manual actions, Security & removals</strong> – og brug <strong>URL Inspection</strong> ved nye sider.</li>
+            </ul>
+          </section>
+
+          <!-- Intro -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <p>
+              Google Search Console (GSC) er dit gratis kontrolpanel for, hvordan Google ser og bruger dit website.
+              I 2025 er fokus især på <strong>kvalitetsindeksering, brugeroplevelse og synlighed</strong> på tværs af Search og Discover.
+              Guiden her viser trin for trin, hvordan du sætter GSC korrekt op – og præcis hvilke rapporter du skal bruge i hverdagen.
+            </p>
+          </section>
+
+          <!-- ... resten af artiklen med alle sektioner (opsætning, sitemaps, performance, CWV, URL inspection, Discover osv.) ... -->
+
+          <!-- Back to top -->
+          <div class="text-right">
+            <a href="#top" class="inline-block mt-2 text-sm text-blue-600 hover:underline">Til toppen ↑</a>
+          </div>
+        </article>
+
+        <!-- Sticky TOC -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24">
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+              <nav class="space-y-2 text-sm">
+                <a class="block hover:underline" href="#opsætning">Opsætning & verifikation</a>
+                <a class="block hover:underline" href="#sitemap">Sitemaps & indexering</a>
+                <a class="block hover:underline" href="#performance">Performance</a>
+                <a class="block hover:underline" href="#experience">Experience & CWV</a>
+                <a class="block hover:underline" href="#url-inspection">URL Inspection</a>
+                <a class="block hover:underline" href="#index-rapporter">Indexrapporter</a>
+                <a class="block hover:underline" href="#discover">Google Discover</a>
+                <a class="block hover:underline" href="#links-sikkerhed">Links & sikkerhed</a>
+                <a class="block hover:underline" href="#arbejdsgang">Arbejdsgang</a>
+                <a class="block hover:underline" href="#tjekliste">Tjekliste</a>
+                <a class="block hover:underline" href="#faq">FAQ</a>
+              </nav>
+              <hr class="my-4">
+              <div class="text-xs text-neutral-500">
+                Tip: Brug vores sitemap- og robots-generator for hurtigere fejlretning.
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- Global footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+  </body>
+</html>
