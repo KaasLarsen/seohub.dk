@@ -40,7 +40,7 @@
 
     // indsæt GA4 script
     const s = document.createElement("script");
-    s.src = "https://www.googletagmanager.com/gtag/js?id=G-2Z08EV6L9C";
+    s.src = "https://www.googletagmanager.com/gtag/js?id=2Z08EV6L9C";
     s.async = true;
     document.head.appendChild(s);
 
@@ -51,7 +51,7 @@
     window.gtag = gtag;
 
     gtag("js", new Date());
-    gtag("config", "G-XXXXXXXXXX");
+    gtag("config", "G-2Z08EV6L9C");
     console.info("GA init OK");
 
     // sikrer første page_view efter accept
