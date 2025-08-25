@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <!-- Global header/nav -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+
+    <meta charset="utf-8" />
+    <title>Google Analytics 4 (GA4) – forstå rapporterne (2025) | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="GA4-guide 2025: Lær at læse rapporterne, opsætte events og konverteringer, bygge Explorations, forstå attribution og bruge data til SEO og vækst." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://www.seohub.dk/blog/google-analytics-4-guide-2025.html" />
+
+    <!-- Consent + GA4 -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Article",
+      "headline":"Google Analytics 4 (GA4) – forstå rapporterne (2025)",
+      "author":{"@type":"Organization","name":"Seohub.dk"},
+      "datePublished":"2025-08-25",
+      "dateModified":"2025-08-25",
+      "image":"https://www.seohub.dk/og-image.png",
+      "mainEntityOfPage":"https://www.seohub.dk/blog/google-analytics-4-guide-2025.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
+      "description":"GA4-guide 2025: Lær at læse rapporterne, opsætte events og konverteringer, bygge Explorations, forstå attribution og bruge data til SEO og vækst."
+    }
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Hero -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · Guide</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">
+            Google Analytics 4 (GA4) – forstå rapporterne (2025)
+          </h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Sådan læser du GA4, finder vækstmuligheder og får styr på events, konverteringer og attribution.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Content -->
+        <article class="lg:col-span-8 space-y-6">
+
+          <!-- TL;DR -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Rapporter:</strong> Start i <em>Reports snapshot</em>, brug <em>Acquisition</em> og <em>Engagement → Pages & screens</em> for SEO.</li>
+              <li><strong>Events & konverteringer:</strong> Spore vigtige handlinger, markér som konverteringer (ikke alt!).</li>
+              <li><strong>Explorations:</strong> Byg dybe analyser (Funnel/Path) til UX og konverteringsoptimering.</li>
+              <li><strong>Attribution:</strong> Brug data‑drevet model, men sanity‑check med sidste klik og UTM‑disciplin.</li>
+              <li><strong>Rens data:</strong> Filtrér internt trafik, brug klare UTM‑navngivninger og hold konsistens.</li>
+            </ul>
+          </section>
+
+          <!-- Intro -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <p>
+              GA4 er bygget på events, ikke sessions. Det giver mere fleksibilitet – men kræver god opsætning for at blive
+              værdifuldt. I denne guide får du en praktisk gennemgang af rapporter, events/konverteringer, Explorations og
+              attribution, så du kan gå fra data til handling.
+            </p>
+          </section>
+
+          <!-- Opsætning & grunddata -->
+          <section id="opsætning" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Opsætning: sådan får du rene GA4-data</h2>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li><strong>Datastreams:</strong> Sørg for korrekt web‑stream, aktiver enhanced measurement hvor relevant.</li>
+              <li><strong>Internt trafik‑filter:</strong> Opret datafilter (dev/marketing IPs), så rapporter spejler rigtige brugere.</li>
+              <li><strong>UTM‑disciplin:</strong> Brug <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code> konsekvent (fx <em>email</em>, <em>cpc</em>, <em>social</em>).</li>
+              <li><strong>Events:</strong> Navngiv klart (fx <code>generate_lead</code>, <code>purchase</code>, <code>file_download</code>).</li>
+              <li><strong>Konverteringer:</strong> Markér KUN de vigtigste events som konverteringer (lead, køb, demo‑book).</li>
+            </ol>
+          </section>
+
+          <!-- Reports -->
+          <section id="rapporter" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Forstå standard-rapporterne</h2>
+
+            <h3 class="text-xl font-semibold mt-2">Reports snapshot</h3>
+            <p class="text-sm mb-2">Dit overblik: trends, topkanaler, top-sider. Brug kortene som springbræt til detaljer.</p>
+
+            <h3 class="text-xl font-semibold mt-3">Realtime</h3>
+            <p class="text-sm mb-2">Bruges til at teste events/konverteringer efter release og til at se kampagner “gå live”.</p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h4 class="font-semibold mb-2">Acquisition</h4>
+                <ul class="list-disc pl-6 text-sm space-y-1">
+                  <li><strong>Traffic acquisition:</strong> Kanalniveau (default channel group). Brug segmenter på device/land.</li>
+                  <li><strong>User acquisition:</strong> Første‑touch fokus (førstegangskilde).</li>
+                </ul>
+              </div>
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h4 class="font-semibold mb-2">Engagement</h4>
+                <ul class="list-disc pl-6 text-sm space-y-1">
+                  <li><strong>Pages & screens:</strong> Find top‑sider, høj exit, lav engagement rate → optimér UX/indhold.</li>
+                  <li><strong>Events:</strong> Se event‑volumen og parametre (scroll, click, file_download, form_submit m.fl.).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h4 class="font-semibold mb-2">Monetization (hvis e‑handel)</h4>
+                <ul class="list-disc pl-6 text-sm space-y-1">
+                  <li>Omsætning, AOV, produkter. Tjek produktvisning → kurv → køb (brug også funnel i Explorations).</li>
+                </ul>
+              </div>
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h4 class="font-semibold mb-2">Retention, Demographics & Tech</h4>
+                <ul class="list-disc pl-6 text-sm space-y-1">
+                  <li>Retention: Hvor godt fastholder du brugere? Se cohort‑tendenser.</li>
+                  <li>Demographics/Tech: Målgrupper og enheder – godt til prioriteter i UX og indhold.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sponsoreret (enkel) -->
+            <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg mt-6"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-xl md:text-2xl font-extrabold mb-2">Morningscore – SEO & GA4 side om side</h3>
+              <p class="text-blue-100 mb-3">Kobl søgeord og opgaver med dine GA4‑mål. Se potentiale og ROI hurtigere.</p>
+              <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+                Prøv Morningscore
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- Events & konverteringer -->
+          <section id="events" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Events & konverteringer – det vigtigste lag</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Anbefalede events:</strong> Brug GA4s navne hvor muligt (<code>purchase</code>, <code>generate_lead</code> etc.).</li>
+              <li><strong>Parametre:</strong> Tilføj <code>content_type</code>, <code>value</code>, <code>currency</code>, <code>method</code> m.m. til bedre analyser.</li>
+              <li><strong>Konverteringer:</strong> Markér kun de 1–3 forretningskritiske events som konverteringer.</li>
+              <li><strong>DebugView:</strong> Test events i realtid efter deploy.</li>
+            </ul>
+          </section>
+
+          <!-- Explorations -->
+          <section id="explorations" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Explorations: find den skjulte værdi</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h3 class="font-semibold mb-2">Funnel</h3>
+                <p class="text-sm">Byg trin (fx land → produkt → kurv → køb), se drop‑offs og test hypoteser.</p>
+              </div>
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h3 class="font-semibold mb-2">Path</h3>
+                <p class="text-sm">Se reelle klikflows før/efter en side eller event. Afslør friktion.</p>
+              </div>
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h3 class="font-semibold mb-2">Segment overlap</h3>
+                <p class="text-sm">Overlappet mellem fx organisk trafik, mobil og konverterede brugere.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Attribution -->
+          <section id="attribution" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Attribution: sådan læser du den rigtigt</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Model:</strong> Data‑drevet er default. Sammenlign med sidste klik for sanity‑check.</li>
+              <li><strong>Lookback windows:</strong> Brug samme vindue på tværs af værktøjer for retfærdige sammenligninger.</li>
+              <li><strong>UTM‑hygiejne:</strong> Konsistent tagging → færre “(other)” og “unassigned”.</li>
+            </ul>
+          </section>
+
+          <!-- Arbejdsgang -->
+          <section id="arbejdsgang" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Anbefalet månedlig arbejdsgang</h2>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li><strong>Reports snapshot:</strong> Tjek trends og afvigelser.</li>
+              <li><strong>Acquisition:</strong> Kanaler der stiger/falder → årsag og handling.</li>
+              <li><strong>Engagement → Pages:</strong> Lav exit/engagement → indholds- og UX‑opdateringer.</li>
+              <li><strong>Events/konverteringer:</strong> Kvalitetssikring + nye ideer (fx micro‑konverteringer).</li>
+              <li><strong>Explorations:</strong> 1 funnel eller path‑analyse pr. måned til læring.</li>
+            </ol>
+          </section>
+
+          <!-- Tjekliste -->
+          <section id="tjekliste" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Tjekliste: hurtige gevinster</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Filter for internt trafik aktiveret.</li>
+              <li>UTM‑navngivning dokumenteret og i brug.</li>
+              <li>Top 3 konverteringer defineret og tracket.</li>
+              <li>Exploration (funnel/path) oprettet for din vigtigste rejse.</li>
+              <li>Dashboards/alerts for spikes og drops.</li>
+            </ul>
+          </section>
+
+          <!-- CTA til værktøjer -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+            <p>Brug dine GA4‑indsigter sammen med disse værktøjer:</p>
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Forbedr title & meta</a>
+              <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Byg interne links</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Opdatér sitemap</a>
+            </div>
+          </section>
+
+          <!-- Hosting CTA (bund) -->
+          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
+            <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+            <h3 class="text-lg md:text-xl font-bold mb-2">Mangler du domæne og webhotel?</h3>
+            <p class="text-blue-100 mb-4">
+              Kom hurtigt online med <strong>Simply.com</strong> – dansk support og nem opsætning.
+            </p>
+            <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+              Køb domæne & hosting hos Simply.com
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </section>
+
+          <!-- Back to top -->
+          <div class="text-right">
+            <a href="#top" class="inline-block mt-2 text-sm text-blue-600 hover:underline">Til toppen ↑</a>
+          </div>
+        </article>
+
+        <!-- Sticky TOC + én reklame i højre spalte -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            <!-- TOC -->
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+              <nav class="space-y-2 text-sm">
+                <a class="block hover:underline" href="#opsætning">Opsætning</a>
+                <a class="block hover:underline" href="#rapporter">Rapporter</a>
+                <a class="block hover:underline" href="#events">Events & konverteringer</a>
+                <a class="block hover:underline" href="#explorations">Explorations</a>
+                <a class="block hover:underline" href="#attribution">Attribution</a>
+                <a class="block hover:underline" href="#arbejdsgang">Arbejdsgang</a>
+                <a class="block hover:underline" href="#tjekliste">Tjekliste</a>
+              </nav>
+              <hr class="my-4">
+              <div class="text-xs text-neutral-500">
+                Tip: Dokumentér din UTM‑standard og del den med hele teamet.
+              </div>
+            </div>
+
+            <!-- Én reklameboks -->
+            <div class="rounded-2xl p-5 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Annonce</div>
+              <h3 class="text-lg font-extrabold mb-1">Domæne & webhotel hos Simply.com</h3>
+              <p class="text-blue-100 text-sm mb-3">Hurtig opsætning, dansk support og nem DNS‑styring.</p>
+              <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm">
+                Køb domæne & hosting
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- Global footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+  </body>
+</html>
