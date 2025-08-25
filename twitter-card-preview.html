@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <title>Twitter/X Card Preview – generér meta-tags | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Lav Twitter/X card preview og generér de korrekte meta-tags (summary / summary_large_image). Hurtigt og simpelt." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://www.seohub.dk/twitter-card-preview.html" />
+
+    <!-- Header (fælles navigation) -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+
+    <!-- Cookie consent + Analytics -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- Tailwind (UI) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Hero -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">Twitter/X Card Preview</h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Se hvordan dit kort ser ud, og kopiér de rigtige meta-tags (summary / summary_large_image).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Form -->
+          <div>
+            <h2 class="text-xl md:text-2xl font-semibold mb-4">Indtast oplysninger</h2>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">Side-URL</span>
+              <input id="inpUrl" type="url" placeholder="https://www.seohub.dk/blog/..."
+                     class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
+            </label>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">Titel</span>
+              <input id="inpTitle" type="text" placeholder="Din title her"
+                     class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
+            </label>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">Beskrivelse</span>
+              <textarea id="inpDesc" rows="3" placeholder="Kort, fængende beskrivelse…"
+                        class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200"></textarea>
+            </label>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">Billede (absolut URL)</span>
+              <input id="inpImg" type="url" placeholder="https://.../image.jpg (min. 600×314 – helst 1200×630)"
+                     class="w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring focus:ring-indigo-200">
+            </label>
+
+            <div class="mb-4">
+              <span class="block text-sm font-medium mb-1">Kort-type</span>
+              <div class="flex items-center gap-3">
+                <label class="inline-flex items-center gap-2 text-sm">
+                  <input type="radio" name="cardtype" value="summary" checked class="accent-blue-600">
+                  Summary (lille billede)
+                </label>
+                <label class="inline-flex items-center gap-2 text-sm">
+                  <input type="radio" name="cardtype" value="summary_large_image" class="accent-blue-600">
+                  Summary Large Image
+                </label>
+              </div>
+            </div>
+
+            <div class="flex gap-2">
+              <button id="btnPreview"
+                      class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
+                Opdater preview
+              </button>
+              <button id="btnReset"
+                      class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">
+                Nulstil
+              </button>
+            </div>
+
+            <p class="text-xs text-neutral-500 mt-3">
+              Tip: Brug absolutte URL’er (inkl. https://) til både side og billede.
+            </p>
+          </div>
+
+          <!-- Preview + tags -->
+          <div>
+            <h2 class="text-xl md:text-2xl font-semibold mb-4">Preview</h2>
+
+            <!-- Card preview -->
+            <div id="preview" class="rounded-2xl border overflow-hidden bg-white shadow">
+              <!-- indhold sættes via JS -->
+            </div>
+
+            <!-- Generated meta tags -->
+            <div class="mt-6">
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-lg font-semibold">Genererede meta-tags</h3>
+                <button id="btnCopy"
+                        class="px-3 py-2 rounded-xl text-sm border bg-neutral-50 hover:bg-neutral-100">
+                  Kopiér
+                </button>
+              </div>
+              <pre id="tagsOut" class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre"></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hjælp + guidelines -->
+      <section class="mt-8 bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+        <h2 class="text-xl md:text-2xl font-semibold mb-3">Retningslinjer (kort)</h2>
+        <ul class="list-disc pl-6 space-y-2 text-sm">
+          <li><strong>Billede:</strong> Brug 1200×630px for <em>summary_large_image</em>. Filstørrelse lav & hurtig hosting.</li>
+          <li><strong>Titel:</strong> 50–70 tegn anbefales. Undgå cut-off.</li>
+          <li><strong>Beskrivelse:</strong> 120–200 tegn. Klar værdi/CTA.</li>
+          <li><strong>Absolutte URL’er:</strong> Kræves i <code>twitter:image</code> og <code>og:image</code>.</li>
+          <li>Supplér gerne med Open Graph (og:title, og:description, og:image, og:url).</li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+
+    <!-- Page logic (CSP-venlig) -->
+    <script>
+      (function () {
+        const $ = s => document.querySelector(s);
+
+        const inpUrl   = $("#inpUrl");
+        const inpTitle = $("#inpTitle");
+        const inpDesc  = $("#inpDesc");
+        const inpImg   = $("#inpImg");
+        const btnPrev  = $("#btnPreview");
+        const btnCopy  = $("#btnCopy");
+        const btnReset = $("#btnReset");
+        const preview  = $("#preview");
+        const out      = $("#tagsOut");
+
+        function sanitize(s){ return (s||"").toString().trim(); }
+
+        function currentType(){
+          const r = document.querySelector('input[name="cardtype"]:checked');
+          return r ? r.value : "summary";
+        }
+
+        function renderPreview() {
+          const url   = sanitize(inpUrl.value);
+          const title = sanitize(inpTitle.value) || "Din titel her";
+          const desc  = sanitize(inpDesc.value)  || "Kort, præcis beskrivelse af indholdet – vises i kortet.";
+          const img   = sanitize(inpImg.value);
+          const type  = currentType();
+
+          // Simple visuel simulering
+          const imgEl = img
+            ? \`<div class="\${type==='summary_large_image' ? 'h-48 md:h-56' : 'h-28 md:h-32'} w-full bg-neutral-200 overflow-hidden">
+                 <img src="\${img}" alt="" class="w-full h-full object-cover">
+               </div>\`
+            : \`<div class="\${type==='summary_large_image' ? 'h-48 md:h-56' : 'h-28 md:h-32'} w-full bg-neutral-200 grid place-items-center text-neutral-500 text-sm">Ingen billede-URL</div>\`;
+
+          preview.innerHTML = \`
+            \${imgEl}
+            <div class="p-4">
+              <div class="text-sm text-neutral-500 truncate">\${url || 'https://dit-domæne.dk/side'}</div>
+              <div class="font-semibold mt-1 truncate">\${title}</div>
+              <div class="text-sm text-neutral-600 mt-1 line-clamp-2">\${desc}</div>
+            </div>\`;
+        }
+
+        function renderTags() {
+          const url   = sanitize(inpUrl.value);
+          const title = sanitize(inpTitle.value);
+          const desc  = sanitize(inpDesc.value);
+          const img   = sanitize(inpImg.value);
+          const type  = currentType();
+
+          const tags = [
+            \`<meta name="twitter:card" content="\${type}">\`,
+            \`<meta name="twitter:title" content="\${title}">\`,
+            \`<meta name="twitter:description" content="\${desc}">\`,
+            img ? \`<meta name="twitter:image" content="\${img}">\` : null,
+            url ? \`<meta property="og:url" content="\${url}">\` : null,
+            title ? \`<meta property="og:title" content="\${title}">\` : null,
+            desc ? \`<meta property="og:description" content="\${desc}">\` : null,
+            img ? \`<meta property="og:image" content="\${img}">\` : null,
+            \`<!-- Tilføj evt. <meta name="twitter:site" content="@dinprofil"> -->\`
+          ].filter(Boolean).join("\\n");
+
+          out.textContent = tags;
+        }
+
+        function updateAll() {
+          renderPreview();
+          renderTags();
+        }
+
+        // Events
+        btnPrev.addEventListener("click", updateAll);
+        btnReset.addEventListener("click", () => {
+          inpUrl.value = ""; inpTitle.value = ""; inpDesc.value = ""; inpImg.value = "";
+          document.querySelector('input[name="cardtype"][value="summary"]').checked = true;
+          updateAll();
+        });
+        btnCopy.addEventListener("click", async () => {
+          try { await navigator.clipboard.writeText(out.textContent || ""); btnCopy.textContent = "Kopieret!"; setTimeout(()=>btnCopy.textContent="Kopiér", 1200); }
+          catch(e){ alert("Kunne ikke kopiere. Markér teksten manuelt."); }
+        });
+
+        // Live opdatering ved input (behagelig UX)
+        [inpUrl, inpTitle, inpDesc, inpImg].forEach(el => el.addEventListener("input", updateAll));
+        document.querySelectorAll('input[name="cardtype"]').forEach(r => r.addEventListener("change", updateAll));
+
+        // Første render
+        updateAll();
+      })();
+    </script>
+  </body>
+</html>
