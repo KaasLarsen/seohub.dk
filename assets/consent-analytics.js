@@ -1,78 +1,104 @@
-// /assets/consent-analytics.js — Consent + Google Analytics 4 (patched)
-
-// Dit GA4 Measurement ID
-const GA_MEASUREMENT_ID = "G-FBXNYF72EJ";
-
+// /assets/consent-analytics.js
 (function () {
-  let gaLoaded = false;
+  // ---- Simple cookie consent banner ----
+  const KEY = "seohub-consent";
+  const saved = localStorage.getItem(KEY);
 
-  // Indsæt GA-scriptet
-  function loadGA() {
-    if (gaLoaded) return;
-    gaLoaded = true;
+  function accept() {
+    localStorage.setItem(KEY, "yes");
+    document.getElementById("cookie-banner")?.remove();
+    initGA();
+  }
 
-    // Opret script tag
-    const gtagScript = document.createElement("script");
-    gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-    gtagScript.async = true;
-    document.head.appendChild(gtagScript);
+  function decline() {
+    localStorage.setItem(KEY, "no");
+    document.getElementById("cookie-banner")?.remove();
+  }
 
-    // Init dataLayer + gtag
+  function showBanner() {
+    if (document.getElementById("cookie-banner")) return;
+    const div = document.createElement("div");
+    div.id = "cookie-banner";
+    div.className =
+      "fixed bottom-4 right-4 max-w-sm bg-white border shadow-lg p-4 rounded-xl text-sm z-50";
+    div.innerHTML = `
+      <p class="mb-3">Vi bruger cookies til statistik (Google Analytics).</p>
+      <div class="flex gap-2">
+        <button id="cookie-yes" class="px-3 py-1 rounded bg-blue-600 text-white">Accepter</button>
+        <button id="cookie-no" class="px-3 py-1 rounded border">Afvis</button>
+      </div>
+    `;
+    document.body.appendChild(div);
+    document.getElementById("cookie-yes").onclick = accept;
+    document.getElementById("cookie-no").onclick = decline;
+  }
+
+  // ---- Google Analytics init ----
+  function initGA() {
+    if (window.GA_INIT) return;
+    window.GA_INIT = true;
+
+    // indsæt GA4 script
+    const s = document.createElement("script");
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX";
+    s.async = true;
+    document.head.appendChild(s);
+
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag() {
+      dataLayer.push(arguments);
+    }
     window.gtag = gtag;
 
     gtag("js", new Date());
-    gtag("config", GA_MEASUREMENT_ID);
+    gtag("config", "G-XXXXXXXXXX");
+    console.info("GA init OK");
 
-    console.log("[ConsentAnalytics] GA init OK");
-
-    // Send første page_view manuelt (efter samtykke)
-    gtag("event", "page_view", {
-      page_title: document.title,
-      page_location: window.location.href,
-      page_path: window.location.pathname
-    });
-    console.log("[ConsentAnalytics] Første page_view sendt");
+    // sikrer første page_view efter accept
+    gtag("event", "page_view");
   }
 
-  // --- Cookie Consent Banner ---
-  function showBanner() {
-    if (localStorage.getItem("cookie_consent") === "accepted") {
-      loadGA();
-      return; // Ingen banner, GA starter direkte
-    }
-
-    const banner = document.createElement("div");
-    banner.id = "cookie-banner";
-    banner.className =
-      "fixed bottom-0 left-0 right-0 bg-neutral-900 text-white text-sm p-4 flex flex-col md:flex-row items-center justify-between z-50";
-    banner.innerHTML = `
-      <p class="mb-2 md:mb-0">Vi bruger cookies til statistik (Google Analytics). </p>
-      <div class="flex gap-2">
-        <button id="cookie-accept" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Accepter</button>
-        <button id="cookie-decline" class="bg-neutral-600 hover:bg-neutral-700 text-white px-3 py-1 rounded">Afvis</button>
-      </div>
-    `;
-    document.body.appendChild(banner);
-
-    document.getElementById("cookie-accept").addEventListener("click", () => {
-      localStorage.setItem("cookie_consent", "accepted");
-      banner.remove();
-      loadGA(); // Init GA + send første page_view
-    });
-
-    document.getElementById("cookie-decline").addEventListener("click", () => {
-      localStorage.setItem("cookie_consent", "declined");
-      banner.remove();
-      console.log("[ConsentAnalytics] Bruger afviste cookies");
-    });
-  }
-
-  // --- Init ---
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", showBanner);
+  // ---- Consent check ----
+  if (saved === "yes") {
+    initGA();
+  } else if (saved === "no") {
+    // gør ingenting
   } else {
-    showBanner();
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showBanner);
+    } else {
+      showBanner();
+    }
+  }
+
+  // --- Header re-loader (bevar v7, men bust cache på mobiler der hænger fast) ---
+  try {
+    var hasNav =
+      !!document.getElementById("siteNav") ||
+      !!document.querySelector("header .text-sm");
+    if (!hasNav) {
+      var existingTag = document.querySelector(
+        'script[src*="/assets/include-header.js"]'
+      );
+      var srcBase = "/assets/include-header.js?v=7&cb=1";
+      if (existingTag) {
+        try {
+          var url = new URL(existingTag.src);
+          if (!url.searchParams.has("cb"))
+            url.searchParams.set("cb", "1");
+          srcBase =
+            url.pathname + "?" + url.searchParams.toString();
+        } catch (e) {}
+      }
+      var s2 = document.createElement("script");
+      s2.src = srcBase;
+      s2.defer = true;
+      s2.onload = function () {
+        console.info("Header v7 reloaded with cache-bust");
+      };
+      document.head.appendChild(s2);
+    }
+  } catch (e) {
+    console.warn("Header reload shim failed:", e);
   }
 })();
