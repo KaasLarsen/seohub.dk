@@ -8,7 +8,8 @@
     { href: "/internal-link-builder.html", label: "Intern linkbuilder", key: "/internal-link-builder.html" },
     { href: "/meta-tag-generator.html",    label: "Meta tags",          key: "/meta-tag-generator.html" },
     { href: "/page-speed-check.html",      label: "Page Speed",         key: "/page-speed-check.html" },
-    { href: "/redirect-checker.html",      label: "Redirect Checker",   key: "/redirect-checker.html" }
+    { href: "/redirect-checker.html",      label: "Redirect Checker",   key: "/redirect-checker.html" },
+    { href: "/og-generator.html",          label: "OG/Twitter",         key: "/og-generator.html" },
   ];
   const TOP = [
     { href: "/",      label: "Forside", key: "/" },
