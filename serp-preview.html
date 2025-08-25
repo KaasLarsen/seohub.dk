@@ -1,145 +1,170 @@
 <!doctype html>
 <html lang="da">
   <head>
-    <!-- Fælles header/nav -->
-    <script src="/assets/include-header.js?v=7" defer></script>
-
     <meta charset="utf-8" />
-    <title>SERP Preview & Meta-tjek – titler og beskrivelser | Seohub.dk</title>
+    <title>SERP Preview & Title/Meta-tjek | Seohub.dk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Gratis SERP preview: tjek længde på title (50–60 tegn) og meta description (140–160). Se en Google-lignende visning og få hurtige tips til højere CTR." />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="description" content="Tjek længde og forhåndsvisning af titel og metabeskrivelse. Live-tegnoptælling, Google-lignende preview og hurtige tips til bedre CTR." />
     <link rel="canonical" href="https://www.seohub.dk/serp-preview.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <!-- Consent + Analytics (GA4 loader efter samtykke) -->
+    <!-- Fælles (GA + cookie consent) -->
     <script src="/assets/consent-analytics.js" defer></script>
+    <!-- Header og footer (v7 og v2) -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+    <script src="/assets/include-footer.js?v=2" defer></script>
 
     <!-- UI -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Struktureret data (valgfrit) -->
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebPage",
-      "name":"SERP Preview & Meta-tjek",
-      "description":"Gratis SERP preview og længde-tjek for title og meta description.",
-      "url":"https://www.seohub.dk/serp-preview.html",
-      "publisher":{"@type":"Organization","name":"Seohub.dk"}
-    }
-    </script>
   </head>
   <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
-
     <!-- Hero -->
     <section class="py-10 md:py-14">
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
              style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
-          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj · SERP & CTR</p>
-          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">SERP Preview & Meta-tjek</h1>
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Værktøj</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">SERP preview & title/meta-tjek</h1>
           <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
-            Forhåndsvis din titel og meta-beskrivelse – og få hurtige længdeindikatorer for bedre CTR.
+            Skriv titel og metabeskrivelse, se en Google-lignende forhåndsvisning – og få længdeindikatorer i realtime.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Indhold -->
+    <!-- Main -->
     <main class="max-w-6xl mx-auto px-4 pb-12">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Content -->
-        <article class="lg:col-span-8 space-y-6">
-          <!-- Intro -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-2xl font-bold mb-3">Hvorfor tjekke titel og meta?</h2>
-            <p>
-              Din <strong>title</strong> og <strong>meta description</strong> er det, brugeren møder i Googles søgeresultater.
-              En skarp vinkel og korrekt længde hjælper din <strong>CTR</strong> (click-through rate). Brug vores preview til
-              at se en Google-lignende visning og få hurtige længdeindikatorer:
-            </p>
-            <ul class="list-disc pl-6">
-              <li><strong>Title:</strong> sigt efter 50–60 tegn (ikke for kort, ikke for langt)</li>
-              <li><strong>Meta:</strong> sigt efter 140–160 tegn med klar værdi + CTA</li>
-              <li>Match søgeintention og brug tydelige H1/H2-strukturer på siden</li>
+        <!-- Værktøj venstre -->
+        <section class="lg:col-span-8 space-y-6">
+          <!-- Form -->
+          <div id="serp-form" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-4" id="form">Indtast oplysninger</h2>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">Titel <span class="text-neutral-400">(50–60 tegn er typisk optimalt)</span></span>
+              <input id="titleInput" type="text" class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" placeholder="fx: Seohub – SEO værktøjer (2025)">
+            </label>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">URL</span>
+              <input id="urlInput" type="text" class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" value="https://www.seohub.dk/">
+            </label>
+
+            <label class="block mb-4">
+              <span class="block text-sm font-medium mb-1">Metabeskrivelse <span class="text-neutral-400">(140–160 tegn)</span></span>
+              <textarea id="descInput" rows="4" class="w-full border rounded-xl p-3 focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Kort, præcis værdi + CTA."></textarea>
+            </label>
+
+            <div class="flex flex-wrap items-center gap-3 text-sm">
+              <span id="titleBadge" class="px-2 py-1 rounded-full bg-amber-100 text-amber-800">titel: 0 tegn</span>
+              <span id="descBadge" class="px-2 py-1 rounded-full bg-amber-100 text-amber-800">meta: 0 tegn</span>
+              <button id="copyTitle" class="px-3 py-2 rounded-xl border bg-neutral-50 hover:bg-neutral-100">kopiér title</button>
+              <button id="copyDesc" class="px-3 py-2 rounded-xl border bg-neutral-50 hover:bg-neutral-100">kopiér description</button>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div id="serp-preview" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-4" id="preview">Google-lignende forhåndsvisning</h2>
+            <div class="rounded-xl border p-4 bg-white">
+              <div id="previewTitle" class="text-[#1a0dab] text-xl leading-snug truncate">Din titel vises her</div>
+              <div id="previewUrl" class="text-[#006621] text-sm mt-1 truncate">https://www.seohub.dk/</div>
+              <div id="previewDesc" class="text-[#545454] text-sm mt-1">
+                Skriv en præcis metabeskrivelse, der matcher søgeintentionen og inkluderer primært søgeord + USP.
+              </div>
+            </div>
+          </div>
+
+          <!-- Tips -->
+          <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3" id="tips">Hurtige tips til bedre CTR</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Placer primært søgeord tidligt i <strong>title</strong> – og giv en tydelig vinkel.</li>
+              <li>Brug tal, årstal eller USP i både titel og beskrivelse (uden clickbait).</li>
+              <li>Match søgeintention: informativ, kommerciel research eller transaktion.</li>
+              <li>Undgå duplikerede titler og descriptions på tværs af sider.</li>
             </ul>
-          </section>
+          </div>
+        </section>
 
-          <!-- Mini “hvordan” -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Sådan bruger du værktøjet</h2>
-            <ol class="list-decimal pl-6 space-y-1">
-              <li>Skriv din titel, URL og meta-beskrivelse i felterne</li>
-              <li>Se længdetællere opdatere live (grøn = godt)</li>
-              <li>Justér, til det ser skarpt ud i forhåndsvisningen</li>
-            </ol>
-            <p class="mt-3 text-sm text-neutral-700">
-              Vil du arbejde videre med hele siden? Tjek også vores <a class="text-blue-600 hover:underline" href="/robots-generator.html">robots.txt-generator</a>,
-              <a class="text-blue-600 hover:underline" href="/sitemap-generator.html">sitemap-generator</a> og <a class="text-blue-600 hover:underline" href="/internal-link-builder.html">interne linkbuilder</a>.
+        <!-- Højre kolonne -->
+        <aside class="lg:col-span-4 space-y-6">
+          <!-- Indholdsoversigt -->
+          <div class="lg:sticky lg:top-24 bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+            <nav class="space-y-2 text-sm">
+              <a class="block hover:underline" href="#form">1) Indtast</a>
+              <a class="block hover:underline" href="#preview">2) Forhåndsvisning</a>
+              <a class="block hover:underline" href="#tips">3) Tips</a>
+            </nav>
+            <hr class="my-4">
+            <p class="text-xs text-neutral-500">
+              Tip: Brug også vores <a class="text-blue-600 hover:underline" href="/internal-link-builder.html">interne linkbuilder</a> og <a class="text-blue-600 hover:underline" href="/sitemap-generator.html">sitemap-generator</a>.
             </p>
-          </section>
+          </div>
 
-          <!-- Link til det interaktive værktøj (på forsiden/SPA) -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Åbn det interaktive SERP-værktøj</h2>
-            <p>På forsiden har vi en fuld version med live-tællere og kopiér-knapper.</p>
-            <a href="/" class="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">
-              Gå til forsiden
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                   class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-              </svg>
-            </a>
-          </section>
-
-          <!-- FAQ (kort) -->
-          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-            <h2 class="text-xl font-semibold mb-2">Ofte stillede spørgsmål</h2>
-            <details class="mb-2">
-              <summary class="cursor-pointer font-medium">Skærer Google altid ved samme antal tegn?</summary>
-              <div class="mt-2 text-sm text-neutral-700">
-                Nej. Google bruger i praksis pixelbredde, og derfor kan to titler med samme tegnantal opføre sig forskelligt.
-                Brug vores indikatorer som guideline – og test i praksis.
-              </div>
-            </details>
-            <details class="mb-2">
-              <summary class="cursor-pointer font-medium">Kan jeg bruge emojis i title?</summary>
-              <div class="mt-2 text-sm text-neutral-700">
-                Nogle emojis kan vises, men påvirker længden og kan blive filtreret. Brug dem med omtanke.
-              </div>
-            </details>
-          </section>
-
-          <!-- Sponsoreret CTA: Simply.com (NY) -->
-          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
-            <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
-            <h3 class="text-lg md:text-xl font-bold mb-2">Klar til at få dit website online?</h3>
-            <p class="text-blue-100 mb-4">
-              Har du lige optimeret title og meta – og mangler domæne & webhotel?
-              <strong>Simply.com</strong> er dansk, nemt og billigt. Perfekt til nye sites.
-            </p>
-            <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+          <!-- Sponsoreret: Nemlinkbuilding -->
+          <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg"
+               style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+            <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret</div>
+            <h3 class="text-lg font-bold">Nemlinkbuilding.dk – få links uden bøvl</h3>
+            <p class="text-blue-100 text-sm mt-1">Kvalitetslinks med enkel bestilling og hurtig levering.</p>
+            <a href="https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=87346"
                target="_blank" rel="sponsored noopener nofollow"
-               class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
-              Køb domæne & hosting hos Simply.com
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                   class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-              </svg>
+               class="inline-block mt-3 bg-white text-neutral-900 px-3 py-2 rounded-xl text-sm font-semibold hover:shadow">
+              Besøg Nemlinkbuilding.dk →
             </a>
-          </section>
-        </article>
+          </div>
 
-        <!-- Sidebar (valgfri, tom på denne side) -->
-        <aside class="lg:col-span-4">
-          <!-- plads til senere TOC/ads -->
+          <!-- Sponsoreret: AI Links -->
+          <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg"
+               style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+            <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret</div>
+            <h3 class="text-lg font-bold">AI Links – find smartere linkmuligheder</h3>
+            <p class="text-blue-100 text-sm mt-1">AI-drevet linkanalyse, der sparer tid i outreach.</p>
+            <a href="https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=108555"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-block mt-3 bg-white text-neutral-900 px-3 py-2 rounded-xl text-sm font-semibold hover:shadow">
+              Besøg AI Links →
+            </a>
+          </div>
+
+          <!-- Sponsoreret: Simply / DanDomain / Morningscore (kompakt) -->
+          <div class="rounded-2xl bg-white/70 backdrop-blur shadow p-5 border border-neutral-100">
+            <div class="text-[11px] uppercase tracking-wide mb-2 text-neutral-500">Sponsoreret</div>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a class="text-blue-600 hover:underline" target="_blank" rel="sponsored noopener nofollow"
+                   href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1">Simply.com – dansk hosting & domæner</a>
+              </li>
+              <li>
+                <a class="text-blue-600 hover:underline" target="_blank" rel="sponsored noopener nofollow"
+                   href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1">DanDomain – domæner & hosting til virksomheder</a>
+              </li>
+              <li>
+                <a class="text-blue-600 hover:underline" target="_blank" rel="sponsored noopener nofollow"
+                   href="https://morningscore.io?fpr=seo43">Morningscore – SEO-værktøj gjort simpelt</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Liten CTA -->
+          <div class="rounded-2xl p-5 text-white shadow-lg"
+               style="background:linear-gradient(135deg,#16a34a 0%,#22c55e 50%,#10b981 100%)">
+            <h3 class="text-lg font-bold">Klar til at gå live?</h3>
+            <p class="text-emerald-50 text-sm mt-1">Køb domæne & hosting – kom hurtigt i gang.</p>
+            <a href="https://go.adt256.com/t/t?a=1715455208&as=1999446175&t=2&tk=1"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-block mt-3 bg-white text-neutral-900 px-3 py-2 rounded-xl text-sm font-semibold hover:shadow">
+              Start hos DanDomain →
+            </a>
+          </div>
         </aside>
       </div>
     </main>
 
-    <!-- Footer -->
-    <script src="/assets/include-footer.js?v=2" defer></script>
+    <!-- Side-JS (ekstern pga. CSP) -->
+    <script src="/assets/serp-preview-page.js?v=1" defer></script>
   </body>
 </html>
