@@ -40,7 +40,7 @@
 
     // indsæt GA4 script
     const s = document.createElement("script");
-    s.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX";
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-2Z08EV6L9C";
     s.async = true;
     document.head.appendChild(s);
 
