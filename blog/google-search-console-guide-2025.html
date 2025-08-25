@@ -12,7 +12,7 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="canonical" href="https://www.seohub.dk/blog/google-search-console-guide-2025.html" />
 
-    <!-- Consent + GA4 -->
+    <!-- Consent + GA4 (samme som på resten af sitet) -->
     <script src="/assets/consent-analytics.js" defer></script>
 
     <!-- UI -->
@@ -64,24 +64,246 @@
           <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
             <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
             <ul class="list-disc pl-6 space-y-2">
-              <li><strong>Opret domæne-ejerskab</strong> (DNS) i stedet for URL-prefix, så alle subdomæner og protokoller dækkes.</li>
-              <li><strong>Indsend sitemap</strong> og tjek <em>Page indexing</em> for blokerede/udelukkede sider.</li>
-              <li>Brug <strong>Performance</strong> til at finde søgeord med lav CTR og sider med stort potentiale.</li>
-              <li>Tjek <strong>Experience/Core Web Vitals</strong> og ret hastigheds-/UX-problemer først på top-sider.</li>
-              <li>Overvåg <strong>Links, Manual actions, Security & removals</strong> – og brug <strong>URL Inspection</strong> ved nye sider.</li>
+              <li><strong>Brug Domain property (DNS)</strong> så alle subdomæner/protokoller dækkes.</li>
+              <li><strong>Indsend sitemap</strong>, gennemgå <em>Page indexing</em> og fix udelukkelser ved kilden.</li>
+              <li>Find vækst i <strong>Performance</strong> via lav CTR, side‑2‑kandidater og long‑tail spørgsmål.</li>
+              <li>Prioritér <strong>Core Web Vitals</strong> på de sider/skabeloner der har mest trafik.</li>
+              <li><strong>URL Inspection</strong> til nye/ændrede sider → anmod om indeksering efter rettelser.</li>
             </ul>
           </section>
 
           <!-- Intro -->
           <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
             <p>
-              Google Search Console (GSC) er dit gratis kontrolpanel for, hvordan Google ser og bruger dit website.
-              I 2025 er fokus især på <strong>kvalitetsindeksering, brugeroplevelse og synlighed</strong> på tværs af Search og Discover.
-              Guiden her viser trin for trin, hvordan du sætter GSC korrekt op – og præcis hvilke rapporter du skal bruge i hverdagen.
+              Google Search Console (GSC) giver dig indsigt i, hvordan Google crawler, indekserer og viser dit website i
+              søgeresultaterne. I 2025 handler det om <strong>kvalitet i indeks, stærk UX (CWV) og høj relevans</strong>.
+              Her får du en trin-for-trin guide samt konkrete tjeklister og arbejdsgange, du kan bruge månedligt.
             </p>
           </section>
 
-          <!-- ... resten af artiklen med alle sektioner (opsætning, sitemaps, performance, CWV, URL inspection, Discover osv.) ... -->
+          <!-- Opsætning -->
+          <section id="opsætning" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Kom i gang: opsætning & verifikation</h2>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li><strong>Opret Domain property</strong> i GSC og tilføj DNS TXT-record hos din udbyder.</li>
+              <li><strong>Alternativt: URL‑prefix</strong> hvis du ikke kan ændre DNS (kræver varianter www/https).</li>
+              <li><strong>Tilføj brugere</strong> under <em>Settings → Users and permissions</em> (least privilege).</li>
+              <li><strong>Associations</strong>: Link til GA4 for krydsdata.</li>
+              <li><strong>Bekræft</strong> at den rigtige version (https + www/uden www) er kanonisk i dit CMS.</li>
+            </ol>
+
+            <!-- Sponsoreret boks: Simply.com -->
+            <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg mt-5"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+              <h3 class="text-xl md:text-2xl font-extrabold mb-2">Brugervenlig DNS hos Simply.com</h3>
+              <p class="text-blue-100 mb-3">
+                Nem DNS-styring gør GSC-verifikation let – plus stabil hosting og dansk support.
+              </p>
+              <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+                Køb domæne & hosting hos Simply.com
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- Sitemap & crawling -->
+          <section id="sitemap" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Sitemaps, crawling & indexering</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Indsend sitemap</strong> i <em>Index → Sitemaps</em> (fx /sitemap.xml med undersitemaps).</li>
+              <li><strong>Robots.txt</strong>: Tjek at vigtige sektioner ikke er blokeret. Brug noindex korrekt.</li>
+              <li><strong>Page indexing</strong>: Find årsager til udelukkelser (noindex, redirect, canonical, soft 404, 404, blocked).</li>
+              <li><strong>Fix ved kilden</strong> (CMS/tema). <em>URL Inspection → Request indexing</em> efter rettelse.</li>
+            </ul>
+
+            <!-- CTA: interne værktøjer -->
+            <div class="flex flex-wrap gap-3 mt-4">
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Lav sitemap</a>
+              <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Generér robots.txt</a>
+              <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Tjek title & meta</a>
+            </div>
+          </section>
+
+          <!-- Performance -->
+          <section id="performance" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Performance: find vækstmuligheder</h2>
+            <p>Brug filtre for dato, land, enhed og sider/søgeord. Fokusér på:</p>
+            <div class="grid md:grid-cols-2 gap-4 mt-3">
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h3 class="font-semibold mb-2">Hurtige analyser</h3>
+                <ul class="list-disc pl-6 text-sm space-y-1">
+                  <li><strong>Lav CTR + høj eksponering:</strong> forbedr title/meta og SERP‑features.</li>
+                  <li><strong>Position 11–20:</strong> identificér side‑2‑kandidater → indholdsforbedring + interne links.</li>
+                  <li><strong>Long‑tail spørgsmål:</strong> lav sektion “Relaterede spørgsmål” på siden.</li>
+                </ul>
+              </div>
+              <div class="bg-neutral-50 rounded-xl p-4 border">
+                <h3 class="font-semibold mb-2">Handling</h3>
+                <ul class="list-disc pl-6 text-sm space-y-1">
+                  <li>Opdater med data, tabeller, eksempler og medier.</li>
+                  <li>Forstærk interne links fra autoritetsindlæg.</li>
+                  <li>Udnyt FAQ/How‑to markup hvor relevant.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sponsoreret boks: Morningscore -->
+            <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg mt-5"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-xl md:text-2xl font-extrabold mb-2">Morningscore – nem SEO‑tracking</h3>
+              <p class="text-blue-100 mb-3">
+                Se rangeringer, potentiale og ROI – koblet til konkrete opgaver. Perfekt makker til GSC.
+              </p>
+              <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+                Prøv Morningscore
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- Experience / CWV -->
+          <section id="experience" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Experience & Core Web Vitals (CWV)</h2>
+            <p>
+              Brug rapporten til at prioritere <em>LCP</em>, <em>INP</em> og <em>CLS</em> der rammer sider med mest trafik.
+              Optimer billeder (format/størrelse), lazyload, kritisk CSS og reducer JS‑blokeringer.
+            </p>
+            <ul class="list-disc pl-6 mt-2 space-y-1">
+              <li><strong>Skabeloner først:</strong> Løs problemer i tema/komponenter så forbedringer skalerer.</li>
+              <li><strong>Mål igen:</strong> Udrul → vent CrUX opdatering → bekræft i GSC.</li>
+            </ul>
+          </section>
+
+          <!-- URL Inspection -->
+          <section id="url-inspection" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">URL Inspection: debugging af enkeltsider</h2>
+            <ul class="list-disc pl-6 mt-2 space-y-1">
+              <li><strong>Nye sider:</strong> “Request indexing”.</li>
+              <li><strong>Opdaterede sider:</strong> Anmod om genindeksering ved større ændringer.</li>
+              <li><strong>Canonical‑tjek:</strong> Sammenlign “User‑declared” vs. “Google‑selected”.</li>
+            </ul>
+          </section>
+
+          <!-- Indexrapporter -->
+          <section id="index-rapporter" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Vigtige indexrapporter</h2>
+            <div class="space-y-3">
+              <div>
+                <h3 class="text-xl font-semibold">Page indexing</h3>
+                <p class="text-sm">Se status for indekserede/udelukkede sider og identificér mønstre.</p>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Video pages</h3>
+                <p class="text-sm">Sikrer korrekt videoopmærkning og synlighed i Search.</p>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Sitemaps</h3>
+                <p class="text-sm">Sammenlign sidelister vs. faktisk indeks for at finde skævheder.</p>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">Removals</h3>
+                <p class="text-sm">Midlertidig fjernelse – husk at løse kildeårsagen (noindex/robots/redirect).</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Discover -->
+          <section id="discover" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Google Discover: sådan øger du chancen</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li><strong>E‑E‑A‑T:</strong> Tydelig forfatter/brand, kilder og opdaterede fakta.</li>
+              <li><strong>Visuelt stærkt:</strong> Store, skarpe billeder (og korrekte Open Graph‑tags).</li>
+              <li><strong>Aktualitet:</strong> Trends/ny vinkel på evergreen‑emner.</li>
+            </ul>
+          </section>
+
+          <!-- Links & sikkerhed -->
+          <section id="links-sikkerhed" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Links, sikkerhed & manuelle tiltag</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li><strong>Links</strong>: Se henvisende domæner og top‑linked pages → styrk interne links til målsider.</li>
+              <li><strong>Manual actions</strong>: Læs årsag, udbedr og indsende reconsideration.</li>
+              <li><strong>Security issues</strong>: Malware/hacked content → ret straks og anmod om gennemgang.</li>
+            </ul>
+          </section>
+
+          <!-- Arbejdsgang -->
+          <section id="arbejdsgang" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Anbefalet arbejdsgang (månedlig)</h2>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li>Tjek <strong>Performance</strong> og lav CTR‑forbedringer + find side‑2‑kandidater.</li>
+              <li>Gennemgå <strong>Page indexing</strong> og fix kritiske udelukkelser først.</li>
+              <li>Se <strong>Experience/CWV</strong> på top‑sider og planlæg optimeringer.</li>
+              <li>Kig <strong>Links</strong> (nye stærke) og forstærk interne links.</li>
+              <li>Overvåg <strong>Manual/Security</strong> og <strong>Removals</strong>.</li>
+            </ol>
+
+            <!-- Sponsoreret boks: Nemlinkbuilding -->
+            <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg mt-5"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-xl md:text-2xl font-extrabold mb-2">Nemlinkbuilding.dk – få kvalitetslinks uden bøvl</h3>
+              <p class="text-blue-100 mb-3">
+                Bestil gennemskuelige linkpakker til blog, shop eller lokal side. Hurtig levering og klar rapportering.
+              </p>
+              <a href="https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=87346"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+                Besøg Nemlinkbuilding.dk
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- Tjekliste -->
+          <section id="tjekliste" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Tjekliste: når organisk trafik falder</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Tekniske fejl? (5xx/4xx, robots, noindex, canonical)</li>
+              <li>URL‑ændringer uden 301? Ret og gensend til indeksering.</li>
+              <li>Konkurrenter lanceret bedre indhold/links?</li>
+              <li>Google systemændringer? Skærp hjælpsomhed/E‑E‑A‑T.</li>
+              <li>Sæson? Sammenlign samme periode YoY.</li>
+            </ul>
+          </section>
+
+          <!-- CTA til værktøjer (bund) -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+            <p>Arbejd smartere med GSC – her er tre hurtige værktøjer:</p>
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Forbedr title & meta</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Opdatér sitemap</a>
+              <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Byg interne links</a>
+            </div>
+          </section>
+
+          <!-- Hosting CTA (bund) -->
+          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
+            <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+            <h3 class="text-lg md:text-xl font-bold mb-2">Mangler du domæne og webhotel?</h3>
+            <p class="text-blue-100 mb-4">
+              Kom hurtigt online med <strong>Simply.com</strong> – dansk support og nem opsætning.
+            </p>
+            <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+              Køb domæne & hosting hos Simply.com
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </section>
 
           <!-- Back to top -->
           <div class="text-right">
@@ -89,9 +311,10 @@
           </div>
         </article>
 
-        <!-- Sticky TOC -->
+        <!-- Sticky TOC + højre kolonne med reklamer -->
         <aside class="lg:col-span-4">
-          <div class="lg:sticky lg:top-24">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            <!-- TOC -->
             <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
               <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
               <nav class="space-y-2 text-sm">
@@ -105,12 +328,55 @@
                 <a class="block hover:underline" href="#links-sikkerhed">Links & sikkerhed</a>
                 <a class="block hover:underline" href="#arbejdsgang">Arbejdsgang</a>
                 <a class="block hover:underline" href="#tjekliste">Tjekliste</a>
-                <a class="block hover:underline" href="#faq">FAQ</a>
               </nav>
               <hr class="my-4">
               <div class="text-xs text-neutral-500">
                 Tip: Brug vores sitemap- og robots-generator for hurtigere fejlretning.
               </div>
+            </div>
+
+            <!-- Reklamekort 1: Morningscore -->
+            <div class="rounded-2xl p-5 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-lg font-extrabold mb-1">Morningscore – SEO gjort simpelt</h3>
+              <p class="text-blue-100 text-sm mb-3">Hold styr på rankings, opgaver og ROI – perfekt makker til GSC.</p>
+              <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm">
+                Prøv Morningscore
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+
+            <!-- Reklamekort 2: Simply -->
+            <div class="rounded-2xl p-5 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+              <h3 class="text-lg font-extrabold mb-1">Domæne & webhotel hos Simply.com</h3>
+              <p class="text-blue-100 text-sm mb-3">Hurtig opsætning, dansk support og nem DNS‑styring.</p>
+              <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm">
+                Køb domæne & hosting
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+
+            <!-- Reklamekort 3: Nemlinkbuilding -->
+            <div class="rounded-2xl p-5 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#06b6d4 0%,#3b82f6 50%,#6366f1 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-lg font-extrabold mb-1">Nemlinkbuilding.dk</h3>
+              <p class="text-blue-100 text-sm mb-3">Kvalitetslinks med transparent rapportering.</p>
+              <a href="https://www.partner-ads.com/dk/klikbanner.php?partnerid=55078&bannerid=87346"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm">
+                Se linkpakker
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
             </div>
           </div>
         </aside>
