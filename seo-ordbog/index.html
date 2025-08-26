@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="da" id="top">
+<html lang="da">
   <head>
     <script src="/assets/include-header.js?v=7" defer></script>
     <meta charset="utf-8" />
@@ -38,10 +38,10 @@
         <p>Velkommen til Seohub.dk’s SEO ordbog. Klik på et begreb for en kort og præcis forklaring – inkl. eksempler og relaterede termer.</p>
       </section>
 
-      <!-- A–Å + Search -->
+      <!-- A–Å + søgning -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <div class="grid md:grid-cols-3 gap-6">
-          <!-- Venstre: bogstavsbar + filtre + liste -->
+          <!-- Venstre -->
           <div class="md:col-span-2">
             <div class="flex flex-col gap-3 mb-3">
               <div class="flex items-end justify-between gap-4">
@@ -51,76 +51,169 @@
 
               <!-- Bogstavsbar -->
               <div id="letterBar" class="flex flex-wrap gap-1.5">
-                <!-- knapper ... -->
+                <button type="button" data-letter="" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Alle</button>
+                <button type="button" data-letter="#" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">#</button>
+                <button type="button" data-letter="A" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">A</button>
+                <button type="button" data-letter="B" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">B</button>
+                <button type="button" data-letter="C" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">C</button>
+                <button type="button" data-letter="D" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">D</button>
+                <button type="button" data-letter="E" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">E</button>
+                <button type="button" data-letter="H" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">H</button>
+                <button type="button" data-letter="I" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">I</button>
+                <button type="button" data-letter="K" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">K</button>
+                <button type="button" data-letter="M" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">M</button>
+                <button type="button" data-letter="N" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">N</button>
+                <button type="button" data-letter="S" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">S</button>
+                <button type="button" data-letter="T" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">T</button>
               </div>
 
               <!-- Kategori-filtre -->
               <div id="catBar" class="flex flex-wrap gap-1.5">
-                <!-- knapper ... -->
+                <button type="button" data-cat="" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Alle</button>
+                <button type="button" data-cat="teknisk" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Teknisk</button>
+                <button type="button" data-cat="indhold" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Indhold</button>
+                <button type="button" data-cat="links" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Links</button>
+                <button type="button" data-cat="generelt" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Generelt</button>
               </div>
             </div>
 
-            <!-- SEKTIONSLISTE -->
+            <!-- Ordbogssektioner -->
             <div id="termsWrap" class="space-y-6">
 
-              <!-- # -->
               <section id="letter-#" data-letter-section="#">
                 <h3 class="text-lg font-semibold text-neutral-800 mb-2">#</h3>
                 <div class="grid md:grid-cols-2 gap-3 text-blue-700">
-                  <a data-letter="#" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/301-redirect.html">301 redirect</a>
-                  <a data-letter="#" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/404-soft-404.html">404 &amp; soft 404</a>
+                  <a data-letter="#" data-cat="teknisk" href="/seo-ordbog/301-redirect.html" class="hover:underline">301 redirect</a>
+                  <a data-letter="#" data-cat="teknisk" href="/seo-ordbog/404-soft-404.html" class="hover:underline">404 &amp; soft 404</a>
                 </div>
               </section>
 
-              <!-- A -->
               <section id="letter-A" data-letter-section="A">
                 <h3 class="text-lg font-semibold text-neutral-800 mb-2">A</h3>
                 <div class="grid md:grid-cols-2 gap-3 text-blue-700">
-                  <a data-letter="A" data-cat="links" class="hover:underline" href="/seo-ordbog/anchor-text.html">Anchor text</a>
-                  <a data-letter="A" data-cat="indhold" class="hover:underline" href="/seo-ordbog/alt-tekst.html">Alt-tekst</a>
+                  <a data-letter="A" data-cat="links" href="/seo-ordbog/anchor-text.html" class="hover:underline">Anchor text</a>
+                  <a data-letter="A" data-cat="indhold" href="/seo-ordbog/alt-tekst.html" class="hover:underline">Alt-tekst</a>
                 </div>
               </section>
 
-              <!-- B -->
               <section id="letter-B" data-letter-section="B">
                 <h3 class="text-lg font-semibold text-neutral-800 mb-2">B</h3>
                 <div class="grid md:grid-cols-2 gap-3 text-blue-700">
-                  <a data-letter="B" data-cat="links" class="hover:underline" href="/seo-ordbog/backlink.html">Backlink</a>
-                  <a data-letter="B" data-cat="generelt" class="hover:underline" href="/seo-ordbog/bounce-rate.html">Bounce rate</a>
+                  <a data-letter="B" data-cat="links" href="/seo-ordbog/backlink.html" class="hover:underline">Backlink</a>
+                  <a data-letter="B" data-cat="generelt" href="/seo-ordbog/bounce-rate.html" class="hover:underline">Bounce rate</a>
                 </div>
               </section>
 
-              <!-- (fortsæt for C, D, E, H, I, K, M, N, S, T ...) -->
-            </div>
+              <section id="letter-C" data-letter-section="C">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">C</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="C" data-cat="teknisk" href="/seo-ordbog/canonical-tag.html" class="hover:underline">Canonical tag</a>
+                  <a data-letter="C" data-cat="teknisk" href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
+                  <a data-letter="C" data-cat="teknisk" href="/seo-ordbog/crawling.html" class="hover:underline">Crawling</a>
+                </div>
+              </section>
 
+              <section id="letter-D" data-letter-section="D">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">D</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="D" data-cat="teknisk" href="/seo-ordbog/duplicate-content.html" class="hover:underline">Duplicate content</a>
+                </div>
+              </section>
+
+              <section id="letter-E" data-letter-section="E">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">E</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="E" data-cat="generelt" href="/seo-ordbog/e-e-a-t.html" class="hover:underline">E-E-A-T</a>
+                  <a data-letter="E" data-cat="links" href="/seo-ordbog/external-link.html" class="hover:underline">Eksternt link</a>
+                </div>
+              </section>
+
+              <section id="letter-H" data-letter-section="H">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">H</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="H" data-cat="teknisk" href="/seo-ordbog/hreflang.html" class="hover:underline">Hreflang</a>
+                </div>
+              </section>
+
+              <section id="letter-I" data-letter-section="I">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">I</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="I" data-cat="teknisk" href="/seo-ordbog/indexing.html" class="hover:underline">Indexing</a>
+                  <a data-letter="I" data-cat="links" href="/seo-ordbog/internal-linking.html" class="hover:underline">Intern linkbuilding</a>
+                </div>
+              </section>
+
+              <section id="letter-K" data-letter-section="K">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">K</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="K" data-cat="generelt" href="/seo-ordbog/keyword.html" class="hover:underline">Keyword</a>
+                </div>
+              </section>
+
+              <section id="letter-M" data-letter-section="M">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">M</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="M" data-cat="indhold" href="/seo-ordbog/meta-description.html" class="hover:underline">Meta description</a>
+                  <a data-letter="M" data-cat="indhold" href="/seo-ordbog/meta-title.html" class="hover:underline">Meta title</a>
+                </div>
+              </section>
+
+              <section id="letter-N" data-letter-section="N">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">N</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="N" data-cat="links" href="/seo-ordbog/nofollow.html" class="hover:underline">Nofollow</a>
+                  <a data-letter="N" data-cat="teknisk" href="/seo-ordbog/noindex.html" class="hover:underline">Noindex</a>
+                </div>
+              </section>
+
+              <section id="letter-S" data-letter-section="S">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">S</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="S" data-cat="teknisk" href="/seo-ordbog/schema-markup.html" class="hover:underline">Schema Markup</a>
+                  <a data-letter="S" data-cat="generelt" href="/seo-ordbog/search-intent.html" class="hover:underline">Search Intent</a>
+                  <a data-letter="S" data-cat="teknisk" href="/seo-ordbog/sitemap-xml.html" class="hover:underline">Sitemap.xml</a>
+                </div>
+              </section>
+
+              <section id="letter-T" data-letter-section="T">
+                <h3 class="text-lg font-semibold text-neutral-800 mb-2">T</h3>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="T" data-cat="indhold" href="/seo-ordbog/thin-content.html" class="hover:underline">Thin content</a>
+                  <a data-letter="T" data-cat="indhold" href="/seo-ordbog/title-vs-h1.html" class="hover:underline">Title vs. H1</a>
+                </div>
+              </section>
+
+            </div>
           </div>
 
-          <!-- Højre: søgning + sponsorer -->
+          <!-- Højre søgning + sponsorer -->
           <aside class="md:col-span-1">
-            <!-- søg og sponsorer ... -->
-          </aside>
-        </div>
-      </section>
+            <div class="mb-4">
+              <label for="searchInput" class="block text-sm font-medium text-neutral-700 mb-2">Søg i ordbogen</label>
+              <div class="relative">
+                <input type="text" id="searchInput" placeholder="Skriv et begreb..."
+                       class="w-full pr-10 px-4 py-2 rounded-xl border border-neutral-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <button type="button" id="clearSearch" class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-neutral-500 hover:text-neutral-800 hidden">✕</button>
+              </div>
+              <div id="searchHint" class="mt-1 text-xs text-neutral-500">Tip: Prøv “canonical”, “hreflang” eller “title”.</div>
+              <div id="resultMetaSide" class="mt-1 text-xs text-neutral-500"></div>
+            </div>
 
-      <!-- Bund-CTA -->
-      <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-xl font-semibold mb-2">Få mere ud af din SEO</h2>
-        <p>Brug vores gratis værktøjer sammen med ordbogen:</p>
-        <div class="flex flex-wrap gap-3 mt-3">
-          <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">SERP &amp; Meta</a>
-          <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Sitemap.xml</a>
-          <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.txt</a>
-          <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Intern linkbuilder</a>
-        </div>
-      </section>
-    </main>
+            <div class="space-y-3">
+              <div class="rounded-2xl p-4 text-white shadow"
+                   style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+                <div class="text-[11px] uppercase tracking-wide mb-1 opacity-90">Sponsoreret</div>
+                <div class="font-semibold">Morningscore – SEO gjort simpelt</div>
+                <p class="text-blue-100 text-xs mt-1 mb-2">Track søgeord, opgaver og ROI – perfekt til begyndere.</p>
+                <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
+                   class="inline-block bg-white text-neutral-900 px-3 py-1.5 rounded-lg text-sm font-medium hover:shadow">
+                  Prøv gratis
+                </a>
+              </div>
 
-    <!-- Global footer -->
-    <script src="/assets/include-footer.js?v=2" defer></script>
-
-    <!-- JS til søg og filtrering (samme som før, ingen ændringer) -->
-    <script>
-      // ... din filtreringskode her ...
-    </script>
-  </body>
-</html>
+              <div class="rounded-2xl p-4 text-white shadow"
+                   style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
+                <div class="text-[11px] uppercase tracking-wide mb-1 opacity-90">Annonce · Hosting</div>
+                <div class="font-semibold">Simply.com – domæne & webhotel</div>
+                <p class="text-blue-100 text-xs mt-1 mb-2">Hurtig opsætning, dansk support og nem DNS.</p>
+                <a href="https://go.adt291.com/t/t?a=1676137662&as=199944617
