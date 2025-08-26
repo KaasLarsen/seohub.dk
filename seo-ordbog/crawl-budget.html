@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <!-- Global header/nav -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+
+    <meta charset="utf-8" />
+    <title>Crawl budget – hvad er crawl budget? (SEO ordbog 2025) | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="Crawl budget forklaret: Hvad er det, hvordan vurderer Google det, og hvordan optimerer du det i praksis? Få konkrete tjekpunkter, måling og best practices." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://www.seohub.dk/seo-ordbog/crawl-budget.html" />
+
+    <!-- Consent + GA4 -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"DefinedTerm",
+      "name":"Crawl budget",
+      "description":"Crawl budget er den mængde ressourcer en søgemaskine (fx Google) afsætter til at crawle et domæne inden for en given periode. Det påvirkes af crawl-kapacitet (server/teknik) og crawl-efterspørgsel (indholdets popularitet/opdateringsfrekvens).",
+      "inDefinedTermSet":"https://www.seohub.dk/seo-ordbog/",
+      "url":"https://www.seohub.dk/seo-ordbog/crawl-budget.html"
+    }
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Hero -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">SEO Ordbog</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">
+            Crawl budget
+          </h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Hvad er crawl budget – og hvordan optimerer du det, så Google finder og opdaterer dine vigtigste sider hurtigere?
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Content -->
+        <article class="lg:col-span-8 space-y-6">
+
+          <!-- TL;DR -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">Kort forklaring (TL;DR)</h2>
+            <p>
+              <strong>Crawl budget</strong> er den mængde crawl-ressourcer Google afsætter til dit site.
+              Det afhænger primært af <em>crawl-kapacitet</em> (kan din server håndtere det?) og
+              <em>crawl-efterspørgsel</em> (er dine sider vigtige/opdaterede?). Reducér spild på
+              duplikeret/thin indhold, og gør dine vigtigste sider nemme at finde og hurtige at hente.
+            </p>
+          </section>
+
+          <!-- Definition -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Hvad betyder crawl budget?</h2>
+            <p>
+              Crawl budget beskriver hvor meget og hvor ofte Googlebot crawler dit domæne i en periode.
+              Google vurderer kontinuerligt:
+            </p>
+            <ul class="list-disc pl-6 mt-2 space-y-1">
+              <li><strong>Crawl-kapacitet:</strong> Hastighed, stabilitet og responser fra din server.</li>
+              <li><strong>Crawl-efterspørgsel:</strong> Hvor populære/opdaterede siderne er (links, trafik, historik).</li>
+            </ul>
+          </section>
+
+          <!-- Symptomer & hvornår det betyder noget -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Hvornår er crawl budget et problem?</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Meget stort site (tusinder/millioner af URL’er).</li>
+              <li>CMS genererer mange low-value sider (filtre, parametre, arkiver).</li>
+              <li>Laaangsom hosting, ustabile svar, mange 5xx/429.</li>
+              <li>Hyppige opdateringer – men Google opfanger dem sent.</li>
+            </ul>
+          </section>
+
+          <!-- Sådan måler du -->
+          <section id="maaling" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Måling & fejlfinding</h2>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li><strong>GSC → Indstillinger → Crawlstatistik:</strong> Se hentninger/dag, svarstørrelse, responstid og fejl.</li>
+              <li><strong>Serverlogs:</strong> Se faktiske hits fra Googlebot (user-agent + IP). Find spild og dybe crawl-løkker.</li>
+              <li><strong>URL-inspektion:</strong> Tjek enkeltsider, rekvirér genindeksering ved større ændringer.</li>
+            </ol>
+          </section>
+
+          <!-- Best practices -->
+          <section id="best-practice" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Best practices (2025)</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <h3 class="font-semibold mb-1">Reducer spild</h3>
+                <ul class="list-disc pl-6 space-y-1">
+                  <li>Noindex/afindeksér facetter/parametre uden søgeværdi.</li>
+                  <li>Bloker i <a class="text-blue-600 hover:underline" href="/seo-ordbog/robots-txt.html">robots.txt</a> hvor sikkert (ikke indekserede sider).</li>
+                  <li>Fjern <a class="text-blue-600 hover:underline" href="/seo-ordbog/duplicate-content.html">duplikater</a> / brug <a class="text-blue-600 hover:underline" href="/seo-ordbog/canonical-tag.html">canonical</a>.</li>
+                  <li>Fix 404-kæder og unødige 301-hop.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="font-semibold mb-1">Styrk vigtige sider</h3>
+                <ul class="list-disc pl-6 space-y-1">
+                  <li>Hold dit <a class="text-blue-600 hover:underline" href="/seo-ordbog/sitemap-xml.html">XML-sitemap</a> rent og opdateret.</li>
+                  <li>Intern linkstruktur: klikvej til vigtige sider ≤ 3.</li>
+                  <li>Forbedr performance (TTFB, HTML-size) – stabil hosting/HTTP 200.</li>
+                  <li>Opdater indhold regelmæssigt på centrale landingssider.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Typiske fejl -->
+          <section id="fejl" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Typiske fejl</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>At blokere vigtige CSS/JS i robots.txt (kan skade rendering).</li>
+              <li>Massive parametre uden styring (<code>?sort=</code>, <code>?color=</code>, <code>?page=</code> …).</li>
+              <li>Store arkiver/paginering uden noindex/canonical-strategi.</li>
+              <li>Langsomme svar og mange 5xx under deploys.</li>
+            </ul>
+          </section>
+
+          <!-- Relaterede begreber -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Relaterede begreber</h2>
+            <div class="flex flex-wrap gap-3">
+              <a href="/seo-ordbog/crawling.html" class="px-3 py-1.5 rounded-xl border bg-white hover:bg-neutral-50">Crawling</a>
+              <a href="/seo-ordbog/indexing.html" class="px-3 py-1.5 rounded-xl border bg-white hover:bg-neutral-50">Indexing</a>
+              <a href="/seo-ordbog/sitemap-xml.html" class="px-3 py-1.5 rounded-xl border bg-white hover:bg-neutral-50">Sitemap.xml</a>
+              <a href="/seo-ordbog/robots-txt.html" class="px-3 py-1.5 rounded-xl border bg-white hover:bg-neutral-50">Robots.txt</a>
+              <a href="/seo-ordbog/noindex.html" class="px-3 py-1.5 rounded-xl border bg-white hover:bg-neutral-50">Noindex</a>
+              <a href="/seo-ordbog/canonical-tag.html" class="px-3 py-1.5 rounded-xl border bg-white hover:bg-neutral-50">Canonical tag</a>
+            </div>
+          </section>
+
+          <!-- CTA til værktøjer -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+            <p>Få Google til at crawle det rigtige – hurtigere:</p>
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Generér sitemap</a>
+              <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Lav robots.txt</a>
+              <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Byg interne links</a>
+            </div>
+          </section>
+
+          <!-- Sponsor-CTA (stor) -->
+          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
+            <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · SEO værktøj</div>
+            <h3 class="text-lg md:text-xl font-bold mb-2">Få styr på crawl & indeksering</h3>
+            <p class="text-blue-100 mb-4">
+              Med <strong>Morningscore</strong> kan du holde styr på søgeord, opgaver og rapportering – perfekt makker til teknisk SEO.
+            </p>
+            <a href="https://morningscore.io/?via=seohub"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+              Prøv Morningscore gratis
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </section>
+
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24 space-y-4">
+            <!-- Hurtigt overblik -->
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Overblik</h2>
+              <ul class="text-sm space-y-2">
+                <li>Type: <span class="font-medium">Teknisk SEO</span></li>
+                <li>Primære signaler: <span class="font-medium">Serverhastighed, stabilitet, efterspørgsel</span></li>
+                <li>GSC-rapport: <span class="font-medium">Indstillinger → Crawlstatistik</span></li>
+              </ul>
+            </div>
+
+            <!-- Sponsoreret: Morningscore -->
+            <div class="rounded-2xl p-5 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-lg font-extrabold mb-1">Morningscore – SEO gjort simpelt</h3>
+              <p class="text-blue-100 text-sm mb-3">Track søgeord, opgaver og ROI – og se effekten af tekniske fixes.</p>
+              <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm"
+                 onclick="window.gtag && gtag('event','select_promotion',{creative_name:'sidebar_morningscore',location:'glossary_crawl_budget'});">
+                Prøv Morningscore
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+
+            <!-- Sponsoreret: Hosting -->
+            <div class="rounded-2xl p-5 text-white shadow-lg"
+                 style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+              <h3 class="text-lg font-extrabold mb-1">Domæne & webhotel hos Simply.com</h3>
+              <p class="text-blue-100 text-sm mb-3">Stabil performance og dansk support – godt for crawl-kapacitet.</p>
+              <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm"
+                 onclick="window.gtag && gtag('event','select_promotion',{creative_name:'sidebar_hosting',location:'glossary_crawl_budget'});">
+                Se priser
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- Global footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+  </body>
+</html>
