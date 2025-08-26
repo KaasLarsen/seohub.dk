@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <!-- Global header/nav -->
+    <script src="/assets/include-header.js?v=7" defer></script>
+
+    <meta charset="utf-8" />
+    <title>Komplet teknisk SEO-guide (2025) – crawling, hastighed, redirects, schema | Seohub.dk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+          content="Teknisk SEO-guide 2025: Crawling, indexering, Core Web Vitals, mobile-first, HTTPS, canonical, redirects, hreflang og structured data – inkl. tjekliste og eksempler." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="canonical" href="https://www.seohub.dk/blog/teknisk-seo-guide-2025.html" />
+
+    <!-- Consent + GA4 -->
+    <script src="/assets/consent-analytics.js" defer></script>
+
+    <!-- UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Article",
+      "headline":"Komplet teknisk SEO-guide (2025)",
+      "author":{"@type":"Organization","name":"Seohub.dk"},
+      "datePublished":"2025-08-26",
+      "dateModified":"2025-08-26",
+      "image":"https://www.seohub.dk/og-image.png",
+      "mainEntityOfPage":"https://www.seohub.dk/blog/teknisk-seo-guide-2025.html",
+      "publisher":{"@type":"Organization","name":"Seohub.dk","logo":{"@type":"ImageObject","url":"https://www.seohub.dk/favicon.svg"}},
+      "description":"Teknisk SEO-guide 2025: Crawling, indexering, Core Web Vitals, mobile-first, HTTPS, canonical, redirects, hreflang og structured data – inkl. tjekliste og eksempler."
+    }
+    </script>
+
+    <style>
+      /* Læsefremskridt (progress bar) */
+      #readProgress {
+        position: fixed; inset: 0 0 auto 0; height: 4px;
+        background: linear-gradient(90deg,#6366f1, #3b82f6, #06b6d4);
+        transform-origin: 0 50%; transform: scaleX(0);
+        z-index: 60;
+      }
+      details > summary::-webkit-details-marker { display:none; }
+      details > summary { list-style:none; cursor:pointer; }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900">
+
+    <!-- Progress bar -->
+    <div id="readProgress"></div>
+
+    <!-- Hero (gradient i blog-stil) -->
+    <section class="py-10 md:py-14">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
+             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
+          <p class="text-xs uppercase tracking-wider text-blue-100/90 mb-2">Blog · Guide</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold mb-3 leading-tight">
+            Komplet teknisk SEO-guide (2025)
+          </h1>
+          <p class="text-blue-100 text-lg md:text-xl max-w-3xl">
+            Alt om crawling, Core Web Vitals, mobile-first, HTTPS, canonical, redirects, hreflang og structured data –
+            forklaret trin-for-trin med eksempler og tjekliste.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Content -->
+        <article class="lg:col-span-8 space-y-6">
+
+          <!-- TL;DR -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Sitemap + robots.txt</strong> skal hjælpe (ikke hindre) crawling &amp; indexering.</li>
+              <li><strong>Core Web Vitals</strong> (LCP, CLS, INP) påvirker både UX og synlighed – mål og forbedr løbende.</li>
+              <li><strong>HTTPS, canonical &amp; 301-redirects</strong> fjerner duplikerede versioner og sikrer korrekt signal.</li>
+              <li><strong>Mobile-first</strong>: Optimer primært på mobil; test alt på små skærme først.</li>
+              <li><strong>Structured data</strong> (JSON-LD) gør indholdet tydeligt for Google og kan udløse rich results.</li>
+            </ul>
+          </section>
+
+          <!-- Intro -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <p>
+              Teknisk SEO er fundamentet, der gør det muligt for dine tekster og links at virke. Uden korrekt crawling,
+              hastighed og struktur får du sjældent det fulde udbytte. Denne guide giver dig en <em>praktisk</em>
+              step-by-step tilgang – med små tjeklister og eksempler, som du kan implementere med det samme.
+            </p>
+            <p class="mt-2 text-sm text-neutral-700">
+              Tip: Brug vores gratis værktøjer undervejs: <a class="text-blue-600 hover:underline" href="/serp-preview.html">SERP &amp; Meta</a>,
+              <a class="text-blue-600 hover:underline" href="/robots-generator.html">Robots.txt generator</a>,
+              <a class="text-blue-600 hover:underline" href="/sitemap-generator.html">Sitemap.xml generator</a> og
+              <a class="text-blue-600 hover:underline" href="/internal-link-builder.html">Intern linkbuilder</a>.
+            </p>
+          </section>
+
+          <!-- Crawling & Indexing -->
+          <section id="crawling" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Crawling &amp; indexering</h2>
+
+            <h3 class="text-xl font-semibold mt-2">Robots.txt</h3>
+            <p>Brug <code>robots.txt</code> til at styre crawl-adgang, men blokér ikke sider, du ønsker i indekset.</p>
+            <details class="mt-3 bg-neutral-50 border rounded-xl p-4">
+              <summary class="font-medium">Vis eksempel (minimal robots.txt)</summary>
+<pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap mt-3">
+User-agent: *
+Disallow:
+Sitemap: https://www.seohub.dk/sitemap.xml
+</pre>
+            </details>
+
+            <h3 class="text-xl font-semibold mt-4">XML-sitemap</h3>
+            <p>
+              Et opdateret sitemap hjælper Google med at finde nyt og opdateret indhold. Sørg for at <em>alle</em> vigtige
+              skabeloner er med: blog, værktøjer, ordbog m.m.
+            </p>
+
+            <h3 class="text-xl font-semibold mt-4">Crawl budget</h3>
+            <p>
+              Store sites bør fjerne støj (tynde sider, filtre, dubletter), så crawl-budget bruges på det, der betyder noget.
+              Læs mere i ordbogen: <a class="text-blue-600 hover:underline" href="/seo-ordbog/crawl-budget.html">Crawl budget</a>.
+            </p>
+
+            <!-- Mini tjekliste -->
+            <div class="mt-4 bg-white border rounded-2xl p-4">
+              <div class="font-semibold mb-2">Tjekliste: Crawling</div>
+              <ul class="list-disc pl-6 space-y-1 text-sm">
+                <li>Robots.txt blokerer ikke vigtige skabeloner.</li>
+                <li>Sitemap indeholder alle centrale URL’er (ingen 404/410/301).</li>
+                <li>Parametre håndteres (noindex, canonical eller blokering efter behov).</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Core Web Vitals -->
+          <section id="web-vitals" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Site speed &amp; Core Web Vitals</h2>
+            <p>
+              Fokuser på <strong>LCP</strong> (load-hastighed), <strong>CLS</strong> (stabilitet) og <strong>INP</strong> (interaktivitet).
+              Start med billeder, fonte og tredjeparts-scripts.
+            </p>
+            <details class="mt-3 bg-neutral-50 border rounded-xl p-4">
+              <summary class="font-medium">Hurtige wins</summary>
+              <ul class="list-disc pl-6 mt-3 space-y-1 text-sm">
+                <li>Komprimer billeder (WebP/AVIF) og brug <code>width/height</code> + <code>loading="lazy"</code>.</li>
+                <li>Preload vigtigste font og hero-billede.</li>
+                <li>Udsæt ikke-kritiske scripts (defer) og fjern ubrugte.</li>
+              </ul>
+            </details>
+            <p class="mt-3 text-sm text-neutral-700">
+              Se ordbogen: <a class="text-blue-600 hover:underline" href="/seo-ordbog/core-web-vitals.html">Core Web Vitals</a>,
+              <a class="text-blue-600 hover:underline" href="/seo-ordbog/cumulative-layout-shift.html">CLS</a>.
+            </p>
+          </section>
+
+          <!-- Mobile-first & UX -->
+          <section id="mobile" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Mobile-first &amp; UX</h2>
+            <p>Design på mobil først. Test navigation, tap-mål, tabeller og interaktioner på små skærme.</p>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Responsivt grid, læsbare fonte, nok kontrast.</li>
+              <li>Undgå intrusive popups – især på mobil.</li>
+              <li>Hold CTA’er synlige, men ikke aggressive.</li>
+            </ul>
+          </section>
+
+          <!-- HTTPS, canonicals & redirects -->
+          <section id="canonical-redirects" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">HTTPS, canonical &amp; redirects</h2>
+            <p>
+              Brug <strong>HTTPS</strong> overalt. <strong>Canonical</strong> for at pege på den “rigtige” version, og <strong>301-redirects</strong>
+              til at samle signaler, når URL’er ændrer sig.
+            </p>
+            <details class="mt-3 bg-neutral-50 border rounded-xl p-4">
+              <summary class="font-medium">Eksempel: 301 i .htaccess</summary>
+<pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap mt-3">
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://www.seohub.dk/$1 [L,R=301]
+</pre>
+            </details>
+            <p class="mt-3 text-sm text-neutral-700">
+              Se ordbogen: <a class="text-blue-600 hover:underline" href="/seo-ordbog/301-redirect.html">301 redirect</a>,
+              <a class="text-blue-600 hover:underline" href="/seo-ordbog/canonical-tag.html">Canonical tag</a>.
+            </p>
+          </section>
+
+          <!-- Duplicate content & index bloat -->
+          <section id="duplicate" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Duplicate content &amp; index bloat</h2>
+            <p>Filtre, søgning, tags og arkiver skaber ofte uønskede dubletter. Ryd op med noindex, canonical og logisk IA.</p>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Noindex på paginerede/tynde lister, der ikke skal rangere.</li>
+              <li>Canonical mellem varianter (sprog, parametre, UTM’er).</li>
+              <li>Fjern døde sider (410) og ryd op i interne links.</li>
+            </ul>
+          </section>
+
+          <!-- International SEO -->
+          <section id="international" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">International SEO (hreflang)</h2>
+            <p>Hreflang hjælper Google med at vise den rette sprog-/landeversion. Vær konsekvent i sprogkoder og URL-struktur.</p>
+            <details class="mt-3 bg-neutral-50 border rounded-xl p-4">
+              <summary class="font-medium">Eksempel: Hreflang tags (head)</summary>
+<pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap mt-3">
+<link rel="alternate" href="https://www.seohub.dk/" hreflang="da" />
+<link rel="alternate" href="https://www.seohub.dk/en/" hreflang="en" />
+<link rel="alternate" href="https://www.seohub.dk/" hreflang="x-default" />
+</pre>
+            </details>
+            <p class="mt-3 text-sm text-neutral-700">
+              Se ordbogen: <a class="text-blue-600 hover:underline" href="/seo-ordbog/hreflang.html">Hreflang</a>.
+            </p>
+          </section>
+
+          <!-- Structured data -->
+          <section id="schema" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Structured data (schema)</h2>
+            <p>Brug JSON-LD til at beskrive dine sider (Article, Product, FAQ). Det hjælper Google med at forstå indholdet.</p>
+            <details class="mt-3 bg-neutral-50 border rounded-xl p-4">
+              <summary class="font-medium">Eksempel: Article (JSON-LD)</summary>
+<pre class="bg-neutral-900 text-neutral-100 rounded-xl p-4 overflow-auto text-sm whitespace-pre-wrap mt-3">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Min artikel",
+  "author": {"@type":"Person","name":"Navn"},
+  "datePublished": "2025-08-26"
+}
+</pre>
+            </details>
+            <p class="mt-3 text-sm text-neutral-700">
+              Se ordbogen: <a class="text-blue-600 hover:underline" href="/seo-ordbog/schema-markup.html">Schema markup</a>,
+              <a class="text-blue-600 hover:underline" href="/seo-ordbog/structured-data.html">Structured data</a>.
+            </p>
+          </section>
+
+          <!-- Fejlretning & værktøjer -->
+          <section id="tools" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Fejlretning &amp; værktøjer</h2>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Google Search Console: Performance, Pages (Index), Enhancements.</li>
+              <li>Screaming Frog/ Sitebulb: crawls, statuskoder, internal linking.</li>
+              <li>PageSpeed Insights / Lighthouse: Web Vitals og optimeringer.</li>
+            </ul>
+
+            <!-- Sponsoreret boks (diskret) -->
+            <div class="rounded-2xl p-5 md:p-6 text-white shadow-lg mt-5"
+                 style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+              <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
+              <h3 class="text-lg md:text-xl font-extrabold mb-2">Morningscore – SEO gjort simpelt</h3>
+              <p class="text-blue-100 mb-3">
+                Saml søgeord, opgaver og rapportering ét sted – perfekt makker til teknisk oprydning.
+              </p>
+              <a href="https://morningscore.io/?via=seohub"
+                 target="_blank" rel="sponsored noopener nofollow"
+                 class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+                Prøv gratis
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- Tjekliste (samlet) -->
+          <section id="checklist" class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-2xl font-bold mb-3">Tjekliste: Teknisk SEO (2025)</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>HTTPS og HSTS aktiveret, ingen mixed content.</li>
+              <li>Kun én version af domænet er tilgængelig (www/non-www, http→https).</li>
+              <li>XML-sitemap opdateres automatisk og kun med 200-URL’er.</li>
+              <li>Robots.txt blokkerer ikke vigtige skabeloner; sitemap erklæret.</li>
+              <li>Core Web Vitals: LCP &lt; 2.5s, CLS &lt; 0.1, INP &lt; 200ms (mobil først).</li>
+              <li>Canonical korrekt på lister, filtre, paginering og varianter.</li>
+              <li>Parametre: noindex/canonical eller blokering efter strategi.</li>
+              <li>404/410 ryddet op; 301-kæder minimeret.</li>
+              <li>Hreflang konsistent på alle sprogversioner (inkl. x-default).</li>
+              <li>Structured data valideret (no errors/warnings af relevans).</li>
+              <li>Intern linkstruktur peger autoritet mod de vigtigste sider.</li>
+            </ul>
+          </section>
+
+          <!-- Bund-CTA til værktøjer -->
+          <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
+            <h2 class="text-xl font-semibold mb-2">Næste skridt</h2>
+            <p>Få styr på fundamentet og gør optimering hurtigere:</p>
+            <div class="flex flex-wrap gap-3 mt-3">
+              <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">Byg interne links</a>
+              <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Forbedr title &amp; meta</a>
+              <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Opdatér sitemap</a>
+              <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Fix robots.txt</a>
+            </div>
+          </section>
+
+          <!-- Hosting CTA -->
+          <section class="mt-2 rounded-2xl p-6 shadow bg-gradient-to-r from-indigo-500 via-blue-600 to-sky-500 text-white">
+            <div class="text-xs uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
+            <h3 class="text-lg md:text-xl font-bold mb-2">Mangler du domæne og webhotel?</h3>
+            <p class="text-blue-100 mb-4">
+              Kom hurtigt online med <strong>Simply.com</strong> – dansk support og nem opsætning.
+            </p>
+            <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+               target="_blank" rel="sponsored noopener nofollow"
+               class="inline-flex items-center gap-2 bg-white text-neutral-900 px-4 py-2 rounded-xl font-semibold hover:shadow-lg transition">
+              Køb domæne &amp; hosting hos Simply.com
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </section>
+
+          <!-- Back to top -->
+          <div class="text-right">
+            <a href="#top" class="inline-block mt-2 text-sm text-blue-600 hover:underline">Til toppen ↑</a>
+          </div>
+        </article>
+
+        <!-- Sticky TOC -->
+        <aside class="lg:col-span-4">
+          <div class="lg:sticky lg:top-24">
+            <div class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 border border-neutral-100">
+              <h2 class="text-sm font-semibold uppercase tracking-wide text-neutral-600 mb-3">Indholdsoversigt</h2>
+              <nav class="space-y-2 text-sm">
+                <a class="block hover:underline" href="#crawling">Crawling &amp; indexering</a>
+                <a class="block hover:underline" href="#web-vitals">Core Web Vitals</a>
+                <a class="block hover:underline" href="#mobile">Mobile-first &amp; UX</a>
+                <a class="block hover:underline" href="#canonical-redirects">HTTPS, canonical &amp; redirects</a>
+                <a class="block hover:underline" href="#duplicate">Duplicate &amp; index bloat</a>
+                <a class="block hover:underline" href="#international">International SEO</a>
+                <a class="block hover:underline" href="#schema">Structured data</a>
+                <a class="block hover:underline" href="#tools">Fejlretning &amp; værktøjer</a>
+                <a class="block hover:underline" href="#checklist">Tjekliste</a>
+              </nav>
+              <hr class="my-4">
+              <div class="text-xs text-neutral-500">
+                Tip: Brug vores interne linkbuilder til at løfte dine vigtigste sider først.
+              </div>
+
+              <!-- Diskret sponsor i siden -->
+              <div class="mt-5 rounded-xl p-4 text-white shadow"
+                   style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
+                <div class="text-[11px] uppercase tracking-wide mb-1 opacity-90">Sponsoreret</div>
+                <div class="font-semibold">Domæne &amp; webhotel hos Simply.com</div>
+                <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+                   target="_blank" rel="sponsored noopener nofollow"
+                   class="mt-2 inline-block bg-white text-neutral-900 px-3 py-1.5 rounded-lg text-sm font-medium hover:shadow">
+                  Se priser
+                </a>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- Global footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+
+    <!-- Læsefremskridt script -->
+    <script>
+      (function(){
+        const bar = document.getElementById('readProgress');
+        function onScroll() {
+          const el = document.documentElement;
+          const h = el.scrollHeight - el.clientHeight;
+          const p = h > 0 ? (el.scrollTop / h) : 0;
+          bar.style.transform = 'scaleX(' + p + ')';
+        }
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
+  </body>
+</html>
