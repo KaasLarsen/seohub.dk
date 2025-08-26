@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="da">
+<html lang="da" id="top">
   <head>
     <script src="/assets/include-header.js?v=7" defer></script>
     <meta charset="utf-8" />
@@ -50,7 +50,39 @@
               </div>
 
               <!-- Bogstavsbar -->
-              <div id="letterBar" class="flex flex-wrap gap-1.5"></div>
+              <div id="letterBar" class="flex flex-wrap gap-1.5">
+                <button type="button" data-letter="" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Alle</button>
+                <button type="button" data-letter="#" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">#</button>
+                <button type="button" data-letter="A" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">A</button>
+                <button type="button" data-letter="B" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">B</button>
+                <button type="button" data-letter="C" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">C</button>
+                <button type="button" data-letter="D" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">D</button>
+                <button type="button" data-letter="E" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">E</button>
+                <button type="button" data-letter="F" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">F</button>
+                <button type="button" data-letter="G" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">G</button>
+                <button type="button" data-letter="H" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">H</button>
+                <button type="button" data-letter="I" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">I</button>
+                <button type="button" data-letter="J" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">J</button>
+                <button type="button" data-letter="K" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">K</button>
+                <button type="button" data-letter="L" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">L</button>
+                <button type="button" data-letter="M" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">M</button>
+                <button type="button" data-letter="N" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">N</button>
+                <button type="button" data-letter="O" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">O</button>
+                <button type="button" data-letter="P" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">P</button>
+                <button type="button" data-letter="Q" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Q</button>
+                <button type="button" data-letter="R" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">R</button>
+                <button type="button" data-letter="S" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">S</button>
+                <button type="button" data-letter="T" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">T</button>
+                <button type="button" data-letter="U" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">U</button>
+                <button type="button" data-letter="V" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">V</button>
+                <button type="button" data-letter="W" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">W</button>
+                <button type="button" data-letter="X" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">X</button>
+                <button type="button" data-letter="Y" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Y</button>
+                <button type="button" data-letter="Z" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Z</button>
+                <button type="button" data-letter="Æ" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Æ</button>
+                <button type="button" data-letter="Ø" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Ø</button>
+                <button type="button" data-letter="Å" class="px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Å</button>
+              </div>
 
               <!-- Kategori-filtre -->
               <div id="catBar" class="flex flex-wrap gap-1.5">
@@ -62,13 +94,166 @@
               </div>
             </div>
 
-            <!-- Liste med bogstav-overskrifter (fyldes/sorteres i JS) -->
+            <!-- SEKTIONSLISTE (statisk, altid-klikbare links) -->
             <div id="termsWrap" class="space-y-6">
-              <!-- JS genererer <section id="letter-A"> med <h3> og grid af links -->
-              <div id="noResults" class="hidden text-sm text-neutral-600 bg-neutral-50 border rounded-xl p-4">
-                Ingen resultater for <span class="font-semibold" id="qText"></span>. Prøv et andet begreb eller kategori.
-              </div>
+
+              <!-- # -->
+              <section id="letter-#" data-letter-section="#">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">#</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="#" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/301-redirect.html">301 redirect</a>
+                  <a data-letter="#" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/404-soft-404.html">404 &amp; soft 404</a>
+                </div>
+              </section>
+
+              <!-- A -->
+              <section id="letter-A" data-letter-section="A">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">A</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="A" data-cat="links" class="hover:underline" href="/seo-ordbog/anchor-text.html">Anchor text</a>
+                  <a data-letter="A" data-cat="indhold" class="hover:underline" href="/seo-ordbog/alt-tekst.html">Alt-tekst</a>
+                </div>
+              </section>
+
+              <!-- B -->
+              <section id="letter-B" data-letter-section="B">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">B</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="B" data-cat="links" class="hover:underline" href="/seo-ordbog/backlink.html">Backlink</a>
+                  <a data-letter="B" data-cat="generelt" class="hover:underline" href="/seo-ordbog/bounce-rate.html">Bounce rate</a>
+                </div>
+              </section>
+
+              <!-- C -->
+              <section id="letter-C" data-letter-section="C">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">C</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="C" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/canonical-tag.html">Canonical tag</a>
+                  <a data-letter="C" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/core-web-vitals.html">Core Web Vitals</a>
+                  <a data-letter="C" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/crawling.html">Crawling</a>
+                </div>
+              </section>
+
+              <!-- D -->
+              <section id="letter-D" data-letter-section="D">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">D</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="D" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/duplicate-content.html">Duplicate content</a>
+                </div>
+              </section>
+
+              <!-- E -->
+              <section id="letter-E" data-letter-section="E">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">E</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="E" data-cat="generelt" class="hover:underline" href="/seo-ordbog/e-e-a-t.html">E-E-A-T</a>
+                  <a data-letter="E" data-cat="links" class="hover:underline" href="/seo-ordbog/external-link.html">Eksternt link</a>
+                </div>
+              </section>
+
+              <!-- H -->
+              <section id="letter-H" data-letter-section="H">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">H</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="H" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/hreflang.html">Hreflang</a>
+                </div>
+              </section>
+
+              <!-- I -->
+              <section id="letter-I" data-letter-section="I">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">I</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="I" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/indexing.html">Indexing</a>
+                  <a data-letter="I" data-cat="links" class="hover:underline" href="/seo-ordbog/internal-linking.html">Intern linkbuilding</a>
+                </div>
+              </section>
+
+              <!-- K -->
+              <section id="letter-K" data-letter-section="K">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">K</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="K" data-cat="generelt" class="hover:underline" href="/seo-ordbog/keyword.html">Keyword</a>
+                </div>
+              </section>
+
+              <!-- M -->
+              <section id="letter-M" data-letter-section="M">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">M</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="M" data-cat="indhold" class="hover:underline" href="/seo-ordbog/meta-description.html">Meta description</a>
+                  <a data-letter="M" data-cat="indhold" class="hover:underline" href="/seo-ordbog/meta-title.html">Meta title</a>
+                </div>
+              </section>
+
+              <!-- N -->
+              <section id="letter-N" data-letter-section="N">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">N</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="N" data-cat="links" class="hover:underline" href="/seo-ordbog/nofollow.html">Nofollow</a>
+                  <a data-letter="N" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/noindex.html">Noindex</a>
+                </div>
+              </section>
+
+              <!-- S -->
+              <section id="letter-S" data-letter-section="S">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">S</h3>
+                <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="S" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/schema-markup.html">Schema Markup</a>
+                  <a data-letter="S" data-cat="generelt" class="hover:underline" href="/seo-ordbog/search-intent.html">Search Intent</a>
+                  <a data-letter="S" data-cat="teknisk" class="hover:underline" href="/seo-ordbog/sitemap-xml.html">Sitemap.xml</a>
+                </div>
+              </section>
+
+              <!-- T -->
+              <section id="letter-T" data-letter-section="T">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="text-lg font-semibold text-neutral-800">T</h3>
+                  <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3 text-blue-700">
+                  <a data-letter="T" data-cat="indhold" class="hover:underline" href="/seo-ordbog/thin-content.html">Thin content</a>
+                  <a data-letter="T" data-cat="indhold" class="hover:underline" href="/seo-ordbog/title-vs-h1.html">Title vs. H1</a>
+                </div>
+              </section>
+
             </div>
+
           </div>
 
           <!-- Højre: søgning + sponsorer -->
@@ -83,6 +268,7 @@
                         class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-neutral-500 hover:text-neutral-800 hidden">✕</button>
               </div>
               <div id="searchHint" class="mt-1 text-xs text-neutral-500">Tip: Prøv “canonical”, “hreflang” eller “title”.</div>
+              <div id="resultMetaSide" class="mt-1 text-xs text-neutral-500"></div>
             </div>
 
             <!-- Sponsorerede visninger -->
@@ -130,197 +316,126 @@
     <!-- Global footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Søg + sortering + bogstavsbar + sektioner + GA4 -->
+    <!-- Filtrering + søgning (kun viser/skjuler – ødelægger ikke links) -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // ----- DATA: Begreber (tekst, url, kategori) -----
-        const TERMS = [
-          { t: "301 redirect", url: "/seo-ordbog/301-redirect.html", cat: "teknisk" },
-          { t: "404 & soft 404", url: "/seo-ordbog/404-soft-404.html", cat: "teknisk" },
-          { t: "Anchor text", url: "/seo-ordbog/anchor-text.html", cat: "links" },
-          { t: "Alt-tekst", url: "/seo-ordbog/alt-tekst.html", cat: "indhold" },
-          { t: "Backlink", url: "/seo-ordbog/backlink.html", cat: "links" },
-          { t: "Bounce rate", url: "/seo-ordbog/bounce-rate.html", cat: "generelt" },
-          { t: "Canonical tag", url: "/seo-ordbog/canonical-tag.html", cat: "teknisk" },
-          { t: "Core Web Vitals", url: "/seo-ordbog/core-web-vitals.html", cat: "teknisk" },
-          { t: "Crawling", url: "/seo-ordbog/crawling.html", cat: "teknisk" },
-          { t: "Duplicate content", url: "/seo-ordbog/duplicate-content.html", cat: "teknisk" },
-          { t: "E-E-A-T", url: "/seo-ordbog/e-e-a-t.html", cat: "generelt" },
-          { t: "Eksternt link", url: "/seo-ordbog/external-link.html", cat: "links" },
-          { t: "Hreflang", url: "/seo-ordbog/hreflang.html", cat: "teknisk" },
-          { t: "Indexing", url: "/seo-ordbog/indexing.html", cat: "teknisk" },
-          { t: "Intern linkbuilding", url: "/seo-ordbog/internal-linking.html", cat: "links" },
-          { t: "Keyword", url: "/seo-ordbog/keyword.html", cat: "generelt" },
-          { t: "Meta description", url: "/seo-ordbog/meta-description.html", cat: "indhold" },
-          { t: "Meta title", url: "/seo-ordbog/meta-title.html", cat: "indhold" },
-          { t: "Nofollow", url: "/seo-ordbog/nofollow.html", cat: "links" },
-          { t: "Noindex", url: "/seo-ordbog/noindex.html", cat: "teknisk" },
-          { t: "Schema Markup", url: "/seo-ordbog/schema-markup.html", cat: "teknisk" },
-          { t: "Search Intent", url: "/seo-ordbog/search-intent.html", cat: "generelt" },
-          { t: "Sitemap.xml", url: "/seo-ordbog/sitemap-xml.html", cat: "teknisk" },
-          { t: "Thin content", url: "/seo-ordbog/thin-content.html", cat: "indhold" },
-          { t: "Title vs. H1", url: "/seo-ordbog/title-vs-h1.html", cat: "indhold" }
-        ];
-
-        const termsWrap = document.getElementById("termsWrap");
+        const sections = Array.from(document.querySelectorAll("[data-letter-section]"));
+        const allLinks = Array.from(document.querySelectorAll("#termsWrap a[data-letter]"));
         const letterBar = document.getElementById("letterBar");
-        const resultMeta = document.getElementById("resultMeta");
+        const catBar = document.getElementById("catBar");
         const input = document.getElementById("searchInput");
         const clearBtn = document.getElementById("clearSearch");
-        const noResults = document.getElementById("noResults");
-        const qText = document.getElementById("qText");
+        const resultMeta = document.getElementById("resultMeta");
+        const resultMetaSide = document.getElementById("resultMetaSide");
+        const noResultsBox = document.getElementById("noResults"); // findes i første version; her skjult
         let activeLetter = "";
         let activeCat = "";
+        let q = "";
 
-        // Sortér dansk, tal først (#)
-        const sorted = [...TERMS].sort((a, b) => {
-          const ax = a.t.trim(), bx = b.t.trim();
-          const aNum = /^[0-9]/.test(ax), bNum = /^[0-9]/.test(bx);
-          if (aNum && !bNum) return -1;
-          if (!aNum && bNum) return 1;
-          return ax.localeCompare(bx, "da", { sensitivity: "base" });
-        });
-
-        // Gruppér pr. førstetegn
-        function firstKey(label) {
-          const first = label.trim().charAt(0);
-          return /^[0-9]/.test(first) ? "#" : first.toUpperCase();
+        function updateMeta(visible) {
+          const text = visible + " resultat(er)";
+          resultMeta.textContent = text;
+          resultMetaSide.textContent = text;
         }
-        const groupsAll = {};
-        sorted.forEach(item => {
-          const k = firstKey(item.t);
-          (groupsAll[k] = groupsAll[k] || []).push(item);
-        });
 
-        // Byg bogstavsbar
-        const LETTERS = ["#", "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Æ","Ø","Å"];
-        function renderLetterBar() {
-          LETTERS.forEach(letter => {
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.textContent = letter;
-            btn.dataset.letter = letter;
-            btn.className = "px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50";
-            btn.addEventListener("click", () => {
-              activeLetter = (activeLetter === letter) ? "" : letter;
-              highlight(letterBar, "letter", activeLetter);
-              input.value = "";
-              renderSections();
+        function applyFilters() {
+          const query = q.trim().toLowerCase();
+          let visibleCount = 0;
+
+          // Vis/skjul links
+          allLinks.forEach(a => {
+            const letter = a.dataset.letter || "";
+            const cat = a.dataset.cat || "";
+            const matchesLetter = !activeLetter || letter === activeLetter || (activeLetter === "#" && letter === "#");
+            const matchesCat = !activeCat || cat === activeCat;
+            const matchesQuery = !query || a.textContent.toLowerCase().includes(query);
+
+            const show = matchesLetter && matchesCat && matchesQuery;
+            a.style.display = show ? "" : "none";
+            if (show) visibleCount++;
+          });
+
+          // Vis/skjul sektioner
+          sections.forEach(sec => {
+            const anyVisible = Array.from(sec.querySelectorAll("a")).some(a => a.style.display !== "none");
+            sec.style.display = anyVisible ? "" : "none";
+          });
+
+          // Ingen resultater boks (valgfrit – hvis du vil vise den, lav et element med id="noResults")
+          if (noResultsBox) {
+            noResultsBox.classList.toggle("hidden", visibleCount !== 0);
+          }
+
+          updateMeta(visibleCount);
+          clearBtn.classList.toggle("hidden", !query);
+        }
+
+        // Bogstavsbar (toggle styling)
+        letterBar.querySelectorAll("button[data-letter]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const letter = btn.getAttribute("data-letter");
+            activeLetter = (activeLetter === letter) ? "" : letter;
+            // styling
+            letterBar.querySelectorAll("button[data-letter]").forEach(b => {
+              const active = b.getAttribute("data-letter") === activeLetter && activeLetter !== "";
+              b.classList.toggle("bg-blue-600", active);
+              b.classList.toggle("text-white", active);
+              b.classList.toggle("border-blue-600", active);
             });
-            letterBar.appendChild(btn);
+            input.value = "";
+            q = "";
+            applyFilters();
           });
-        }
+        });
 
-        function highlight(container, key, value) {
-          container.querySelectorAll(`[data-${key}]`).forEach(el => {
-            el.classList.toggle("bg-blue-600", el.dataset[key] === value && value !== "");
-            el.classList.toggle("text-white", el.dataset[key] === value && value !== "");
-            el.classList.toggle("border-blue-600", el.dataset[key] === value && value !== "");
-          });
-        }
-
-        // Kategori-bar (chips)
-        const catBar = document.getElementById("catBar");
+        // Kategorier
         catBar.querySelectorAll(".cat-chip").forEach(btn => {
           btn.addEventListener("click", () => {
             const cat = btn.getAttribute("data-cat");
             activeCat = (activeCat === cat) ? "" : cat;
             catBar.querySelectorAll(".cat-chip").forEach(b => {
-              const isActive = b.getAttribute("data-cat") === activeCat && activeCat !== "";
-              b.classList.toggle("bg-blue-600", isActive);
-              b.classList.toggle("text-white", isActive);
-              b.classList.toggle("border-blue-600", isActive);
+              const active = b.getAttribute("data-cat") === activeCat && activeCat !== "";
+              b.classList.toggle("bg-blue-600", active);
+              b.classList.toggle("text-white", active);
+              b.classList.toggle("border-blue-600", active);
             });
-            renderSections();
+            applyFilters();
           });
         });
 
-        // Render sektioner med overskrifter + grid
-        function renderSections() {
-          const q = input.value.trim().toLowerCase();
-          const groups = {}; // filtreret
-          let visibleCount = 0;
-
-          // Filtrér
-          sorted.forEach(item => {
-            const label = item.t;
-            const k = firstKey(label);
-            const matchLetter = !activeLetter || k === activeLetter;
-            const matchQuery = !q || label.toLowerCase().includes(q);
-            const matchCat = !activeCat || item.cat === activeCat;
-
-            if (matchLetter && matchQuery && matchCat) {
-              (groups[k] = groups[k] || []).push(item);
-              visibleCount++;
-            }
-          });
-
-          // Ryd og genskab
-          termsWrap.innerHTML = "";
-          if (visibleCount === 0) {
-            const qShown = q || activeLetter || activeCat || "";
-            qText.textContent = qShown;
-            noResults.classList.remove("hidden");
-          } else {
-            noResults.classList.add("hidden");
-            LETTERS.forEach(letter => {
-              const arr = groups[letter];
-              if (arr && arr.length) {
-                const sec = document.createElement("section");
-                sec.id = `letter-${letter}`;
-                sec.innerHTML = `
-                  <div class="flex items-center justify-between mb-2">
-                    <h3 class="text-lg font-semibold text-neutral-800">${letter}</h3>
-                    <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
-                  </div>
-                  <div class="grid md:grid-cols-2 gap-3 text-blue-700"></div>
-                `;
-                const grid = sec.querySelector("div.grid");
-                arr.forEach(it => {
-                  const a = document.createElement("a");
-                  a.href = it.url;
-                  a.textContent = it.t;
-                  a.className = "hover:underline";
-                  a.setAttribute("data-cat", it.cat);
-                  a.addEventListener("click", () => {
-                    // GA4 event hvis gtag findes og consent er givet via dit script
-                    if (typeof window.gtag === "function") {
-                      window.gtag('event', 'select_content', {
-                        content_type: 'glossary_term',
-                        item_id: it.url,
-                        item_name: it.t,
-                        category: it.cat
-                      });
-                    }
-                  });
-                  grid.appendChild(a);
-                });
-                termsWrap.appendChild(sec);
-              }
-            });
-          }
-
-          // Meta
-          resultMeta.textContent = visibleCount ? `${visibleCount} resultat(er)` : "";
-          // Clear-knap state
-          clearBtn.classList.toggle("hidden", !q);
-        }
-
-        // Søgefelt
+        // Søg
         input.addEventListener("input", () => {
-          activeLetter = ""; highlight(letterBar, "letter", "");
-          renderSections();
+          q = input.value || "";
+          activeLetter = ""; // nulstil bogstavfilter ved søg
+          letterBar.querySelectorAll("button[data-letter]").forEach(b => {
+            b.classList.remove("bg-blue-600","text-white","border-blue-600");
+          });
+          applyFilters();
         });
         clearBtn.addEventListener("click", () => {
           input.value = "";
+          q = "";
           input.focus();
-          activeLetter = ""; highlight(letterBar, "letter", "");
-          renderSections();
+          applyFilters();
+        });
+
+        // GA4 event på klik (respekterer consent – gtag kan være udefineret)
+        allLinks.forEach(a => {
+          a.addEventListener("click", () => {
+            if (typeof window.gtag === "function") {
+              window.gtag('event', 'select_content', {
+                content_type: 'glossary_term',
+                item_id: a.getAttribute('href'),
+                item_name: a.textContent.trim(),
+                category: a.dataset.cat || ''
+              });
+            }
+          });
         });
 
         // Init
-        renderLetterBar();
-        renderSections();
+        updateMeta(allLinks.length);
+        applyFilters();
       });
     </script>
   </body>
