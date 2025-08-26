@@ -2,12 +2,12 @@
 // Mobil: burger + "Værktøjer" som accordion med ALLE værktøjer
 // Desktop: hover/click dropdown, bliver åben mens man klikker
 
-(function () {
-  // ----- KONFIG -----
-  const LINKS_LEFT = [
-    { href: "/", label: "Forside", key: "/" },
-    { href: "/blog/", label: "Blog", key: "/blog/" }
-  ];
+const LINKS_LEFT = [
+  { href: "/",            label: "Forside",    key: "/" },
+  { href: "/blog/",       label: "Blog",       key: "/blog" },
+  { href: "/seo-ordbog/", label: "SEO Ordbog", key: "/seo-ordbog" }
+];
+
 
   const TOOLS = [
     { href: "/serp-preview.html",         label: "SERP & Meta",        key: "/serp-preview.html" },
