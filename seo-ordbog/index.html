@@ -16,14 +16,6 @@
 
     <!-- Hero -->
     <section class="py-10 md:py-14">
-      <!-- Søgefelt -->
-<div class="mb-6">
-  <label for="searchInput" class="block text-sm font-medium text-neutral-700 mb-2">
-    Søg i ordbogen
-  </label>
-  <input type="text" id="searchInput" placeholder="Skriv et begreb..."
-         class="w-full md:w-1/2 px-4 py-2 rounded-xl border border-neutral-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-</div>
       <div class="max-w-6xl mx-auto px-4">
         <div class="rounded-2xl p-12 md:p-16 text-white shadow-lg"
              style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 50%,#06b6d4 100%)">
@@ -46,37 +38,56 @@
         <p>Velkommen til Seohub.dk’s SEO ordbog. Klik på et begreb for en kort og præcis forklaring – inkl. eksempler og relaterede termer.</p>
       </section>
 
-      <!-- A–Z liste -->
+      <!-- A–Z liste + søgning -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <h2 class="text-2xl font-bold mb-4">A–Z begreber</h2>
-        <div class="grid md:grid-cols-2 gap-4 text-blue-700">
-          <a href="/seo-ordbog/backlink.html" class="hover:underline">Backlink</a>
-          <a href="/seo-ordbog/bounce-rate.html" class="hover:underline">Bounce rate</a>
-          <a href="/seo-ordbog/canonical-tag.html" class="hover:underline">Canonical tag</a>
-          <a href="/seo-ordbog/crawling.html" class="hover:underline">Crawling</a>
-          <a href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
-          <a href="/seo-ordbog/e-e-a-t.html" class="hover:underline">E-E-A-T</a>
-          <a href="/seo-ordbog/indexing.html" class="hover:underline">Indexing</a>
-          <a href="/seo-ordbog/keyword.html" class="hover:underline">Keyword</a>
-          <a href="/seo-ordbog/meta-description.html" class="hover:underline">Meta description</a>
-          <a href="/seo-ordbog/robots-txt.html" class="hover:underline">Robots.txt</a>
-          <a href="/seo-ordbog/sitemap-xml.html" class="hover:underline">Sitemap.xml</a>
-          <a href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
-          <a href="/seo-ordbog/meta-title.html" class="hover:underline">Meta title</a>
-          <a href="/seo-ordbog/alt-tekst.html" class="hover:underline">Alt-tekst</a>
-          <a href="/seo-ordbog/schema-markup.html" class="hover:underline">Schema Markup</a>
-          <a href="/seo-ordbog/hreflang.html" class="hover:underline">Hreflang</a>
-          <a href="/seo-ordbog/search-intent.html" class="hover:underline">Search Intent</a>
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+          <h2 class="text-2xl font-bold">A–Z begreber</h2>
+
+          <!-- Søgefelt -->
+          <div class="w-full md:w-96">
+            <label for="searchInput" class="block text-sm font-medium text-neutral-700 mb-2">Søg i ordbogen</label>
+            <div class="relative">
+              <input type="text" id="searchInput" placeholder="Skriv et begreb..."
+                     class="w-full pr-10 px-4 py-2 rounded-xl border border-neutral-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+              <button type="button" id="clearSearch" aria-label="Ryd søgning"
+                      class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-neutral-500 hover:text-neutral-800 hidden">✕</button>
+            </div>
+            <div id="resultMeta" class="mt-1 text-xs text-neutral-500"></div>
+          </div>
+        </div>
+
+        <div id="termsGrid" class="grid md:grid-cols-2 gap-4 text-blue-700">
+          <!-- Alfabetisk liste (rydder dubletter) -->
           <a href="/seo-ordbog/301-redirect.html" class="hover:underline">301 redirect</a>
           <a href="/seo-ordbog/404-soft-404.html" class="hover:underline">404 &amp; soft 404</a>
           <a href="/seo-ordbog/anchor-text.html" class="hover:underline">Anchor text</a>
+          <a href="/seo-ordbog/alt-tekst.html" class="hover:underline">Alt-tekst</a>
+          <a href="/seo-ordbog/backlink.html" class="hover:underline">Backlink</a>
+          <a href="/seo-ordbog/bounce-rate.html" class="hover:underline">Bounce rate</a>
+          <a href="/seo-ordbog/canonical-tag.html" class="hover:underline">Canonical tag</a>
+          <a href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
+          <a href="/seo-ordbog/crawling.html" class="hover:underline">Crawling</a>
           <a href="/seo-ordbog/duplicate-content.html" class="hover:underline">Duplicate content</a>
+          <a href="/seo-ordbog/e-e-a-t.html" class="hover:underline">E-E-A-T</a>
           <a href="/seo-ordbog/external-link.html" class="hover:underline">Eksternt link</a>
+          <a href="/seo-ordbog/hreflang.html" class="hover:underline">Hreflang</a>
+          <a href="/seo-ordbog/indexing.html" class="hover:underline">Indexing</a>
           <a href="/seo-ordbog/internal-linking.html" class="hover:underline">Intern linkbuilding</a>
+          <a href="/seo-ordbog/keyword.html" class="hover:underline">Keyword</a>
+          <a href="/seo-ordbog/meta-description.html" class="hover:underline">Meta description</a>
+          <a href="/seo-ordbog/meta-title.html" class="hover:underline">Meta title</a>
           <a href="/seo-ordbog/nofollow.html" class="hover:underline">Nofollow</a>
           <a href="/seo-ordbog/noindex.html" class="hover:underline">Noindex</a>
+          <a href="/seo-ordbog/schema-markup.html" class="hover:underline">Schema Markup</a>
+          <a href="/seo-ordbog/search-intent.html" class="hover:underline">Search Intent</a>
+          <a href="/seo-ordbog/sitemap-xml.html" class="hover:underline">Sitemap.xml</a>
           <a href="/seo-ordbog/thin-content.html" class="hover:underline">Thin content</a>
           <a href="/seo-ordbog/title-vs-h1.html" class="hover:underline">Title vs. H1</a>
+        </div>
+
+        <!-- Ingen resultater -->
+        <div id="noResults" class="hidden mt-4 text-sm text-neutral-600 bg-neutral-50 border rounded-xl p-4">
+          Ingen resultater for <span class="font-semibold" id="qText"></span>. Prøv et andet begreb.
         </div>
       </section>
 
@@ -115,6 +126,68 @@
         <h2 class="text-xl font-semibold mb-2">Få mere ud af din SEO</h2>
         <p>Brug vores gratis værktøjer sammen med ordbogen:</p>
         <div class="flex flex-wrap gap-3 mt-3">
-          <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">SERP & Meta</a>
+          <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">SERP &amp; Meta</a>
           <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Sitemap.xml</a>
-          <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.t
+          <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.txt</a>
+          <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Intern linkbuilder</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Global footer -->
+    <script src="/assets/include-footer.js?v=2" defer></script>
+
+    <!-- Søg JS -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("searchInput");
+        const clearBtn = document.getElementById("clearSearch");
+        const grid = document.getElementById("termsGrid");
+        const links = Array.from(grid.querySelectorAll("a"));
+        const noResults = document.getElementById("noResults");
+        const qText = document.getElementById("qText");
+        const resultMeta = document.getElementById("resultMeta");
+
+        function applyFilter(q) {
+          const query = q.trim().toLowerCase();
+          let visibleCount = 0;
+
+          links.forEach(link => {
+            const txt = link.textContent.toLowerCase();
+            const show = !query || txt.includes(query);
+            link.style.display = show ? "" : "none";
+            if (show) visibleCount++;
+          });
+
+          // “Ingen resultater”
+          if (query && visibleCount === 0) {
+            qText.textContent = q;
+            noResults.classList.remove("hidden");
+          } else {
+            noResults.classList.add("hidden");
+          }
+
+          // Resultat-meta
+          if (!query) {
+            resultMeta.textContent = `${links.length} begreber`;
+          } else {
+            resultMeta.textContent = `${visibleCount} resultat(er)`;
+          }
+
+          // Vis/skjul clear-knap
+          clearBtn.classList.toggle("hidden", !query);
+        }
+
+        input.addEventListener("input", () => applyFilter(input.value));
+        clearBtn.addEventListener("click", () => {
+          input.value = "";
+          input.focus();
+          applyFilter("");
+        });
+
+        // Init
+        applyFilter("");
+      });
+    </script>
+  </body>
+</html>
