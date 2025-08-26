@@ -2,20 +2,23 @@
 // Mobil: burger + "Værktøjer" som accordion med ALLE værktøjer
 // Desktop: hover/click dropdown, bliver åben mens man klikker
 
-const LINKS_LEFT = [
-  { href: "/",            label: "Forside",    key: "/" },
-  { href: "/blog/",       label: "Blog",       key: "/blog" },
-  { href: "/seo-ordbog/", label: "SEO Ordbog", key: "/seo-ordbog" }
-];
+(function () {
+  // ----- KONFIG -----
+  const LINKS_LEFT = [
+    { href: "/",            label: "Forside",    key: "/" },
+    { href: "/blog/",       label: "Blog",       key: "/blog" },
+    { href: "/seo-ordbog/", label: "SEO Ordbog", key: "/seo-ordbog" }
+  ];
+
   const TOOLS = [
-    { href: "/serp-preview.html",         label: "SERP & Meta",        key: "/serp-preview.html" },
-    { href: "/robots-generator.html",     label: "Robots.txt",         key: "/robots-generator.html" },
-    { href: "/sitemap-generator.html",    label: "Sitemap.xml",        key: "/sitemap-generator.html" },
-    { href: "/internal-link-builder.html",label: "Intern linkbuilder", key: "/internal-link-builder.html" },
-    { href: "/meta-tag-generator.html",   label: "Meta Tag Generator", key: "/meta-tag-generator.html" },
-    { href: "/redirect-checker.html",     label: "Redirect Checker",   key: "/redirect-checker.html" },
-    { href: "/page-speed-check.html",     label: "Page Speed Check",   key: "/page-speed-check.html" },
-    { href: "/tweet-preview.html",        label: "Tweet Preview",      key: "/tweet-preview.html" }
+    { href: "/serp-preview.html",          label: "SERP & Meta",        key: "/serp-preview.html" },
+    { href: "/robots-generator.html",      label: "Robots.txt",         key: "/robots-generator.html" },
+    { href: "/sitemap-generator.html",     label: "Sitemap.xml",        key: "/sitemap-generator.html" },
+    { href: "/internal-link-builder.html", label: "Intern linkbuilder", key: "/internal-link-builder.html" },
+    { href: "/meta-tag-generator.html",    label: "Meta Tag Generator", key: "/meta-tag-generator.html" },
+    { href: "/redirect-checker.html",      label: "Redirect Checker",   key: "/redirect-checker.html" },
+    { href: "/page-speed-check.html",      label: "Page Speed Check",   key: "/page-speed-check.html" },
+    { href: "/tweet-preview.html",         label: "Tweet Preview",      key: "/tweet-preview.html" }
   ];
 
   // ----- HTML -----
