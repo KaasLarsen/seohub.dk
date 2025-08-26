@@ -7,8 +7,6 @@ const LINKS_LEFT = [
   { href: "/blog/",       label: "Blog",       key: "/blog" },
   { href: "/seo-ordbog/", label: "SEO Ordbog", key: "/seo-ordbog" }
 ];
-
-
   const TOOLS = [
     { href: "/serp-preview.html",         label: "SERP & Meta",        key: "/serp-preview.html" },
     { href: "/robots-generator.html",     label: "Robots.txt",         key: "/robots-generator.html" },
