@@ -38,54 +38,36 @@
         <p>Velkommen til Seohub.dk’s SEO ordbog. Klik på et begreb for en kort og præcis forklaring – inkl. eksempler og relaterede termer.</p>
       </section>
 
-      <!-- A–Z + Search (search til højre, sponsoreret under søgning) -->
+      <!-- A–Å + Search (search til højre, sponsoreret under søgning) -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <div class="grid md:grid-cols-3 gap-6">
-          <!-- Venstre: A–Å og bogstavsbar -->
+          <!-- Venstre: bogstavsbar + filtre + liste -->
           <div class="md:col-span-2">
-            <div class="flex items-end justify-between gap-4 mb-3">
-              <h2 class="text-2xl font-bold">A–Å begreber</h2>
-              <div id="resultMeta" class="text-xs text-neutral-500"></div>
+            <div class="flex flex-col gap-3 mb-3">
+              <div class="flex items-end justify-between gap-4">
+                <h2 class="text-2xl font-bold">A–Å begreber</h2>
+                <div id="resultMeta" class="text-xs text-neutral-500"></div>
+              </div>
+
+              <!-- Bogstavsbar -->
+              <div id="letterBar" class="flex flex-wrap gap-1.5"></div>
+
+              <!-- Kategori-filtre -->
+              <div id="catBar" class="flex flex-wrap gap-1.5">
+                <button type="button" data-cat="" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Alle</button>
+                <button type="button" data-cat="teknisk" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Teknisk</button>
+                <button type="button" data-cat="indhold" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Indhold</button>
+                <button type="button" data-cat="links" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Links</button>
+                <button type="button" data-cat="generelt" class="cat-chip px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50">Generelt</button>
+              </div>
             </div>
 
-            <!-- Bogstavsbar -->
-            <div id="letterBar" class="flex flex-wrap gap-1.5 mb-4">
-              <!-- Fyldes i JS -->
-            </div>
-
-            <!-- Liste -->
-            <div id="termsGrid" class="grid md:grid-cols-2 gap-4 text-blue-700">
-              <!-- (Uordnet – sorteres automatisk i JS med dansk locale) -->
-              <a href="/seo-ordbog/301-redirect.html" class="hover:underline">301 redirect</a>
-              <a href="/seo-ordbog/404-soft-404.html" class="hover:underline">404 &amp; soft 404</a>
-              <a href="/seo-ordbog/anchor-text.html" class="hover:underline">Anchor text</a>
-              <a href="/seo-ordbog/alt-tekst.html" class="hover:underline">Alt-tekst</a>
-              <a href="/seo-ordbog/backlink.html" class="hover:underline">Backlink</a>
-              <a href="/seo-ordbog/bounce-rate.html" class="hover:underline">Bounce rate</a>
-              <a href="/seo-ordbog/canonical-tag.html" class="hover:underline">Canonical tag</a>
-              <a href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
-              <a href="/seo-ordbog/crawling.html" class="hover:underline">Crawling</a>
-              <a href="/seo-ordbog/duplicate-content.html" class="hover:underline">Duplicate content</a>
-              <a href="/seo-ordbog/e-e-a-t.html" class="hover:underline">E-E-A-T</a>
-              <a href="/seo-ordbog/external-link.html" class="hover:underline">Eksternt link</a>
-              <a href="/seo-ordbog/hreflang.html" class="hover:underline">Hreflang</a>
-              <a href="/seo-ordbog/indexing.html" class="hover:underline">Indexing</a>
-              <a href="/seo-ordbog/internal-linking.html" class="hover:underline">Intern linkbuilding</a>
-              <a href="/seo-ordbog/keyword.html" class="hover:underline">Keyword</a>
-              <a href="/seo-ordbog/meta-description.html" class="hover:underline">Meta description</a>
-              <a href="/seo-ordbog/meta-title.html" class="hover:underline">Meta title</a>
-              <a href="/seo-ordbog/nofollow.html" class="hover:underline">Nofollow</a>
-              <a href="/seo-ordbog/noindex.html" class="hover:underline">Noindex</a>
-              <a href="/seo-ordbog/schema-markup.html" class="hover:underline">Schema Markup</a>
-              <a href="/seo-ordbog/search-intent.html" class="hover:underline">Search Intent</a>
-              <a href="/seo-ordbog/sitemap-xml.html" class="hover:underline">Sitemap.xml</a>
-              <a href="/seo-ordbog/thin-content.html" class="hover:underline">Thin content</a>
-              <a href="/seo-ordbog/title-vs-h1.html" class="hover:underline">Title vs. H1</a>
-            </div>
-
-            <!-- Ingen resultater -->
-            <div id="noResults" class="hidden mt-4 text-sm text-neutral-600 bg-neutral-50 border rounded-xl p-4">
-              Ingen resultater for <span class="font-semibold" id="qText"></span>. Prøv et andet begreb.
+            <!-- Liste med bogstav-overskrifter (fyldes/sorteres i JS) -->
+            <div id="termsWrap" class="space-y-6">
+              <!-- JS genererer <section id="letter-A"> med <h3> og grid af links -->
+              <div id="noResults" class="hidden text-sm text-neutral-600 bg-neutral-50 border rounded-xl p-4">
+                Ingen resultater for <span class="font-semibold" id="qText"></span>. Prøv et andet begreb eller kategori.
+              </div>
             </div>
           </div>
 
@@ -148,120 +130,197 @@
     <!-- Global footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Søg + sortering + bogstavsbar -->
+    <!-- Søg + sortering + bogstavsbar + sektioner + GA4 -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const grid = document.getElementById("termsGrid");
-        const links = Array.from(grid.querySelectorAll("a"));
+        // ----- DATA: Begreber (tekst, url, kategori) -----
+        const TERMS = [
+          { t: "301 redirect", url: "/seo-ordbog/301-redirect.html", cat: "teknisk" },
+          { t: "404 & soft 404", url: "/seo-ordbog/404-soft-404.html", cat: "teknisk" },
+          { t: "Anchor text", url: "/seo-ordbog/anchor-text.html", cat: "links" },
+          { t: "Alt-tekst", url: "/seo-ordbog/alt-tekst.html", cat: "indhold" },
+          { t: "Backlink", url: "/seo-ordbog/backlink.html", cat: "links" },
+          { t: "Bounce rate", url: "/seo-ordbog/bounce-rate.html", cat: "generelt" },
+          { t: "Canonical tag", url: "/seo-ordbog/canonical-tag.html", cat: "teknisk" },
+          { t: "Core Web Vitals", url: "/seo-ordbog/core-web-vitals.html", cat: "teknisk" },
+          { t: "Crawling", url: "/seo-ordbog/crawling.html", cat: "teknisk" },
+          { t: "Duplicate content", url: "/seo-ordbog/duplicate-content.html", cat: "teknisk" },
+          { t: "E-E-A-T", url: "/seo-ordbog/e-e-a-t.html", cat: "generelt" },
+          { t: "Eksternt link", url: "/seo-ordbog/external-link.html", cat: "links" },
+          { t: "Hreflang", url: "/seo-ordbog/hreflang.html", cat: "teknisk" },
+          { t: "Indexing", url: "/seo-ordbog/indexing.html", cat: "teknisk" },
+          { t: "Intern linkbuilding", url: "/seo-ordbog/internal-linking.html", cat: "links" },
+          { t: "Keyword", url: "/seo-ordbog/keyword.html", cat: "generelt" },
+          { t: "Meta description", url: "/seo-ordbog/meta-description.html", cat: "indhold" },
+          { t: "Meta title", url: "/seo-ordbog/meta-title.html", cat: "indhold" },
+          { t: "Nofollow", url: "/seo-ordbog/nofollow.html", cat: "links" },
+          { t: "Noindex", url: "/seo-ordbog/noindex.html", cat: "teknisk" },
+          { t: "Schema Markup", url: "/seo-ordbog/schema-markup.html", cat: "teknisk" },
+          { t: "Search Intent", url: "/seo-ordbog/search-intent.html", cat: "generelt" },
+          { t: "Sitemap.xml", url: "/seo-ordbog/sitemap-xml.html", cat: "teknisk" },
+          { t: "Thin content", url: "/seo-ordbog/thin-content.html", cat: "indhold" },
+          { t: "Title vs. H1", url: "/seo-ordbog/title-vs-h1.html", cat: "indhold" }
+        ];
 
-        // 1) Alfabetisk sortering (dansk locale) – tal/tegn (#) først
-        links.sort((a, b) => {
-          const ax = a.textContent.trim();
-          const bx = b.textContent.trim();
-          // Tal (0-9) sorteres før bogstaver via custom weight
+        const termsWrap = document.getElementById("termsWrap");
+        const letterBar = document.getElementById("letterBar");
+        const resultMeta = document.getElementById("resultMeta");
+        const input = document.getElementById("searchInput");
+        const clearBtn = document.getElementById("clearSearch");
+        const noResults = document.getElementById("noResults");
+        const qText = document.getElementById("qText");
+        let activeLetter = "";
+        let activeCat = "";
+
+        // Sortér dansk, tal først (#)
+        const sorted = [...TERMS].sort((a, b) => {
+          const ax = a.t.trim(), bx = b.t.trim();
           const aNum = /^[0-9]/.test(ax), bNum = /^[0-9]/.test(bx);
           if (aNum && !bNum) return -1;
           if (!aNum && bNum) return 1;
           return ax.localeCompare(bx, "da", { sensitivity: "base" });
         });
-        // Re-append i sorteret rækkefølge
-        grid.innerHTML = "";
-        links.forEach(a => grid.appendChild(a));
 
-        // 2) Søgning
-        const input = document.getElementById("searchInput");
-        const clearBtn = document.getElementById("clearSearch");
-        const noResults = document.getElementById("noResults");
-        const qText = document.getElementById("qText");
-        const resultMeta = document.getElementById("resultMeta");
+        // Gruppér pr. førstetegn
+        function firstKey(label) {
+          const first = label.trim().charAt(0);
+          return /^[0-9]/.test(first) ? "#" : first.toUpperCase();
+        }
+        const groupsAll = {};
+        sorted.forEach(item => {
+          const k = firstKey(item.t);
+          (groupsAll[k] = groupsAll[k] || []).push(item);
+        });
 
-        function applyFilter(query, letterFilter) {
-          const q = (query || "").trim().toLowerCase();
-          const lf = (letterFilter || "").toLowerCase();
+        // Byg bogstavsbar
+        const LETTERS = ["#", "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Æ","Ø","Å"];
+        function renderLetterBar() {
+          LETTERS.forEach(letter => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.textContent = letter;
+            btn.dataset.letter = letter;
+            btn.className = "px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50";
+            btn.addEventListener("click", () => {
+              activeLetter = (activeLetter === letter) ? "" : letter;
+              highlight(letterBar, "letter", activeLetter);
+              input.value = "";
+              renderSections();
+            });
+            letterBar.appendChild(btn);
+          });
+        }
+
+        function highlight(container, key, value) {
+          container.querySelectorAll(`[data-${key}]`).forEach(el => {
+            el.classList.toggle("bg-blue-600", el.dataset[key] === value && value !== "");
+            el.classList.toggle("text-white", el.dataset[key] === value && value !== "");
+            el.classList.toggle("border-blue-600", el.dataset[key] === value && value !== "");
+          });
+        }
+
+        // Kategori-bar (chips)
+        const catBar = document.getElementById("catBar");
+        catBar.querySelectorAll(".cat-chip").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const cat = btn.getAttribute("data-cat");
+            activeCat = (activeCat === cat) ? "" : cat;
+            catBar.querySelectorAll(".cat-chip").forEach(b => {
+              const isActive = b.getAttribute("data-cat") === activeCat && activeCat !== "";
+              b.classList.toggle("bg-blue-600", isActive);
+              b.classList.toggle("text-white", isActive);
+              b.classList.toggle("border-blue-600", isActive);
+            });
+            renderSections();
+          });
+        });
+
+        // Render sektioner med overskrifter + grid
+        function renderSections() {
+          const q = input.value.trim().toLowerCase();
+          const groups = {}; // filtreret
           let visibleCount = 0;
 
-          links.forEach(link => {
-            const txt = link.textContent.trim();
-            const lower = txt.toLowerCase();
+          // Filtrér
+          sorted.forEach(item => {
+            const label = item.t;
+            const k = firstKey(label);
+            const matchLetter = !activeLetter || k === activeLetter;
+            const matchQuery = !q || label.toLowerCase().includes(q);
+            const matchCat = !activeCat || item.cat === activeCat;
 
-            // Første tegn (bogstavsfilter)
-            const first = txt.charAt(0);
-            const isDigit = /^[0-9]/.test(first);
-            const firstNorm = isDigit ? "#" : first.toUpperCase();
-
-            const matchQ = !q || lower.includes(q);
-            const matchL = !lf || (lf === "#" ? isDigit : firstNorm === lf.toUpperCase());
-
-            const show = matchQ && matchL;
-            link.style.display = show ? "" : "none";
-            if (show) visibleCount++;
+            if (matchLetter && matchQuery && matchCat) {
+              (groups[k] = groups[k] || []).push(item);
+              visibleCount++;
+            }
           });
 
-          // “Ingen resultater”
-          if ((q || lf) && visibleCount === 0) {
-            qText.textContent = q || lf;
+          // Ryd og genskab
+          termsWrap.innerHTML = "";
+          if (visibleCount === 0) {
+            const qShown = q || activeLetter || activeCat || "";
+            qText.textContent = qShown;
             noResults.classList.remove("hidden");
           } else {
             noResults.classList.add("hidden");
+            LETTERS.forEach(letter => {
+              const arr = groups[letter];
+              if (arr && arr.length) {
+                const sec = document.createElement("section");
+                sec.id = `letter-${letter}`;
+                sec.innerHTML = `
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-neutral-800">${letter}</h3>
+                    <a href="#top" class="text-xs text-blue-600 hover:underline">Til toppen ↑</a>
+                  </div>
+                  <div class="grid md:grid-cols-2 gap-3 text-blue-700"></div>
+                `;
+                const grid = sec.querySelector("div.grid");
+                arr.forEach(it => {
+                  const a = document.createElement("a");
+                  a.href = it.url;
+                  a.textContent = it.t;
+                  a.className = "hover:underline";
+                  a.setAttribute("data-cat", it.cat);
+                  a.addEventListener("click", () => {
+                    // GA4 event hvis gtag findes og consent er givet via dit script
+                    if (typeof window.gtag === "function") {
+                      window.gtag('event', 'select_content', {
+                        content_type: 'glossary_term',
+                        item_id: it.url,
+                        item_name: it.t,
+                        category: it.cat
+                      });
+                    }
+                  });
+                  grid.appendChild(a);
+                });
+                termsWrap.appendChild(sec);
+              }
+            });
           }
 
           // Meta
-          if (!q && !lf) {
-            resultMeta.textContent = `${links.length} begreber`;
-          } else {
-            resultMeta.textContent = `${visibleCount} resultat(er)`;
-          }
-
-          // Clear-knap
+          resultMeta.textContent = visibleCount ? `${visibleCount} resultat(er)` : "";
+          // Clear-knap state
           clearBtn.classList.toggle("hidden", !q);
         }
 
+        // Søgefelt
         input.addEventListener("input", () => {
-          activeLetter = ""; // nulstil bogstavsfilter ved manuel søgning
-          highlightLetter("");
-          applyFilter(input.value, activeLetter);
+          activeLetter = ""; highlight(letterBar, "letter", "");
+          renderSections();
         });
-
         clearBtn.addEventListener("click", () => {
           input.value = "";
           input.focus();
-          activeLetter = "";
-          highlightLetter("");
-          applyFilter("", "");
-        });
-
-        // 3) Bogstavsbar
-        const letterBar = document.getElementById("letterBar");
-        const LETTERS = ["#", "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Æ","Ø","Å"];
-        let activeLetter = "";
-
-        function highlightLetter(letter) {
-          document.querySelectorAll('[data-letter]').forEach(btn => {
-            btn.classList.toggle("bg-blue-600", btn.dataset.letter === letter);
-            btn.classList.toggle("text-white", btn.dataset.letter === letter);
-            btn.classList.toggle("border-blue-600", btn.dataset.letter === letter);
-          });
-        }
-
-        LETTERS.forEach(letter => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.textContent = letter;
-          btn.dataset.letter = letter;
-          btn.className = "px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50";
-          btn.addEventListener("click", () => {
-            // Toggle hvis samme trykkes igen
-            activeLetter = (activeLetter === letter) ? "" : letter;
-            highlightLetter(activeLetter);
-            // Tøm søg, så bogstavsfilter er tydeligt
-            input.value = "";
-            applyFilter("", activeLetter);
-          });
-          letterBar.appendChild(btn);
+          activeLetter = ""; highlight(letterBar, "letter", "");
+          renderSections();
         });
 
         // Init
-        applyFilter("", "");
+        renderLetterBar();
+        renderSections();
       });
     </script>
   </body>
