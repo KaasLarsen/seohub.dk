@@ -43,105 +43,193 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Blogindlæg gamle -->
-  <url>
-    <loc>https://seohub.dk/blog/seo-for-begyndere-2025.html</loc>
-    <lastmod>2025-08-16</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc>
-    <lastmod>2025-08-13</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/sitemap-fejl-fixes.html</loc>
-    <lastmod>2025-08-15</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/intern-linkbuilding-strategi.html</loc>
-    <lastmod>2025-08-12</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/core-web-vitals-2025.html</loc>
-    <lastmod>2025-08-11</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/lokal-seo-danmark-guide.html</loc>
-    <lastmod>2025-08-10</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/meta-descriptions-der-konverterer.html</loc>
-    <lastmod>2025-08-09</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/intern-linkbuilding-guide.html</loc>
-    <lastmod>2025-08-08</lastmod>
-    <priority>0.5</priority>
-  </url>
+  <!-- Blogindlæg (tidligere i din fil) -->
+  <url><loc>https://seohub.dk/blog/seo-for-begyndere-2025.html</loc><lastmod>2025-08-16</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/seo-titler-der-ranker.html</loc><lastmod>2025-08-13</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/sitemap-fejl-fixes.html</loc><lastmod>2025-08-15</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/intern-linkbuilding-strategi.html</loc><lastmod>2025-08-12</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/core-web-vitals-2025.html</loc><lastmod>2025-08-11</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/lokal-seo-danmark-guide.html</loc><lastmod>2025-08-10</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/meta-descriptions-der-konverterer.html</loc><lastmod>2025-08-09</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/intern-linkbuilding-guide.html</loc><lastmod>2025-08-08</lastmod><priority>0.5</priority></url>
 
   <!-- Blogindlæg nye -->
-  <url>
-    <loc>https://seohub.dk/blog/seo-audit-guide-2025.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/voice-search-seo.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/ai-content-seo.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/ecommerce-seo-2025.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/mobile-first-seo.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/seo-mistakes-2025.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/keyword-research-2025.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/linkbuilding-trends-2025.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/local-seo-strategier.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://seohub.dk/blog/serp-features-2025.html</loc>
-    <lastmod>2025-08-18</lastmod>
-    <priority>0.5</priority>
-  </url>
+  <url><loc>https://seohub.dk/blog/seo-audit-guide-2025.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/voice-search-seo.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/ai-content-seo.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/ecommerce-seo-2025.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/mobile-first-seo.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/seo-mistakes-2025.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/keyword-research-2025.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/linkbuilding-trends-2025.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/local-seo-strategier.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
+  <url><loc>https://seohub.dk/blog/serp-features-2025.html</loc><lastmod>2025-08-18</lastmod><priority>0.5</priority></url>
 
   <!-- Juridisk -->
-  <url>
-    <loc>https://seohub.dk/privatliv-cookies.html</loc>
-    <lastmod>2025-08-15</lastmod>
-    <priority>0.3</priority>
-  </url>
+  <url><loc>https://seohub.dk/privatliv-cookies.html</loc><lastmod>2025-08-15</lastmod><priority>0.3</priority></url>
+
+  <!-- ====================================== -->
+  <!--           SEO ORDBOG – ALLE           -->
+  <!-- ====================================== -->
+
+  <!-- # -->
+  <url><loc>https://seohub.dk/seo-ordbog/301-redirect.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/404-soft-404.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- A -->
+  <url><loc>https://seohub.dk/seo-ordbog/ai-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/alt-attribute.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/alt-tekst.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/anchor-tag.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/anchor-text.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/api-indexing.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/attribution.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- B -->
+  <url><loc>https://seohub.dk/seo-ordbog/backlink.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/backlink-profile.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/black-hat-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/blacklist-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/bounce-rate.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/bounce-vs-pogosticking.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/branded-keywords.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- C -->
+  <url><loc>https://seohub.dk/seo-ordbog/canonical-chain.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/canonical-tag.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/citation-flow.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/click-depth.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/content-audit.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/content-freshness.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/content-gap.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/conversion-rate.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/core-web-vitals.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/cornerstone-content.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/crawl-budget.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/crawl-depth.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/crawl-errors.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/crawl-rate.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/crawling.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/ctr.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/cumulative-layout-shift.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- D -->
+  <url><loc>https://seohub.dk/seo-ordbog/disavow.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/discovery-crawl.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/domain-authority.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/domain-history.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/duplicate-content.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/duplicate-title-tags.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- E -->
+  <url><loc>https://seohub.dk/seo-ordbog/e-e-a-t.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/everflux.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/evergreen-content.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/exact-match-domain.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/external-link.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- F -->
+  <url><loc>https://seohub.dk/seo-ordbog/faceted-navigation.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/featured-snippet.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/fetch-as-google.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/freshness-algorithm.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- G -->
+  <url><loc>https://seohub.dk/seo-ordbog/geo-targeting.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/google-dance.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/google-florida-update.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/google-mobilegeddon.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/google-panda-update.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/google-penguin-update.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/google-rankbrain.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/gray-hat-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- H -->
+  <url><loc>https://seohub.dk/seo-ordbog/hreflang.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/hreflang-tag.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/http-status-codes.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- I -->
+  <url><loc>https://seohub.dk/seo-ordbog/impressions.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/index-bloat.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/index-coverage.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/indexing.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/international-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/internal-linking.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- J -->
+  <url><loc>https://seohub.dk/seo-ordbog/javascript-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- K -->
+  <url><loc>https://seohub.dk/seo-ordbog/keyword-cannibalization.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/keyword-density.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/keyword-golden-ratio.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- L -->
+  <url><loc>https://seohub.dk/seo-ordbog/lazy-loading.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/link-building.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/link-juice.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/link-neighborhood.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/link-profile.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/link-velocity.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/local-citations.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/log-file-analysis.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/long-tail-keywords.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/lsi-keywords.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- M -->
+  <url><loc>https://seohub.dk/seo-ordbog/meta-description.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/meta-robots-tag.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/meta-title.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/mobile-first-indexing.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/mobile-usability.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- N -->
+  <url><loc>https://seohub.dk/seo-ordbog/nap-consistency.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/natural-link-profile.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/nofollow.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/noindex.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- O -->
+  <url><loc>https://seohub.dk/seo-ordbog/outbound-link.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- P -->
+  <url><loc>https://seohub.dk/seo-ordbog/page-experience-update.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/pagination-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/parameter-handling.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/people-also-ask.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/pogosticking.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/proximity-factor.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- R -->
+  <url><loc>https://seohub.dk/seo-ordbog/redirect-chain.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/render-blocking-resources.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/robots-meta.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/robots-txt.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- S -->
+  <url><loc>https://seohub.dk/seo-ordbog/schema-markup.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/search-intent.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/server-errors-5xx.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/sessions-vs-users.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/sitemap-xml.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/soft-404.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/ssl-certifikat.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/structured-data.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- T -->
+  <url><loc>https://seohub.dk/seo-ordbog/thin-content.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/title-vs-h1.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/topic-cluster.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- U -->
+  <url><loc>https://seohub.dk/seo-ordbog/ugc-sponsored.html</loc><lastmod>2025-08-26</lastmod></url>
+  <url><loc>https://seohub.dk/seo-ordbog/url-inspection.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- W -->
+  <url><loc>https://seohub.dk/seo-ordbog/white-hat-seo.html</loc><lastmod>2025-08-26</lastmod></url>
+
+  <!-- X -->
+  <url><loc>https://seohub.dk/seo-ordbog/xml-feed.html</loc><lastmod>2025-08-26</lastmod></url>
 
 </urlset>
