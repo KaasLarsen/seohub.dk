@@ -38,86 +38,97 @@
         <p>Velkommen til Seohub.dk’s SEO ordbog. Klik på et begreb for en kort og præcis forklaring – inkl. eksempler og relaterede termer.</p>
       </section>
 
-      <!-- A–Z liste + søgning -->
+      <!-- A–Z + Search (search til højre, sponsoreret under søgning) -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
-          <h2 class="text-2xl font-bold">A–Z begreber</h2>
-
-          <!-- Søgefelt -->
-          <div class="w-full md:w-96">
-            <label for="searchInput" class="block text-sm font-medium text-neutral-700 mb-2">Søg i ordbogen</label>
-            <div class="relative">
-              <input type="text" id="searchInput" placeholder="Skriv et begreb..."
-                     class="w-full pr-10 px-4 py-2 rounded-xl border border-neutral-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
-              <button type="button" id="clearSearch" aria-label="Ryd søgning"
-                      class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-neutral-500 hover:text-neutral-800 hidden">✕</button>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Venstre: A–Å og bogstavsbar -->
+          <div class="md:col-span-2">
+            <div class="flex items-end justify-between gap-4 mb-3">
+              <h2 class="text-2xl font-bold">A–Å begreber</h2>
+              <div id="resultMeta" class="text-xs text-neutral-500"></div>
             </div>
-            <div id="resultMeta" class="mt-1 text-xs text-neutral-500"></div>
+
+            <!-- Bogstavsbar -->
+            <div id="letterBar" class="flex flex-wrap gap-1.5 mb-4">
+              <!-- Fyldes i JS -->
+            </div>
+
+            <!-- Liste -->
+            <div id="termsGrid" class="grid md:grid-cols-2 gap-4 text-blue-700">
+              <!-- (Uordnet – sorteres automatisk i JS med dansk locale) -->
+              <a href="/seo-ordbog/301-redirect.html" class="hover:underline">301 redirect</a>
+              <a href="/seo-ordbog/404-soft-404.html" class="hover:underline">404 &amp; soft 404</a>
+              <a href="/seo-ordbog/anchor-text.html" class="hover:underline">Anchor text</a>
+              <a href="/seo-ordbog/alt-tekst.html" class="hover:underline">Alt-tekst</a>
+              <a href="/seo-ordbog/backlink.html" class="hover:underline">Backlink</a>
+              <a href="/seo-ordbog/bounce-rate.html" class="hover:underline">Bounce rate</a>
+              <a href="/seo-ordbog/canonical-tag.html" class="hover:underline">Canonical tag</a>
+              <a href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
+              <a href="/seo-ordbog/crawling.html" class="hover:underline">Crawling</a>
+              <a href="/seo-ordbog/duplicate-content.html" class="hover:underline">Duplicate content</a>
+              <a href="/seo-ordbog/e-e-a-t.html" class="hover:underline">E-E-A-T</a>
+              <a href="/seo-ordbog/external-link.html" class="hover:underline">Eksternt link</a>
+              <a href="/seo-ordbog/hreflang.html" class="hover:underline">Hreflang</a>
+              <a href="/seo-ordbog/indexing.html" class="hover:underline">Indexing</a>
+              <a href="/seo-ordbog/internal-linking.html" class="hover:underline">Intern linkbuilding</a>
+              <a href="/seo-ordbog/keyword.html" class="hover:underline">Keyword</a>
+              <a href="/seo-ordbog/meta-description.html" class="hover:underline">Meta description</a>
+              <a href="/seo-ordbog/meta-title.html" class="hover:underline">Meta title</a>
+              <a href="/seo-ordbog/nofollow.html" class="hover:underline">Nofollow</a>
+              <a href="/seo-ordbog/noindex.html" class="hover:underline">Noindex</a>
+              <a href="/seo-ordbog/schema-markup.html" class="hover:underline">Schema Markup</a>
+              <a href="/seo-ordbog/search-intent.html" class="hover:underline">Search Intent</a>
+              <a href="/seo-ordbog/sitemap-xml.html" class="hover:underline">Sitemap.xml</a>
+              <a href="/seo-ordbog/thin-content.html" class="hover:underline">Thin content</a>
+              <a href="/seo-ordbog/title-vs-h1.html" class="hover:underline">Title vs. H1</a>
+            </div>
+
+            <!-- Ingen resultater -->
+            <div id="noResults" class="hidden mt-4 text-sm text-neutral-600 bg-neutral-50 border rounded-xl p-4">
+              Ingen resultater for <span class="font-semibold" id="qText"></span>. Prøv et andet begreb.
+            </div>
           </div>
-        </div>
 
-        <div id="termsGrid" class="grid md:grid-cols-2 gap-4 text-blue-700">
-          <!-- Alfabetisk liste (rydder dubletter) -->
-          <a href="/seo-ordbog/301-redirect.html" class="hover:underline">301 redirect</a>
-          <a href="/seo-ordbog/404-soft-404.html" class="hover:underline">404 &amp; soft 404</a>
-          <a href="/seo-ordbog/anchor-text.html" class="hover:underline">Anchor text</a>
-          <a href="/seo-ordbog/alt-tekst.html" class="hover:underline">Alt-tekst</a>
-          <a href="/seo-ordbog/backlink.html" class="hover:underline">Backlink</a>
-          <a href="/seo-ordbog/bounce-rate.html" class="hover:underline">Bounce rate</a>
-          <a href="/seo-ordbog/canonical-tag.html" class="hover:underline">Canonical tag</a>
-          <a href="/seo-ordbog/core-web-vitals.html" class="hover:underline">Core Web Vitals</a>
-          <a href="/seo-ordbog/crawling.html" class="hover:underline">Crawling</a>
-          <a href="/seo-ordbog/duplicate-content.html" class="hover:underline">Duplicate content</a>
-          <a href="/seo-ordbog/e-e-a-t.html" class="hover:underline">E-E-A-T</a>
-          <a href="/seo-ordbog/external-link.html" class="hover:underline">Eksternt link</a>
-          <a href="/seo-ordbog/hreflang.html" class="hover:underline">Hreflang</a>
-          <a href="/seo-ordbog/indexing.html" class="hover:underline">Indexing</a>
-          <a href="/seo-ordbog/internal-linking.html" class="hover:underline">Intern linkbuilding</a>
-          <a href="/seo-ordbog/keyword.html" class="hover:underline">Keyword</a>
-          <a href="/seo-ordbog/meta-description.html" class="hover:underline">Meta description</a>
-          <a href="/seo-ordbog/meta-title.html" class="hover:underline">Meta title</a>
-          <a href="/seo-ordbog/nofollow.html" class="hover:underline">Nofollow</a>
-          <a href="/seo-ordbog/noindex.html" class="hover:underline">Noindex</a>
-          <a href="/seo-ordbog/schema-markup.html" class="hover:underline">Schema Markup</a>
-          <a href="/seo-ordbog/search-intent.html" class="hover:underline">Search Intent</a>
-          <a href="/seo-ordbog/sitemap-xml.html" class="hover:underline">Sitemap.xml</a>
-          <a href="/seo-ordbog/thin-content.html" class="hover:underline">Thin content</a>
-          <a href="/seo-ordbog/title-vs-h1.html" class="hover:underline">Title vs. H1</a>
-        </div>
+          <!-- Højre: søgning + sponsorer -->
+          <aside class="md:col-span-1">
+            <!-- Søgefelt -->
+            <div class="mb-4">
+              <label for="searchInput" class="block text-sm font-medium text-neutral-700 mb-2">Søg i ordbogen</label>
+              <div class="relative">
+                <input type="text" id="searchInput" placeholder="Skriv et begreb..."
+                       class="w-full pr-10 px-4 py-2 rounded-xl border border-neutral-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                <button type="button" id="clearSearch" aria-label="Ryd søgning"
+                        class="absolute right-2 top-1/2 -translate-y-1/2 px-2 text-neutral-500 hover:text-neutral-800 hidden">✕</button>
+              </div>
+              <div id="searchHint" class="mt-1 text-xs text-neutral-500">Tip: Prøv “canonical”, “hreflang” eller “title”.</div>
+            </div>
 
-        <!-- Ingen resultater -->
-        <div id="noResults" class="hidden mt-4 text-sm text-neutral-600 bg-neutral-50 border rounded-xl p-4">
-          Ingen resultater for <span class="font-semibold" id="qText"></span>. Prøv et andet begreb.
-        </div>
-      </section>
+            <!-- Sponsorerede visninger -->
+            <div class="space-y-3">
+              <div class="rounded-2xl p-4 text-white shadow"
+                   style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
+                <div class="text-[11px] uppercase tracking-wide mb-1 opacity-90">Sponsoreret</div>
+                <div class="font-semibold">Morningscore – SEO gjort simpelt</div>
+                <p class="text-blue-100 text-xs mt-1 mb-2">Track søgeord, opgaver og ROI – perfekt til begyndere.</p>
+                <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
+                   class="inline-block bg-white text-neutral-900 px-3 py-1.5 rounded-lg text-sm font-medium hover:shadow">
+                  Prøv gratis
+                </a>
+              </div>
 
-      <!-- Sponsorerede anbefalinger (diskret, 2 kort) -->
-      <section class="grid md:grid-cols-2 gap-4">
-        <div class="rounded-2xl p-5 text-white shadow-lg"
-             style="background:linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)">
-          <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Sponsoreret anbefaling</div>
-          <h3 class="text-lg font-extrabold mb-1">Morningscore – SEO gjort simpelt</h3>
-          <p class="text-blue-100 text-sm mb-3">Hold styr på søgeord, opgaver og ROI. Perfekt makker til ordbogen.</p>
-          <a href="https://morningscore.io/?via=seohub" target="_blank" rel="sponsored noopener nofollow"
-             class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm">
-            Prøv Morningscore
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
-          </a>
-        </div>
-
-        <div class="rounded-2xl p-5 text-white shadow-lg"
-             style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
-          <div class="text-[11px] uppercase tracking-wide mb-2 opacity-90">Annonce · Hosting</div>
-          <h3 class="text-lg font-extrabold mb-1">Domæne & webhotel hos Simply.com</h3>
-          <p class="text-blue-100 text-sm mb-3">Hurtig opsætning, dansk support og nem DNS-styring.</p>
-          <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
-             target="_blank" rel="sponsored noopener nofollow"
-             class="inline-flex items-center gap-2 bg-white text-neutral-900 px-3 py-2 rounded-xl font-semibold hover:shadow-lg transition text-sm">
-            Køb domæne & hosting
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="2"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
-          </a>
+              <div class="rounded-2xl p-4 text-white shadow"
+                   style="background:linear-gradient(135deg,#6366f1 0%,#3b82f6 60%,#06b6d4 100%)">
+                <div class="text-[11px] uppercase tracking-wide mb-1 opacity-90">Annonce · Hosting</div>
+                <div class="font-semibold">Simply.com – domæne & webhotel</div>
+                <p class="text-blue-100 text-xs mt-1 mb-2">Hurtig opsætning, dansk support og nem DNS.</p>
+                <a href="https://go.adt291.com/t/t?a=1676137662&as=1999446175&t=2&tk=1"
+                   target="_blank" rel="sponsored noopener nofollow"
+                   class="inline-block bg-white text-neutral-900 px-3 py-1.5 rounded-lg text-sm font-medium hover:shadow">
+                  Se priser
+                </a>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -137,56 +148,120 @@
     <!-- Global footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Søg JS -->
+    <!-- Søg + sortering + bogstavsbar -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const input = document.getElementById("searchInput");
-        const clearBtn = document.getElementById("clearSearch");
         const grid = document.getElementById("termsGrid");
         const links = Array.from(grid.querySelectorAll("a"));
+
+        // 1) Alfabetisk sortering (dansk locale) – tal/tegn (#) først
+        links.sort((a, b) => {
+          const ax = a.textContent.trim();
+          const bx = b.textContent.trim();
+          // Tal (0-9) sorteres før bogstaver via custom weight
+          const aNum = /^[0-9]/.test(ax), bNum = /^[0-9]/.test(bx);
+          if (aNum && !bNum) return -1;
+          if (!aNum && bNum) return 1;
+          return ax.localeCompare(bx, "da", { sensitivity: "base" });
+        });
+        // Re-append i sorteret rækkefølge
+        grid.innerHTML = "";
+        links.forEach(a => grid.appendChild(a));
+
+        // 2) Søgning
+        const input = document.getElementById("searchInput");
+        const clearBtn = document.getElementById("clearSearch");
         const noResults = document.getElementById("noResults");
         const qText = document.getElementById("qText");
         const resultMeta = document.getElementById("resultMeta");
 
-        function applyFilter(q) {
-          const query = q.trim().toLowerCase();
+        function applyFilter(query, letterFilter) {
+          const q = (query || "").trim().toLowerCase();
+          const lf = (letterFilter || "").toLowerCase();
           let visibleCount = 0;
 
           links.forEach(link => {
-            const txt = link.textContent.toLowerCase();
-            const show = !query || txt.includes(query);
+            const txt = link.textContent.trim();
+            const lower = txt.toLowerCase();
+
+            // Første tegn (bogstavsfilter)
+            const first = txt.charAt(0);
+            const isDigit = /^[0-9]/.test(first);
+            const firstNorm = isDigit ? "#" : first.toUpperCase();
+
+            const matchQ = !q || lower.includes(q);
+            const matchL = !lf || (lf === "#" ? isDigit : firstNorm === lf.toUpperCase());
+
+            const show = matchQ && matchL;
             link.style.display = show ? "" : "none";
             if (show) visibleCount++;
           });
 
           // “Ingen resultater”
-          if (query && visibleCount === 0) {
-            qText.textContent = q;
+          if ((q || lf) && visibleCount === 0) {
+            qText.textContent = q || lf;
             noResults.classList.remove("hidden");
           } else {
             noResults.classList.add("hidden");
           }
 
-          // Resultat-meta
-          if (!query) {
+          // Meta
+          if (!q && !lf) {
             resultMeta.textContent = `${links.length} begreber`;
           } else {
             resultMeta.textContent = `${visibleCount} resultat(er)`;
           }
 
-          // Vis/skjul clear-knap
-          clearBtn.classList.toggle("hidden", !query);
+          // Clear-knap
+          clearBtn.classList.toggle("hidden", !q);
         }
 
-        input.addEventListener("input", () => applyFilter(input.value));
+        input.addEventListener("input", () => {
+          activeLetter = ""; // nulstil bogstavsfilter ved manuel søgning
+          highlightLetter("");
+          applyFilter(input.value, activeLetter);
+        });
+
         clearBtn.addEventListener("click", () => {
           input.value = "";
           input.focus();
-          applyFilter("");
+          activeLetter = "";
+          highlightLetter("");
+          applyFilter("", "");
+        });
+
+        // 3) Bogstavsbar
+        const letterBar = document.getElementById("letterBar");
+        const LETTERS = ["#", "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Æ","Ø","Å"];
+        let activeLetter = "";
+
+        function highlightLetter(letter) {
+          document.querySelectorAll('[data-letter]').forEach(btn => {
+            btn.classList.toggle("bg-blue-600", btn.dataset.letter === letter);
+            btn.classList.toggle("text-white", btn.dataset.letter === letter);
+            btn.classList.toggle("border-blue-600", btn.dataset.letter === letter);
+          });
+        }
+
+        LETTERS.forEach(letter => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = letter;
+          btn.dataset.letter = letter;
+          btn.className = "px-2.5 py-1 rounded-lg border text-sm text-neutral-700 hover:bg-neutral-50";
+          btn.addEventListener("click", () => {
+            // Toggle hvis samme trykkes igen
+            activeLetter = (activeLetter === letter) ? "" : letter;
+            highlightLetter(activeLetter);
+            // Tøm søg, så bogstavsfilter er tydeligt
+            input.value = "";
+            applyFilter("", activeLetter);
+          });
+          letterBar.appendChild(btn);
         });
 
         // Init
-        applyFilter("");
+        applyFilter("", "");
       });
     </script>
   </body>
