@@ -1,4 +1,4 @@
-// /app.js — Forside med stor blå hero, søgning m. overskrift, sponsorer, seneste indlæg + værktøjer
+// /app.js — Forside med stor blå hero, søgning, sponsorer, seneste indlæg + nyheder og værktøjer
 const { useState, useMemo, useEffect } = React;
 
 /* ---------- UI helpers ---------- */
@@ -52,58 +52,7 @@ function BigHero() {
       React.createElement("line", { x1:"15", y1:"6", x2:"15", y2:"21" })
     )
   );
-  function LatestNews() {
-  const [news, setNews] = useState(null);
-  const [err, setErr] = useState(null);
 
-  useEffect(() => {
-    let alive = true;
-    fetch("/nyheder/posts.json", { cache: "no-store" })
-      .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente nyheder")))
-      .then(list => {
-        if (!alive) return;
-        const items = Array.isArray(list) ? list : [];
-        const sorted = items.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0,3);
-        setNews(sorted);
-      })
-      .catch(e => { if (alive) setErr(e.message || "Fejl"); });
-    return () => { alive = false; };
-  }, []);
-
-  const fmtDate = (iso) => {
-    const d = iso ? new Date(iso) : null;
-    return d && !isNaN(d) ? d.toLocaleDateString("da-DK", { year:"numeric", month:"short", day:"2-digit" }) : "";
-  };
-
-  const safeHref = (item) => {
-    if (item.url) return item.url;                     // fuld/absolut eller relativ URL fra JSON
-    if (item.slug) return `/nyheder/${item.slug}.html`; // fallback hvis du bruger slug
-    return "#";
-  };
-
-  return React.createElement(Section, {
-    title: "Seneste SEO-nyheder",
-    description: "Opdateringer fra Google & branchen – kort og handlingsorienteret."
-  },
-    err
-      ? React.createElement("p", { className:"text-sm text-red-600" }, err)
-      : !news
-        ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
-        : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
-            news.map((n, i) => React.createElement(Card, {
-              key: n.slug || n.url || i,
-              title: n.title,
-              description: n.excerpt,
-              href: safeHref(n)
-            },
-              React.createElement("div", { className:"flex items-center justify-between text-xs text-neutral-500 mt-2" }, [
-                React.createElement("span", { key:"badge", className:"inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-700" }, "Nyhed"),
-                React.createElement("span", { key:"date" }, fmtDate(n.date))
-              ])
-            ))
-          )
-  );
-}
   return React.createElement("section", { className:"py-10 md:py-14" },
     React.createElement("div", { className:"max-w-6xl mx-auto px-4" },
       React.createElement("div", {
@@ -284,7 +233,6 @@ function Sponsors() {
     }
   ];
 
-  // Blå gradient vi genbruger på alle kort
   const cardBg = "linear-gradient(135deg,#0ea5e9 0%,#6366f1 60%,#8b5cf6 100%)";
 
   return React.createElement("section", { className:"py-8" },
@@ -293,7 +241,7 @@ function Sponsors() {
         React.createElement("h2", { className:"text-xl md:text-2xl font-semibold" }, "Sponsoreret (reklame)")
       ),
 
-      // Mobil: vandret scroll-snap karussel
+      // Mobil: vandret scroll-snap
       React.createElement("div", {
         key:"carousel",
         className:"md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2",
@@ -304,7 +252,7 @@ function Sponsors() {
             key: it.name,
             href: it.href,
             target: "_blank",
-            rel: "sponsored noopener nofollow", // vigtigt: ikke 'noreferrer'
+            rel: "sponsored noopener nofollow",
             onClick: () => { try { window.trackAffiliateClick && window.trackAffiliateClick(it.name, "homepage_sponsors"); } catch(_) {} },
             className:"snap-start shrink-0 w-72 rounded-2xl p-5 text-white shadow-lg block",
             style: { background: cardBg }
@@ -316,7 +264,7 @@ function Sponsors() {
         )
       ),
 
-      // Desktop: 4-kolonne grid
+      // Desktop: 4-grid
       React.createElement("div", { key:"grid", className:"hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4" },
         items.map(it =>
           React.createElement("a", {
@@ -338,7 +286,6 @@ function Sponsors() {
   );
 }
 
-
 /* ---------- Seneste indlæg (auto) ---------- */
 function LatestPosts() {
   const [posts, setPosts] = useState(null);
@@ -346,11 +293,11 @@ function LatestPosts() {
 
   useEffect(() => {
     let alive = true;
-    fetch("/blog/posts.json", { cache: "no-cache" })
+    fetch("/blog/posts.json", { cache: "no-store" })
       .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente posts.json")))
       .then(data => {
         if (!alive) return;
-        const sorted = [...data].sort((a,b) => (b.date || "").localeCompare(a.date || ""));
+        const sorted = [...data].sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0));
         setPosts(sorted.slice(0,3));
       })
       .catch(e => { if (alive) setErr(e.message || "Fejl"); });
@@ -367,8 +314,62 @@ function LatestPosts() {
         ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
         : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
             posts.map(p => React.createElement(Card, {
-              key:p.slug, title:p.title, description:p.excerpt, href:`/blog/${p.slug}.html`
+              key:p.slug || p.title, title:p.title, description:p.excerpt, href:`/blog/${p.slug}.html`
             }, React.createElement("div", { className:"text-xs text-neutral-500 mt-2" }, p.date)))
+          )
+  );
+}
+
+/* ---------- Seneste SEO-nyheder (auto fra /nyheder/posts.json) ---------- */
+function LatestNews() {
+  const [news, setNews] = useState(null);
+  const [err, setErr] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("/nyheder/posts.json", { cache: "no-store" })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente nyheder")))
+      .then(list => {
+        if (!alive) return;
+        const items = Array.isArray(list) ? list : [];
+        const sorted = items.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0,3);
+        setNews(sorted);
+      })
+      .catch(e => { if (alive) setErr(e.message || "Fejl"); });
+    return () => { alive = false; };
+  }, []);
+
+  const fmtDate = (iso) => {
+    const d = iso ? new Date(iso) : null;
+    return d && !isNaN(d) ? d.toLocaleDateString("da-DK", { year:"numeric", month:"short", day:"2-digit" }) : "";
+  };
+
+  const safeHref = (item) => {
+    if (item.url) return item.url;                     // fuld/relativ URL fra JSON
+    if (item.slug) return `/nyheder/${item.slug}.html`; // fallback
+    return "#";
+  };
+
+  return React.createElement(Section, {
+    title: "Seneste SEO-nyheder",
+    description: "Opdateringer fra Google & branchen – kort og handlingsorienteret."
+  },
+    err
+      ? React.createElement("p", { className:"text-sm text-red-600" }, err)
+      : !news
+        ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
+        : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
+            news.map((n, i) => React.createElement(Card, {
+              key: n.slug || n.url || i,
+              title: n.title,
+              description: n.excerpt,
+              href: safeHref(n)
+            },
+              React.createElement("div", { className:"flex items-center justify-between text-xs text-neutral-500 mt-2" }, [
+                React.createElement("span", { key:"badge", className:"inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-700" }, "Nyhed"),
+                React.createElement("span", { key:"date" }, fmtDate(n.date))
+              ])
+            ))
           )
   );
 }
@@ -610,8 +611,9 @@ function App() {
   return React.createElement("main", { className:"max-w-6xl mx-auto px-4 pb-12 space-y-8" }, [
     React.createElement(BigHero, { key:"hero" }),
     React.createElement(HomeSearch, { key:"homesearch" }),
-    React.createElement(Sponsors, { key:"sponsors" }),     // LIGE UNDER SØGNING
+    React.createElement(Sponsors, { key:"sponsors" }),
     React.createElement(LatestPosts, { key:"latest" }),
+    React.createElement(LatestNews, { key:"news" }),   // 👈 NY: Seneste SEO-nyheder
     React.createElement(KeywordIdeas, { key:"kw" }),
     React.createElement(SerpAndMeta, { key:"serp" }),
     React.createElement(RobotsTxt, { key:"rob" }),
