@@ -51,41 +51,178 @@
     <!-- Layout -->
     <main class="max-w-6xl mx-auto px-4 pb-12 space-y-6">
 
-      <!-- Filter/søg + status -->
+      <!-- Filter/søg -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
-            <div class="flex items-center gap-3 mb-2">
-              <h2 class="text-xl md:text-2xl font-semibold">Seneste SEO-nyheder</h2>
-              <span id="dataBadge" class="text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800">Indlæser…</span>
-            </div>
-            <p class="text-neutral-600">Vi opdaterer løbende. Brug søgning eller tags for at finde relevante nyheder.</p>
-            <noscript class="block mt-2 text-sm text-red-600">JavaScript er slået fra – nyheder kan ikke vises.</noscript>
+            <h2 class="text-xl md:text-2xl font-semibold mb-1">Seneste SEO-nyheder</h2>
+            <p class="text-neutral-600">Brug søgning eller tags for at finde relevante nyheder.</p>
           </div>
           <div>
             <label for="newsSearch" class="block text-sm font-medium text-neutral-700 mb-2">Søg i nyheder</label>
             <input id="newsSearch" type="search" placeholder="Skriv et emne…"
                    class="w-full px-4 py-2 rounded-xl border border-neutral-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" />
-            <div id="resMeta" class="mt-1 text-xs text-neutral-500"></div>
+            <div id="resMeta" class="mt-1 text-xs text-neutral-500">10 nyheder</div>
           </div>
         </div>
       </section>
 
-      <!-- Liste -->
+      <!-- Liste (statisk render – ingen fetch) -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
-        <div id="newsList" class="grid md:grid-cols-2 gap-4"></div>
+        <div id="newsList" class="grid md:grid-cols-2 gap-4">
+
+          <!-- 1 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/search-console-pages-rapport-ny.html"
+             data-text="ny search console rapport pages giver nye indsigter google search console introducerer en ny rapport der giver dybere indsigt i sideperformance og indeksstatus search console pages indeks google">
+            <div class="text-xs text-neutral-500 mb-1">25. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Ny Search Console-rapport: ‘Pages’ giver nye indsigter</h3>
+            <p class="text-sm text-neutral-600 mt-1">Google Search Console introducerer en ny rapport, der giver dybere indsigt i sideperformance og indeksstatus.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">search console</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">pages</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">indeks</span>
+            </div>
+          </a>
+
+          <!-- 2 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/ai-overview-aendringer-eu-2025.html"
+             data-text="google tester ændringer i ai overviews i eu ai overviews justeres i eu med nye krav til transparens og kildeangivelser google ai overviews eu">
+            <div class="text-xs text-neutral-500 mb-1">24. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Google tester ændringer i AI Overviews i EU</h3>
+            <p class="text-sm text-neutral-600 mt-1">AI Overviews justeres i EU med nye krav til transparens og kildeangivelser.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">ai overviews</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">google</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">eu</span>
+            </div>
+          </a>
+
+          <!-- 3 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/discover-kvalitetssignaler-opdateres.html"
+             data-text="discover kvalitetssignaler opdateres for friskt indhold google discover prioriterer nu opdaterede artikler og friskt indhold endnu højere discover indhold kvalitet">
+            <div class="text-xs text-neutral-500 mb-1">23. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Discover: Kvalitetssignaler opdateres for friskt indhold</h3>
+            <p class="text-sm text-neutral-600 mt-1">Google Discover prioriterer nu opdaterede artikler og friskt indhold endnu højere.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">discover</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">indhold</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">kvalitet</span>
+            </div>
+          </a>
+
+          <!-- 4 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/core-web-vitals-inp-vejledning.html"
+             data-text="ny inp vejledning interaktivitet og lange tasks google udsender en officiel vejledning til hvordan du forbedrer inp som en del af core web vitals core web vitals inp google">
+            <div class="text-xs text-neutral-500 mb-1">22. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Ny INP-vejledning: interaktivitet og lange tasks</h3>
+            <p class="text-sm text-neutral-600 mt-1">Google udsender en officiel vejledning til hvordan du forbedrer INP som en del af Core Web Vitals.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">core web vitals</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">inp</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">google</span>
+            </div>
+          </a>
+
+          <!-- 5 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/gsc-api-udvider-dimensioner.html"
+             data-text="gsc api udvider dimensioner device country i samme forespørgsel ny funktion i google search console api gør det muligt at kombinere dimensioner i rapporter gsc api device country">
+            <div class="text-xs text-neutral-500 mb-1">21. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">GSC API udvider dimensioner: device + country i samme forespørgsel</h3>
+            <p class="text-sm text-neutral-600 mt-1">Ny funktion i Google Search Console API gør det muligt at kombinere dimensioner i rapporter.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">gsc api</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">device</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">country</span>
+            </div>
+          </a>
+
+          <!-- 6 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/schema-faq-policy-opdatering.html"
+             data-text="schema faq politikker opdateret for bedre relevans google strammer kravene til faq markup for at sikre mere relevant brug schema faq structured data">
+            <div class="text-xs text-neutral-500 mb-1">20. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Schema FAQ: Politikker opdateret for bedre relevans</h3>
+            <p class="text-sm text-neutral-600 mt-1">Google strammer kravene til FAQ markup for at sikre mere relevant brug.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">schema</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">faq</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">structured data</span>
+            </div>
+          </a>
+
+          <!-- 7 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/local-pack-foto-krav.html"
+             data-text="local pack nye anbefalinger til billeder i profiler google anbefaler højere billedkvalitet og specifikke størrelser i lokale profiler local pack billeder lokal seo">
+            <div class="text-xs text-neutral-500 mb-1">19. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Local Pack: Nye anbefalinger til billeder i profiler</h3>
+            <p class="text-sm text-neutral-600 mt-1">Google anbefaler højere billedkvalitet og specifikke størrelser i lokale profiler.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">local pack</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">billeder</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">lokal seo</span>
+            </div>
+          </a>
+
+          <!-- 8 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/shopping-structured-data-varer.html"
+             data-text="shopping resultater structured data for varianter præciseres google tydeliggør hvordan du markerer produktvarianter i structured data shopping structured data produkter">
+            <div class="text-xs text-neutral-500 mb-1">18. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Shopping-resultater: Structured data for varianter præciseres</h3>
+            <p class="text-sm text-neutral-600 mt-1">Google tydeliggør hvordan du markerer produktvarianter i structured data.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">shopping</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">structured data</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">produkter</span>
+            </div>
+          </a>
+
+          <!-- 9 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/ranking-signaler-myte-aflivning.html"
+             data-text="google afliver endnu en myte om hemmelige rankingsignaler i en q&a understreger googles team at der ikke findes skjulte signaler udenfor dokumentation ranking google myter">
+            <div class="text-xs text-neutral-500 mb-1">17. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">Google afliver endnu en myte om ‘hemmelige rankingsignaler’</h3>
+            <p class="text-sm text-neutral-600 mt-1">I en Q&A understreger Googles team at der ikke findes skjulte signaler udenfor dokumentation.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">ranking</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">google</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">myter</span>
+            </div>
+          </a>
+
+          <!-- 10 -->
+          <a class="news-card block rounded-2xl border bg-white p-5 hover:shadow transition"
+             href="/nyheder/bing-indexnow-udvidelser.html"
+             data-text="indexnow flere cms plugins opdateres til hurtigere ping flere store cms’er udvider deres integrationer med indexnow protokollen bing indexnow cms">
+            <div class="text-xs text-neutral-500 mb-1">16. aug. 2025</div>
+            <h3 class="font-semibold leading-snug">IndexNow: Flere CMS-plugins opdateres til hurtigere ping</h3>
+            <p class="text-sm text-neutral-600 mt-1">Flere store CMS’er udvider deres integrationer med IndexNow-protokollen.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">bing</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">indexnow</span>
+              <span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">cms</span>
+            </div>
+          </a>
+
+        </div>
         <div id="emptyState" class="hidden text-sm text-neutral-600">Ingen nyheder matcher din søgning.</div>
-        <div id="errorState" class="hidden text-sm text-red-600 mt-3"></div>
       </section>
 
-      <!-- Bund CTA: værktøjer -->
+      <!-- Bund CTA -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <h2 class="text-xl font-semibold mb-2">Få mere ud af din SEO</h2>
         <p>Brug vores gratis værktøjer sammen med nyhederne:</p>
         <div class="flex flex-wrap gap-3 mt-3">
           <a href="/serp-preview.html" class="px-4 py-2 rounded-2xl text-white bg-blue-600 hover:bg-blue-700">SERP &amp; Meta</a>
           <a href="/sitemap-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Sitemap.xml</a>
-          <a href="/robots-generator.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.txt</a>
+          <a href="/robots-generator.html" className="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Robots.txt</a>
           <a href="/internal-link-builder.html" class="px-4 py-2 rounded-2xl border bg-white hover:bg-neutral-50">Intern linkbuilder</a>
         </div>
       </section>
@@ -111,154 +248,29 @@
     <!-- Footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Nyheder-script (DOMContentLoaded, indbygget fallback) -->
+    <!-- Simpel filter-logik (ingen fetch) -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const listEl   = document.getElementById('newsList');
-        const emptyEl  = document.getElementById('emptyState');
-        const errorEl  = document.getElementById('errorState');
-        const searchEl = document.getElementById('newsSearch');
-        const resMeta  = document.getElementById('resMeta');
-        const badge    = document.getElementById('dataBadge');
+        const input = document.getElementById('newsSearch');
+        const cards = Array.from(document.querySelectorAll('.news-card'));
+        const empty = document.getElementById('emptyState');
+        const meta  = document.getElementById('resMeta');
 
-        // ❶ Fallback: vises altid først
-        const FALLBACK = [
-          {
-            slug: "search-console-pages-rapport-ny",
-            title: "Ny Search Console-rapport: \"Pages\" giver nye indsigter",
-            excerpt: "Google Search Console lancerer en ny 'Pages'-rapport med detaljerede data om sideindeksering og problemer.",
-            date: "2025-08-27",
-            tags: ["google","search console","indeksering"]
-          },
-          {
-            slug: "ai-overview-aendringer-eu-2025",
-            title: "Google tester ændringer i AI Overviews i EU",
-            excerpt: "Små UI-ændringer og konservativ visning i informationssøgninger. Ingen bred udrulning meldt ud endnu.",
-            date: "2025-08-26",
-            tags: ["google","AI Overviews","eu"]
-          },
-          {
-            slug: "discover-kvalitetssignaler-opdateres",
-            title: "Discover: Kvalitetssignaler opdateres for friskt indhold",
-            excerpt: "Flere rapporterer ændringer i Discover-trafik – fokus på E-E-A-T, billeder og entitetsklarhed.",
-            date: "2025-08-25",
-            tags: ["discover","eeat","content"]
-          }
-        ];
-
-        let all = [];      // aktuelle data (fallback eller live)
-        let filtered = []; // filtreret efter søgning
-        setBadge('loading');
-        useData(FALLBACK, 'fallback'); // vis straks fallback
-        tryFetchLive();                 // forsøg at hente live data
-
-        function setBadge(source) {
-          if (source === 'live') {
-            badge.textContent = 'Live JSON';
-            badge.className = 'text-xs px-2 py-1 rounded-full bg-green-100 text-green-800';
-          } else if (source === 'fallback') {
-            badge.textContent = 'Fallback';
-            badge.className = 'text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800';
-          } else {
-            badge.textContent = 'Indlæser…';
-            badge.className = 'text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800';
-          }
-        }
-
-        function useData(items, source) {
-          all = (Array.isArray(items) ? items : []).slice()
-            .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
-          filtered = all.slice();
-          render();
-          setBadge(source);
-          errorEl.classList.add('hidden');
-          console.log('[nyheder] bruger data fra:', source, 'antal:', all.length);
-        }
-
-        function fmtDate(iso) {
-          try {
-            const d = new Date((iso || '') + 'T12:00:00Z');
-            return d.toLocaleDateString('da-DK', { day: '2-digit', month: 'short', year: 'numeric' });
-          } catch { return iso || ''; }
-        }
-
-        function render() {
-          listEl.innerHTML = '';
-          if (!filtered.length) {
-            emptyEl.classList.remove('hidden');
-            resMeta.textContent = '0 nyheder';
-            return;
-          }
-          emptyEl.classList.add('hidden');
-          resMeta.textContent = filtered.length + ' nyhed' + (filtered.length !== 1 ? 'er' : '');
-          filtered.forEach(p => {
-            const url = p.url || ('/nyheder/' + p.slug + '.html');
-            const tags = Array.isArray(p.tags) ? p.tags.slice(0,4) : [];
-            const el = document.createElement('a');
-            el.href = url;
-            el.className = 'block rounded-2xl border bg-white p-5 hover:shadow transition';
-            el.innerHTML = `
-              <div class="text-xs text-neutral-500 mb-1">${fmtDate(p.date || '')}</div>
-              <h3 class="font-semibold leading-snug">${p.title || ''}</h3>
-              <p class="text-sm text-neutral-600 mt-1">${p.excerpt || ''}</p>
-              ${tags.length ? `<div class="mt-2 flex flex-wrap gap-2">
-                ${tags.map(t => `<span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">${String(t)}</span>`).join('')}
-              </div>` : ''}
-            `;
-            listEl.appendChild(el);
+        function applyFilter() {
+          const q = (input.value || '').trim().toLowerCase();
+          let shown = 0;
+          cards.forEach(card => {
+            const hay = card.getAttribute('data-text') || '';
+            const ok = !q || hay.includes(q);
+            card.style.display = ok ? '' : 'none';
+            if (ok) shown++;
           });
+          empty.classList.toggle('hidden', shown !== 0);
+          meta.textContent = shown + ' nyhed' + (shown !== 1 ? 'er' : '');
         }
 
-        function applyFilter(q) {
-          const needle = (q || '').trim().toLowerCase();
-          if (!needle) { filtered = all.slice(); render(); return; }
-          filtered = all.filter(p => {
-            const hay = [
-              p.title || '',
-              p.excerpt || '',
-              ...(Array.isArray(p.tags) ? p.tags : [])
-            ].join(' ').toLowerCase();
-            return hay.includes(needle);
-          });
-          render();
-        }
-
-        async function fetchJson(url) {
-          const r = await fetch(url, { cache: 'no-cache' });
-          if (!r.ok) throw new Error('HTTP ' + r.status + ' @ ' + url);
-          const txt = await r.text();
-          try { return JSON.parse(txt); }
-          catch { throw new Error('Ugyldig JSON @ ' + url); }
-        }
-
-        async function tryFetchLive() {
-          try {
-            let items = await fetchJson('/nyheder/posts.json');
-            if (!Array.isArray(items) || !items.length) {
-              console.warn('[nyheder] tom eller ugyldig /nyheder/posts.json – prøver relativ sti…');
-              try {
-                const rel = await fetchJson('posts.json');
-                if (Array.isArray(rel) && rel.length) items = rel;
-              } catch (e2) {
-                console.warn('[nyheder] relativ posts.json fejlede:', e2.message);
-              }
-            }
-            if (Array.isArray(items) && items.length) {
-              useData(items, 'live');
-            } else {
-              setBadge('fallback');
-              errorEl.textContent = 'Ingen poster i posts.json – viser fallback.';
-              errorEl.classList.remove('hidden');
-            }
-          } catch (e) {
-            setBadge('fallback');
-            errorEl.textContent = 'Kunne ikke hente nyheder (' + (e && e.message ? e.message : 'ukendt fejl') + ') – viser fallback.';
-            errorEl.classList.remove('hidden');
-            console.error('[nyheder] fetch-fejl:', e);
-          }
-        }
-
-        searchEl.addEventListener('input', () => applyFilter(searchEl.value));
+        input.addEventListener('input', applyFilter);
+        applyFilter(); // init
       });
     </script>
   </body>
