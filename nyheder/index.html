@@ -51,11 +51,14 @@
     <!-- Layout -->
     <main class="max-w-6xl mx-auto px-4 pb-12 space-y-6">
 
-      <!-- Filter/søg + info -->
+      <!-- Filter/søg + status -->
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <div class="grid md:grid-cols-3 gap-6 items-start">
           <div class="md:col-span-2">
-            <h2 class="text-xl md:text-2xl font-semibold mb-2">Seneste SEO-nyheder</h2>
+            <div class="flex items-center gap-3 mb-2">
+              <h2 class="text-xl md:text-2xl font-semibold">Seneste SEO-nyheder</h2>
+              <span id="dataBadge" class="text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800">Indlæser…</span>
+            </div>
             <p class="text-neutral-600">Vi opdaterer løbende. Brug søgning eller tags for at finde relevante nyheder.</p>
           </div>
           <div>
@@ -71,7 +74,7 @@
       <section class="bg-white/70 backdrop-blur rounded-2xl shadow p-6 md:p-8 border border-neutral-100">
         <div id="newsList" class="grid md:grid-cols-2 gap-4"></div>
         <div id="emptyState" class="hidden text-sm text-neutral-600">Ingen nyheder matcher din søgning.</div>
-        <div id="errorState" class="hidden text-sm text-red-600">Kunne ikke hente nyheder. Viser fallback-data.</div>
+        <div id="errorState" class="hidden text-sm text-red-600 mt-3"></div>
       </section>
 
       <!-- Bund CTA: værktøjer -->
@@ -107,7 +110,7 @@
     <!-- Footer -->
     <script src="/assets/include-footer.js?v=2" defer></script>
 
-    <!-- Fallback data (bruges kun hvis fetch fejler eller returnerer tomt) -->
+    <!-- Fallback data (vises hvis fetch fejler/returnerer tomt) -->
     <script type="application/json" id="NEWS_FALLBACK">
     [
       {
@@ -134,7 +137,7 @@
     ]
     </script>
 
-    <!-- Script: hent og vis nyheder (med robust fallback) -->
+    <!-- Script: hent og vis nyheder (robust) -->
     <script>
       (function () {
         const listEl   = document.getElementById('newsList');
@@ -142,15 +145,30 @@
         const errorEl  = document.getElementById('errorState');
         const searchEl = document.getElementById('newsSearch');
         const resMeta  = document.getElementById('resMeta');
+        const badge    = document.getElementById('dataBadge');
 
         let all = [];
         let filtered = [];
+        let usedSource = 'fallback'; // 'fallback' | 'live'
 
         function fmtDate(iso) {
           try {
             const d = new Date((iso || '') + 'T12:00:00Z');
             return d.toLocaleDateString('da-DK', { day: '2-digit', month: 'short', year: 'numeric' });
           } catch { return iso || ''; }
+        }
+
+        function setBadge(source) {
+          if (source === 'live') {
+            badge.textContent = 'Live JSON';
+            badge.className = 'text-xs px-2 py-1 rounded-full bg-green-100 text-green-800';
+          } else if (source === 'fallback') {
+            badge.textContent = 'Fallback';
+            badge.className = 'text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800';
+          } else {
+            badge.textContent = 'Indlæser…';
+            badge.className = 'text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-800';
+          }
         }
 
         function render() {
@@ -195,56 +213,61 @@
           render();
         }
 
-        async function fetchJson(url) {
-          const r = await fetch(url, { cache: 'no-cache' });
-          if (!r.ok) throw new Error('HTTP ' + r.status + ' @ ' + url);
-          return r.json();
-        }
-
         function getInlineFallback() {
           try {
             const el = document.getElementById('NEWS_FALLBACK');
-            if (!el) return [];
             return JSON.parse(el.textContent || '[]');
           } catch { return []; }
         }
 
-        (async function load() {
-          let items = [];
+        async function fetchJson(url) {
+          const r = await fetch(url, { cache: 'no-cache' });
+          if (!r.ok) throw new Error('HTTP ' + r.status + ' @ ' + url);
+          // Robusthed: nogle hosts serverer JSON som text/plain
+          const text = await r.text();
+          try { return JSON.parse(text); } catch (e) {
+            throw new Error('Ugyldig JSON @ ' + url);
+          }
+        }
+
+        // 1) Vis fallback med det samme (så siden aldrig er tom)
+        (function showFallbackImmediately() {
+          all = getInlineFallback();
+          filtered = all.slice().sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
+          usedSource = 'fallback';
+          setBadge(usedSource);
+          render();
+        })();
+
+        // 2) Forsøg at hente live JSON og overskriv, hvis succes
+        (async function tryLive() {
           try {
-            // Prøv absolutsti
-            items = await fetchJson('/nyheder/posts.json');
-            // Hvis tomt array, prøv relativ sti
-            if (!Array.isArray(items) || items.length === 0) {
+            let items = await fetchJson('/nyheder/posts.json');
+            if (!Array.isArray(items) || !items.length) {
+              // prøv relativ sti hvis absolut giver tomt
               try {
                 const rel = await fetchJson('posts.json');
                 if (Array.isArray(rel) && rel.length) items = rel;
               } catch {}
             }
-          } catch (e) {
-            // Fallback: inline
-            errorEl.classList.remove('hidden');
-            errorEl.textContent = 'Kunne ikke hente nyheder. Viser fallback-data.';
-            items = getInlineFallback();
-          }
-
-          all = (Array.isArray(items) ? items : []).slice()
-                .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
-          filtered = all.slice();
-          render();
-
-          if (!all.length) {
-            // Hvis stadig tomt → brug fallback uanset hvad
-            const fb = getInlineFallback();
-            if (Array.isArray(fb) && fb.length) {
-              all = fb.slice().sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
+            if (Array.isArray(items) && items.length) {
+              all = items.slice().sort((a,b)=> String(b.date||'').localeCompare(String(a.date||'')));
               filtered = all.slice();
+              usedSource = 'live';
+              setBadge(usedSource);
+              errorEl.classList.add('hidden');
               render();
-              errorEl.classList.remove('hidden');
-              errorEl.textContent = 'Ingen poster i posts.json. Viser fallback-data.';
             } else {
-              emptyEl.classList.remove('hidden');
+              // Tom JSON → behold fallback
+              errorEl.textContent = 'Ingen poster i posts.json – viser fallback.';
+              errorEl.classList.remove('hidden');
+              setBadge('fallback');
             }
+          } catch (e) {
+            // Fetch fejl → behold fallback, vis fejl
+            errorEl.textContent = 'Kunne ikke hente nyheder (' + (e && e.message ? e.message : 'ukendt fejl') + ') – viser fallback.';
+            errorEl.classList.remove('hidden');
+            setBadge('fallback');
           }
         })();
 
