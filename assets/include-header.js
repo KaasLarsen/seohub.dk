@@ -7,7 +7,8 @@
   const LINKS_LEFT = [
     { href: "/",            label: "Forside",    key: "/" },
     { href: "/blog/",       label: "Blog",       key: "/blog" },
-    { href: "/seo-ordbog/", label: "SEO Ordbog", key: "/seo-ordbog" }
+    { href: "/seo-ordbog/", label: "SEO Ordbog", key: "/seo-ordbog" },
+    { href: "/nyheder/",    label: "Nyheder",    key: "/nyheder" }
   ];
 
   const TOOLS = [
