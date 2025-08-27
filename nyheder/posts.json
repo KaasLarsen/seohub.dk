@@ -1,37 +1,72 @@
 [
   {
-  "title": "Google Core Update (august 2025) – de første observationer",
-  "url": "/nyheder/google-core-update-august-2025.html",
-  "date": "2025-08-26",
-  "excerpt": "De første udsving ses især på YMYL og affiliate. Tjek intent-match, styrk kategorier og hold øje med INP.",
-  "tags": ["google", "core update"]
-},
+    "slug": "search-console-pages-rapport-ny",
+    "title": "Ny Search Console-rapport: 'Pages' giver nye indsigter",
+    "excerpt": "Google Search Console introducerer en ny rapport, der giver dybere indsigt i sideperformance og indeksstatus.",
+    "date": "2025-08-25",
+    "tags": ["search console","pages","indeks"]
+  },
   {
-    "title": "Google lancerer august 2025 Core Update",
-    "url": "/nyheder/google-core-update-august-2025.html",
+    "slug": "ai-overview-aendringer-eu-2025",
+    "title": "Google tester ændringer i AI Overviews i EU",
+    "excerpt": "AI Overviews justeres i EU med nye krav til transparens og kildeangivelser.",
     "date": "2025-08-24",
-    "excerpt": "De første udsving ses især på YMYL og affiliate. Hold øje med tynde kategorisider og mixed intent.",
-    "tags": ["google", "core update"]
+    "tags": ["ai overviews","google","eu"]
   },
   {
-    "title": "Search Console ruller ny 'Pages' rapport ud",
-    "url": "/nyheder/search-console-pages-rapport-ny.html",
+    "slug": "discover-kvalitetssignaler-opdateres",
+    "title": "Discover: Kvalitetssignaler opdateres for friskt indhold",
+    "excerpt": "Google Discover prioriterer nu opdaterede artikler og friskt indhold endnu højere.",
+    "date": "2025-08-23",
+    "tags": ["discover","indhold","kvalitet"]
+  },
+  {
+    "slug": "core-web-vitals-inp-vejledning",
+    "title": "Ny INP-vejledning: interaktivitet og lange tasks",
+    "excerpt": "Google udsender en officiel vejledning til hvordan du forbedrer INP som en del af Core Web Vitals.",
+    "date": "2025-08-22",
+    "tags": ["core web vitals","inp","google"]
+  },
+  {
+    "slug": "gsc-api-udvider-dimensioner",
+    "title": "GSC API udvider dimensioner: device + country i samme forespørgsel",
+    "excerpt": "Ny funktion i Google Search Console API gør det muligt at kombinere dimensioner i rapporter.",
+    "date": "2025-08-21",
+    "tags": ["gsc api","device","country"]
+  },
+  {
+    "slug": "schema-faq-policy-opdatering",
+    "title": "Schema FAQ: Politikker opdateret for bedre relevans",
+    "excerpt": "Google strammer kravene til FAQ markup for at sikre mere relevant brug.",
     "date": "2025-08-20",
-    "excerpt": "Kombinerer tidligere 'Indexed' og 'Experience' signaler. Giver hurtigere overblik over tekniske problemer.",
-    "tags": ["gsc", "teknisk"]
+    "tags": ["schema","faq","structured data"]
   },
   {
-    "title": "GA4 opdaterer Attribution vinduer",
-    "url": "/nyheder/ga4-attribution-aug-2025.html",
+    "slug": "local-pack-foto-krav",
+    "title": "Local Pack: Nye anbefalinger til billeder i profiler",
+    "excerpt": "Google anbefaler højere billedkvalitet og specifikke størrelser i lokale profiler.",
+    "date": "2025-08-19",
+    "tags": ["local pack","billeder","lokal seo"]
+  },
+  {
+    "slug": "shopping-structured-data-varer",
+    "title": "Shopping-resultater: Structured data for varianter præciseres",
+    "excerpt": "Google tydeliggør hvordan du markerer produktvarianter i structured data.",
     "date": "2025-08-18",
-    "excerpt": "Standard vindue reduceres; forvent ændringer i konverteringskreditering på tværs af kanaler.",
-    "tags": ["ga4"]
+    "tags": ["shopping","structured data","produkter"]
   },
   {
-    "title": "Discover får fokus på friskhed",
-    "url": "/nyheder/google-discover-friskhed-2025.html",
-    "date": "2025-08-14",
-    "excerpt": "Korte noter + klare billeder performer bedre. Opdater evergreen indhold for at få Discover-trafik.",
-    "tags": ["discover", "google"]
+    "slug": "ranking-signaler-myte-aflivning",
+    "title": "Google afliver endnu en myte om ‘hemmelige rankingsignaler’",
+    "excerpt": "I en Q&A understreger Googles team at der ikke findes skjulte signaler udenfor dokumentation.",
+    "date": "2025-08-17",
+    "tags": ["ranking","google","myter"]
+  },
+  {
+    "slug": "bing-indexnow-udvidelser",
+    "title": "IndexNow: Flere CMS-plugins opdateres til hurtigere ping",
+    "excerpt": "Flere store CMS’er udvider deres integrationer med IndexNow-protokollen.",
+    "date": "2025-08-16",
+    "tags": ["bing","indexnow","cms"]
   }
 ]
