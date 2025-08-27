@@ -111,80 +111,103 @@
 
     <!-- Script: hent og vis nyheder -->
     <script>
-      (function () {
-        const listEl = document.getElementById('newsList');
-        const emptyEl = document.getElementById('emptyState');
-        const errorEl = document.getElementById('errorState');
-        const searchEl = document.getElementById('newsSearch');
-        const resMeta = document.getElementById('resMeta');
+  (function () {
+    const listEl = document.getElementById('newsList');
+    const emptyEl = document.getElementById('emptyState');
+    const errorEl = document.getElementById('errorState');
+    const searchEl = document.getElementById('newsSearch');
+    const resMeta = document.getElementById('resMeta');
 
-        let all = [];
-        let filtered = [];
+    let all = [];
+    let filtered = [];
 
-        function fmtDate(iso) {
-          // viser YYYY-MM-DD som DD. MMM YYYY (dansk-ish)
+    function fmtDate(iso) {
+      try {
+        const d = new Date((iso || '') + 'T12:00:00Z');
+        return d.toLocaleDateString('da-DK', { day: '2-digit', month: 'short', year: 'numeric' });
+      } catch { return iso || ''; }
+    }
+
+    function render() {
+      listEl.innerHTML = '';
+      if (!filtered.length) {
+        emptyEl.classList.remove('hidden');
+        resMeta.textContent = '0 nyheder';
+        return;
+      }
+      emptyEl.classList.add('hidden');
+      resMeta.textContent = filtered.length + ' nyhed' + (filtered.length !== 1 ? 'er' : '');
+
+      filtered.forEach(p => {
+        const url = p.url || ('/nyheder/' + p.slug + '.html');
+        const tags = Array.isArray(p.tags) ? p.tags.slice(0,4) : [];
+        const card = document.createElement('a');
+        card.href = url;
+        card.className = 'block rounded-2xl border bg-white p-5 hover:shadow transition';
+        card.innerHTML = `
+          <div class="text-xs text-neutral-500 mb-1">${fmtDate(p.date || '')}</div>
+          <h3 class="font-semibold leading-snug">${p.title || ''}</h3>
+          <p class="text-sm text-neutral-600 mt-1">${p.excerpt || ''}</p>
+          ${tags.length ? `<div class="mt-2 flex flex-wrap gap-2">
+            ${tags.map(t => `<span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">${String(t)}</span>`).join('')}
+          </div>` : ''}
+        `;
+        listEl.appendChild(card);
+      });
+    }
+
+    function applyFilter(q) {
+      const needle = (q || '').trim().toLowerCase();
+      if (!needle) { filtered = all.slice(); render(); return; }
+      filtered = all.filter(p => {
+        const hay = [
+          p.title || '',
+          p.excerpt || '',
+          ...(Array.isArray(p.tags) ? p.tags : [])
+        ].join(' ').toLowerCase();
+        return hay.includes(needle);
+      });
+      render();
+    }
+
+    async function tryFetch(url) {
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (!r.ok) throw new Error(`HTTP ${r.status} @ ${url}`);
+      return r.json();
+    }
+
+    (async function load() {
+      try {
+        // 1) absolut sti
+        let items = await tryFetch('/nyheder/posts.json');
+        // fallback: hvis tom array, prøv relativ (nogle hosts ændrer stier)
+        if (!Array.isArray(items) || items.length === 0) {
           try {
-            const d = new Date(iso + 'T12:00:00Z');
-            return d.toLocaleDateString('da-DK', { day: '2-digit', month: 'short', year: 'numeric' });
-          } catch { return iso; }
+            const rel = await tryFetch('posts.json');
+            if (Array.isArray(rel) && rel.length) items = rel;
+          } catch {}
         }
 
-        function render() {
-          listEl.innerHTML = '';
-          if (!filtered.length) {
-            emptyEl.classList.remove('hidden');
-            resMeta.textContent = '';
-            return;
-          }
-          emptyEl.classList.add('hidden');
-          resMeta.textContent = filtered.length + ' nyhed' + (filtered.length !== 1 ? 'er' : '');
-          filtered.forEach(p => {
-            const url = p.url || ('/nyheder/' + p.slug + '.html');
-            const tags = Array.isArray(p.tags) ? p.tags.slice(0,4) : [];
-            const card = document.createElement('a');
-            card.href = url;
-            card.className = 'block rounded-2xl border bg-white p-5 hover:shadow transition';
+        all = (Array.isArray(items) ? items : []).slice()
+          .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
+        filtered = all.slice();
+        render();
 
-            card.innerHTML = `
-              <div class="text-xs text-neutral-500 mb-1">${fmtDate(p.date || '')}</div>
-              <h3 class="font-semibold leading-snug">${p.title || ''}</h3>
-              <p class="text-sm text-neutral-600 mt-1">${p.excerpt || ''}</p>
-              ${tags.length ? `<div class="mt-2 flex flex-wrap gap-2">
-                ${tags.map(t => `<span class="text-[11px] px-2 py-1 rounded-full bg-neutral-100">${String(t)}</span>`).join('')}
-              </div>` : ''}
-            `;
-            listEl.appendChild(card);
-          });
+        // Hvis der stadig intet er, vis tom-UI (det betyder at JSON er tom)
+        if (!all.length) {
+          emptyEl.classList.remove('hidden');
+          resMeta.textContent = '0 nyheder';
         }
+      } catch (e) {
+        console.error('Nyheder fejl:', e);
+        errorEl.textContent = 'Kunne ikke hente nyheder: ' + (e && e.message ? e.message : 'ukendt fejl');
+        errorEl.classList.remove('hidden');
+      }
+    })();
 
-        function applyFilter(q) {
-          const needle = (q || '').trim().toLowerCase();
-          if (!needle) { filtered = all.slice(); render(); return; }
-          filtered = all.filter(p => {
-            const hay = [
-              p.title || '', p.excerpt || '',
-              ...(Array.isArray(p.tags) ? p.tags : [])
-            ].join(' ').toLowerCase();
-            return hay.includes(needle);
-          });
-          render();
-        }
+    searchEl.addEventListener('input', () => applyFilter(searchEl.value));
+  })();
+</script>
 
-        fetch('/nyheder/posts.json', { cache: 'no-cache' })
-          .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
-          .then(items => {
-            // sortér nyeste først
-            all = (Array.isArray(items) ? items : []).slice()
-              .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')));
-            filtered = all.slice();
-            render();
-          })
-          .catch(() => {
-            errorEl.classList.remove('hidden');
-          });
-
-        searchEl.addEventListener('input', () => applyFilter(searchEl.value));
-      })();
-    </script>
   </body>
 </html>
