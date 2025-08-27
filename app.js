@@ -52,7 +52,58 @@ function BigHero() {
       React.createElement("line", { x1:"15", y1:"6", x2:"15", y2:"21" })
     )
   );
+  function LatestNews() {
+  const [news, setNews] = useState(null);
+  const [err, setErr] = useState(null);
 
+  useEffect(() => {
+    let alive = true;
+    fetch("/nyheder/posts.json", { cache: "no-store" })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error("Kunne ikke hente nyheder")))
+      .then(list => {
+        if (!alive) return;
+        const items = Array.isArray(list) ? list : [];
+        const sorted = items.sort((a,b) => new Date(b.date || 0) - new Date(a.date || 0)).slice(0,3);
+        setNews(sorted);
+      })
+      .catch(e => { if (alive) setErr(e.message || "Fejl"); });
+    return () => { alive = false; };
+  }, []);
+
+  const fmtDate = (iso) => {
+    const d = iso ? new Date(iso) : null;
+    return d && !isNaN(d) ? d.toLocaleDateString("da-DK", { year:"numeric", month:"short", day:"2-digit" }) : "";
+  };
+
+  const safeHref = (item) => {
+    if (item.url) return item.url;                     // fuld/absolut eller relativ URL fra JSON
+    if (item.slug) return `/nyheder/${item.slug}.html`; // fallback hvis du bruger slug
+    return "#";
+  };
+
+  return React.createElement(Section, {
+    title: "Seneste SEO-nyheder",
+    description: "Opdateringer fra Google & branchen – kort og handlingsorienteret."
+  },
+    err
+      ? React.createElement("p", { className:"text-sm text-red-600" }, err)
+      : !news
+        ? React.createElement("p", { className:"text-sm text-neutral-500" }, "Indlæser…")
+        : React.createElement("div", { className:"grid md:grid-cols-3 gap-4" },
+            news.map((n, i) => React.createElement(Card, {
+              key: n.slug || n.url || i,
+              title: n.title,
+              description: n.excerpt,
+              href: safeHref(n)
+            },
+              React.createElement("div", { className:"flex items-center justify-between text-xs text-neutral-500 mt-2" }, [
+                React.createElement("span", { key:"badge", className:"inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-blue-50 border border-blue-100 text-blue-700" }, "Nyhed"),
+                React.createElement("span", { key:"date" }, fmtDate(n.date))
+              ])
+            ))
+          )
+  );
+}
   return React.createElement("section", { className:"py-10 md:py-14" },
     React.createElement("div", { className:"max-w-6xl mx-auto px-4" },
       React.createElement("div", {
